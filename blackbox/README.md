@@ -1,6 +1,6 @@
 # blackbox
 
-A new Flutter project.
+A new Flutter project that will bring Black Box to Android. Black Box is a game where a group of people get several questions that require a person's name as answer. After every question, all participants can vote on anyone of the group. Afterwards, the results will be gathered and showed (anonymously).
 
 ## Getting Started
 
