@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1092212056414",
+    "firebase_url": "https://blackbox-app.firebaseio.com",
+    "project_id": "blackbox-app",
+    "storage_bucket": "blackbox-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092212056414:android:1fe54453de54b1ff",
+        "android_client_info": {
+          "package_name": "be.dezijwegel.blackbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1092212056414-osqhpe8peu21knm71f58b7fa3q6i535o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "be.dezijwegel.blackbox",
+            "certificate_hash": "8fce0aa62bd3fa6544ceec94d712f0e4d64abcfe"
+          }
+        },
+        {
+          "client_id": "1092212056414-tsrsg5f0prp6njmc9r5qdgbl5d1i2iut.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMtd92yhdRv1X4Rfw7GAUE06J-e7gwspM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092212056414-tsrsg5f0prp6njmc9r5qdgbl5d1i2iut.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
