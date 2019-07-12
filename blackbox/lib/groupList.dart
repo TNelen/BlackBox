@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'Interfaces/Database.dart';
+import 'Database/firebase.dart';
+
 List<String> groupNames;
 
 class GroupList extends StatelessWidget {
 
 
   /*
+   * Will be replaced by a custom class
    * Get all groups that the given user is part of
    * For testing: use gtqnKc2lyo5ip2fqOAkq as input!
    * Returns a List<String> of group names.
    */
+  @Deprecated('updateGroups')
   void updateGroups(String uniqueUserID)
   {
     groupNames = new List<String>();
@@ -47,7 +52,13 @@ class GroupList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    updateGroups("gtqnKc2lyo5ip2fqOAkq");
+    // Gebruik globaal één instance van Database, dit is tijdelijk!
+    // Via FutureBuilder zou je Widgets kunnen bouwen na te wachten op database resultaat
+    //Database db = new Firebase();
+    //Future< List<String> > groupNames = db.getGroupNames("gtqnKc2lyo5ip2fqOAkq");
+
+    // Tijdelijk om te kunnen testen ;)
+    List<String> groupNames = ["Group 1", "Group 2", "Group 3"];
 
     return new ListView.separated(
       scrollDirection:  Axis.vertical,
@@ -58,5 +69,6 @@ class GroupList extends StatelessWidget {
       itemBuilder: buildGroupItem,
       separatorBuilder: (BuildContext context, int index) => const Divider(),
     );
+    
   }
 }
