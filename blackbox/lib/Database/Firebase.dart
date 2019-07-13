@@ -3,7 +3,10 @@ import '../Interfaces/Database.dart';
 
 class Firebase implements Database{
 
+  @override
   void openConnection(){}
+
+  @override
   void closeConnection(){}
 
   /*
@@ -11,6 +14,7 @@ class Firebase implements Database{
    * For testing: use gtqnKc2lyo5ip2fqOAkq as input!
    * Returns a List<String> of group names.
    */
+  @override
   Future< List<String> > getGroupNames(String uniqueUserID) async
   {
 

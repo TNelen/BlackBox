@@ -1,6 +1,9 @@
 
 import 'package:flutter/material.dart';
 
+import 'Interfaces/Database.dart';
+import 'Database/Firebase.dart';
+
 import './ProfileScreen.dart';
 import './groupList.dart';
 import './JoinGroupScreen.dart';
@@ -10,6 +13,14 @@ import './CreateGroupScreen.dart';
 
 
 class HomeScreen extends StatelessWidget {
+
+    Database database;
+
+    HomeScreen(Database db)
+    {
+      database = db;
+      db.openConnection();
+    }
 
     @override
     Widget build(BuildContext context) {
@@ -87,7 +98,7 @@ class HomeScreen extends StatelessWidget {
         ),
 
 
-                GroupList(),
+                GroupList( database ),
 
               ],
             ),

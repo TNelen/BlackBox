@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Database/firebase.dart';
 import './groupList.dart';
 import './ProfileScreen.dart';
 import './HomeScreen.dart';
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: HomeScreen());
+        home: HomeScreen(new Firebase()));
   }
 }
 

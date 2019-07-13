@@ -8,7 +8,7 @@ abstract class Database {
   /**
    * Returns the list of group names that a user is part of
    */
-  Future< List<String> > getGroupNames(String UniqueUserID);
+  Future< List<String> > getGroupNames(String uniqueUserID);
 
   /**
    * Closes the connection to the database
