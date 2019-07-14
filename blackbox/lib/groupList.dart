@@ -3,16 +3,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'Interfaces/Database.dart';
 import 'Database/firebase.dart';
+import './GroupScreen.dart';
+
+
+// Tijdelijk om te kunnen testen ;)
+List<String> groupNames = ["Group 1", "Group 2", "Group 3"];
 
 class GroupList extends StatelessWidget {
 
-  Database database;
+  /*Database database;
   List<String> groupNames;
 
   GroupList( Database db )
   {
     database = db;
-  }
+  }*/
 
 
   Widget buildGroupItem(BuildContext context, int index) {
@@ -29,6 +34,14 @@ class GroupList extends StatelessWidget {
           ),
           trailing:
           Icon(Icons.more_vert, size: 25, color: Colors.amber,),
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (BuildContext context) => GroupScreen(groupNames[index]
+              ),
+            ));
+          },
+
+
     ),);
   }
 
@@ -39,8 +52,7 @@ class GroupList extends StatelessWidget {
     // Via FutureBuilder zou je Widgets kunnen bouwen na te wachten op database resultaat
     //Future< List<String> > groupNames = db.getGroupNames("gtqnKc2lyo5ip2fqOAkq");
 
-    // Tijdelijk om te kunnen testen ;)
-    List<String> groupNames = ["Group 1", "Group 2", "Group 3"];
+
 
     return new ListView.separated(
       scrollDirection:  Axis.vertical,
