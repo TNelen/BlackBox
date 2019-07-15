@@ -117,11 +117,11 @@ class HomeScreen extends StatelessWidget {
                       ));
                     },
 
-                    color: Colors.amber,
-                    child: Text('Join group', style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.white,
-                    )
+                        color: Colors.amber,
+                       child: Text('Join group', style: TextStyle(
+                         fontSize: 25,
+                         color: Colors.white,
+                       )
                     ),
 
                   ),

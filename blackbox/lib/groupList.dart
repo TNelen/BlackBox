@@ -21,28 +21,33 @@ class GroupList extends StatelessWidget {
 
 
   Widget buildGroupItem(BuildContext context, int index) {
-    return new Container(
-        //height: 50,
-        color: Colors.white,
-        child:ListTile(
-          title: Text(
-            groupNames[index],
-            style: TextStyle(
-              fontSize: 17,
-              color: Colors.black,
+    return GestureDetector(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (BuildContext context) => GroupScreen(groupNames[index]
             ),
-          ),
-          trailing:
-          Icon(Icons.more_vert, size: 25, color: Colors.amber,),
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) => GroupScreen(groupNames[index]
+          ));
+        },
+        onLongPress: () {
+            print("long press");
+        } ,
+        child: Container(
+          //height: 50,
+          color: Colors.white,
+          child:ListTile(
+            title: Text(
+              groupNames[index],
+              style: TextStyle(
+                fontSize: 17,
+                color: Colors.black,
               ),
-            ));
-          },
+            ),
+            trailing:
+            //als je admin bent, daar een profile icoontje zetten
+            Icon(Icons.lens, size: 25, color: Colors.amber),
 
-
-    ),);
+          ),))
+    ;
   }
 
   @override
