@@ -7,9 +7,11 @@ import './GroupScreen.dart';
 
 
 // Tijdelijk om te kunnen testen ;)
-List<String> groupNames = ["Group 1", "Group 2", "Group 3"];
 
 class GroupList extends StatelessWidget {
+
+  List<String> groupNames = ["Group 1", "Group 2", "Group 3","Group 4", "Group 5", "Group 6"];
+
 
   /*Database database;
   List<String> groupNames;
@@ -30,6 +32,7 @@ class GroupList extends StatelessWidget {
         },
         onLongPress: () {
             print("long press");
+            groupNames.removeAt(index);
         } ,
         child: Container(
           //height: 50,
