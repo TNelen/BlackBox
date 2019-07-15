@@ -98,8 +98,8 @@ class HomeScreen extends StatelessWidget {
         ),
 
 
-                //GroupList( database ),
-                GroupList(),
+                GroupList( database ),
+                //GroupList(),
               ],
             ),
             bottomNavigationBar:
