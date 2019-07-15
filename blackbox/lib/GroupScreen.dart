@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Interfaces/Database.dart';
 import 'Database/firebase.dart';
 
-List<String> members = ["member 1","member 2","member 3","member 4","member 1","member 2","member 3","member 4","member 1","member 2","member 3","member 4","member 1","member 2","member 3","member 4",];
+List<String> members = ["member 1","member 2","member 4","member 1","member 2","member 3","member 4","member 1","member 2","member 3","member 4","member 1","member 2","member 3","member 4",];
 
 
 class GroupScreen extends StatelessWidget {
@@ -16,123 +16,131 @@ class GroupScreen extends StatelessWidget {
     return MaterialApp(
       theme: new ThemeData(scaffoldBackgroundColor: Colors.black,
       ),
-      home: Scaffold(body: DefaultTabController(
-        length: 3,
-        child: Scaffold(
+      home: Scaffold(
+          body: DefaultTabController(
+              length: 3,
+              child: Scaffold(
 
-          appBar: AppBar(
+                appBar: AppBar(
 
-            title: Text(groupname),
-            backgroundColor: Colors.black,
-            bottom: TabBar(
-              indicatorColor: Colors.amber,
-              indicatorSize: TabBarIndicatorSize.label,
-
-              tabs: [
-                new Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    new Icon(
-                      Icons.info_outline,
+                  title: Text(groupname,
+                    style: TextStyle(
+                      fontSize: 28,
                       color: Colors.white,
-                      //size: 25,
-
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 8),
-                      child: Text(
-                        'Info',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                        ),
+                  ),
+                  backgroundColor: Colors.black,
+                  bottom: TabBar(
+                    indicatorColor: Colors.amber,
+                    indicatorSize: TabBarIndicatorSize.label,
+
+                    tabs: [
+                      new Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          new Icon(
+                            Icons.info_outline,
+                            color: Colors.white,
+                            //size: 25,
+
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              'Info',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                new Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.people_outline,
-                      color: Colors.white,
-                      //size: 25,
+                      new Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.people_outline,
+                            color: Colors.white,
+                            //size: 25,
 
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 8),
-                      child: Text(
-                        'Members',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                        ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              'Members',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                new Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.settings,
-                      color: Colors.white,
-                      //size: 25,
+                      new Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.settings,
+                            color: Colors.white,
+                            //size: 25,
 
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 8),
-                      child: Text(
-                        'Settings',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                        ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              'Settings',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+
                 ),
-              ],
-            ),
+                body: TabBarView(children: [
 
-          ),
-          body: TabBarView(children: [
-            //tab 1
-            new Text('Info',
-            style: new TextStyle(color: Colors.white, fontSize: 20.0),),
+                  //tab 1
+                  new Text('Info',
+                  style: new TextStyle(color: Colors.white, fontSize: 20.0),),
 
-            //tab 2
-            GridView.count(
-            crossAxisCount: 2,
-            padding: EdgeInsets.all(8.0),
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 5.0,
-            children: members
-                .map((data) => Card(
-              color: Colors.amber,
-              child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text(data,
-                      style: new TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold),),
-                  )),
-            ))
-                .toList(),
-          ),
-          //tab 3
-            new Text('settings',
-              style: new TextStyle(color: Colors.white, fontSize: 20.0),),
+                  //tab 2
+                  GridView.count(
+                  crossAxisCount: 2,
+                  padding: EdgeInsets.all(8.0),
+                  crossAxisSpacing: 12.0,
+                  mainAxisSpacing: 12.0,
+                  children: members
+                      .map((data) => Card(
+                    color: Colors.amber,
+                    child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(data,
+                            style: new TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold),),
+                        )),
+                  ))
+                      .toList(),
+                ),
 
-          ],
+                //tab 3
+                  new Text('settings',
+                    style: new TextStyle(color: Colors.white, fontSize: 20.0),),
 
-    )
-        ),
+                ],
+
+          )
+              ),
       ),
         bottomNavigationBar:
         Container(
