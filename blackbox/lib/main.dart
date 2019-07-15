@@ -7,8 +7,11 @@ import 'package:blackbox/Screens/HomeScreen.dart';
 
 void main() => runApp(MyApp());
 
+String username = 'timo';
 
 class MyApp extends StatelessWidget {
+
+
 
   @override
   Widget build(BuildContext context) {

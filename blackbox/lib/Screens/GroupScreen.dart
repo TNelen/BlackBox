@@ -4,12 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Interfaces/Database.dart';
 import '../Database/firebase.dart';
 
-List<String> members = ["member 1","member 2","member 4","member 1","member 2","member 3","member 4","member 1","member 2","member 3","member 4","member 1","member 2","member 3","member 4",];
+import '../DataContainers/GroupTileData.dart';
+
 
 
 class GroupScreen extends StatelessWidget {
-  GroupScreen(this.groupname) : super();
-  final String groupname;
+  GroupScreen(this.groupInfo) : super();
+  final GroupTileData groupInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class GroupScreen extends StatelessWidget {
 
                 appBar: AppBar(
 
-                  title: Text(groupname,
+                  title: Text(groupInfo.groupName,
                     style: TextStyle(
                       fontSize: 28,
                       color: Colors.white,
@@ -120,14 +121,29 @@ class GroupScreen extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   crossAxisSpacing: 12.0,
                   mainAxisSpacing: 12.0,
-                  children: members
+                  children: groupInfo.members
                       .map((data) => Card(
-                    color: Colors.white,
+                    color: data == groupInfo.adminID  ? Colors.amber : Colors.white
+                    ,
                     child: Center(
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: Text(data,
-                            style: new TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold),),
+                          child:data == groupInfo.adminID  ?
+
+                          Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                            Text(data,
+                              style: new TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold),),
+                            Text('Admin',
+                              style: new TextStyle(color: Colors.black, fontSize: 15.0,fontWeight: FontWeight.bold),),],),) :
+
+                          Text(data,
+                            style: new TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold),)
+
+
+                              ,
                         )),
                   ))
                       .toList(),

@@ -4,6 +4,7 @@ import '../Interfaces/Database.dart';
 import '../Database/firebase.dart';
 import 'package:blackbox/Screens/GroupScreen.dart';
 import '../DataContainers/GroupTileData.dart';
+import '../main.dart';
 
 
 // Tijdelijk om te kunnen testen ;)
@@ -24,7 +25,7 @@ class GroupList extends StatefulWidget {
 class _GroupListState extends State<GroupList> {
 
   Database database;
-  List<GroupTileData> groupData = [new GroupTileData('group1', 'id1', 'ad1'),new GroupTileData('group2', 'id2', 'ad2'),new GroupTileData('group3', 'id3', 'ad3'),new GroupTileData('group4', 'id4', 'ad4'),new GroupTileData('group5', 'id5', 'ad5'),];
+  List<GroupTileData> groupData = [new GroupTileData('group1', 'id1', 'klootzak',['lid1','lid2','klootzak','lid2','lid2']),new GroupTileData('group2', 'id2', 'timo',['lid1','timo','lid2']),new GroupTileData('group3', 'id3', 'lid2',['lid1','lid2']),new GroupTileData('group4', 'id4', 'timo',['lid1','lid2','timo','lid1','lid2']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),];
 
 
 
@@ -45,10 +46,16 @@ class _GroupListState extends State<GroupList> {
 
   Widget buildGroupItem(BuildContext context, int index) {
      GroupTileData removed;
-    return GestureDetector(
+     IconData trailing;
+     if (groupData[index].adminID == username) {
+         trailing = Icons.star;
+     }
+     else  trailing = Icons.people_outline;
+
+       return GestureDetector(
         onTap: () {
           Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => GroupScreen(groupData[index].groupName
+            builder: (BuildContext context) => GroupScreen(groupData[index]
             ),
           ));
         },
@@ -87,8 +94,10 @@ class _GroupListState extends State<GroupList> {
               ),
             ),
             trailing:
+
             //als je admin bent, daar een profile icoontje zetten
-            Icon(Icons.lens, size: 25, color: Colors.amber),
+            Icon(trailing, size: 25, color: Colors.amber)//}
+            //else{},
 
           ),))
     ;
