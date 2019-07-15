@@ -1,13 +1,13 @@
 
 import 'package:flutter/material.dart';
 
-import 'Interfaces/Database.dart';
-import 'Database/Firebase.dart';
+import '../Interfaces/Database.dart';
+import '../Database/Firebase.dart';
 
 import './ProfileScreen.dart';
 import './groupList.dart';
-import './JoinGroupScreen.dart';
-import './CreateGroupScreen.dart';
+import 'package:blackbox/Screens/JoinGroupScreen.dart';
+import 'package:blackbox/Screens/CreateGroupScreen.dart';
 
 
 

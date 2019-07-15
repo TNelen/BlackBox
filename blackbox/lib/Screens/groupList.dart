@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'Interfaces/Database.dart';
-import 'Database/firebase.dart';
-import './GroupScreen.dart';
+import '../Interfaces/Database.dart';
+import '../Database/firebase.dart';
+import 'package:blackbox/Screens/GroupScreen.dart';
+import '../DataContainers/GroupTileData.dart';
 
 
 // Tijdelijk om te kunnen testen ;)
@@ -23,7 +24,8 @@ class GroupList extends StatefulWidget {
 class _GroupListState extends State<GroupList> {
 
   Database database;
-  List<String> groupNames = ["group 1", "group 2", "group 3", "group 4", "group 5", "group 6"];
+  List<GroupTileData> groupData = [new GroupTileData('group1', 'id1', 'ad1'),new GroupTileData('group2', 'id2', 'ad2'),new GroupTileData('group3', 'id3', 'ad3'),new GroupTileData('group4', 'id4', 'ad4'),new GroupTileData('group5', 'id5', 'ad5'),];
+
 
 
   _GroupListState(Database db)
@@ -33,20 +35,20 @@ class _GroupListState extends State<GroupList> {
 
   void refresh()
   {
-      database.getGroupNames("").then( (names) => setState(() {
+      //database.getGroupNames("").then( (names) => setState(() {
 
-          groupNames = names;
+          //groupNames = names;
 
-        })
-      );
+       // })
+      //);
   }
 
   Widget buildGroupItem(BuildContext context, int index) {
-     String removed;
+     GroupTileData removed;
     return GestureDetector(
         onTap: () {
           Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => GroupScreen(groupNames[index]
+            builder: (BuildContext context) => GroupScreen(groupData[index].groupName
             ),
           ));
         },
@@ -61,13 +63,13 @@ class _GroupListState extends State<GroupList> {
                   label: 'Undo',
                   textColor: Colors.amber,
                   onPressed: () {
-                    groupNames.insert(index, removed);
+                    groupData.insert(index, removed);
                     setState(() {
                       //Nothing yet
                     });
           },),),);
-            removed = groupNames[index];
-            groupNames.removeAt(index);
+            removed = groupData[index];
+            groupData.removeAt(index);
             setState(() {
               //Nothing yet
             });
@@ -78,7 +80,7 @@ class _GroupListState extends State<GroupList> {
           color: Colors.white,
           child:ListTile(
             title: Text(
-              groupNames[index],
+              groupData[index].groupName,
               style: TextStyle(
                 fontSize: 17,
                 color: Colors.black,
@@ -102,7 +104,7 @@ class _GroupListState extends State<GroupList> {
       physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
       padding: const EdgeInsets.all(8.0),
-      itemCount: groupNames.length,
+      itemCount: groupData.length,
       itemBuilder: buildGroupItem,
       separatorBuilder: (BuildContext context, int index) => const Divider(),
     );

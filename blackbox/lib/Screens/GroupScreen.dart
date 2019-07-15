@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'Interfaces/Database.dart';
-import 'Database/firebase.dart';
+import '../Interfaces/Database.dart';
+import '../Database/firebase.dart';
 
 List<String> members = ["member 1","member 2","member 4","member 1","member 2","member 3","member 4","member 1","member 2","member 3","member 4","member 1","member 2","member 3","member 4",];
 

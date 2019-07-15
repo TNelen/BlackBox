@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'Database/firebase.dart';
-import './groupList.dart';
-import './ProfileScreen.dart';
-import './HomeScreen.dart';
+import 'package:blackbox/Screens/groupList.dart';
+import 'package:blackbox/Screens/ProfileScreen.dart';
+import 'package:blackbox/Screens/HomeScreen.dart';
 
 
 void main() => runApp(MyApp());
