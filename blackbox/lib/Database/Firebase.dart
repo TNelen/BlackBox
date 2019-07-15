@@ -1,3 +1,4 @@
+import 'package:blackbox/DataContainers/GroupTileData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Interfaces/Database.dart';
 
@@ -43,5 +44,8 @@ class Firebase implements Database{
       return groupNames;
     }
   }
+
+    @override
+    void removeUserFromGroup(String userID, String groupID) {}
 
 }
