@@ -122,7 +122,7 @@ class GroupScreen extends StatelessWidget {
                   mainAxisSpacing: 12.0,
                   children: members
                       .map((data) => Card(
-                    color: Colors.amber,
+                    color: Colors.white,
                     child: Center(
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),

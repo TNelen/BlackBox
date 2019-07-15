@@ -8,20 +8,15 @@ import './GroupScreen.dart';
 
 // Tijdelijk om te kunnen testen ;)
 
-class GroupList extends StatelessWidget {
+class groupList extends StatefulWidget {
+  @override
+  _groupListState createState() => _groupListState();
+}
 
+class _groupListState extends State<groupList> {
   List<String> groupNames = ["Group 1", "Group 2", "Group 3","Group 4", "Group 5", "Group 6"];
 
-
-  /*Database database;
-  List<String> groupNames;
-
-  GroupList( Database db )
-  {
-    database = db;
-  }*/
-
-
+  @override
   Widget buildGroupItem(BuildContext context, int index) {
     return GestureDetector(
         onTap: () {
@@ -31,8 +26,11 @@ class GroupList extends StatelessWidget {
           ));
         },
         onLongPress: () {
-            print("long press");
-            groupNames.removeAt(index);
+          print("long press");
+          groupNames.removeAt(index);
+          setState(() {
+            //Nothing yet
+          });
         } ,
         child: Container(
           //height: 50,
@@ -59,9 +57,6 @@ class GroupList extends StatelessWidget {
     // Gebruik globaal één instance van Database, dit is tijdelijk!
     // Via FutureBuilder zou je Widgets kunnen bouwen na te wachten op database resultaat
     //Future< List<String> > groupNames = db.getGroupNames("gtqnKc2lyo5ip2fqOAkq");
-
-
-
     return new ListView.separated(
       scrollDirection:  Axis.vertical,
       physics: const BouncingScrollPhysics(),
@@ -71,6 +66,7 @@ class GroupList extends StatelessWidget {
       itemBuilder: buildGroupItem,
       separatorBuilder: (BuildContext context, int index) => const Divider(),
     );
-    
+
   }
+
 }
