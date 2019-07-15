@@ -99,7 +99,7 @@ class HomeScreen extends StatelessWidget {
 
 
                 //GroupList( database ),
-                groupList(),
+                GroupList(),
               ],
             ),
             bottomNavigationBar:

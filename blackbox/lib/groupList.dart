@@ -8,12 +8,12 @@ import './GroupScreen.dart';
 
 // Tijdelijk om te kunnen testen ;)
 
-class groupList extends StatefulWidget {
+class GroupList extends StatefulWidget {
   @override
-  _groupListState createState() => _groupListState();
+  _GroupListState createState() => _GroupListState();
 }
 
-class _groupListState extends State<groupList> {
+class _GroupListState extends State<GroupList> {
   List<String> groupNames = ["Group 1", "Group 2", "Group 3","Group 4", "Group 5", "Group 6"];
 
   @override
