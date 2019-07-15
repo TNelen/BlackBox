@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'Interfaces/Database.dart';
 import 'Database/firebase.dart';
@@ -9,14 +8,39 @@ import './GroupScreen.dart';
 // Tijdelijk om te kunnen testen ;)
 
 class GroupList extends StatefulWidget {
+
+  Database database;
+
+
+  GroupList( Database db ) {
+    this.database = db;
+  }
+
   @override
-  _GroupListState createState() => _GroupListState();
+  _GroupListState createState() => _GroupListState( database );
 }
 
 class _GroupListState extends State<GroupList> {
-  List<String> groupNames = ["Group 1", "Group 2", "Group 3","Group 4", "Group 5", "Group 6"];
 
-  @override
+  Database database;
+  List<String> groupNames = ["group 1", "group 2", "group 3", "group 4", "group 5", "group 6"];
+
+
+  _GroupListState(Database db)
+  {
+      this.database = db;
+  }
+
+  void refresh()
+  {
+      database.getGroupNames("").then( (names) => setState(() {
+
+          groupNames = names;
+
+        })
+      );
+  }
+
   Widget buildGroupItem(BuildContext context, int index) {
      String removed;
     return GestureDetector(
@@ -71,10 +95,8 @@ class _GroupListState extends State<GroupList> {
   @override
   Widget build(BuildContext context) {
 
+    refresh();
 
-    // Gebruik globaal één instance van Database, dit is tijdelijk!
-    // Via FutureBuilder zou je Widgets kunnen bouwen na te wachten op database resultaat
-    //Future< List<String> > groupNames = db.getGroupNames("gtqnKc2lyo5ip2fqOAkq");
     return new ListView.separated(
       scrollDirection:  Axis.vertical,
       physics: const BouncingScrollPhysics(),
