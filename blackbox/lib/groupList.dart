@@ -18,6 +18,7 @@ class _GroupListState extends State<GroupList> {
 
   @override
   Widget buildGroupItem(BuildContext context, int index) {
+     String removed;
     return GestureDetector(
         onTap: () {
           Navigator.push(context, MaterialPageRoute(
@@ -27,10 +28,26 @@ class _GroupListState extends State<GroupList> {
         },
         onLongPress: () {
           print("long press");
-          groupNames.removeAt(index);
-          setState(() {
-            //Nothing yet
-          });
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text('Group removed',style: TextStyle(color: Colors.white, fontSize: 15,
+              ),),
+              backgroundColor: Colors.black,
+            duration: const Duration(seconds: 3),
+              action: SnackBarAction(
+                  label: 'Undo',
+                  textColor: Colors.amber,
+                  onPressed: () {
+                    groupNames.insert(index, removed);
+                    setState(() {
+                      //Nothing yet
+                    });
+          },),),);
+            removed = groupNames[index];
+            groupNames.removeAt(index);
+            setState(() {
+              //Nothing yet
+            });
+
         } ,
         child: Container(
           //height: 50,
@@ -53,6 +70,7 @@ class _GroupListState extends State<GroupList> {
 
   @override
   Widget build(BuildContext context) {
+
 
     // Gebruik globaal één instance van Database, dit is tijdelijk!
     // Via FutureBuilder zou je Widgets kunnen bouwen na te wachten op database resultaat
