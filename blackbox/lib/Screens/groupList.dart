@@ -7,7 +7,7 @@ import '../DataContainers/GroupTileData.dart';
 import '../main.dart';
 
 
-// Tijdelijk om te kunnen testen ;)
+
 
 class GroupList extends StatefulWidget {
 

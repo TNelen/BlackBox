@@ -8,6 +8,12 @@ import '../DataContainers/GroupTileData.dart';
 
 
 
+
+
+
+
+
+
 class GroupScreen extends StatelessWidget {
   GroupScreen(this.groupInfo) : super();
   final GroupTileData groupInfo;
