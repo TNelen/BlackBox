@@ -2,6 +2,8 @@ import 'package:blackbox/DataContainers/GroupTileData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Interfaces/Database.dart';
 
+import '../DataContainers/GroupTileData.dart';
+
 class Firebase implements Database{
 
   @override
@@ -16,10 +18,10 @@ class Firebase implements Database{
    * Returns a List<String> of group names.
    */
   @override
-  Future< List<String> > getGroupNames(String uniqueUserID) async
+  Future< List<GroupTileData> > getGroups(String uniqueUserID) async
   {
 
-    List<String> groupNames = new List<String>();
+    List<GroupTileData> groups = new List<GroupTileData>();
 
     try {
       Firestore.instance
@@ -28,23 +30,30 @@ class Firebase implements Database{
           .snapshots()
           .listen (
             (snapshot) {
+              // Handle all documents one by one
               for (DocumentSnapshot ds in snapshot.documents)
               {
-                groupNames.add( ds.data['name'] );
+                List<String> members = new List<String>();                
+
+                // Get all member IDs
+                for (DocumentReference dr in ds.data['members'])
+                {
+                  members.add(dr.path);
+                }
+
+                groups.add( new GroupTileData(ds.data['name'], ds.documentID.toString(), ds.data['admin'].path, members) );
               }
             }
           );
 
-      return groupNames;
+      return groups;
 
     } catch (Exception)
     {
         print ('Something went wrong while fetching the groups!');
-    } finally {
-      return groupNames;
     }
   }
-
+    
     @override
     void removeUserFromGroup(String userID, String groupID) {}
 

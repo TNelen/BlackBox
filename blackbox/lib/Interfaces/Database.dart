@@ -1,3 +1,5 @@
+import '../DataContainers/GroupTileData.dart';
+
 abstract class Database {
 
   /// Performs actions to set up the connection to the database
@@ -8,7 +10,9 @@ abstract class Database {
   /// -------
 
   /// Returns the list of group names that a user is part of
-  Future< List< String> > getGroupNames(String uniqueUserID);
+  Future< List<GroupTileData> > getGroups(String uniqueUserID);
+
+
 
   /// -------
   /// Setters
