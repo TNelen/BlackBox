@@ -4,19 +4,17 @@ import '../Interfaces/Database.dart';
 
 import '../DataContainers/GroupTileData.dart';
 
+/// For documentation: please check interfaces/Database.dart
 class Firebase implements Database{
 
+  /// Not needed when using Firebase
   @override
   void openConnection(){}
 
+  /// Not needed when using Firebase
   @override
   void closeConnection(){}
 
-  /*
-   * Get all groups that the given user is part of
-   * For testing: use gtqnKc2lyo5ip2fqOAkq as input!
-   * Returns a List<String> of group names.
-   */
   @override
   Future< List<GroupTileData> > getGroups(String uniqueUserID) async
   {
@@ -56,5 +54,40 @@ class Firebase implements Database{
     
     @override
     void removeUserFromGroup(String userID, String groupID) {}
+
+
+
+  @override
+  void addUserToGroup(String uniqueUserID, String groupID) {
+    // TODO: implement addUserToGroup
+  }
+
+
+
+  @override
+  void createGroup(String groupName, String adminID) {
+    // TODO: implement createGroup
+  }
+
+
+
+  @override
+  String getGroupIDByCode(String code) {
+    // TODO: implement getGroupIDByCode
+    return null;
+  }
+
+  @override
+  bool isUserAdmin(String uniqueUserID, String groupID) {
+    // TODO: implement isUserAdmin
+    return null;
+  }
+
+
+
+  @override
+  void setUserName(String uniqueUserID, String newName) {
+    // TODO: implement setUserName
+  }
 
 }
