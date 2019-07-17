@@ -25,7 +25,7 @@ class GroupList extends StatefulWidget {
 class _GroupListState extends State<GroupList> {
 
   Database database;
-  List<GroupTileData> groupData = [new GroupTileData('group1', 'id1', 'klootzak',['lid1','lid2','klootzak','lid2','lid2']),new GroupTileData('group2', 'id2', 'timo',['lid1','timo','lid2']),new GroupTileData('group3', 'id3', 'lid2',['lid1','lid2']),new GroupTileData('group4', 'id4', 'timo',['lid1','lid2','timo','lid1','lid2']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),];
+  List<GroupTileData> groupData = [new GroupTileData('group1', 'id1', 'klootzak',['lid1','lid2','klootzak','lid2','lid2']),new GroupTileData('group2', 'id2', 'timo',['lid1','timo','lid2']),new GroupTileData('group3', 'id3', 'lid2',['lid1','lid2']),new GroupTileData('group4', 'id4', 'timo',['lid1','lid2','timo','lid1','lid2']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578'])];
 
 
 

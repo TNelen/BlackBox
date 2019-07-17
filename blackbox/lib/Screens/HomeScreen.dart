@@ -88,7 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             PopupMenuButton(
-              child: Column(children: <Widget>[Container(child:Icon(Icons.add_circle, size: 40,),padding: EdgeInsets.only(left: 2, right:2, top:3, bottom: 5),),
+              child: Column(
+                children: <Widget>[Container(child:Icon(Icons.add_circle, size: 40,),padding: EdgeInsets.only(left: 2, right:2, top:3, bottom: 5),),
           Text('New',
             style: TextStyle(
               fontSize: 16,
@@ -98,10 +99,13 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (BuildContext context){
                 return Constants.choices.map((String choice){
                   return PopupMenuItem<String>(
-                    value: choice,
+                      value: choice,
                     child:
                         Row(children: <Widget>[Text(choice), choice == Constants.choices[0]  ? Icon(Icons.add_circle_outline) : Icon(Icons.search)
-                        ],)
+                        ],
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                        )
                   );
                 }).toList();
               },

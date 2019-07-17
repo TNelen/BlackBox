@@ -111,6 +111,7 @@ class YourGroups extends StatelessWidget {
               ),
                 Align(
                     alignment: Alignment.bottomCenter,
+
                     child: _buildBottomCard(width, height, context)
                 ),
                 //_buildCardsList(),
