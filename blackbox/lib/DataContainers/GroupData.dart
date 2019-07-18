@@ -1,11 +1,11 @@
-class GroupTileData {
+class GroupData {
     
   String groupName;
   String groupID;
   String adminID;
   List<String> members;
 
-  GroupTileData(String groupName, String groupID, String adminID, List<String> members)
+  GroupData(String groupName, String groupID, String adminID, List<String> members)
   {
       this.groupName = groupName;
       this.groupID = groupID;

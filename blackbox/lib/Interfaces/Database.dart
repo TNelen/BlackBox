@@ -1,4 +1,4 @@
-import '../DataContainers/GroupTileData.dart';
+import '../DataContainers/GroupData.dart';
 
 abstract class Database {
 
@@ -19,7 +19,7 @@ abstract class Database {
   /// -------
 
   /// Returns the list of group names that a user is part of
-  Future< List<GroupTileData> > getGroups(String uniqueUserID);
+  Future< List<GroupData> > getGroups(String uniqueUserID);
 
   /// Check whether or not a given user is an admin of a given group
   bool isUserAdmin(String uniqueUserID, String groupID);

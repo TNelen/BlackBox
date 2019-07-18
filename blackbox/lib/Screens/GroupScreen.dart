@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../Interfaces/Database.dart';
-import '../Database/firebase.dart';
 
-import '../DataContainers/GroupTileData.dart';
+import '../DataContainers/GroupData.dart';
 
 
 
@@ -16,7 +13,7 @@ import '../DataContainers/GroupTileData.dart';
 
 class GroupScreen extends StatelessWidget {
   GroupScreen(this.groupInfo) : super();
-  final GroupTileData groupInfo;
+  final GroupData groupInfo;
 
   @override
   Widget build(BuildContext context) {

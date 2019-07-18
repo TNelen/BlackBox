@@ -1,8 +1,6 @@
-import 'package:blackbox/DataContainers/GroupTileData.dart';
+import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Interfaces/Database.dart';
-
-import '../DataContainers/GroupTileData.dart';
 
 /// For documentation: please check interfaces/Database.dart
 class Firebase implements Database{
@@ -16,10 +14,10 @@ class Firebase implements Database{
   void closeConnection(){}
 
   @override
-  Future< List<GroupTileData> > getGroups(String uniqueUserID) async
+  Future< List<GroupData> > getGroups(String uniqueUserID) async
   {
 
-    List<GroupTileData> groups = new List<GroupTileData>();
+    List<GroupData> groups = new List<GroupData>();
 
     try {
       Firestore.instance
@@ -39,7 +37,7 @@ class Firebase implements Database{
                   members.add(dr.path);
                 }
 
-                groups.add( new GroupTileData(ds.data['name'], ds.documentID.toString(), ds.data['admin'].path, members) );
+                groups.add( new GroupData(ds.data['name'], ds.documentID.toString(), ds.data['admin'].path, members) );
               }
             }
           );

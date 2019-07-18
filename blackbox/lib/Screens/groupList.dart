@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../Interfaces/Database.dart';
-import '../Database/firebase.dart';
 import 'package:blackbox/Screens/GroupScreen.dart';
-import '../DataContainers/GroupTileData.dart';
+import '../DataContainers/GroupData.dart';
 import '../main.dart';
 
 
@@ -25,7 +24,7 @@ class GroupList extends StatefulWidget {
 class _GroupListState extends State<GroupList> {
 
   Database database;
-  List<GroupTileData> groupData = [new GroupTileData('group1', 'id1', 'klootzak',['lid1','lid2','klootzak','lid2','lid2']),new GroupTileData('group2', 'id2', 'timo',['lid1','timo','lid2']),new GroupTileData('group3', 'id3', 'lid2',['lid1','lid2']),new GroupTileData('group4', 'id4', 'timo',['lid1','lid2','timo','lid1','lid2']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupTileData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578'])];
+  List<GroupData> groupData = [new GroupData('group1', 'id1', 'klootzak',['lid1','lid2','klootzak','lid2','lid2']),new GroupData('group2', 'id2', 'timo',['lid1','timo','lid2']),new GroupData('group3', 'id3', 'lid2',['lid1','lid2']),new GroupData('group4', 'id4', 'timo',['lid1','lid2','timo','lid1','lid2']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578'])];
 
 
 
@@ -45,7 +44,7 @@ class _GroupListState extends State<GroupList> {
   }
 
   Widget buildGroupItem(BuildContext context, int index) {
-     GroupTileData removed;
+     GroupData removed;
      IconData trailing;
      if (groupData[index].adminID == username) {
          trailing = Icons.star;
