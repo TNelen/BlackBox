@@ -21,12 +21,11 @@ abstract class Database {
   /// Returns the list of group names that a user is part of
   Future< List<GroupData> > getGroups(String uniqueUserID);
 
-  /// Check whether or not a given user is an admin of a given group
-  bool isUserAdmin(String uniqueUserID, String groupID);
-
   /// Get the unique ID of a group by providing the code
   /// Will return "" if the group does not exist!
-  String getGroupIDByCode(String code);
+  GroupData getGroupByCode(String code);
+
+
 
   /// -------
   /// Setters

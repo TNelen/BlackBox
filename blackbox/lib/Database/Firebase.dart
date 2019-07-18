@@ -70,7 +70,7 @@ class Firebase implements Database{
 
 
   @override
-  String getGroupIDByCode(String code) {
+  GroupData getGroupByCode(String code) {
     // TODO: implement getGroupIDByCode
     return null;
   }
