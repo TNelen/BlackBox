@@ -1,3 +1,4 @@
+import 'package:blackbox/Database/GoogleUserHandler.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
 import 'CreateGroupScreen.dart';
@@ -5,6 +6,7 @@ import 'JoinGroupScreen.dart';
 import 'YourGroupsScreen.dart';
 import 'ProfileScreen.dart';
 import '../Interfaces/Database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeScreen extends StatefulWidget{
 
@@ -38,6 +40,13 @@ class _HomeScreenState extends State<HomeScreen> {
   _HomeScreenState(Database db)
   {
     this.database = db;
+
+    try {
+      GoogleUserHandler guh = new GoogleUserHandler();
+      guh.handleSignIn().then( (user) => print(user.getIdToken()) );
+    } catch(e) {
+      print(e.toString());
+    }
   }
 
 
