@@ -33,9 +33,10 @@ class YourGroups extends StatelessWidget {
       return MaterialApp(
         title: 'BlackBox',
         theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
-        home: Scaffold(appBar: AppBar(
+        home: Scaffold(appBar:
+        AppBar(
           backgroundColor: Colors.black,
-          title: Text('Black Box',
+          title: Text('Your Groups',
             style: TextStyle(
               fontSize: 28,
               color: Colors.white,
@@ -49,64 +50,6 @@ class YourGroups extends StatelessWidget {
                 child: ListView(
                   shrinkWrap: true,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            /*1*/
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                /*2*/
-                                Container(
-                                  padding: const EdgeInsets.only(bottom: 8),
-                                  child: Text(
-                                    'Your groups',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          /*3*/
-
-                          /*Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.account_box),
-                                color: Colors.amber,
-                                //size: 25,
-                                onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (BuildContext context) => ProfileScreen(),
-                                  ));
-                                },
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(top: 8),
-                                child: Text(
-                                  'Profile',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.amber,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),*/
-
-                        ],
-                      ),
-                  ),
-
 
                   GroupList( database ),
                   //GroupList(),

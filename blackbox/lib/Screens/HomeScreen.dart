@@ -150,24 +150,29 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
+
+
     return MaterialApp(
       theme: new ThemeData(scaffoldBackgroundColor: Colors.black,
       ),
       home: Scaffold(
         backgroundColor: Colors.grey[300],
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.grey[300],
-          title: Text('Black Box'),
-          actions: <Widget>[
-            IconButton(
-              onPressed: (){},
-              icon: Icon(Icons.notifications,
-                color: Colors.blueGrey,
-              ),
-            )
-          ],
-        ),
+        appBar: PreferredSize(
+          child: Material(
+                elevation: 1.0,
+                child: Container(
+                   padding: EdgeInsets.all(10),
+                    child: Row(
+                  children: <Widget>[
+                    Text('Hi '+ Constants.username+ '!', style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),),
+                    //Icon(Icons.)
+                  ],
+                )),),
+            preferredSize: Size.fromHeight(height/5) ),
+
+
+
         body: Container(
           margin: EdgeInsets.only(top: 16),
           child: Stack(

@@ -86,17 +86,19 @@ class _GroupListState extends State<GroupList> {
           //height: 50,
           color: Colors.white,
           child:ListTile(
-            title: Text(
-              groupData[index].groupName,
-              style: TextStyle(
-                fontSize: 17,
-                color: Colors.black,
+            title: Row(children: <Widget>[Container(child:Icon(trailing, size: 25,color: Colors.amber,), padding: EdgeInsets.only(right: 7),),
+              Text(
+                groupData[index].groupName,
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black,
+                ),
               ),
-            ),
+              ],),
             trailing:
 
             //als je admin bent, daar een profile icoontje zetten
-            Icon(trailing, size: 25, color: Colors.amber)//}
+            Icon(Icons.arrow_forward_ios, size: 18, color: Colors.black)//}
             //else{},
 
           ),))
@@ -112,7 +114,7 @@ class _GroupListState extends State<GroupList> {
       scrollDirection:  Axis.vertical,
       physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
       itemCount: groupData.length,
       itemBuilder: buildGroupItem,
       separatorBuilder: (BuildContext context, int index) => const Divider(),

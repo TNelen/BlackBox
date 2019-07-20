@@ -32,11 +32,15 @@ class GroupScreen extends StatelessWidget {
 
                 appBar: AppBar(
 
-                  title: Text(groupInfo.groupName,
+                  title: Container(
+                    padding: EdgeInsets.only( bottom: 5),
+                    child: Center(child: Text(groupInfo.groupName,
                     style: TextStyle(
-                      fontSize: 28,
+                      fontSize: 35,
                       color: Colors.white,
                     ),
+                  ),
+                  ),
                   ),
                   backgroundColor: Colors.black,
                   bottom: TabBar(
@@ -49,7 +53,7 @@ class GroupScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           new Icon(
-                            Icons.info_outline,
+                            Icons.group_add,
                             color: Colors.white,
                             //size: 25,
 
@@ -57,7 +61,7 @@ class GroupScreen extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.only(top: 8),
                             child: Text(
-                              'Info',
+                              'Invite',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w400,
@@ -123,8 +127,18 @@ class GroupScreen extends StatelessWidget {
                 TabBarView(children: [
 
                   //tab 1
-                  new Text('Info',
-                  style: new TextStyle(color: Colors.white, fontSize: 20.0),),
+                  Center(
+                  child: Container(
+                  alignment: Alignment(0, 0),
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: 'Display group code here + copy icon' ,
+                      style: TextStyle(color: Colors.white, fontSize: 50 ),
+
+
+                    ),),
+                   ),),
 
                   //tab 2
                   GridView.count(

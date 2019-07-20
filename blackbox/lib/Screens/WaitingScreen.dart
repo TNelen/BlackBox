@@ -31,18 +31,27 @@ class _WaitingScreenState extends State<WaitingScreen> {
 
   Widget build(BuildContext context) {
     if(Constants.username == groupInfo.adminID )
-      return adminScreen();
+      return adminScreen(context);
     else
-      return userScreen();
+      return userScreen(context);
   }
 }
 
 
 
-MaterialApp userScreen(){
+MaterialApp userScreen(BuildContext context){
   return MaterialApp(
     theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
     home: Scaffold(
+
+      appBar: AppBar(
+        title: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: Colors.amber,),
+          onPressed: () => Navigator.pop(context),
+
+        ),
+        backgroundColor: Colors.black,
+      ),
 
       body: Center(
 
@@ -52,17 +61,26 @@ MaterialApp userScreen(){
             textAlign: TextAlign.center,
             text: TextSpan(
               text: 'Waiting for people to join' ,
-              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white, fontSize: 50 ),
+              style: TextStyle(color: Colors.white, fontSize: 50 ),
 
 
             ),),
         ),),),);
 }
 
-MaterialApp adminScreen(){
+MaterialApp adminScreen(BuildContext context){
   return MaterialApp(
     theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
     home: Scaffold(
+
+      appBar: AppBar(
+        title: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: Colors.amber,),
+          onPressed: () => Navigator.pop(context),
+
+        ),
+        backgroundColor: Colors.black,
+      ),
 
       body: Center(
 
@@ -72,9 +90,10 @@ MaterialApp adminScreen(){
             textAlign: TextAlign.center,
             text: TextSpan(
               text: 'You are admin' ,
-              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white, fontSize: 50 ),
+              style: TextStyle(color: Colors.white, fontSize: 50 ),
 
 
             ),),
-        ),),),);
+        ),),
+      ),);
 }
