@@ -41,12 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
   {
     this.database = db;
 
-    try {
+    /*try {
       GoogleUserHandler guh = new GoogleUserHandler();
       guh.handleSignIn().then( (user) => print(user.getIdToken()) );
     } catch(e) {
       print(e.toString());
-    }
+    }*/
   }
 
 

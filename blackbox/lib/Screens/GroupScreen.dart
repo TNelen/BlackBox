@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
 
 import '../DataContainers/GroupData.dart';
+import 'WaitingScreen.dart';
 
 
 
@@ -17,6 +18,10 @@ class GroupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
     return MaterialApp(
       theme: new ThemeData(scaffoldBackgroundColor: Colors.black,
       ),
@@ -112,7 +117,10 @@ class GroupScreen extends StatelessWidget {
                   ),
 
                 ),
-                body: TabBarView(children: [
+                body: Stack(
+                  children: <Widget>[
+
+                TabBarView(children: [
 
                   //tab 1
                   new Text('Info',
@@ -158,42 +166,83 @@ class GroupScreen extends StatelessWidget {
 
                 ],
 
-          )
-              ),
-      ),
-        bottomNavigationBar:
-        Container(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-            children: [
-              RaisedButton(
-                onPressed: () => Navigator.pop(context),
-
-                color: Colors.amber,
-                child: Text('Back', style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.white,
-                )
-                ),
-
-              ),
-              RaisedButton(
-                onPressed: () {//NOTHING YET
-                },
-                color: Colors.amber,
-                child: Text('Start', style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                )
-                ),
-
-              )
-            ],
           ),
-        )
+            Align(
+              alignment: Alignment.bottomCenter,
+
+              child: _buildBottomCard(width, height, context)
+            ),
+
+              ],),),
+      ),
     ),
+    );
+  }
+
+  Widget _buildBottomCard(double width, double , BuildContext context) {
+
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
+    return
+      Container(
+        width: width,
+        height: height / 11,
+        padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+        decoration: BoxDecoration(
+            color: Colors.amber ,
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(32),
+                topLeft: Radius.circular(32)
+            )
+        ),
+        child: _buildBottomCardChildren(context),
+      );
+  }
+
+  Widget _buildBottomCardChildren(BuildContext context) {
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                IconButton(onPressed: () {
+                  Navigator.pop(context);
+                }
+                  ,icon:Icon(Icons.list, size: 30,),padding: EdgeInsets.all(2),),
+                /*Text('Home',
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),*/
+              ]
+          ),
+
+          Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                IconButton(onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (BuildContext context) => WaitingScreen(groupInfo),
+                  ));
+                }
+                  ,icon:Icon(Icons.play_arrow, size: 30,),padding: EdgeInsets.all(2),),
+                /*Text('Home',
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),*/
+              ]
+          )
+
+        ]
     );
   }
 

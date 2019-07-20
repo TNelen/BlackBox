@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
+import '../Constants.dart';
 
 class ProfileScreen extends StatelessWidget{
 
@@ -20,7 +21,7 @@ class ProfileScreen extends StatelessWidget{
             ),
       body: Center(
         child: RaisedButton(
-            child: Text('your username:  ' +username, style: TextStyle(fontSize: 20),),
+            child: Text('your username:  ' +Constants.username, style: TextStyle(fontSize: 20),),
             color: Colors.amber,
             textColor: Colors.white,
             onPressed: () => Navigator.pop(context)
