@@ -1,13 +1,15 @@
 class GroupData {
     
   String groupName;
+  String groupDescription;
   String groupID;
   String adminID;
   List<String> members;
 
-  GroupData(String groupName, String groupID, String adminID, List<String> members)
+  GroupData(String groupName,String groupDescription, String groupID, String adminID, List<String> members)
   {
       this.groupName = groupName;
+      this.groupDescription = groupDescription;
       this.groupID = groupID;
       this.adminID = adminID;
       this.members = members;

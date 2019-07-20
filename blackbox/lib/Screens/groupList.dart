@@ -25,7 +25,6 @@ class GroupList extends StatefulWidget {
 class _GroupListState extends State<GroupList> {
 
   Database database;
-  List<GroupData> groupData = [new GroupData('group1', 'id1', 'klootzak',['lid1','lid2','klootzak','lid2','lid2']),new GroupData('group2', 'id2', 'timo',['lid1','timo','lid2']),new GroupData('group3', 'id3', 'lid2',['lid1','lid2']),new GroupData('group4', 'id4', 'timo',['lid1','lid2','timo','lid1','lid2']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('groupX', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578','lid1','lid1','lid1','lid1','lid1','lid1'])];
 
 
 
@@ -45,9 +44,14 @@ class _GroupListState extends State<GroupList> {
   }
 
   Widget buildGroupItem(BuildContext context, int index) {
+
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
+
      GroupData removed;
      IconData trailing;
-     if (groupData[index].adminID == Constants.username) {
+     if (Constants.groupData[index].adminID == Constants.username) {
          trailing = Icons.star;
      }
      else  trailing = Icons.people_outline;
@@ -55,7 +59,7 @@ class _GroupListState extends State<GroupList> {
        return GestureDetector(
         onTap: () {
           Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) => GroupScreen(groupData[index]
+            builder: (BuildContext context) => GroupScreen(Constants.groupData[index]
             ),
           ));
         },
@@ -70,13 +74,13 @@ class _GroupListState extends State<GroupList> {
                   label: 'Undo',
                   textColor: Colors.amber,
                   onPressed: () {
-                    groupData.insert(index, removed);
+                    Constants.groupData.insert(index, removed);
                     setState(() {
                       //Nothing yet
                     });
           },),),);
-            removed = groupData[index];
-            groupData.removeAt(index);
+            removed = Constants.groupData[index];
+          Constants.groupData.removeAt(index);
             setState(() {
               //Nothing yet
             });
@@ -87,13 +91,33 @@ class _GroupListState extends State<GroupList> {
           color: Colors.white,
           child:ListTile(
             title: Row(children: <Widget>[Container(child:Icon(trailing, size: 25,color: Colors.amber,), padding: EdgeInsets.only(right: 7),),
-              Text(
-                groupData[index].groupName,
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.black,
+              Container(
+                constraints: BoxConstraints(minWidth: 100, maxWidth: width-120 ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+
+                  children: [
+                  Text(
+                    Constants.groupData[index].groupName,
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                 ),
-              ),
+                  Text(
+                    Constants.groupData[index].groupDescription,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  )
+
+                ],),),
               ],),
             trailing:
 
@@ -114,8 +138,8 @@ class _GroupListState extends State<GroupList> {
       scrollDirection:  Axis.vertical,
       physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
-      padding: const EdgeInsets.all(16.0),
-      itemCount: groupData.length,
+      padding: const EdgeInsets.all(8.0),
+      itemCount: Constants.groupData.length,
       itemBuilder: buildGroupItem,
       separatorBuilder: (BuildContext context, int index) => const Divider(),
     );

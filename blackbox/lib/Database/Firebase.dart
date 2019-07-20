@@ -37,7 +37,7 @@ class Firebase implements Database{
                   members.add(dr.path);
                 }
 
-                groups.add( new GroupData(ds.data['name'], ds.documentID.toString(), ds.data['admin'].path, members) );
+                //groups.add( new GroupData(ds.data['name'], ds.documentID.toString(), ds.data['admin'].path, members) );
               }
             }
           );
