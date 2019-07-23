@@ -2,85 +2,98 @@ import 'package:flutter/material.dart';
 import '../Constants.dart';
 import '../DataContainers/GroupData.dart';
 
-
 class CreateGroupScreen extends StatefulWidget {
   @override
   _CreateGroupScreenState createState() => new _CreateGroupScreenState();
 }
 
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
-
   static String groupName;
   static String groupDescription;
   static String groupID = 'AC8NR27';
   static String groupAdmin = Constants.username;
 
-
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
+    final emailField = TextField(
+      obscureText: false,
+      style: TextStyle(fontSize: 20, color: Colors.black),
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          fillColor: Colors.white,
+          filled: true,
+          hintText: "Group Name",
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+    );
+    final passwordField = TextField(
+      obscureText: true,
+      style: TextStyle(fontSize: 20, color: Colors.black),
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          fillColor: Colors.white,
+          filled: true,
+          hintText: "Description",
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+    );
+    final loginButon = Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(30.0),
+      color: Colors.amber,
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {},
+        child: Text("Create",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20)
+                .copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
     return MaterialApp(
-     home: Scaffold(
-      body: Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          TextFormField(
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Enter some text';
-              }
-              return null;
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: RaisedButton(
-              onPressed: () {
-                // Validate returns true if the form is valid, or false
-                // otherwise.
-                if (_formKey.currentState.validate()) {
-                  // If the form is valid, display a Snackbar.
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
-                }
-              },
-              child: Text('Submit'),
+      theme: new ThemeData(
+        scaffoldBackgroundColor: Colors.black,
+      ),
+      home: Scaffold(
+        resizeToAvoidBottomPadding: false,
+
+        body: Center(
+          child: Container(
+            color: Colors.black,
+            child: Padding(
+              padding: const EdgeInsets.all(36.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 30.0,
+                    child: Image.asset(
+                      "../Assets/logoPlaceholder.png",
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  SizedBox(height: 45.0),
+                  emailField,
+                  SizedBox(height: 25.0),
+                  passwordField,
+                  SizedBox(
+                    height: 35.0,
+                  ),
+                  loginButon,
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                ],
+              ),
             ),
           ),
-        ],
+        ),
       ),
-    ),),);
+    );
   }
-
-
-
 }
-/*
-showDialog(
-context: context,
-child: new AlertDialog(
-title: new Text("Details"),
-//content: new Text("Hello World"),
-content: new SingleChildScrollView(
-child: new ListBody(
-children: <Widget>[
-new Text("Name : " + groupName),
-new Text("Description : " + groupDescription),
-new Text("Admin : " + groupAdmin),
-new Text("ID : " + groupID),
-],
-),
-),
-actions: <Widget>[
-new FlatButton(
-child: new Text('OK', style: TextStyle(color: Colors.black),),
-onPressed: () {
-Navigator.of(context).pop();
-},
-),
-],
-));*/
