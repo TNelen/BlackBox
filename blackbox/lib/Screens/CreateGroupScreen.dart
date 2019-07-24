@@ -29,7 +29,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
     final passwordField = TextField(
-      obscureText: true,
+      obscureText: false,
       style: TextStyle(fontSize: 20, color: Colors.black),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -60,7 +60,30 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
       ),
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
-
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              InkWell(
+                  onTap: () => Navigator.pop(context),
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.amber,
+                    ),
+                  )),
+              Text(
+                'Create new Group',
+                style: TextStyle(
+                  fontSize: 28,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
         body: Center(
           child: Container(
             color: Colors.black,
