@@ -6,7 +6,7 @@ import 'JoinGroupScreen.dart';
 import 'YourGroupsScreen.dart';
 import 'ProfileScreen.dart';
 import '../Interfaces/Database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:blackbox/DataContainers/UserData.dart';
 
 class HomeScreen extends StatefulWidget{
 
@@ -44,6 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       GoogleUserHandler guh = new GoogleUserHandler();
       guh.handleSignIn().then( (user) => Constants.username = user.getUsername() );
+
+      UserData bob = new UserData("UniqueID", "Not bob anymore");
+      db.updateUser(bob);
+
     } catch(e) {
       print(e.toString());
     }

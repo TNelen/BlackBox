@@ -1,4 +1,5 @@
 import '../DataContainers/GroupData.dart';
+import '../DataContainers/UserData.dart';
 
 abstract class Database {
 
@@ -23,7 +24,11 @@ abstract class Database {
 
   /// Get the unique ID of a group by providing the code
   /// Will return "" if the group does not exist!
-  GroupData getGroupByCode(String code);
+  Future< GroupData > getGroupByCode(String code);
+
+  /// Get UserData from a given user ID
+  /// Will return 0 if user does no exist
+  Future< UserData > getUserByID(String uniqueID);
 
 
 
@@ -31,15 +36,9 @@ abstract class Database {
   /// Setters
   /// -------
 
-  /// Remove a given user from a group
-  void removeUserFromGroup(String uniqueUserID, String groupID);
+  /// Updates the user with the same ID in the database to the one provided. If the user does not exist, they will be added
+  void updateUser(UserData userData);
 
-  /// Set the username of a given user
-  void setUserName(String uniqueUserID, String newName);
-
-  /// Create a new group with given name and ID of the admin
-  void createGroup(String groupName, String adminID);
-
-  /// Add a given user to a given group
-  void addUserToGroup(String uniqueUserID, String groupID);
+  /// Updates the group with the same unique ID. If it doesn't exist, it will be added
+  void updateGroup(GroupData groupData);
 }
