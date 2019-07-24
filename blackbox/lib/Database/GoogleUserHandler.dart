@@ -1,22 +1,31 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:blackbox/DataContainers/UserData.dart';
 
 class GoogleUserHandler {
   
-  static FirebaseAuth _auth = FirebaseAuth.instance;
-  static GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final Firestore _db = Firestore.instance;
 
-  Future< FirebaseUser > handleSignIn() async {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+  Future< UserData > handleSignIn() async {
+    
+    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
+    AuthCredential cred = await GoogleAuthProvider.getCredential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken
     );
 
-    final FirebaseUser user = await _auth.signInWithCredential(credential);
-    print("Signed in " + user.displayName);
-    return user;
+    FirebaseUser user = await _auth.signInWithCredential(cred);
+
+    UserData userData = new UserData(user.uid, user.displayName);
+    
+    print("User signed in: " + userData.getUsername() + ", user ID: " + userData.getUserID());
+
+    return userData;
   }
 }
