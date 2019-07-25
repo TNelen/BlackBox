@@ -29,34 +29,34 @@ class Firebase implements Database{
     List<GroupData> groups = new List<GroupData>();
 
     try {
-      Firestore.instance
+      await Firestore.instance
           .collection("groups")
-          .where("users", arrayContains: uniqueUserID)
+          ///.where("members", arrayContains: uniqueUserID)
           .snapshots()
           .listen (
             (snapshot) {
               // Handle all documents one by one
               for (DocumentSnapshot ds in snapshot.documents)
               {
-                List<String> members = new List<String>();                
-
-                // Get all member IDs
-                for (DocumentReference dr in ds.data['members'])
+                List<String> members = new List<String>();
+                for (dynamic member in ds.data['members'])
                 {
-                  members.add(dr.path);
+                    members.add( member );
                 }
 
-                groups.add( new GroupData(ds.data['name'], ds.data['description'], ds.documentID.toString(), ds.data['admin'].path, members) );
+                print("Name: " + ds.data['name']);
+                groups.add( new GroupData(ds.data['name'], ds.data['description'], ds.documentID.toString(), ds.data['admin'], members) );
               }
             }
           );
+
+          return groups;
     } catch (exception)
     {
         print ('Something went wrong while fetching the groups!');
-        print(exception);
     }
 
-    return groups;
+    return null;
   }
     
 
@@ -93,9 +93,9 @@ class Firebase implements Database{
 
         /// Get all member IDs
         List<String> members = new List<String>();           
-        for (DocumentReference dr in document.data['members'])
+        for (String member in document.data['members'])
         {
-          members.add(dr.path.toString());
+          members.add( member );
         }
 
         ///GroupData constructor: String groupName, String groupDescription, String groupID, String adminID, List<String> members
