@@ -50,9 +50,10 @@ class Firebase implements Database{
               }
             }
           );
-    } catch (Exception)
+    } catch (exception)
     {
         print ('Something went wrong while fetching the groups!');
+        print(exception);
     }
 
     return groups;
@@ -89,16 +90,16 @@ class Firebase implements Database{
         var document = await Firestore.instance
             .collection("groups")
             .document( code ).get();
-        
+
         /// Get all member IDs
         List<String> members = new List<String>();           
         for (DocumentReference dr in document.data['members'])
         {
-          members.add(dr.path);
+          members.add(dr.path.toString());
         }
 
         ///GroupData constructor: String groupName, String groupDescription, String groupID, String adminID, List<String> members
-        groups = new GroupData(document.data['name'], document.data['description'], document.documentID, document.data['admin'], members);
+        groups = new GroupData(document.data['name'], document.data['description'], document.documentID, document.data['admin'].path.toString(), members);
     } catch (Exception)
     {
         print ('Something went wrong while fetching group ' + code);
