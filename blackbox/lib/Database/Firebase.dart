@@ -129,26 +129,6 @@ class Firebase implements Database{
     data['members'] = groupData.getMembers();
 
     Firestore.instance.collection("groups").document( code ).setData(data);
-
- /*   
-  final TransactionHandler createTransaction = (Transaction tx) async {
-    final DocumentSnapshot ds = await tx.get(db.collection('notes').document());
- 
-    var dataMap = new Map<String, dynamic>();
-    dataMap['title'] = '_title';
-    dataMap['description'] = '_description';
- 
-    await tx.set(ds.reference, dataMap);
- 
-    return dataMap;
-  };
- 
-  return Firestore.instance.runTransaction(createTransaction).then((mapData) {
-    return Note.fromMap(mapData);
-  }).catchError((error) {
-    print('error: $error');
-    return null;
-  });*/
   }
 
 
