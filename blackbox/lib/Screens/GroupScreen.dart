@@ -39,7 +39,7 @@ class GroupScreen extends StatelessWidget {
                       child: Text(
                         groupInfo.groupName,
                         style: TextStyle(
-                          fontSize: 35,
+                          fontSize: 28,
                           color: Colors.white,
                         ),
                       ),
