@@ -10,15 +10,26 @@ class ProfileScreen extends StatelessWidget{
       title: 'BlackBox',
       theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
       home: Scaffold(
-          appBar: AppBar(
-              backgroundColor: Colors.black,
-              title: Text('Your profile',
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              InkWell(
+                  onTap: () => Navigator.pop(context),
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: const Icon(Icons.arrow_back_ios,color: Colors.amber,),)),
+              Text(
+                'Your profile',
                 style: TextStyle(
                   fontSize: 28,
                   color: Colors.white,
                 ),
               ),
-            ),
+            ],
+          ),
+        ),
       body: Center(
         child: RaisedButton(
             child: Text('your username:  ' +Constants.username, style: TextStyle(fontSize: 20),),
