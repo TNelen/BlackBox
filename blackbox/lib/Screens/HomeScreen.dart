@@ -41,19 +41,23 @@ class _HomeScreenState extends State<HomeScreen> {
   {
     this.database = db;
 
+    /// Log a user in and update variables accordingly
     try {
       GoogleUserHandler guh = new GoogleUserHandler();
-      guh.handleSignIn().then( (user) => Constants.username = user.getUsername() );
-
-      UserData bob = new UserData("UniqueID", "Not bob anymore");
-      db.updateUser(bob);
+      guh.handleSignIn().then( (user) => logUserIn( user ) );
 
     } catch(e) {
       print(e.toString());
     }
   }
 
-
+  /// Log the given user in and update the data in the database
+  void logUserIn(UserData user) async
+  {
+    Constants.username = user.getUsername();
+    Constants.setUserData( user );
+    database.updateUser( user );
+  }
 
   Widget _buildBottomCard(double width, double height) {
     return Container(

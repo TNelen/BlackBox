@@ -19,15 +19,15 @@ abstract class Database {
   /// Getters
   /// -------
 
-  /// Returns the list of group names that a user is part of
+  /// Returns the list of all the groups that a user is part of
   Future< List<GroupData> > getGroups(String uniqueUserID);
 
   /// Get the unique ID of a group by providing the code
-  /// Will return "" if the group does not exist!
+  /// Will return null if the group does not exist!
   Future< GroupData > getGroupByCode(String code);
 
   /// Get UserData from a given user ID
-  /// Will return 0 if user does no exist
+  /// Will return null if user does not exist
   Future< UserData > getUserByID(String uniqueID);
 
 

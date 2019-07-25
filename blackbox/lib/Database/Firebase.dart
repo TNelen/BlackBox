@@ -6,6 +6,10 @@ import '../Interfaces/Database.dart';
 /// For documentation: please check interfaces/Database.dart
 class Firebase implements Database{
 
+  /// -----------
+  /// Connections
+  /// -----------
+
   /// Not needed when using Firebase
   @override
   void openConnection(){}
@@ -13,6 +17,10 @@ class Firebase implements Database{
   /// Not needed when using Firebase
   @override
   void closeConnection(){}
+
+  /// -------
+  /// Getters
+  /// -------
 
   @override
   Future< List<GroupData> > getGroups(String uniqueUserID) async
@@ -42,13 +50,12 @@ class Firebase implements Database{
               }
             }
           );
-
-      return groups;
-
     } catch (Exception)
     {
         print ('Something went wrong while fetching the groups!');
     }
+
+    return groups;
   }
     
 
@@ -58,65 +65,52 @@ class Firebase implements Database{
     UserData user;
 
     try {
-      Firestore.instance
-          .collection("users")
-          .where("googleID", isEqualTo: uniqueID)
-          .snapshots()
-          .listen (
-            (snapshot) {
-              // Handle all documents one by one
-              for (DocumentSnapshot ds in snapshot.documents)
-              {
-                user = new UserData(ds.data['googleID'], ds.data['username']);
-                return user;
-              }
-            }
-          );
-
-      return user;
-
+        var document = await Firestore.instance
+            .collection("users")
+            .document( uniqueID ).get();
+        
+        user = new UserData(document.documentID, document.data['name']);
     } catch (Exception)
     {
         print ('Something went wrong while fetching user ' + uniqueID);
     }
+
+    return user;
+
   }
 
 
   @override
-  Future< GroupData > getGroupByCode(String code) async {
+  Future< GroupData > getGroupByCode(String code) async
+  {
+    GroupData groups;
 
     try {
-      Firestore.instance
-          .collection("groups")
-          .where("code", isEqualTo: code)
-          .snapshots()
-          .listen (
-            (snapshot) {
-              // Handle all documents one by one
-              for (DocumentSnapshot ds in snapshot.documents)
-              {
-                List<String> members = new List<String>();                
+        var document = await Firestore.instance
+            .collection("groups")
+            .document( code ).get();
+        
+        /// Get all member IDs
+        List<String> members = new List<String>();           
+        for (DocumentReference dr in document.data['members'])
+        {
+          members.add(dr.path);
+        }
 
-                // Get all member IDs
-                for (DocumentReference dr in ds.data['members'])
-                {
-                  members.add(dr.path);
-                }
-
-                return new GroupData(ds.data['name'], ds.data['description'], ds.documentID.toString(), ds.data['admin'].path, members);
-              }
-            }
-          );
-
-      return null;
-
+        ///GroupData constructor: String groupName, String groupDescription, String groupID, String adminID, List<String> members
+        groups = new GroupData(document.data['name'], document.data['description'], document.documentID, document.data['admin'], members);
     } catch (Exception)
     {
-        print ('Something went wrong while fetching the group with id ' + code);
+        print ('Something went wrong while fetching group ' + code);
     }
+
+    return groups;
   }
 
 
+  /// -------
+  /// Setters
+  /// -------
 
   @override
   void updateGroup(GroupData groupData) async {
@@ -129,26 +123,6 @@ class Firebase implements Database{
     data['members'] = groupData.getMembers();
 
     Firestore.instance.collection("groups").document( code ).setData(data);
-
- /*   
-  final TransactionHandler createTransaction = (Transaction tx) async {
-    final DocumentSnapshot ds = await tx.get(db.collection('notes').document());
- 
-    var dataMap = new Map<String, dynamic>();
-    dataMap['title'] = '_title';
-    dataMap['description'] = '_description';
- 
-    await tx.set(ds.reference, dataMap);
- 
-    return dataMap;
-  };
- 
-  return Firestore.instance.runTransaction(createTransaction).then((mapData) {
-    return Note.fromMap(mapData);
-  }).catchError((error) {
-    print('error: $error');
-    return null;
-  });*/
   }
 
 
