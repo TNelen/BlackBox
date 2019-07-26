@@ -24,8 +24,6 @@ class GoogleUserHandler {
 
     UserData userData = new UserData(user.uid, user.displayName);
     
-    print("User signed in: " + userData.getUsername() + ", user ID: " + userData.getUserID());
-
     return userData;
   }
 }
