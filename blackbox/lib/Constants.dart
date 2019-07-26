@@ -31,5 +31,11 @@ class Constants{
   {
     return userData.getUserID();
   }
+
+  ///get the users of the group
+  static List<String> getMembers(index)
+  {
+    return groupData[index].getMembers();
+  }
 }
 

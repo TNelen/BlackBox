@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
+import 'QuestionScreen.dart';
 
 class ResultScreen extends StatefulWidget {
   @override
@@ -11,15 +12,11 @@ class ResultScreen extends StatefulWidget {
 class ResultScreenState extends State<ResultScreen> {
   int currentpage = 2;
 
-
-
   final controller = PageController(
     initialPage: 0,
     keepPage: false,
     viewportFraction: 0.85,
   );
-
-
 
   @override
   dispose() {
@@ -29,14 +26,14 @@ class ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-
-    final winner = Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 30),
-      padding: EdgeInsets.only(top: height/10, bottom: height/10),
+    final winner = Hero(
+      tag: 'submit',
+      child: Container(
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
+      padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(32.0),
@@ -67,13 +64,13 @@ class ResultScreenState extends State<ResultScreen> {
               ),
             ),
           ),
-        ),),
+        ),
+      ),),
     );
 
-
     final top3 = Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 30),
-      padding: EdgeInsets.only(top: height/10, bottom: height/10),
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
+      padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(32.0),
@@ -104,13 +101,13 @@ class ResultScreenState extends State<ResultScreen> {
               ),
             ),
           ),
-        ),),
+        ),
+      ),
     );
 
-
     final alltime = Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 30),
-      padding: EdgeInsets.only(top: height/10, bottom: height/10),
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
+      padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(32.0),
@@ -141,8 +138,38 @@ class ResultScreenState extends State<ResultScreen> {
               ),
             ),
           ),
-        ),),
+        ),
+      ),
     );
+
+    final nextButton = Hero(
+        tag: 'button',
+        child:Container(
+        margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
+        padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
+        child:Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(30.0),
+      color: Colors.amber,
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.all(20),
+        onPressed: () {
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => QuestionScreen(),
+              ));
+
+        },
+        //change isplaying field in database for this group to TRUE
+        child: Text("Next Question",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 30)
+                .copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    ),),);
 
     return MaterialApp(
       theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
@@ -159,11 +186,11 @@ class ResultScreenState extends State<ResultScreen> {
         ),
         body: PageView(
           controller: controller,
-
           children: <Widget>[
             winner,
             top3,
             alltime,
+            nextButton,
           ],
         ),
       ),
