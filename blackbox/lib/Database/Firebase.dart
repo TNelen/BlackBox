@@ -68,15 +68,18 @@ class Firebase implements Database{
     try {
         var document = await Firestore.instance
             .collection("users")
-            .document( uniqueID ).get();
+            .document( uniqueID ).get().then( (doc) {
+              user = new UserData(doc.documentID, doc.data['name']);
+            });
         
-        user = new UserData(document.documentID, document.data['name']);
-    } catch (Exception)
+        return user;
+    } catch (exception)
     {
         print ('Something went wrong while fetching user ' + uniqueID);
+        print(exception);
     }
 
-    return user;
+    return null;
 
   }
 
@@ -84,28 +87,30 @@ class Firebase implements Database{
   @override
   Future< GroupData > getGroupByCode(String code) async
   {
-    GroupData groups;
+    GroupData group;
 
     try {
-        var document = await Firestore.instance
+        var documentSnap = await Firestore.instance
             .collection("groups")
-            .document( code ).get();
+            .document( code ).get().then( (document) {
+              /// Get all member IDs
+              List<String> members = new List<String>();           
+              for (String member in document.data['members'])
+              {
+                members.add( member );
+              }
 
-        /// Get all member IDs
-        List<String> members = new List<String>();           
-        for (String member in document.data['members'])
-        {
-          members.add( member );
-        }
-
-        ///GroupData constructor: String groupName, String groupDescription, String groupID, String adminID, List<String> members
-        groups = new GroupData(document.data['name'], document.data['description'], document.documentID, document.data['admin'].path.toString(), members);
-    } catch (Exception)
+              ///GroupData constructor: String groupName, String groupDescription, String groupID, String adminID, List<String> members
+              group = new GroupData(document.data['name'], document.data['description'], document.documentID, document.data['admin'], members);
+            } );
+        
+        return group;
+    } catch (exception)
     {
         print ('Something went wrong while fetching group ' + code);
+        print(exception);
     }
-
-    return groups;
+    return null;
   }
 
 
