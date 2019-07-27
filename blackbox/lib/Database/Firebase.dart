@@ -25,38 +25,38 @@ class Firebase implements Database{
   @override
   Future< List<GroupData> > getGroups(String uniqueUserID) async
   {
-
+    
     List<GroupData> groups = new List<GroupData>();
 
     try {
-      await Firestore.instance
+      var result = Firestore.instance
           .collection("groups")
-          ///.where("members", arrayContains: uniqueUserID)
-          .snapshots()
-          .listen (
-            (snapshot) {
-              // Handle all documents one by one
-              for (DocumentSnapshot ds in snapshot.documents)
-              {
-                List<String> members = new List<String>();
-                for (dynamic member in ds.data['members'])
-                {
-                    members.add( member );
-                }
-
-                print("Name: " + ds.data['name']);
-                groups.add( new GroupData(ds.data['name'], ds.data['description'], ds.documentID.toString(), ds.data['admin'], members) );
-              }
+          .where("members", arrayContains: uniqueUserID)
+          .snapshots();
+      
+      await for (final data in result){
+          // Handle all documents one by one
+          for (final DocumentSnapshot ds in data.documents)
+          {
+            List<String> members = new List<String>();
+            for (dynamic member in ds.data['members'])
+            {
+                members.add( member );
             }
-          );
+
+            groups.add( new GroupData(ds.data['name'], ds.data['description'], ds.documentID.toString(), ds.data['admin'], members) );
+          }
 
           return groups;
+
+        }
     } catch (exception)
     {
-        print ('Something went wrong while fetching the groups!');
+        print ('Something went wrong while fetching the groups of user ' + uniqueUserID + ' !');
     }
 
-    return null;
+    return groups;
+
   }
     
 
