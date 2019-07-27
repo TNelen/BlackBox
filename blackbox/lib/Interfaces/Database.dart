@@ -30,7 +30,9 @@ abstract class Database {
   /// Will return null if user does not exist
   Future< UserData > getUserByID(String uniqueID);
 
-
+  /// Generates and returns a unique group ID
+  /// This ID is ONLY unique for groups!!
+  String generateUniqueGroupCode();
 
   /// -------
   /// Setters

@@ -109,6 +109,13 @@ class Firebase implements Database{
   }
 
 
+  @override
+  String generateUniqueGroupCode()
+  {
+    DocumentReference ref = Firestore.instance.collection("groups").document();
+    return ref.documentID;
+  }
+
   /// -------
   /// Setters
   /// -------
