@@ -7,6 +7,7 @@ import 'YourGroupsScreen.dart';
 import 'ProfileScreen.dart';
 import '../Interfaces/Database.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
+import 'package:blackbox/DataContainers/GroupData.dart';
 
 class HomeScreen extends StatefulWidget{
 
@@ -44,20 +45,20 @@ class _HomeScreenState extends State<HomeScreen> {
     /// Log a user in and update variables accordingly
     try {
       GoogleUserHandler guh = new GoogleUserHandler();
-      guh.handleSignIn().then( (user) => logUserIn( user ) );
+      guh.handleSignIn().then( (user) {
+        
+        /// Log the retreived user in and update the data in the database
+        Constants.username = user.getUsername();
+        Constants.setUserData( user );
+        database.updateUser( user );
+
+      } );
 
     } catch(e) {
       print(e.toString());
     }
   }
 
-  /// Log the given user in and update the data in the database
-  void logUserIn(UserData user) async
-  {
-    Constants.username = user.getUsername();
-    Constants.setUserData( user );
-    database.updateUser( user );
-  }
 
   Widget _buildBottomCard(double width, double height) {
     return Container(
