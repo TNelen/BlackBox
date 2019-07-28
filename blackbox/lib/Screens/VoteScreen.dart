@@ -19,6 +19,31 @@ class _VoteScreenState extends State<VoteScreen> {
 
     color = Colors.white;
   }
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0))
+          ),
+          title: new Text("No members selected", style: TextStyle(color: Colors.black, fontSize: 25),),
+          content: new Text("Please make a valid choice", style: TextStyle(color: Colors.black, fontSize: 20),),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close", style: TextStyle(color: Colors.amber, fontSize: 20, fontWeight: FontWeight.bold  ),),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +65,15 @@ class _VoteScreenState extends State<VoteScreen> {
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           onPressed: () {
-
+            if (clickedmember!= null){
             Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (BuildContext context) => ResultScreen(),
-                ));
+                ));}
+            else {
+              _showDialog();
+            }
 
           },
           child: Text("Submit choice",
@@ -55,6 +83,8 @@ class _VoteScreenState extends State<VoteScreen> {
         ),
       ),),
     );
+
+
 
     return MaterialApp(
       theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
