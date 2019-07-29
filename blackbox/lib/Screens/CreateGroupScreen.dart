@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
 import '../Constants.dart';
 import '../DataContainers/GroupData.dart';
+import '../Interfaces/Database.dart';
+
 
 class CreateGroupScreen extends StatefulWidget {
+
+  Database database;
+
+  CreateGroupScreen(Database db)
+  {
+    this.database = db;
+  }
+
   @override
-  _CreateGroupScreenState createState() => new _CreateGroupScreenState();
+  _CreateGroupScreenState createState() => new _CreateGroupScreenState( database);
 }
 
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
+
+  Database database;
+
+  _CreateGroupScreenState(Database db)
+  {
+    this.database = db;
+  }
+
+
   static String groupName;
   static String groupDescription;
   static String groupID = 'AC8NR27';

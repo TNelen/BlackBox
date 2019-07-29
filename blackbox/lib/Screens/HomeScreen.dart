@@ -209,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if(choice == Constants.choices[0]){
       print('create');
       Navigator.push(context, MaterialPageRoute(
-          builder: (BuildContext context) => CreateGroupScreen()));
+          builder: (BuildContext context) => CreateGroupScreen(database)));
     }
     if(choice == Constants.choices[1]){
       print('join');
