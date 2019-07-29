@@ -44,7 +44,12 @@ class Firebase implements Database{
                 members.add( member );
             }
 
-            groups.add( new GroupData(ds.data['name'], ds.data['description'], ds.documentID.toString(), ds.data['admin'], members) );
+            if (ds.data['name'] == null || ds.data['description'] == null || ds.data['admin'] == null || members.length == 0)
+            {
+              // In this case, nothing should happen  
+            } else {
+              groups.add( new GroupData(ds.data['name'], ds.data['description'], ds.documentID.toString(), ds.data['admin'], members) );
+            }
           }
 
           return groups;
@@ -72,6 +77,11 @@ class Firebase implements Database{
               user = new UserData(doc.documentID, doc.data['name']);
             });
         
+        if (user.getUserID() == null || user.getUsername() == null)
+        {
+          return null;
+        }
+
         return user;
     } catch (exception)
     {
@@ -98,6 +108,11 @@ class Firebase implements Database{
               for (String member in document.data['members'])
               {
                 members.add( member );
+              }
+
+              if (document.data['name'] == null || document.data['description'] == null || document.data['admin'] == null || members.length == 0)
+              {
+                return null;
               }
 
               ///GroupData constructor: String groupName, String groupDescription, String groupID, String adminID, List<String> members
