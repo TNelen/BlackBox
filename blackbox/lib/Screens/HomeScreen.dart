@@ -54,6 +54,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
       } );
 
+      //GroupData group;
+      //database.getGroupByCode("code").then( (fromDB) {
+      //  group = fromDB;
+      //});
+
+
+
+
     } catch(e) {
       print(e.toString());
     }
