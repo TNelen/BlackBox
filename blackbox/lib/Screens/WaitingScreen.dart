@@ -3,6 +3,7 @@ import '../main.dart';
 import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
 import 'ResultsScreen.dart';
+import 'InstructionScreen.dart';
 
 class WaitingScreen extends StatefulWidget {
   WaitingScreen(this.groupInfo) : super();
@@ -35,12 +36,22 @@ MaterialApp userScreen(BuildContext context) {
     theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
     home: Scaffold(
       appBar: AppBar(
-        title: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.amber,
+        title: Container(
+          alignment: Alignment.centerRight,
+          child: IconButton(
+            icon: Icon(
+              Icons.help_outline,
+              color: Colors.amber,
+              size: 35,
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => InstructionScreen(),
+                  ));
+            },
           ),
-          onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: Colors.black,
       ),
@@ -50,7 +61,7 @@ MaterialApp userScreen(BuildContext context) {
           child: RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              text: 'Get Ready!'
+              text: 'Get Ready!\n'
                   'waiting for admin to start game',
               style: TextStyle(color: Colors.white, fontSize: 50),
             ),
@@ -69,11 +80,13 @@ MaterialApp adminScreen(BuildContext context) {
     child: MaterialButton(
       minWidth: MediaQuery.of(context).size.width,
       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-      onPressed: () {Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => ResultScreen(),
-        ));}, //change isplaying field in database for this group to TRUE
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => ResultScreen(),
+            ));
+      }, //change isplaying field in database for this group to TRUE
       child: Text("Play",
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 20)

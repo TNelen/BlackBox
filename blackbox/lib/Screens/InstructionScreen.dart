@@ -17,20 +17,7 @@ class InstructionScreenState extends State<InstructionScreen> {
 
 
 MaterialApp instructions(BuildContext context) {
-  final understoodButton = Material(
-    elevation: 5.0,
-    borderRadius: BorderRadius.circular(30.0),
-    color: Colors.amber,
-    child: MaterialButton(
-      minWidth: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-      onPressed: () {}, //change isplaying field in database for this group to TRUE
-      child: Text("Understood",
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20)
-              .copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
-    ),
-  );
+
 
   return MaterialApp(
     theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
@@ -55,13 +42,12 @@ MaterialApp instructions(BuildContext context) {
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  text: 'Vote for a member'
+                  text: 'Vote for a member \n\n'
                   'The person with the most votes is the winner',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
               SizedBox(height: 45.0),
-              understoodButton,
             ],
           ),
         ),

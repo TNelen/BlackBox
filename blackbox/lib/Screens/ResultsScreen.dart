@@ -32,40 +32,41 @@ class ResultScreenState extends State<ResultScreen> {
     final winner = Hero(
       tag: 'submit',
       child: Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
-      padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(32.0),
-        ),
-        color: Colors.white,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'WINNER',
-                    style: new TextStyle(
-                        color: Colors.amber,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'de winnaar van deze ronde',
-                    style: new TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
+        margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
+        padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(32.0),
+          ),
+          color: Colors.white,
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'WINNER',
+                      style: new TextStyle(
+                          color: Colors.amber,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      'de winnaar van deze ronde',
+                      style: new TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      ),),
+      ),
     );
 
     final top3 = Container(
@@ -143,38 +144,38 @@ class ResultScreenState extends State<ResultScreen> {
     );
 
     final nextButton = Hero(
-        tag: 'button',
-        child:Container(
+      tag: 'button',
+      child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
         padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
-        child:Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Colors.amber,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.all(20),
-        onPressed: () {
-
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => QuestionScreen(),
-              ));
-
-        },
-        //change isplaying field in database for this group to TRUE
-        child: Text("Next Question",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 30)
-                .copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+        child: Material(
+          elevation: 5.0,
+          borderRadius: BorderRadius.circular(32.0),
+          color: Colors.amber,
+          child: MaterialButton(
+            minWidth: MediaQuery.of(context).size.width,
+            padding: const EdgeInsets.all(20),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => QuestionScreen(),
+                  ));
+            },
+            //change isplaying field in database for this group to TRUE
+            child: Text("Next Question",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 30).copyWith(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
+          ),
+        ),
       ),
-    ),),);
+    );
 
     return MaterialApp(
       theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
       home: Scaffold(
-        appBar: AppBar(
+        /*appBar: AppBar(
           title: IconButton(
             icon: Icon(
               Icons.arrow_back_ios,
@@ -183,7 +184,7 @@ class ResultScreenState extends State<ResultScreen> {
             onPressed: () => Navigator.pop(context),
           ),
           backgroundColor: Colors.black,
-        ),
+        ),*/
         body: PageView(
           controller: controller,
           children: <Widget>[

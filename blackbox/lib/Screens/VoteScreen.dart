@@ -19,6 +19,7 @@ class _VoteScreenState extends State<VoteScreen> {
 
     color = Colors.white;
   }
+
   void _showDialog() {
     // flutter defined function
     showDialog(
@@ -27,14 +28,25 @@ class _VoteScreenState extends State<VoteScreen> {
         // return object of type Dialog
         return AlertDialog(
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30.0))
+              borderRadius: BorderRadius.all(Radius.circular(30.0))),
+          title: new Text(
+            "No members selected",
+            style: TextStyle(color: Colors.black, fontSize: 25),
           ),
-          title: new Text("No members selected", style: TextStyle(color: Colors.black, fontSize: 25),),
-          content: new Text("Please make a valid choice", style: TextStyle(color: Colors.black, fontSize: 20),),
+          content: new Text(
+            "Please make a valid choice",
+            style: TextStyle(color: Colors.black, fontSize: 20),
+          ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Close", style: TextStyle(color: Colors.amber, fontSize: 20, fontWeight: FontWeight.bold  ),),
+              child: new Text(
+                "Close",
+                style: TextStyle(
+                    color: Colors.amber,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -54,37 +66,35 @@ class _VoteScreenState extends State<VoteScreen> {
     final int index = 5;
 
     final voteButton = Hero(
-        tag: 'submit',
-        child:Padding(
-      padding: const EdgeInsets.all(20),
-      child: Material(
-        elevation: 5.0,
-        borderRadius: BorderRadius.circular(30.0),
-        color: Colors.amber,
-        child: MaterialButton(
-          minWidth: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          onPressed: () {
-            if (clickedmember!= null){
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => ResultScreen(),
-                ));}
-            else {
-              _showDialog();
-            }
-
-          },
-          child: Text("Submit choice",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20)
-                  .copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+      tag: 'submit',
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Material(
+          elevation: 5.0,
+          borderRadius: BorderRadius.circular(30.0),
+          color: Colors.amber,
+          child: MaterialButton(
+            minWidth: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.fromLTRB(1.0, 15.0, 20.0, 15.0),
+            onPressed: () {
+              if (clickedmember != null) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => ResultScreen(),
+                    ));
+              } else {
+                _showDialog();
+              }
+            },
+            child: Text("Submit choice",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20).copyWith(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
+          ),
         ),
-      ),),
+      ),
     );
-
-
 
     return MaterialApp(
       theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
