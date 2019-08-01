@@ -29,7 +29,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   static String groupName = "ExampleName";
   static String groupDescription = "Example Description";
   static String groupID = 'AC8NR27';
-  static String groupAdmin = Constants.username;
+  static String groupAdmin = Constants.getUserID();
 
   final _formKey = GlobalKey<FormState>();
 

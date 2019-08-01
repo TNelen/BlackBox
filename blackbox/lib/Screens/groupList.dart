@@ -51,7 +51,7 @@ class _GroupListState extends State<GroupList> {
 
      GroupData removed;
      IconData trailing;
-     if (Constants.groupData[index].adminID == Constants.username) {
+     if (Constants.groupData[index].adminID == Constants.getUsername()) {
          trailing = Icons.star;
      }
      else  trailing = Icons.people_outline;

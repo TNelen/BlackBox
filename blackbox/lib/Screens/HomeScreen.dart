@@ -48,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
       guh.handleSignIn().then( (user) {
         
         /// Log the retreived user in and update the data in the database
-        Constants.username = user.getUsername();
         Constants.setUserData( user );
         database.updateUser( user );
 
@@ -58,8 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
       //database.getGroupByCode("code").then( (fromDB) {
       //  group = fromDB;
       //});
-
-
 
 
     } catch(e) {
@@ -182,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                    padding: EdgeInsets.all(10),
                     child: Row(
                   children: <Widget>[
-                    Text('Hi '+ Constants.username+ '!', style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),),
+                    Text('Hi '+ Constants.getUsername() + '!', style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),),
                     //Icon(Icons.)
                   ],
                 )),),

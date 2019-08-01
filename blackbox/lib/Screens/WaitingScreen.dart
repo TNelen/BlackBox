@@ -16,15 +16,13 @@ class WaitingScreen extends StatefulWidget {
 class _WaitingScreenState extends State<WaitingScreen> {
   GroupData groupInfo;
 
-  String username = Constants.username;
-
   _WaitingScreenState(GroupData groupinfo) {
     this.groupInfo = groupinfo;
   }
 
   @override
   Widget build(BuildContext context) {
-    if (Constants.username == groupInfo.adminID)
+    if (Constants.getUserID() == groupInfo.adminID)
       return adminScreen(context);
     else
       return userScreen(context);
