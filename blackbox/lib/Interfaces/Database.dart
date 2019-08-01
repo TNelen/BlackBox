@@ -32,7 +32,8 @@ abstract class Database {
 
   /// Generates and returns a unique group ID
   /// This ID is ONLY unique for groups!!
-  String generateUniqueGroupCode();
+  Future< String > generateUniqueGroupCode();
+
 
   /// -------
   /// Setters
