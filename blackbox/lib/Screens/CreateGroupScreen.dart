@@ -6,33 +6,34 @@ import '../Interfaces/Database.dart';
 
 class CreateGroupScreen extends StatefulWidget {
 
-  Database database;
+  Database _database;
 
   CreateGroupScreen(Database db)
   {
-    this.database = db;
+    this._database = db;
   }
 
   @override
-  _CreateGroupScreenState createState() => new _CreateGroupScreenState( database);
+  _CreateGroupScreenState createState() => new _CreateGroupScreenState( _database);
 }
 
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
 
-  Database database;
+  Database _database;
 
   _CreateGroupScreenState(Database db)
   {
-    this.database = db;
+    this._database = db;
   }
 
-
-  static String groupName;
-  static String groupDescription;
+  static String groupName = "ExampleName";
+  static String groupDescription = "Example Description";
   static String groupID = 'AC8NR27';
   static String groupAdmin = Constants.username;
 
   final _formKey = GlobalKey<FormState>();
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,14 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           
+          // Create list of members
+          List<String> members = new List<String>();
+          members.add( Constants.getUserID() );
 
+          // Generate a unique ID and save the group
+         _database.generateUniqueGroupCode().then( (code) {
+            _database.updateGroup( new GroupData(groupName, groupDescription, code, Constants.getUserID(), members) );
+         } );
 
         },
         child: Text("Create",
