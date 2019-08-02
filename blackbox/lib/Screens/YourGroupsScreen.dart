@@ -5,8 +5,8 @@ import '../Database/Firebase.dart';
 
 import './ProfileScreen.dart';
 import './groupList.dart';
-import 'package:blackbox/Screens/JoinGroupScreen.dart';
-import 'package:blackbox/Screens/CreateGroupScreen.dart';
+import 'package:blackbox/Screens/JoinGameScreen.dart';
+import 'package:blackbox/Screens/CreateGameScreen.dart';
 
 class YourGroups extends StatelessWidget {
   Database database;

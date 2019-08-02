@@ -4,11 +4,25 @@ import '../Interfaces/Database.dart';
 import '../DataContainers/GroupData.dart';
 import 'WaitingScreen.dart';
 
-class GroupScreen extends StatelessWidget {
-  GroupScreen(this.groupInfo) : super();
-  final GroupData groupInfo;
+class GameScreen extends StatefulWidget {
+  Database _database;
+
+  GameScreen(Database db) {
+    this._database = db;
+  }
 
   @override
+  _GameScreenState createState() => new _GameScreenState(_database);
+}
+
+class _GameScreenState extends State<GameScreen> {
+  Database _database;
+
+  _GameScreenState(Database db) {
+    this._database = db;
+  }
+
+    @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;

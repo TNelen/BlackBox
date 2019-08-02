@@ -3,26 +3,21 @@ import '../Constants.dart';
 import '../DataContainers/GroupData.dart';
 import '../Interfaces/Database.dart';
 
-class CreateGroupScreen extends StatefulWidget {
-
+class CreateGameScreen extends StatefulWidget {
   Database _database;
 
-  CreateGroupScreen(Database db)
-  {
+  CreateGameScreen(Database db) {
     this._database = db;
   }
 
   @override
-  _CreateGroupScreenState createState() =>
-      new _CreateGroupScreenState(_database);
+  _CreateGameScreenState createState() => new _CreateGameScreenState(_database);
 }
 
-class _CreateGroupScreenState extends State<CreateGroupScreen> {
-
+class _CreateGameScreenState extends State<CreateGameScreen> {
   Database _database;
 
-  _CreateGroupScreenState(Database db)
-  {
+  _CreateGameScreenState(Database db) {
     this._database = db;
   }
 
@@ -35,7 +30,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final emailField = TextField(
+    final nameField = TextField(
       obscureText: false,
       style: TextStyle(fontSize: 20, color: Colors.black),
       decoration: InputDecoration(
@@ -46,7 +41,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
-    final passwordField = TextField(
+    final descrField = TextField(
       obscureText: false,
       style: TextStyle(fontSize: 20, color: Colors.black),
       decoration: InputDecoration(
@@ -57,29 +52,31 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
-    final createButton = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Colors.amber,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          
-          // Create list of members
-          List<String> members = new List<String>();
-          members.add( Constants.getUserID() );
+    final createButton = Hero(
+      tag: 'tobutton',
+      child: Material(
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(32.0),
+        color: Colors.amber,
+        child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          onPressed: () {
+            // Create list of members
+            List<String> members = new List<String>();
+            members.add(Constants.getUserID());
 
-          // Generate a unique ID and save the group
-         _database.generateUniqueGroupCode().then( (code) {
-            _database.updateGroup( new GroupData(groupName, groupDescription, code, Constants.getUserID(), members) );
-         } );
-
-        },
-        child: Text("Create",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20)
-                .copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+            // Generate a unique ID and save the group
+            _database.generateUniqueGroupCode().then((code) {
+              _database.updateGroup(new GroupData(groupName, groupDescription,
+                  code, Constants.getUserID(), members));
+            });
+          },
+          child: Text("Create",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20)
+                  .copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+        ),
       ),
     );
 
@@ -95,16 +92,17 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               InkWell(
-                  onTap: () => Navigator.pop(context),
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 20),
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.amber,
-                    ),
-                  )),
+                onTap: () => Navigator.pop(context),
+                child: Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: const Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.amber,
+                  ),
+                ),
+              ),
               Text(
-                'Create new Group',
+                'Create new Game',
                 style: TextStyle(
                   fontSize: 28,
                   color: Colors.white,
@@ -122,24 +120,17 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30.0,
-                    child: Image.asset(
-                      "../Assets/logoPlaceholder.png",
-                      fit: BoxFit.contain,
-                    ),
+                  Text(
+                    'Enter game details',
+                    style: new TextStyle(color: Colors.amber, fontSize: 25.0),
                   ),
                   SizedBox(height: 45.0),
-                  emailField,
+                  nameField,
                   SizedBox(height: 25.0),
-                  passwordField,
-                  SizedBox(
-                    height: 35.0,
-                  ),
+                  descrField,
+                  SizedBox(height: 35.0),
                   createButton,
-                  SizedBox(
-                    height: 15.0,
-                  ),
+                  SizedBox(height: 15.0),
                 ],
               ),
             ),

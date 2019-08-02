@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Interfaces/Database.dart';
-import 'package:blackbox/Screens/GroupScreen.dart';
+import 'package:blackbox/Screens/GameScreen.dart';
 import '../DataContainers/GroupData.dart';
 import '../main.dart';
 import '../Constants.dart';
@@ -104,7 +104,7 @@ class _GroupListState extends State<GroupList> {
               context,
               MaterialPageRoute(
                 builder: (BuildContext context) =>
-                    GroupScreen(Constants.groupData[index]),
+                    GameScreen(Constants.groupData[index]),
               ));
         },
         onLongPress: () {
