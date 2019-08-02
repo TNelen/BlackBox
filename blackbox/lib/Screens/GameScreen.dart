@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
 
+import '../Database/FirebaseStream.dart';
 import '../DataContainers/GroupData.dart';
 import 'WaitingScreen.dart';
 
 class GameScreen extends StatelessWidget {
   Database _database;
+  GroupData groupInfo; 
 
   GameScreen(Database db) {
     this._database = db;
+
+    FirebaseStream fs = new FirebaseStream( "-LkoEjPkbJU3KMIJPf1I" );
+    Stream< GroupData > groupData = fs.groupData;
+    groupData.listen( (data) {
+        groupInfo = data;
+    } );
+
   }
 
     @override
@@ -155,7 +164,7 @@ class GameScreen extends StatelessWidget {
                         padding: EdgeInsets.all(8.0),
                         crossAxisSpacing: 12.0,
                         mainAxisSpacing: 12.0,
-                        children: groupInfo.members
+                        children: groupInfo.getMembers()
                             .map((data) =>
                             Card(
                               color: data == groupInfo.adminID
@@ -269,6 +278,6 @@ class GameScreen extends StatelessWidget {
                     ),
                   ),*/
           ]);
-    }
   }
 }
+
