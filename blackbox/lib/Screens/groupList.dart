@@ -6,33 +6,42 @@ import '../DataContainers/GroupData.dart';
 import '../main.dart';
 import '../Constants.dart';
 
+
+
+
 class GroupList extends StatefulWidget {
+
   Database database;
 
-  GroupList(Database db) {
+
+  GroupList( Database db ) {
     this.database = db;
   }
 
   @override
-  _GroupListState createState() => _GroupListState(database);
+  _GroupListState createState() => _GroupListState( database );
 }
 
 class _GroupListState extends State<GroupList> {
+
   Database database;
   GroupData removed;
 
 
-  _GroupListState(Database db) {
-    this.database = db;
+
+  _GroupListState(Database db)
+  {
+      this.database = db;
   }
 
-  void refresh() {
-    //database.getGroupNames("").then( (names) => setState(() {
+  void refresh()
+  {
+      //database.getGroupNames("").then( (names) => setState(() {
 
-    //groupNames = names;
+          //groupNames = names;
 
-    // })
-    //);
+       // })
+      //);
   }
 
 
@@ -81,11 +90,13 @@ class _GroupListState extends State<GroupList> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    IconData trailing;
-    if (Constants.groupData[index].adminID == Constants.username) {
-      trailing = Icons.star;
-    } else
-      trailing = Icons.people_outline;
+
+     GroupData removed;
+     IconData trailing;
+     if (Constants.groupData[index].adminID == Constants.getUsername()) {
+         trailing = Icons.star;
+     }
+     else  trailing = Icons.people_outline;
 
     return GestureDetector(
         onTap: () {

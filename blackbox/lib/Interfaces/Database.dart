@@ -23,7 +23,7 @@ abstract class Database {
   Future< List<GroupData> > getGroups(String uniqueUserID);
 
   /// Get the unique ID of a group by providing the code
-  /// Will return null if the group does not exist!
+  /// Will return null if the group does not exist
   Future< GroupData > getGroupByCode(String code);
 
   /// Get UserData from a given user ID
@@ -32,7 +32,8 @@ abstract class Database {
 
   /// Generates and returns a unique group ID
   /// This ID is ONLY unique for groups!!
-  String generateUniqueGroupCode();
+  Future< String > generateUniqueGroupCode();
+
 
   /// -------
   /// Setters

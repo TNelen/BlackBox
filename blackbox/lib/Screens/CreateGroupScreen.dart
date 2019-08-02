@@ -4,28 +4,32 @@ import '../DataContainers/GroupData.dart';
 import '../Interfaces/Database.dart';
 
 class CreateGroupScreen extends StatefulWidget {
-  Database database;
 
-  CreateGroupScreen(Database db) {
-    this.database = db;
+  Database _database;
+
+  CreateGroupScreen(Database db)
+  {
+    this._database = db;
   }
 
   @override
   _CreateGroupScreenState createState() =>
-      new _CreateGroupScreenState(database);
+      new _CreateGroupScreenState(_database);
 }
 
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
-  Database database;
 
-  _CreateGroupScreenState(Database db) {
-    this.database = db;
+  Database _database;
+
+  _CreateGroupScreenState(Database db)
+  {
+    this._database = db;
   }
 
-  static String groupName;
-  static String groupDescription;
+  static String groupName = "ExampleName";
+  static String groupDescription = "Example Description";
   static String groupID = 'AC8NR27';
-  static String groupAdmin = Constants.username;
+  static String groupAdmin = Constants.getUserID();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -60,7 +64,18 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: () {
+          
+          // Create list of members
+          List<String> members = new List<String>();
+          members.add( Constants.getUserID() );
+
+          // Generate a unique ID and save the group
+         _database.generateUniqueGroupCode().then( (code) {
+            _database.updateGroup( new GroupData(groupName, groupDescription, code, Constants.getUserID(), members) );
+         } );
+
+        },
         child: Text("Create",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20)

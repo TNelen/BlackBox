@@ -2,9 +2,11 @@ import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Interfaces/Database.dart';
+import 'dart:math';
 
 /// For documentation: please check interfaces/Database.dart
 class Firebase implements Database{
+
 
   /// -----------
   /// Connections
@@ -130,11 +132,123 @@ class Firebase implements Database{
 
 
   @override
-  String generateUniqueGroupCode()
-  {
-    DocumentReference ref = Firestore.instance.collection("groups").document();
-    return ref.documentID;
+  Future< String > generateUniqueGroupCode() async
+  { 
+    bool isTaken = true;
+    String newRandom;
+
+    // While no unique ID has been found
+    while ( isTaken )
+    {
+        // Generate a random ID
+        newRandom = _getRandomID(5);
+
+        // Check whether or not the generated ID exists 
+        var documentSnap = await Firestore.instance
+            .collection("groups")
+            .document( newRandom ).get().then( (document) {
+
+              // ID does not exist, unique code found!
+              if ( ! document.exists )
+                isTaken = false;
+
+            } );
+    }
+
+    return newRandom;
+
   }
+
+  /// Create a random alphanumeric code
+  /// Returns as a String
+  String _getRandomID(int length)
+  {
+      var random = new Random();
+      String result = "";
+
+      // Generate 'length' characters to be added to the code
+      for (int i = 0; i < length; i++)
+      {
+          // Generate random int => [0, 35[
+          int gen = random.nextInt(35);
+          
+          // Smaller than 25 => Generate character
+          // Otherwise, add a number
+          if (gen <= 24) {
+            result += _intToAlphabet( gen );
+          } else {
+            gen -= 25;
+            result += gen.toString();
+          }
+      }
+
+      return result;
+  }
+  
+  /// The int must be in the range [0, 24]
+  String _intToAlphabet(int num)
+  {
+      // Convert int to String
+      switch (num)
+      {
+          case 0:
+            return 'A';
+          case 1:
+            return 'B';
+          case 2:
+            return 'C';
+          case 3:
+            return 'D';
+          case 4:
+            return 'E';
+          case 5:
+            return 'F';
+          case 6:
+            return 'G';
+          case 7:
+            return 'H';
+          case 8:
+            return 'I';
+          case 9:
+            return 'J';
+          case 10:
+            return 'K';
+          case 11:
+            return 'L';
+          case 12:
+            return 'M';
+          case 13:
+            return 'N';
+          case 14:
+            return 'O';
+          case 15:
+            return 'P';
+          case 16:
+            return 'Q';
+          case 17:
+            return 'R';
+          case 18:
+            return 'S';
+          case 19:
+            return 'T';
+          case 20:
+            return 'U';
+          case 21:
+            return 'V';
+          case 22:
+            return 'W';
+          case 22:
+            return 'X';
+          case 23:
+            return 'Y';
+          case 24:
+            return 'Z';
+          default:      // Out of bounds!!
+            return "";
+      }
+  }
+
+
 
   /// -------
   /// Setters
