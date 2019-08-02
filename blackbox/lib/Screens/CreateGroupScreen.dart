@@ -3,29 +3,24 @@ import '../Constants.dart';
 import '../DataContainers/GroupData.dart';
 import '../Interfaces/Database.dart';
 
-
 class CreateGroupScreen extends StatefulWidget {
-
   Database database;
 
-  CreateGroupScreen(Database db)
-  {
+  CreateGroupScreen(Database db) {
     this.database = db;
   }
 
   @override
-  _CreateGroupScreenState createState() => new _CreateGroupScreenState( database);
+  _CreateGroupScreenState createState() =>
+      new _CreateGroupScreenState(database);
 }
 
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
-
   Database database;
 
-  _CreateGroupScreenState(Database db)
-  {
+  _CreateGroupScreenState(Database db) {
     this.database = db;
   }
-
 
   static String groupName;
   static String groupDescription;
@@ -65,11 +60,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          
-
-
-        },
+        onPressed: () {},
         child: Text("Create",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20)
