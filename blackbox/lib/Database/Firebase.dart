@@ -1,11 +1,21 @@
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
+import 'package:blackbox/Database/FirebaseStream.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Interfaces/Database.dart';
 import 'dart:math';
 
 /// For documentation: please check interfaces/Database.dart
 class Firebase implements Database{
+
+  /// Singleton pattern
+  static final Firebase _firebase = new Firebase._internal();
+
+  factory Firebase() {
+    return _firebase;
+  }
+
+  Firebase._internal();
 
 
   /// -----------
