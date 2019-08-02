@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) => JoinGameScreen(),
+                          builder: (BuildContext context) => JoinGameScreen(database),
                         ));
                   },
                   icon: Icon(

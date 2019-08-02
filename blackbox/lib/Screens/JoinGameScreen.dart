@@ -1,6 +1,25 @@
 import 'package:flutter/material.dart';
+import 'GameScreen.dart';
+import '../Interfaces/Database.dart';
 
-class JoinGameScreen extends StatelessWidget {
+class JoinGameScreen extends StatefulWidget {
+  Database _database;
+
+  JoinGameScreen(Database db) {
+    this._database = db;
+  }
+
+  @override
+  _JoinGameScreenState createState() => new _JoinGameScreenState(_database);
+}
+
+class _JoinGameScreenState extends State<JoinGameScreen> {
+  Database _database;
+
+  _JoinGameScreenState(Database db) {
+    this._database = db;
+  }
+
   @override
   Widget build(BuildContext context) {
     final joinButton = Hero(
@@ -15,7 +34,11 @@ class JoinGameScreen extends StatelessWidget {
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(1.0, 15.0, 20.0, 15.0),
             onPressed: () {
-              ///to groupscreen
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => GameScreen(_database),
+                  ));
             },
             child: Text("Join Group",
                 textAlign: TextAlign.center,

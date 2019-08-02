@@ -16,6 +16,10 @@ class CreateGameScreen extends StatefulWidget {
 
 class _CreateGameScreenState extends State<CreateGameScreen> {
   Database _database;
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController descController = new TextEditingController();
+
+
 
   _CreateGameScreenState(Database db) {
     this._database = db;
@@ -32,6 +36,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   Widget build(BuildContext context) {
     final nameField = TextField(
       obscureText: false,
+      controller: nameController,
       style: TextStyle(fontSize: 20, color: Colors.black),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -43,6 +48,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     );
     final descrField = TextField(
       obscureText: false,
+      controller: descController,
       style: TextStyle(fontSize: 20, color: Colors.black),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -65,12 +71,15 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             // Create list of members
             List<String> members = new List<String>();
             members.add(Constants.getUserID());
-
-            // Generate a unique ID and save the group
-            _database.generateUniqueGroupCode().then((code) {
-              _database.updateGroup(new GroupData(groupName, groupDescription,
-                  code, Constants.getUserID(), members));
-            });
+            groupName = nameController.text;
+            groupDescription = descController.text;
+            if(groupName.length != 0 && groupDescription.length != 0) {
+              // Generate a unique ID and save the group
+              _database.generateUniqueGroupCode().then((code) {
+                _database.updateGroup(new GroupData(groupName, groupDescription,
+                    code, Constants.getUserID(), members));
+              });
+            };
           },
           child: Text("Create",
               textAlign: TextAlign.center,

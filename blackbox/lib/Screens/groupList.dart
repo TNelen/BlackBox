@@ -100,12 +100,7 @@ class _GroupListState extends State<GroupList> {
 
     return GestureDetector(
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    GameScreen(Constants.groupData[index]),
-              ));
+
         },
         onLongPress: () {
           _showDialog(index);
