@@ -4,27 +4,28 @@ import 'dart:async';
 
 class FirebaseStream {
 
+  static String _groupID;
   final StreamController<GroupData> _groupController = StreamController<GroupData>();
 
   /// Singleton pattern
   static final FirebaseStream _firebaseStream = new FirebaseStream._internal();
 
-  factory FirebaseStream() {
+  factory FirebaseStream( String groupID ) {
+    
+    _groupID = groupID;
+
     return _firebaseStream;
   }
 
-  FirebaseStream._internal();
-
-  /// Listen to changes of group with ID groupID
-  FirebaseStream ( String groupID )
-  {
-    // Subscribe to group changes and update the variable
+  FirebaseStream._internal() {
+  /// Subscribe to group changes and update the variable
     Firestore.instance
         .collection('groups')
-        .document( groupID )
+        .document( _groupID )
         .snapshots()
         .listen(_statsUpdated);
   }
+
 
   /// Getter for the GroupData Stream
   Stream<GroupData> get groupData => _groupController.stream;
