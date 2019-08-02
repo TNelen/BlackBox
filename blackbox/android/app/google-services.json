@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1092212056414-oem64ssq4un7s258k89pom3jureever8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "be.dezijwegel.blackbox",
+            "certificate_hash": "db0cd3f4ce229c3434d4dac7223c05b701214b02"
+          }
+        },
+        {
           "client_id": "1092212056414-osqhpe8peu21knm71f58b7fa3q6i535o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
