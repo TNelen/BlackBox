@@ -17,8 +17,20 @@ class GroupData {
     groupDescription = snap.data['description'] ?? "",
     groupID = snap.documentID.toString(),
     adminID = snap.data['admin'],
-    _members = snap.data['members'];
+    _members = _convertFirebaseList( snap.data['members'] );
 
+  /// Convert a list from a DocumentSnapshot to a List<String>
+  static List<String> _convertFirebaseList( dynamic data )
+  {
+    List<String> list = new List<String>();
+
+    for (dynamic element in data)
+    {
+        list.add( element );
+    }
+
+    return list;
+  }
 
   /// Adds a user to this group if he isn't included yet
   void addMember(String uniqueID)
