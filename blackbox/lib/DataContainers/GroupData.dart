@@ -1,33 +1,38 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class GroupData {
     
   String groupName;
   String groupDescription;
   String groupID;
   String adminID;
-  List<String> members;
+  List<String> _members = new List<String>();
 
-  GroupData(String groupName, String groupDescription, String groupID, String adminID, List<String> members)
-  {
-      this.groupName = groupName;
-      this.groupDescription = groupDescription;
-      this.groupID = groupID;
-      this.adminID = adminID;
-      this.members = members;
-  }
+  /// Create a group with the given data fields
+  GroupData(this.groupName, this.groupDescription, this.groupID, this.adminID, this._members);
+
+  /// Create a group from a DocumentSnapshot (Firebase)
+  GroupData.fromDocumentSnapshot ( DocumentSnapshot snap ) :
+    groupName = snap.data['name'] ?? "",
+    groupDescription = snap.data['description'] ?? "",
+    groupID = snap.documentID.toString(),
+    adminID = snap.data['admin'],
+    _members = snap.data['members'];
+
 
   /// Adds a user to this group if he isn't included yet
   void addMember(String uniqueID)
   {
-    if (members.contains(uniqueID))
+    if (_members.contains(uniqueID))
       return;
 
-    members.add(uniqueID);
+    _members.add(uniqueID);
   }
 
   /// Removes a user from this group
   void removeMember(String uniqueID)
   {
-    members.remove(uniqueID);
+    _members.remove(uniqueID);
   }
 
   /// Gets the ID of the admin of this group
@@ -51,7 +56,7 @@ class GroupData {
   /// Get the member IDs of the users in this group
   List<String> getMembers()
   {
-    return members;
+    return _members;
   }
 
   /// Get the name of this group
@@ -64,7 +69,7 @@ class GroupData {
   void printData()
   {
     String membersString = "";
-    for (String member in members)
+    for (String member in _members)
     {
         membersString += member + ", ";
     }
