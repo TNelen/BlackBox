@@ -12,12 +12,22 @@ class GameScreen extends StatelessWidget {
   GameScreen(Database db) {
     this._database = db;
 
-    FirebaseStream fs = new FirebaseStream( "-LkoEjPkbJU3KMIJPf1I" );
-    Stream< GroupData > groupData = fs.groupData;
-    groupData.listen( (data) {
-        groupInfo = data;
-    } );
+    new FirebaseStream( "-LkoEjPkbJU3KMIJPf1I" ).groupData.listen( _onGroupDataUpdate );
+  }
 
+  void _onGroupDataUpdate (GroupData groupData)
+  {
+      groupInfo = groupData;
+
+      if ( groupInfo == null )
+      {
+        // Laadscherm
+        print("NULL LOADED");
+      } else {
+        // Refresh content
+        print("DATA LOADED");
+        
+      }
   }
 
     @override

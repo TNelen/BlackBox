@@ -23,7 +23,7 @@ class FirebaseStream {
         .collection('groups')
         .document( _groupID )
         .snapshots()
-        .listen(_statsUpdated);
+        .listen(_groupDataUpdated);
   }
 
 
@@ -31,7 +31,7 @@ class FirebaseStream {
   Stream<GroupData> get groupData => _groupController.stream;
 
   /// Update groupData in the Stream
-  void _statsUpdated ( DocumentSnapshot ds )
+  void _groupDataUpdated ( DocumentSnapshot ds )
   {
     _groupController.add( GroupData.fromDocumentSnapshot( ds ) );
   }
