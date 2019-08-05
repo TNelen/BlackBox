@@ -30,9 +30,50 @@ class Firebase implements Database{
   @override
   void closeConnection(){}
 
+
   /// -------
   /// Getters
   /// -------
+
+
+  @override
+  Future< GroupData > getGroupFromUser(UserData userData) async
+  {
+
+    try {
+      var result = Firestore.instance
+          .collection("groups")
+          .where("members", arrayContains: userData.getUserID())
+          .snapshots();
+      
+      await for (final data in result){
+          // Handle all documents one by one
+          for (final DocumentSnapshot ds in data.documents)
+          {
+            List<String> members = new List<String>();
+            for (dynamic member in ds.data['members'])
+            {
+                members.add( member );
+            }
+
+            if (ds.data['name'] == null || ds.data['description'] == null || ds.data['admin'] == null || members.length == 0)
+            {
+              // In this case, nothing should happen  
+            } else {
+              return new GroupData(ds.data['name'], ds.data['description'], ds.documentID.toString(), ds.data['admin'], members);
+            }
+          }
+
+        }
+    } catch (exception)
+    {
+        print ('Something went wrong while fetching the groups of user ' + userData.getUserID() + ' !');
+    }
+
+    return null;
+
+  }
+
 
   @override
   Future< List<GroupData> > getGroups(String uniqueUserID) async
