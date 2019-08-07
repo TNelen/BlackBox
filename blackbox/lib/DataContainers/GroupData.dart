@@ -226,6 +226,64 @@ class GroupData {
   }
 
 
+  /// Get the amount of playing users
+  int getNumPlaying()
+  {
+    return _playing.length;
+  }
+
+
+  /// Add a vote to this member's record
+  /// Will be added to the newVotes list
+  void addVote(String voteeID)
+  {
+    if ( _newVotes.containsKey(voteeID) )
+      _newVotes[voteeID] = _newVotes[voteeID] + 1;
+    else
+      _newVotes[voteeID] = 1;
+  }
+
+
+  /// Prepare this group for the next question
+  /// Adds newVotes to totalVotes
+  /// Copies newVotes to lastVotes
+  /// Requires admin authentication, otherwise this action will be canceled
+  void transferVotes(UserData admin)
+  {
+    /// Admin authentication
+    if ( admin.getUserID() != _adminID )
+      return;
+
+    /// Add votes to total count
+    _newVotes.forEach( (userID, numVotes) {
+        if (_totalVotes.containsKey(userID))
+          _totalVotes[userID] += numVotes;
+        else
+          _totalVotes[userID] = numVotes;
+    });
+
+    /// Copy new votes to the old list 
+    _lastVotes = _newVotes;
+
+    /// Reset new votes
+    _newVotes = new Map<String, int>();
+
+  }
+
+
+  /// Get the votes from last round
+  Map<String, int> getLastVotes()
+  {
+    return _lastVotes;
+  }
+
+
+  /// Get the votes of all rounds combined
+  Map<String, int> getTotalVotes()
+  {
+    return _totalVotes;
+  }
+
   /// A temporary method for testing by printing the contents of this group
   @Deprecated('Will be deleted before release!')
   void printData()
