@@ -17,6 +17,7 @@ class GroupData {
   Map<String, String> _members = new Map<String, String>(); /// A list of unique IDs of all members in this group
 
   /// Status information about this group
+  String _nextQuestion;
   Map<String, int> _lastVotes;  /// Mapping unique IDs to the number of last votes a member had
   Map<String, int> _newVotes;   /// Mapping unique IDs to the new number of votes a member had
   Map<String, int> _totalVotes; /// Mapping unique IDs to the total amount of votes for that user
@@ -30,6 +31,7 @@ class GroupData {
 
   /// Create a group with the given data fields
   GroupData(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members) {
+    _nextQuestion = "";
     _lastVotes = new Map<String, int>();
     _newVotes = new Map<String, int>();
     _totalVotes = new Map<String, int>();
@@ -38,7 +40,7 @@ class GroupData {
 
   /// Create a group with the given data fields AND status fields
   GroupData.extended(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members, 
-                     this._lastVotes, this._newVotes, this._totalVotes, this._playing);
+                     this._nextQuestion, this._lastVotes, this._newVotes, this._totalVotes, this._playing);
 
 
   /// ---------------- \\\
@@ -54,6 +56,7 @@ class GroupData {
     _groupID = snap.documentID.toString(),
     _adminID = snap.data['admin'],
     /// Get status data
+    _nextQuestion = snap.data['nextQuestion'] ?? "No question available",
     _members = _convertFirebaseMapString( snap.data['members']),
     _lastVotes = _convertFirebaseMapInt( snap.data['lastVotes'] ),
     _newVotes = _convertFirebaseMapInt( snap.data['newVotes'] ),
@@ -190,6 +193,24 @@ class GroupData {
   /// GroupData Status \\\
   /// ---------------- \\\
   
+
+  /// Set a new question
+  /// Admin account must be provided for authentication
+  /// Non-admins will cause this function to fail silently
+  void setNextQuestion(String nextQuestion, UserData admin)
+  {
+    if (admin.getUserID() != _adminID)
+      return;
+
+    _nextQuestion = nextQuestion;
+  }
+
+
+  /// Get the question currently in this group
+  String getQuestion()
+  {
+    return _nextQuestion;
+  }
 
   /// Check wheter or not a user is playing
   bool isUserPlaying( UserData user )
