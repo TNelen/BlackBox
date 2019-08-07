@@ -121,7 +121,7 @@ class _VoteScreenState extends State<VoteScreen> {
                 children: Constants.groupData[index]
                     .getMembers()
                     .map((data) => Card(
-                          color: data == clickedmember
+                          color: data.getUserID() == clickedmember
                               ? Colors.amber
                               : Colors.white,
                           shape: RoundedRectangleBorder(
@@ -132,7 +132,7 @@ class _VoteScreenState extends State<VoteScreen> {
                             onTap: () {
                               setState(() {
                                 color = Colors.amber;
-                                clickedmember = data;
+                                clickedmember = data.getUserID();
                               });
                             },
                             child: Container(
@@ -140,7 +140,7 @@ class _VoteScreenState extends State<VoteScreen> {
                                   child: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
-                                  data,
+                                  data.getUserID(),
                                   style: new TextStyle(
                                       color: Colors.black,
                                       fontSize: 20.0,

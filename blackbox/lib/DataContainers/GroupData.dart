@@ -1,25 +1,68 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../DataContainers/UserData.dart';
 
 class GroupData {
     
-  String groupName;
-  String groupDescription;
-  String groupID;
-  String adminID;
-  List<String> _members = new List<String>();
+
+  /// ---------------- \\\
+  /// GroupData Fields \\\
+  /// ---------------- \\\
+
+
+  /// Basic data about this group
+  String _groupName;         /// Name of the group
+  String _groupDescription;  /// Description of the group
+  String _groupID;           /// The unique ID of this group
+  String _adminID;           /// The unique ID of the admin
+  Map<String, String> _members = new Map<String, String>(); /// A list of unique IDs of all members in this group
+
+  /// Status information about this group
+  Map<String, int> _lastVotes;  /// Mapping unique IDs to the number of last votes a member had
+  Map<String, int> _newVotes;   /// Mapping unique IDs to the new number of votes a member had
+  Map<String, int> _totalVotes; /// Mapping unique IDs to the total amount of votes for that user
+  List<String> _playing;        /// A list of all IDs of members that are currently playing 
+  
+
+  /// ---------------------- \\\
+  /// GroupData constructors \\\
+  /// ---------------------- \\\
+
 
   /// Create a group with the given data fields
-  GroupData(this.groupName, this.groupDescription, this.groupID, this.adminID, this._members);
+  GroupData(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members) {
+    _lastVotes = new Map<String, int>();
+    _newVotes = new Map<String, int>();
+    _totalVotes = new Map<String, int>();
+    _playing = new List<String>();
+  }
+
+  /// Create a group with the given data fields AND status fields
+  GroupData.extended(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members, 
+                     this._lastVotes, this._newVotes, this._totalVotes, this._playing);
+
+
+  /// ---------------- \\\
+  /// Firebase Utility \\\
+  /// ---------------- \\\
+
 
   /// Create a group from a DocumentSnapshot (Firebase)
   GroupData.fromDocumentSnapshot ( DocumentSnapshot snap ) :
-    groupName = snap.data['name'] ?? "",
-    groupDescription = snap.data['description'] ?? "",
-    groupID = snap.documentID.toString(),
-    adminID = snap.data['admin'],
-    _members = _convertFirebaseList( snap.data['members'] );
+    /// Get basic data
+    _groupName = snap.data['name'] ?? "Nameless group",
+    _groupDescription = snap.data['description'] ?? "No description",
+    _groupID = snap.documentID.toString(),
+    _adminID = snap.data['admin'],
+    /// Get status data
+    _members = _convertFirebaseMapString( snap.data['members']),
+    _lastVotes = _convertFirebaseMapInt( snap.data['lastVotes'] ),
+    _newVotes = _convertFirebaseMapInt( snap.data['newVotes'] ),
+    _totalVotes = _convertFirebaseMapInt( snap.data['totalVotes'] ),
+    _playing = _convertFirebaseList( snap.data['playing'] );
+
 
   /// Convert a list from a DocumentSnapshot to a List<String>
+  /// NO checks are done! Provided parameter MUST be correct
   static List<String> _convertFirebaseList( dynamic data )
   {
     List<String> list = new List<String>();
@@ -32,63 +75,171 @@ class GroupData {
     return list;
   }
 
-  /// Adds a user to this group if he isn't included yet
-  void addMember(String uniqueID)
-  {
-    if (_members.contains(uniqueID))
-      return;
 
-    _members.add(uniqueID);
+  /// Convert a Map from a DocumentSnapshot to a Map<String, int>
+  /// NO checks are done! Provided parameter MUST be correct
+  static Map<String, int> _convertFirebaseMapInt( dynamic data )
+  {
+    Map<String, int> map = data;
+    return map;
   }
 
-  /// Removes a user from this group
-  void removeMember(String uniqueID)
+
+  /// Convert a Map from a DocumentSnapshot to a Map<String, int>
+  /// NO checks are done! Provided parameter MUST be correct
+  static Map<String, String> _convertFirebaseMapString( dynamic data )
   {
-    _members.remove(uniqueID);
+    Map<String, String> map = data;
+    return map;
   }
+
+
+  /// --------------------- \\\
+  /// GroupData Information \\\
+  /// --------------------- \\\
+
 
   /// Gets the ID of the admin of this group
   String getAdminID()
   {
-    return adminID;
+    return _adminID;
   }
+
 
   /// Get the unique code of this group
   String getGroupCode()
   {
-    return groupID;
+    return _groupID;
   }
+
 
   /// Get the description of this group
   String getDescription()
   {
-    return groupDescription;
+    return _groupDescription;
   }
 
-  /// Get the member IDs of the users in this group
-  List<String> getMembers()
+  /// Set the description of this group
+  void setDescription(String newDescription)
   {
-    return _members;
+      _groupDescription = newDescription;
   }
+
+
+  /// Get the username of the member with the provided ID
+  /// Might return null
+  String getUserName( String ID )
+  {
+    return _members[ID];
+  }
+
+
+  /// Get the UserData of all users in this group
+  List< UserData > getMembers()
+  {
+    List< UserData > users = new List<UserData>();
+
+    _members.forEach(
+      (id, username) {
+        users.add( new UserData(id, username) );
+      }
+    );
+
+    return users;
+  }
+
+
+  /// Adds a user to this group if he isn't included yet
+  void addMember( UserData user )
+  {
+    if ( _members.containsKey(user.getUserID()) )
+      return;
+
+    _members[ user.getUserID() ] = user.getUsername();
+  }
+
+
+  /// Removes a user from this group
+  /// User will be removed from all lists (all vote lists + playing lists)
+  void removeMember( UserData user )
+  {
+    _members.remove( user.getUserID() );
+    removePlayingUser(user);
+
+    _lastVotes.remove( user.getUserID() );
+    _newVotes.remove( user.getUserID() );
+    _totalVotes.remove( user.getUserID() );
+  }
+
 
   /// Get the name of this group
   String getName()
   {
-    return groupName;
+    return _groupName;
   }
 
+
+  /// Set the name of this group
+  void setName(String newName)
+  {
+    _groupName = newName;
+  }
+
+
+  /// ---------------- \\\
+  /// GroupData Status \\\
+  /// ---------------- \\\
+  
+
+  /// Check wheter or not a user is playing
+  bool isUserPlaying( UserData user )
+  {
+    if (_playing.contains( user.getUserID() ))
+      return true;
+    else return false;
+  }
+
+
+  /// Add a user to the playing list
+  /// Does not affect the member list
+  void setPlayingUser( UserData user )
+  {
+
+    if ( isUserPlaying( user ) )
+      return;
+    
+    _playing.add( user.getUserID() );
+  }
+
+
+  /// Remove a user from the playing list
+  /// Player will also be removed from vote lists
+  /// Does not affect the member list
+  void removePlayingUser( UserData user )
+  {
+    String id = user.getUserID();
+
+    _playing.remove( id );
+    _lastVotes.remove( id );
+    _newVotes.remove( id );
+    _totalVotes.remove( id );
+  }
+
+
   /// A temporary method for testing by printing the contents of this group
+  @Deprecated('Will be deleted before release!')
   void printData()
   {
     String membersString = "";
-    for (String member in _members)
-    {
-        membersString += member + ", ";
-    }
+    _members.forEach( (key, member)
+      {
+          membersString += member + ", ";
+      });
 
     print("-----");
     print("GroupTileData debug message");
-    print("Name: " + groupName + "\nGroupID: " + groupID + "\nadminID: " + adminID + "\nmembers:" + membersString);
+    print("Name: " + _groupName + "\nGroupID: " + _groupID + "\nadminID: " + _adminID + "\nmembers:" + membersString);
+    _totalVotes.forEach( (key, value) { print("ID: " + key); print("Votes: " + value.toString()); } );
     print("-----");
   }
 

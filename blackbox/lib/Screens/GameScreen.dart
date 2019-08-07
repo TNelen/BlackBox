@@ -65,7 +65,7 @@ class GameScreen extends StatelessWidget {
                           )),
                       Center(
                         child: Text(
-                          groupInfo.groupName,
+                          groupInfo.getName(),
                           style: TextStyle(
                             fontSize: 28,
                             color: Colors.white,
@@ -177,20 +177,20 @@ class GameScreen extends StatelessWidget {
                         children: groupInfo.getMembers()
                             .map((data) =>
                             Card(
-                              color: data == groupInfo.adminID
+                              color: data.getUserID() == groupInfo.getAdminID()
                                   ? Colors.amber
                                   : Colors.white,
                               child: Center(
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
-                                    child: data == groupInfo.adminID
+                                    child: data.getUserID() == groupInfo.getAdminID()
                                         ? Center(
                                       child: Column(
                                         mainAxisAlignment:
                                         MainAxisAlignment.center,
                                         children: <Widget>[
                                           Text(
-                                            data,
+                                            data.getUsername(),
                                             style: new TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 20.0,
@@ -209,7 +209,7 @@ class GameScreen extends StatelessWidget {
                                       ),
                                     )
                                         : Text(
-                                      data,
+                                      data.getUsername(),
                                       style: new TextStyle(
                                           color: Colors.black,
                                           fontSize: 20.0,

@@ -22,7 +22,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (Constants.getUserID() == groupInfo.adminID)
+    if (Constants.getUserID() == groupInfo.getAdminID())
       return adminScreen(context);
     else
       return userScreen(context);

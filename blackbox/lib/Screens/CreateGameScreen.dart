@@ -69,8 +69,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           onPressed: () {
             // Create list of members
-            List<String> members = new List<String>();
-            members.add(Constants.getUserID());
+            Map<String, String> members = new Map<String, String>();
+            members[Constants.getUserID()] = Constants.getUsername();
             groupName = nameController.text;
             groupDescription = descController.text;
             if(groupName.length != 0 && groupDescription.length != 0) {

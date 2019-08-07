@@ -51,11 +51,9 @@ class Firebase implements Database{
           // Handle all documents one by one
           for (final DocumentSnapshot ds in data.documents)
           {
-            List<String> members = new List<String>();
-            for (dynamic member in ds.data['members'])
-            {
-                members.add( member );
-            }
+
+            Map<String, String> members = new Map<String, String>();
+            members = ds.data['members'];
 
             if (ds.data['name'] == null || ds.data['description'] == null || ds.data['admin'] == null || members.length == 0)
             {
@@ -93,11 +91,9 @@ class Firebase implements Database{
           // Handle all documents one by one
           for (final DocumentSnapshot ds in data.documents)
           {
-            List<String> members = new List<String>();
-            for (dynamic member in ds.data['members'])
-            {
-                members.add( member );
-            }
+            
+            Map<String, String> members = new Map<String, String>();
+            members = ds.data['members'];
 
             if (ds.data['name'] == null || ds.data['description'] == null || ds.data['admin'] == null || members.length == 0)
             {
@@ -159,11 +155,9 @@ class Firebase implements Database{
             .collection("groups")
             .document( code ).get().then( (document) {
               /// Get all member IDs
-              List<String> members = new List<String>();           
-              for (String member in document.data['members'])
-              {
-                members.add( member );
-              }
+              
+              Map<String, String> members = new Map<String, String>();
+              members = document.data['members'];
 
               if (document.data['name'] == null || document.data['description'] == null || document.data['admin'] == null || members.length == 0)
               {

@@ -93,7 +93,7 @@ class _GroupListState extends State<GroupList> {
 
      GroupData removed;
      IconData trailing;
-     if (Constants.groupData[index].adminID == Constants.getUsername()) {
+     if (Constants.groupData[index].getAdminID() == Constants.getUsername()) {
          trailing = Icons.star;
      }
      else  trailing = Icons.people_outline;
@@ -128,7 +128,7 @@ class _GroupListState extends State<GroupList> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          Constants.groupData[index].groupName,
+                          Constants.groupData[index].getName(),
                           style: TextStyle(
                             fontSize: 22,
                             color: Colors.black,
@@ -136,7 +136,7 @@ class _GroupListState extends State<GroupList> {
                           ),
                         ),
                         Text(
-                          Constants.groupData[index].groupDescription,
+                          Constants.groupData[index].getDescription(),
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
