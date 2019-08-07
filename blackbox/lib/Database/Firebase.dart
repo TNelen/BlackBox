@@ -37,6 +37,7 @@ class Firebase implements Database{
 
 
   @override
+  @Deprecated('Please use FirebaseStream instead!')
   Future< GroupData > getGroupFromUser(UserData userData) async
   {
 
@@ -76,6 +77,7 @@ class Firebase implements Database{
 
 
   @override
+  @Deprecated('Multiple groups are no longer supported!')
   Future< List<GroupData> > getGroups(String uniqueUserID) async
   {
     

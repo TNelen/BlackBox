@@ -20,10 +20,12 @@ abstract class Database {
   /// -------
 
   /// Returns the list of all the groups that a user is part of
+  @Deprecated('Multiple groups are no longer supported!')
   Future< List<GroupData> > getGroups(String uniqueUserID);
 
   /// Get the group of a given user
   /// Returns null if no group was found
+  @Deprecated('Please use FirebaseStream instead!')
   Future< GroupData > getGroupFromUser( UserData userData );
 
   /// Get the unique ID of a group by providing the code
