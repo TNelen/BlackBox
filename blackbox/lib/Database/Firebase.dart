@@ -309,7 +309,14 @@ class Firebase implements Database{
     data['name'] = groupData.getName();
     data['description'] = groupData.getDescription();
     data['admin'] = groupData.getAdminID();
-    data['members'] = groupData.getMembers();
+    data['members'] = groupData.getMembersAsMap();
+
+    data['playing'] = groupData.getPlaying();
+    data['nextQuestion'] = groupData.getQuestion();
+
+    data['lastVotes'] = groupData.getLastVotes();
+    data['newVotes'] = groupData.getNewVotes();
+    data['totalVotes'] = groupData.getTotalVotes();
 
     Firestore.instance.collection("groups").document( code ).setData(data);
   }

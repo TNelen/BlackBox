@@ -25,10 +25,10 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     this._database = db;
   }
 
-  static String groupName = "ExampleName";
-  static String groupDescription = "Example Description";
-  static String groupID = 'AC8NR27';
-  static String groupAdmin = Constants.getUserID();
+  String _groupName;
+  String _groupDescription;
+  String _groupID;
+  String _groupAdmin = Constants.getUserID();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -68,18 +68,18 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           onPressed: () {
-            // Create list of members
+            // Create map of members
             Map<String, String> members = new Map<String, String>();
             members[Constants.getUserID()] = Constants.getUsername();
-            groupName = nameController.text;
-            groupDescription = descController.text;
-            if(groupName.length != 0 && groupDescription.length != 0) {
+            _groupName = nameController.text;
+            _groupDescription = descController.text;
+            if(_groupName.length != 0 && _groupDescription.length != 0) {
               // Generate a unique ID and save the group
               _database.generateUniqueGroupCode().then((code) {
-                _database.updateGroup(new GroupData(groupName, groupDescription,
+                _database.updateGroup(new GroupData(_groupName, _groupDescription,
                     code, Constants.getUserID(), members));
               });
-            };
+            }
           },
           child: Text("Create",
               textAlign: TextAlign.center,

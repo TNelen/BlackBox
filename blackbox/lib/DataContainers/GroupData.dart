@@ -152,6 +152,13 @@ class GroupData {
   }
 
 
+  /// Get all members in this group as a Map
+  /// Their IDs will serve as key while their usernames will be the values
+  Map< String, String > getMembersAsMap()
+  {
+    return _members;
+  }
+
   /// Adds a user to this group if he isn't included yet
   void addMember( UserData user )
   {
@@ -247,6 +254,12 @@ class GroupData {
   }
 
 
+  /// Get the current list of playing members (their IDs)
+  List<String> getPlaying()
+  {
+    return _playing;
+  }
+
   /// Get the amount of playing users
   int getNumPlaying()
   {
@@ -291,6 +304,12 @@ class GroupData {
 
   }
 
+
+  /// Get the new votes, from this round
+  Map<String, int> getNewVotes()
+  {
+    return _newVotes;
+  }
 
   /// Get the votes from last round
   Map<String, int> getLastVotes()
