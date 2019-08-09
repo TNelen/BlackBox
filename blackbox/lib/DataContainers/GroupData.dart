@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../DataContainers/UserData.dart';
+import '../DataContainers/Question.dart';
 
 class GroupData {
     
@@ -17,7 +18,7 @@ class GroupData {
   Map<String, String> _members = new Map<String, String>(); /// A list of unique IDs of all members in this group
 
   /// Status information about this group
-  String _nextQuestion;
+  Question _nextQuestion;
   Map<String, int> _lastVotes;  /// Mapping unique IDs to the number of last votes a member had
   Map<String, int> _newVotes;   /// Mapping unique IDs to the new number of votes a member had
   Map<String, int> _totalVotes; /// Mapping unique IDs to the total amount of votes for that user
@@ -31,7 +32,7 @@ class GroupData {
 
   /// Create a group with the given data fields
   GroupData(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members) {
-    _nextQuestion = "";
+    _nextQuestion = new Question.empty();
     _lastVotes = new Map<String, int>();
     _newVotes = new Map<String, int>();
     _totalVotes = new Map<String, int>();
@@ -220,7 +221,7 @@ class GroupData {
   /// Set a new question
   /// Admin account must be provided for authentication
   /// Non-admins will cause this function to fail silently
-  void setNextQuestion(String nextQuestion, UserData admin)
+  void setNextQuestion(Question nextQuestion, UserData admin)
   {
     if (admin.getUserID() != _adminID)
       return;
@@ -230,10 +231,11 @@ class GroupData {
 
 
   /// Get the question currently in this group
-  String getQuestion()
+  Question getQuestion()
   {
     return _nextQuestion;
   }
+
 
   /// Check wheter or not a user is playing
   bool isUserPlaying( UserData user )
