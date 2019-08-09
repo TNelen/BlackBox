@@ -1,5 +1,6 @@
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
+import '../DataContainers/Question.dart';
 import 'package:blackbox/Database/FirebaseStream.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Interfaces/Database.dart';
@@ -177,6 +178,50 @@ class Firebase implements Database{
     return null;
   }
 
+  @override
+  Future< Question > getRandomQuestion( Category category ) async
+  {
+    Question randomQuestion;
+    String randomQuestionID;
+
+    var doc = await Firestore.instance
+          .collection("questions")
+          .document("questionList")
+          .get()
+          .then (
+            (document) {
+              /// Convert List<dynamic> to List<String>
+              List<dynamic> existing = document.data['questions'];
+              List<String> questions = existing.cast<String>().toList();
+
+              var random = new Random();
+              int randomID = random.nextInt( questions.length );
+
+              randomQuestionID = questions[randomID];
+
+            }
+          );
+
+      var documentSnap = await Firestore.instance
+            .collection("questions")
+            .document( randomQuestionID ).get().then( (document) {
+              Category category = Category.Default;
+
+              for (Category cat in Category.values)
+              {
+                String comparableCategory = cat.toString().split('.').last;
+                if ( comparableCategory == document.data['category'] )
+                {
+                  category = cat;
+                }
+              }
+
+              randomQuestion = new Question(document.documentID, document.data['question'], category, document.data['creatorID'], document.data['creatorName']);
+            } );
+
+      return randomQuestion;
+  }
+
 
   @override
   Future< String > generateUniqueGroupCode() async
@@ -333,4 +378,38 @@ class Firebase implements Database{
     Firestore.instance.collection("users").document( uniqueID ).setData(data);
   }
 
+  @override
+  void updateQuestion( Question question ) async
+  {
+    String uniqueID = question.getQuestionID();
+    
+    var data = new Map<String, dynamic>();
+    data['category'] = question.getCategory();
+    data['creatorID'] = question.getCreatorID();
+    data['creatorName'] = question.getCreatorName();
+    data['question'] = question.getQuestion();
+
+    Firestore.instance.collection("questions").document( uniqueID ).setData(data);
+
+    var doc = await Firestore.instance
+          .collection("questions")
+          .document("questionList")
+          .get()
+          .then (
+            (document) {
+              /// Convert List<dynamic> to List<String>
+              List<dynamic> existing = document.data['questions'];
+              List<String> questions = existing.cast<String>().toList();
+
+              if ( ! questions.contains(uniqueID) )
+              {
+                questions.add( uniqueID );
+                var newData = new Map<String, dynamic>();
+                newData['questions'] = questions;
+                Firestore.instance.collection('questions').document('questionList').setData( newData );
+              }
+
+            }
+          );
+  }
 }

@@ -1,5 +1,6 @@
 import '../DataContainers/GroupData.dart';
 import '../DataContainers/UserData.dart';
+import '../DataContainers/Question.dart';
 
 abstract class Database {
 
@@ -40,14 +41,20 @@ abstract class Database {
   /// This ID is ONLY unique for groups!!
   Future< String > generateUniqueGroupCode();
 
+  /// Get a random question within the provided category
+  /// For a list of categories: check DataContainers/Question.dart
+  Future< Question > getRandomQuestion( Category category );
 
   /// -------
   /// Setters
   /// -------
 
-  /// Updates the user with the same ID in the database to the one provided. If the user does not exist, they will be added
+  /// Updates the user with the same unique ID in the database to the one provided. If the user does not exist, they will be added
   void updateUser(UserData userData);
 
   /// Updates the group with the same unique ID. If it doesn't exist, it will be added
   void updateGroup(GroupData groupData);
+
+  /// Updates the question with the same unique ID. If it doesn't exist, it will be added
+  void updateQuestion(Question question);
 }
