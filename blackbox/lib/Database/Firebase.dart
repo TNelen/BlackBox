@@ -194,11 +194,15 @@ class Firebase implements Database{
               List<dynamic> existing = document.data['questions'];
               List<String> questions = existing.cast<String>().toList();
 
-              var random = new Random();
-              int randomID = random.nextInt( questions.length );
+              int randomID;
+              if (questions.length > 1) {
+                var random = new Random();
+                randomID = random.nextInt( questions.length );
+              } else randomID = 0;
 
               randomQuestionID = questions[randomID];
-
+              print ("RANDOM QUESTION: " + randomQuestionID);
+              print("Num questions: " + questions.length.toString());
             }
           );
 
@@ -238,6 +242,34 @@ class Firebase implements Database{
         // Check whether or not the generated ID exists 
         var documentSnap = await Firestore.instance
             .collection("groups")
+            .document( newRandom ).get().then( (document) {
+
+              // ID does not exist, unique code found!
+              if ( ! document.exists )
+                isTaken = false;
+
+            } );
+    }
+
+    return newRandom;
+
+  }
+
+  @override
+  Future< String > _generateUniqueQuestionCode() async
+  { 
+    bool isTaken = true;
+    String newRandom;
+
+    // While no unique ID has been found
+    while ( isTaken )
+    {
+        // Generate a random ID
+        newRandom = _getRandomID(6);
+
+        // Check whether or not the generated ID exists 
+        var documentSnap = await Firestore.instance
+            .collection("questions")
             .document( newRandom ).get().then( (document) {
 
               // ID does not exist, unique code found!
@@ -383,6 +415,11 @@ class Firebase implements Database{
   {
     String uniqueID = question.getQuestionID();
     
+    if (uniqueID == "")
+    {
+      uniqueID = await _generateUniqueQuestionCode();
+    }
+
     var data = new Map<String, dynamic>();
     data['category'] = question.getCategory();
     data['creatorID'] = question.getCreatorID();

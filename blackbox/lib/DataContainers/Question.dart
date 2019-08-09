@@ -80,4 +80,16 @@ class Question {
   {
     return _creatorName;
   }
+
+  
+  /// ------- \\\
+  /// Setters \\\
+  /// ------- \\\
+
+
+  /// Set the unique ID of this question
+  void setQuestionID( String newID )
+  {
+    _questionID = newID;
+  }
 }

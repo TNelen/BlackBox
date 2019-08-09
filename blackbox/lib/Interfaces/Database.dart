@@ -43,6 +43,7 @@ abstract class Database {
 
   /// Get a random question within the provided category
   /// For a list of categories: check DataContainers/Question.dart
+  /// The category is currently ignored
   Future< Question > getRandomQuestion( Category category );
 
   /// -------
