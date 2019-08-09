@@ -57,7 +57,7 @@ class GroupData {
     _adminID = snap.data['admin'],
     /// Get status data
     _nextQuestion = snap.data['nextQuestion'] ?? "No question available",
-    _members = _convertFirebaseMapString( snap.data['members']),
+    _members = _convertFirebaseMapString( snap.data['members'] ),
     _lastVotes = _convertFirebaseMapInt( snap.data['lastVotes'] ),
     _newVotes = _convertFirebaseMapInt( snap.data['newVotes'] ),
     _totalVotes = _convertFirebaseMapInt( snap.data['totalVotes'] ),
@@ -83,8 +83,16 @@ class GroupData {
   /// NO checks are done! Provided parameter MUST be correct
   static Map<String, int> _convertFirebaseMapInt( dynamic data )
   {
-    Map<String, int> map = data;
-    return map;
+    /// Initialize lists
+    Map<dynamic, dynamic> dbData = data;
+    Map<String, int> convertedData = new Map<String, int>();
+
+    /// Loop the database Map and add values as Strings to the data Map
+    dbData.forEach( (key, value) {
+      convertedData[key.toString()] = value;
+    } );
+
+    return convertedData;
   }
 
 
@@ -92,8 +100,16 @@ class GroupData {
   /// NO checks are done! Provided parameter MUST be correct
   static Map<String, String> _convertFirebaseMapString( dynamic data )
   {
-    Map<String, String> map = data;
-    return map;
+    /// Initialize lists
+    Map<dynamic, dynamic> DBData = data;
+    Map<String, String> convertedData = new Map<String, String>();
+
+    /// Loop the database Map and add values as Strings to the data Map
+    DBData.forEach( (key, value) {
+      convertedData[key.toString()] = value.toString();
+    } );
+
+    return convertedData;
   }
 
 

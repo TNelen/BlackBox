@@ -26,7 +26,7 @@ class GameScreen extends StatelessWidget {
       } else {
         // Refresh content
         print("DATA LOADED");
-        print("Group name: " + groupInfo.getName());
+        groupInfo.printData();
       }
   }
 
