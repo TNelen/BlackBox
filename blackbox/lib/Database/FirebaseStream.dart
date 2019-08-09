@@ -5,7 +5,7 @@ import 'dart:async';
 class FirebaseStream {
 
   static String _groupID;
-  final StreamController<GroupData> _groupController = StreamController<GroupData>();
+  final StreamController<GroupData> _groupController = StreamController<GroupData>.broadcast();
 
   /// Singleton pattern
   static final FirebaseStream _firebaseStream = new FirebaseStream._internal();
@@ -23,12 +23,15 @@ class FirebaseStream {
         .collection('groups')
         .document( _groupID )
         .snapshots()
+        .asBroadcastStream()
         .listen(_groupDataUpdated);
   }
 
 
   /// Getter for the GroupData Stream
-  Stream<GroupData> get groupData => _groupController.stream;
+  Stream<GroupData> get groupData => _groupController.stream.asBroadcastStream();
+
+
 
   /// Update groupData in the Stream
   void _groupDataUpdated ( DocumentSnapshot ds )
