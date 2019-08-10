@@ -1,8 +1,11 @@
   
+  import 'UserData.dart';
+  
   /// All question Categories should be put in here
   enum Category {
     Any,
-    Default
+    Default,
+    Community
   }
 
 class Question {
@@ -17,6 +20,9 @@ class Question {
   /// Constructors \\\
   /// ------------ \\\
 
+  /// ---
+  /// Questions when retreived from the database
+  /// ---
 
   /// Create a Question by providing all data
   Question(this._questionID, this._question, this._category, this._creatorID, this._creatorName);
@@ -27,10 +33,40 @@ class Question {
   /// CreatorID and name will be set to an empty String
   Question.basic(this._questionID, this._question);
 
+  /// ---
+  /// Questions when empty -> can be used while waiting for Question data
+  /// ---
 
   /// Create an empty question
   /// All fields will be set to an empty String
   Question.empty();
+
+  /// ---
+  /// Questions when creating new questions
+  /// ---
+
+  /// Create a question which can be used locally or added to the database
+  /// Note that a unique ID must NOT be provided, the database should take care of this
+  /// Category will be set to default
+  /// User data will be left empty
+  Question.addDefault(this._question);
+
+
+  /// Create a question which can be used locally or added to the database
+  /// Note that a unique ID must NOT be provided, the database should take care of this
+  /// User data will be left empty
+  Question.add(this._question, this._category);
+
+
+  /// Create a question which can be used locally or added to the database
+  /// Note that a unique ID must NOT be provided, the database should take care of this
+  /// Category will be set to Category.Community
+  /// User data will be those of the provided UserData
+  Question.addFromUser(this._question, UserData user) {
+    _category = Category.Community;
+    _creatorID = user.getUserID();
+    _creatorName = user.getUsername();
+  }
 
 
   /// ------- \\\
