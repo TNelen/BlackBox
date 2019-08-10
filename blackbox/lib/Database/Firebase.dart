@@ -389,7 +389,7 @@ class Firebase implements Database{
     data['members'] = groupData.getMembersAsMap();
 
     data['playing'] = groupData.getPlaying();
-    data['nextQuestion'] = groupData.getQuestion();
+    data['nextQuestion'] = groupData.getQuestion().getQuestion();
 
     data['lastVotes'] = groupData.getLastVotes();
     data['newVotes'] = groupData.getNewVotes();

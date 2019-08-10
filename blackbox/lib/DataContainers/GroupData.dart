@@ -57,7 +57,7 @@ class GroupData {
     _groupID = snap.documentID.toString(),
     _adminID = snap.data['admin'],
     /// Get status data
-    _nextQuestion = snap.data['nextQuestion'] ?? "No question available",
+    _nextQuestion = new Question.addDefault( snap.data['nextQuestion']) ?? new Question.empty(),
     _members = _convertFirebaseMapString( snap.data['members'] ),
     _lastVotes = _convertFirebaseMapInt( snap.data['lastVotes'] ),
     _newVotes = _convertFirebaseMapInt( snap.data['newVotes'] ),
