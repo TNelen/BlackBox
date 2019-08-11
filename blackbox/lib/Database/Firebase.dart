@@ -390,6 +390,10 @@ class Firebase implements Database{
 
     data['playing'] = groupData.getPlaying();
     data['nextQuestion'] = groupData.getQuestion().getQuestion();
+    data['nextQuestionID'] = groupData.getQuestion().getQuestionID();
+    data['nextQuestionCategory'] = groupData.getQuestion().getCategory();
+    data['nextQuestionCreatorID'] = groupData.getQuestion().getCreatorID();
+    data['nextQuestionCreatorName'] = groupData.getQuestion().getCreatorName();
 
     data['lastVotes'] = groupData.getLastVotes();
     data['newVotes'] = groupData.getNewVotes();

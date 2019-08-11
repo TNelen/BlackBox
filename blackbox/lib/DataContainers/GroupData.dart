@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:blackbox/Constants.dart';
 import '../DataContainers/UserData.dart';
 import '../DataContainers/Question.dart';
 
@@ -57,7 +58,7 @@ class GroupData {
     _groupID = snap.documentID.toString(),
     _adminID = snap.data['admin'],
     /// Get status data
-    _nextQuestion = new Question.addDefault( snap.data['nextQuestion']) ?? new Question.empty(),
+    _nextQuestion = new Question( snap.data['nextQuestionID'], snap.data['nextQuestion'], Question.getCategoryFromString(snap.data['nextQuestionCategory']), snap.data['nextQuestionCreatorID'], snap.data['nextQuestionCreatorName']) ?? new Question.empty(),
     _members = _convertFirebaseMapString( snap.data['members'] ),
     _lastVotes = _convertFirebaseMapInt( snap.data['lastVotes'] ),
     _newVotes = _convertFirebaseMapInt( snap.data['newVotes'] ),
