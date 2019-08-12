@@ -1,5 +1,7 @@
+import 'package:blackbox/Constants.dart';
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
+import 'package:blackbox/Exceptions/GroupNotFoundException.dart';
 import '../DataContainers/Question.dart';
 import 'package:blackbox/Database/FirebaseStream.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -149,33 +151,28 @@ class Firebase implements Database{
   @override
   Future< GroupData > getGroupByCode(String code) async
   {
-    GroupData group;
+    GroupData groupData;
 
     try {
-        var documentSnap = await Firestore.instance
-            .collection("groups")
-            .document( code ).get().then( (document) {
-              /// Get all member IDs
-              
-              Map<String, String> members = new Map<String, String>();
-              members = document.data['members'];
+        await Firestore.instance
+          .collection("groups")
+          .document( code ).get().then( (document) {
 
-              if (document.data['name'] == null || document.data['description'] == null || document.data['admin'] == null || members.length == 0)
-              {
-                return null;
-              }
+            if (document.exists) {
+              groupData = GroupData.fromDocumentSnapshot( document );
+            } else {
+              throw new GroupNotFoundException( code );
+            }
 
-              ///GroupData constructor: String groupName, String groupDescription, String groupID, String adminID, List<String> members
-              group = new GroupData(document.data['name'], document.data['description'], document.documentID, document.data['admin'], members);
-            } );
+          });
         
-        return group;
     } catch (exception)
     {
         print ('Something went wrong while fetching group ' + code);
         print(exception);
     }
-    return null;
+
+    return groupData;
   }
 
   @override
@@ -350,25 +347,103 @@ class Firebase implements Database{
   @override
   void updateGroup(GroupData groupData) async {
     String code = groupData.getGroupCode();
-    
-    var data = new Map<String, dynamic>();
-    data['name'] = groupData.getName();
-    data['description'] = groupData.getDescription();
-    data['admin'] = groupData.getAdminID();
-    data['members'] = groupData.getMembersAsMap();
+    String userID = Constants.getUserID();
 
-    data['playing'] = groupData.getPlaying();
-    data['nextQuestion'] = groupData.getQuestion().getQuestion();
-    data['nextQuestionID'] = groupData.getQuestion().getQuestionID();
-    data['nextQuestionCategory'] = groupData.getQuestion().getCategory();
-    data['nextQuestionCreatorID'] = groupData.getQuestion().getCreatorID();
-    data['nextQuestionCreatorName'] = groupData.getQuestion().getCreatorName();
+    Firestore.instance.runTransaction((Transaction transaction) async {
 
-    data['lastVotes'] = groupData.getLastVotes();
-    data['newVotes'] = groupData.getNewVotes();
-    data['totalVotes'] = groupData.getTotalVotes();
+      /// Get up-to-date data
+      GroupData freshData;
+      DocumentReference docRef = Firestore.instance.collection("groups").document( code );
+      DocumentSnapshot snap = await transaction.get( docRef );
+      freshData = new GroupData.fromDocumentSnapshot( snap );
+      //freshData = GroupData.fromDocumentSnapshot( await Firestore.instance
+      //    .collection( "groups" )
+      //    .document( code ).get()
+      //);
+      
 
-    Firestore.instance.collection("groups").document( code ).setData(data);
+      var data = new Map<String, dynamic>();
+      data['admin'] = groupData.getAdminID();
+
+      ///
+      /// Handle members
+      /// 
+      
+      Map<String, dynamic> newMemberList = new Map<String, dynamic>(); 
+      newMemberList = freshData.getMembersAsMap();
+
+      /// Add user if he is still a member
+      if (groupData.getMembersAsMap().containsKey( userID ))
+      {
+        print("new member!");
+        newMemberList[ userID ] = Constants.getUsername();
+      } else {
+        print("Remove member!");
+        newMemberList.remove( userID );
+      }
+
+      data['members'] = newMemberList;
+
+      ///
+      /// Handle isPlaying
+      /// 
+      
+      List<String> newList = new List<String>();
+      newList = freshData.getPlaying();
+      if ( groupData.getPlaying().contains( userID ) )
+      {
+        newList.add( userID );
+      } else {
+        newList.remove( userID );
+      }
+
+      data['playing'] = newList;
+
+      
+      
+      ///
+      /// Handle votes -> Always get most up-to-date values!
+      /// 
+      data['lastVotes'] = freshData.getLastVotes();
+      data['newVotes'] = freshData.getNewVotes();
+      data['totalVotes'] = freshData.getTotalVotes();
+
+
+      /// If user is admin -> Overwrite permissions!
+      if ( freshData.getAdminID() == Constants.getUserID() )
+      {
+        data['name'] = groupData.getName();
+        data['description'] = groupData.getDescription();
+
+        data['nextQuestion'] = groupData.getQuestion().getQuestion();
+        data['nextQuestionID'] = groupData.getQuestion().getQuestionID();
+        data['nextQuestionCategory'] = groupData.getQuestion().getCategory();
+        data['nextQuestionCreatorID'] = groupData.getQuestion().getCreatorID();
+        data['nextQuestionCreatorName'] = groupData.getQuestion().getCreatorName();
+      } else {  /// Otherwise: use current data
+        data['name'] = freshData.getName();
+        data['description'] = freshData.getDescription();
+
+        data['nextQuestion'] = freshData.getQuestion().getQuestion();
+        data['nextQuestionID'] = freshData.getQuestion().getQuestionID();
+        data['nextQuestionCategory'] = freshData.getQuestion().getCategory();
+        data['nextQuestionCreatorID'] = freshData.getQuestion().getCreatorID();
+        data['nextQuestionCreatorName'] = freshData.getQuestion().getCreatorName();
+      }
+
+
+      data.forEach( (key, value) {
+        print(key + ": " + value.toString());
+      });
+
+      /// Add the new data
+      await transaction.set(docRef, data);
+      //await Firestore.instance
+      //  .collection("groups")
+      //  .document( code )
+      //  .setData( data );
+
+      });
   }
 
 
