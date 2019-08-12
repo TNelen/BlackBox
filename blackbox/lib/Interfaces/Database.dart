@@ -46,6 +46,9 @@ abstract class Database {
   /// The category is currently ignored
   Future< Question > getRandomQuestion( Category category );
 
+  /// Check whether or not a group actually exists
+  Future< bool > doesGroupExist( String groupID );
+
   /// -------
   /// Setters
   /// -------
