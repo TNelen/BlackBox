@@ -5,28 +5,36 @@ import 'dart:async';
 class FirebaseStream {
 
   static String _groupID;
-  final StreamController<GroupData> _groupController = StreamController<GroupData>.broadcast();
+  static StreamController<GroupData> _groupController;
+  StreamSubscription< DocumentSnapshot > _subscription;
 
   /// Singleton pattern
   static final FirebaseStream _firebaseStream = new FirebaseStream._internal();
-  StreamSubscription< DocumentSnapshot > subscription;
 
   factory FirebaseStream( String groupID ) {
     
-    _groupID = groupID;
+    _groupController = new StreamController<GroupData>.broadcast();
 
+    _groupID = groupID;
+    FirebaseStream._internal();
+    
     return _firebaseStream;
   }
 
   FirebaseStream._internal() {
 
-    if (subscription != null)
+    if ( _groupController.isClosed )
     {
-      subscription.cancel();
+      _groupController = new StreamController<GroupData>.broadcast();
+      print("Opened controller due to _internal() call");
+    }
+
+    if (_subscription != null ) {
+      _subscription.cancel();
     }
 
     /// Subscribe to group changes and update the variable
-    subscription = Firestore.instance
+    _subscription = Firestore.instance
         .collection('groups')
         .document( _groupID )
         .snapshots()
@@ -37,8 +45,11 @@ class FirebaseStream {
 
 
   void closeController(){
+    if ( _subscription != null ) {
+      _subscription.cancel();
+      _subscription = null;
+    }
     _groupController.close();
-    print("controller closed");
   }
 
 
@@ -50,6 +61,12 @@ class FirebaseStream {
   /// Update groupData in the Stream
   void _groupDataUpdated ( DocumentSnapshot ds )
   {
+    if (_groupController.isClosed)
+    {
+      FirebaseStream._internal();
+    }
+
+
     _groupController.add( GroupData.fromDocumentSnapshot( ds ) );
   }
 

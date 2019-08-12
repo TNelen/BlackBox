@@ -13,6 +13,7 @@ class GameScreen extends StatefulWidget {
   String code;
 
   GameScreen(Database db, String code) {
+    print("Join code: " + code);
     this._database = db;
     this.code = code;
   }
