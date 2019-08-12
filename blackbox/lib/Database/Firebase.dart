@@ -283,6 +283,27 @@ class Firebase implements Database{
 
   }
 
+
+  @override
+  Future< bool > doesGroupExist( String groupID ) async
+  {
+    bool exists = false;
+
+    /// Get group with ID
+    var documentSnap = await Firestore.instance
+        .collection("groups")
+        .document( groupID ).get().then( (document) {
+
+          // Group exists!
+          if ( document.exists )
+            exists = true;
+
+        } );
+
+    return exists;
+  }
+
+
   /// Create a random alphanumeric code
   /// Returns as a String
   String _getRandomID(int length)
