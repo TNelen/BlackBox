@@ -9,6 +9,7 @@ class FirebaseStream {
 
   /// Singleton pattern
   static final FirebaseStream _firebaseStream = new FirebaseStream._internal();
+  StreamSubscription< DocumentSnapshot > subscription;
 
   factory FirebaseStream( String groupID ) {
     
@@ -18,8 +19,14 @@ class FirebaseStream {
   }
 
   FirebaseStream._internal() {
-  /// Subscribe to group changes and update the variable
-    Firestore.instance
+
+    if (subscription != null)
+    {
+      subscription.cancel();
+    }
+
+    /// Subscribe to group changes and update the variable
+    subscription = Firestore.instance
         .collection('groups')
         .document( _groupID )
         .snapshots()
