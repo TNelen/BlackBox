@@ -451,51 +451,68 @@ class Firebase implements Database{
   @override
   void updateUser(UserData userData) async {
     String uniqueID = userData.getUserID();
-    
+      
     var data = new Map<String, dynamic>();
     data['name'] = userData.getUsername();
 
-    Firestore.instance.collection("users").document( uniqueID ).setData(data);
+    Firestore.instance.runTransaction((Transaction transaction) async {
+      DocumentReference docRef = Firestore.instance.collection("users").document( uniqueID );
+      transaction.set(docRef, data);
+    });
   }
 
   @override
   void updateQuestion( Question question ) async
   {
-    String uniqueID = question.getQuestionID();
-    
-    if (uniqueID == "")
-    {
-      uniqueID = await _generateUniqueQuestionCode();
-    }
-
     var data = new Map<String, dynamic>();
+    data['question'] = question.getQuestion();
     data['category'] = question.getCategory();
     data['creatorID'] = question.getCreatorID();
     data['creatorName'] = question.getCreatorName();
-    data['question'] = question.getQuestion();
+    
+    Firestore.instance.runTransaction((Transaction transaction) async {
 
-    Firestore.instance.collection("questions").document( uniqueID ).setData(data);
+      /// Generate a unique ID
+      String uniqueID = question.getQuestionID();
+      
+      if (uniqueID == "")
+      {
+        uniqueID = await _generateUniqueQuestionCode();
+      }
 
-    var doc = await Firestore.instance
-          .collection("questions")
-          .document("questionList")
-          .get()
-          .then (
-            (document) {
-              /// Convert List<dynamic> to List<String>
-              List<dynamic> existing = document.data['questions'];
-              List<String> questions = existing.cast<String>().toList();
 
-              if ( ! questions.contains(uniqueID) )
-              {
-                questions.add( uniqueID );
-                var newData = new Map<String, dynamic>();
-                newData['questions'] = questions;
-                Firestore.instance.collection('questions').document('questionList').setData( newData );
+      /// Update question list
+      DocumentReference docRef = Firestore.instance
+                  .collection("questions")
+                  .document("questionList");
+
+      List<String> questions;
+      await transaction.get(docRef)
+            .then (
+              (document) {
+                /// Convert List<dynamic> to List<String>
+                List<dynamic> existing = document.data['questions'];
+                questions = existing.cast<String>().toList();
+
               }
+            );
+      
+      if ( ! questions.contains(uniqueID) )
+      {
+        questions.add( uniqueID );
+        var newData = new Map<String, dynamic>();
+        newData['questions'] = questions;
 
-            }
-          );
+        transaction.set(docRef, newData );
+      }
+
+
+      /// Save question
+      docRef = Firestore.instance
+                .collection("questions")
+                .document( uniqueID );
+      transaction.set(docRef, data);
+    });
   }
 
 
