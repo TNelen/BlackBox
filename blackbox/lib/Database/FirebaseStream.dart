@@ -1,4 +1,5 @@
 import 'package:blackbox/DataContainers/GroupData.dart';
+import 'package:blackbox/Exceptions/GroupNotFoundException.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 
@@ -65,9 +66,15 @@ class FirebaseStream {
     {
       FirebaseStream._internal();
     }
-
-
-    _groupController.add( GroupData.fromDocumentSnapshot( ds ) );
+  
+    try {
+    if ( ! ds.exists)
+      throw new GroupNotFoundException( _groupID );
+    else
+      _groupController.add( GroupData.fromDocumentSnapshot( ds ) );
+    } catch(e) {
+      print(e);
+    }
   }
 
 }
