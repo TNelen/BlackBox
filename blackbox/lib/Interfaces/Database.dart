@@ -4,9 +4,11 @@ import '../DataContainers/Question.dart';
 
 abstract class Database {
 
+
   /// -----------
   /// Connections
   /// -----------
+
 
   /// Performs actions to set up the connection to the database
   void openConnection();
@@ -15,10 +17,10 @@ abstract class Database {
   void closeConnection();
 
 
-
   /// -------
   /// Getters
   /// -------
+
 
   /// Returns the list of all the groups that a user is part of
   @Deprecated('Multiple groups are no longer supported!')
@@ -49,16 +51,47 @@ abstract class Database {
   /// Check whether or not a group actually exists
   Future< bool > doesGroupExist( String groupID );
 
+  /// Check whether or not a user actually exists
+  Future< bool > doesUserExist( String userID );
+
+  /// Check whether or not a question actually exists
+  Future< bool > doesQuestionExist( String questionID );
+
+
   /// -------
   /// Setters
   /// -------
+  
 
   /// Updates the user with the same unique ID in the database to the one provided. If the user does not exist, they will be added
-  void updateUser(UserData userData);
+  void updateUser( UserData userData );
 
   /// Updates the group with the same unique ID. If it doesn't exist, it will be added
-  void updateGroup(GroupData groupData);
+  void updateGroup( GroupData groupData );
 
   /// Updates the question with the same unique ID. If it doesn't exist, it will be added
-  void updateQuestion(Question question);
+  void updateQuestion( Question question );
+
+
+  /// --------
+  /// Deleters
+  /// --------
+
+
+  /// Delete a UserData from the database
+  /// Returns true when complete
+  /// Returns false when the user wasn't found
+  Future< bool > deleteUser( UserData user );
+
+
+  /// Delete a GroupData from the database
+  /// Returns true when complete
+  /// Returns false when the group wasn't found
+  Future< bool > deleteGroup( GroupData group );
+
+
+  /// Delete a Question from the database
+  /// Returns true when complete
+  /// Returns false when the question wasn't found
+  Future< bool > deleteQuestion( Question question );
 }

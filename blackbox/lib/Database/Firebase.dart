@@ -303,6 +303,187 @@ class Firebase implements Database{
     return exists;
   }
 
+  @override
+  Future< bool > doesUserExist( String userID ) async
+  {
+    bool exists = false;
+
+    /// Get group with ID
+    var documentSnap = await Firestore.instance
+        .collection("groups")
+        .document( userID ).get().then( (document) {
+
+          // Group exists!
+          if ( document.exists )
+            exists = true;
+
+        } );
+
+    return exists;
+  }
+
+    @override
+  Future< bool > doesQuestionExist( String questionID ) async
+  {
+    bool exists = false;
+
+    /// Get group with ID
+    var documentSnap = await Firestore.instance
+        .collection("groups")
+        .document( questionID ).get().then( (document) {
+
+          // Group exists!
+          if ( document.exists )
+            exists = true;
+
+        } );
+
+    return exists;
+  }
+
+
+  /// -------
+  /// Setters
+  /// -------
+
+
+  @override
+  void updateGroup(GroupData groupData) async {
+    String code = groupData.getGroupCode();
+    
+    var data = new Map<String, dynamic>();
+    data['name'] = groupData.getName();
+    data['description'] = groupData.getDescription();
+    data['admin'] = groupData.getAdminID();
+    data['members'] = groupData.getMembersAsMap();
+
+    data['playing'] = groupData.getPlaying();
+    data['nextQuestion'] = groupData.getQuestion().getQuestion();
+    data['nextQuestionID'] = groupData.getQuestion().getQuestionID();
+    data['nextQuestionCategory'] = groupData.getQuestion().getCategory();
+    data['nextQuestionCreatorID'] = groupData.getQuestion().getCreatorID();
+    data['nextQuestionCreatorName'] = groupData.getQuestion().getCreatorName();
+
+    data['lastVotes'] = groupData.getLastVotes();
+    data['newVotes'] = groupData.getNewVotes();
+    data['totalVotes'] = groupData.getTotalVotes();
+
+    Firestore.instance.collection("groups").document( code ).setData(data);
+  }
+
+
+
+  @override
+  void updateUser(UserData userData) async {
+    String uniqueID = userData.getUserID();
+    
+    var data = new Map<String, dynamic>();
+    data['name'] = userData.getUsername();
+
+    Firestore.instance.collection("users").document( uniqueID ).setData(data);
+  }
+
+  @override
+  void updateQuestion( Question question ) async
+  {
+    String uniqueID = question.getQuestionID();
+    
+    if (uniqueID == "")
+    {
+      uniqueID = await _generateUniqueQuestionCode();
+    }
+
+    var data = new Map<String, dynamic>();
+    data['category'] = question.getCategory();
+    data['creatorID'] = question.getCreatorID();
+    data['creatorName'] = question.getCreatorName();
+    data['question'] = question.getQuestion();
+
+    Firestore.instance.collection("questions").document( uniqueID ).setData(data);
+
+    var doc = await Firestore.instance
+          .collection("questions")
+          .document("questionList")
+          .get()
+          .then (
+            (document) {
+              /// Convert List<dynamic> to List<String>
+              List<dynamic> existing = document.data['questions'];
+              List<String> questions = existing.cast<String>().toList();
+
+              if ( ! questions.contains(uniqueID) )
+              {
+                questions.add( uniqueID );
+                var newData = new Map<String, dynamic>();
+                newData['questions'] = questions;
+                Firestore.instance.collection('questions').document('questionList').setData( newData );
+              }
+
+            }
+          );
+  }
+
+
+  /// --------
+  /// Deleters
+  /// --------
+
+
+  @override
+  Future< bool > deleteGroup(GroupData group) async {
+
+    if ( ! await doesGroupExist( group.getGroupCode() ) )
+    {
+      return false;
+    }
+
+    await Firestore.instance
+      .collection('groups')
+      .document( group.getGroupCode() )
+      .delete();
+
+    return true;
+
+  }
+
+  @override
+  Future< bool > deleteQuestion(Question question) async {
+    
+    if ( ! await doesQuestionExist( question.getQuestionID() ) )
+    {
+      return false;
+    }
+
+    await Firestore.instance
+      .collection('questions')
+      .document( question.getQuestionID() )
+      .delete();
+
+    return true;
+
+  }
+
+  @override
+  Future< bool > deleteUser(UserData user) async {
+    
+    if ( ! await doesUserExist( user.getUserID() ) )
+    {
+      return false;
+    }
+
+    await Firestore.instance
+      .collection('users')
+      .document( user.getUserID() )
+      .delete();
+
+    return true;
+
+  }
+
+
+  /// -------
+  /// Utility
+  /// -------
 
   /// Create a random alphanumeric code
   /// Returns as a String
@@ -391,87 +572,5 @@ class Firebase implements Database{
           default:      // Out of bounds!!
             return "";
       }
-  }
-
-
-
-  /// -------
-  /// Setters
-  /// -------
-
-  @override
-  void updateGroup(GroupData groupData) async {
-    String code = groupData.getGroupCode();
-    
-    var data = new Map<String, dynamic>();
-    data['name'] = groupData.getName();
-    data['description'] = groupData.getDescription();
-    data['admin'] = groupData.getAdminID();
-    data['members'] = groupData.getMembersAsMap();
-
-    data['playing'] = groupData.getPlaying();
-    data['nextQuestion'] = groupData.getQuestion().getQuestion();
-    data['nextQuestionID'] = groupData.getQuestion().getQuestionID();
-    data['nextQuestionCategory'] = groupData.getQuestion().getCategory();
-    data['nextQuestionCreatorID'] = groupData.getQuestion().getCreatorID();
-    data['nextQuestionCreatorName'] = groupData.getQuestion().getCreatorName();
-
-    data['lastVotes'] = groupData.getLastVotes();
-    data['newVotes'] = groupData.getNewVotes();
-    data['totalVotes'] = groupData.getTotalVotes();
-
-    Firestore.instance.collection("groups").document( code ).setData(data);
-  }
-
-
-
-  @override
-  void updateUser(UserData userData) async {
-    String uniqueID = userData.getUserID();
-    
-    var data = new Map<String, dynamic>();
-    data['name'] = userData.getUsername();
-
-    Firestore.instance.collection("users").document( uniqueID ).setData(data);
-  }
-
-  @override
-  void updateQuestion( Question question ) async
-  {
-    String uniqueID = question.getQuestionID();
-    
-    if (uniqueID == "")
-    {
-      uniqueID = await _generateUniqueQuestionCode();
-    }
-
-    var data = new Map<String, dynamic>();
-    data['category'] = question.getCategory();
-    data['creatorID'] = question.getCreatorID();
-    data['creatorName'] = question.getCreatorName();
-    data['question'] = question.getQuestion();
-
-    Firestore.instance.collection("questions").document( uniqueID ).setData(data);
-
-    var doc = await Firestore.instance
-          .collection("questions")
-          .document("questionList")
-          .get()
-          .then (
-            (document) {
-              /// Convert List<dynamic> to List<String>
-              List<dynamic> existing = document.data['questions'];
-              List<String> questions = existing.cast<String>().toList();
-
-              if ( ! questions.contains(uniqueID) )
-              {
-                questions.add( uniqueID );
-                var newData = new Map<String, dynamic>();
-                newData['questions'] = questions;
-                Firestore.instance.collection('questions').document('questionList').setData( newData );
-              }
-
-            }
-          );
   }
 }
