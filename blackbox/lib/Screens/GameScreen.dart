@@ -4,186 +4,210 @@ import '../Interfaces/Database.dart';
 import '../Database/FirebaseStream.dart';
 import '../DataContainers/GroupData.dart';
 import 'WaitingScreen.dart';
+import 'JoinGameScreen.dart';
+import '../Constants.dart';
 
-class GameScreen extends StatelessWidget {
+class GameScreen extends StatefulWidget {
   Database _database;
-  GroupData groupInfo; 
+  GroupData groupInfo;
+  String code;
 
-  GameScreen(Database db) {
+  GameScreen(Database db, String code) {
     this._database = db;
-
-    new FirebaseStream( "-LkoEjPkbJU3KMIJPf1I" ).groupData.listen( _onGroupDataUpdate );
+    this.code = code;
   }
 
-  void _onGroupDataUpdate (GroupData groupData)
-  {
-      groupInfo = groupData;
+  @override
+  _GameScreenState createState() => _GameScreenState(_database, code);
+}
 
-      if ( groupInfo == null )
-      {
-        // Laadscherm
-        print("NULL LOADED");
-      } else {
-        // Refresh content
-        print("DATA LOADED");
-        groupInfo.printData();
-      }
+class _GameScreenState extends State<GameScreen> {
+  Database _database;
+  FirebaseStream stream;
+  String code;
+
+  bool _loadingInProgress;
+  GroupData groupdata;
+
+
+  _GameScreenState(Database db, String code) {
+    this._database = db;
+    this.code = code;
+    this.stream = new FirebaseStream(code);
   }
 
-    @override
-    Widget build(BuildContext context) {
-      final width = MediaQuery
-          .of(context)
-          .size
-          .width;
-      final height = MediaQuery
-          .of(context)
-          .size
-          .height;
+  @override
+  void initState() {
+    super.initState();
+    _loadingInProgress = true;
+    print("listen to stream");
+    FirebaseStream(code).groupData.listen((_onGroupDataUpdate) {
+      print("DataReceived");
+    }, onDone: () {
+      print("Task Done");
+      _loadingInProgress = false;
+    }, onError: (error) {
+      print("Some Error");
+    });
+  }
 
-      return MaterialApp(
-        theme: new ThemeData(
-          scaffoldBackgroundColor: Colors.black,
-        ),
-        home: Scaffold(
-          body: DefaultTabController(
-            length: 3,
-            child: Scaffold(
-              appBar: AppBar(
-                title: Container(
-                  padding: EdgeInsets.only(bottom: 5),
-                  child: Row(
-                    children: [
-                      InkWell(
-                          onTap: () => Navigator.pop(context),
-                          child: Padding(
-                            padding: EdgeInsets.only(right: 20),
-                            child: const Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.amber,
+  @override
+  void dispose() {
+    super.dispose();
+
+    ///Something to close the stream goes here
+  }
+
+  Widget _buildBody() {
+    return StreamBuilder(
+        stream: stream.groupData,
+        builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
+          groupdata = snapshot.data;
+          if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+          if (!snapshot.hasData) {
+            return new Center(child: new CircularProgressIndicator());
+          }
+          return new Scaffold(
+            body: DefaultTabController(
+              length: 2,
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Container(
+                    padding: EdgeInsets.only(bottom: 5),
+                    child: Row(
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        JoinGameScreen(_database),
+
+                                  ));
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 20),
+                              child: const Icon(
+                                Icons.arrow_back_ios,
+                                color: Colors.amber,
+                              ),
+                            )),
+                        Center(
+                          child: Text(
+                            snapshot.data.getName(),
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.white,
                             ),
-                          )),
-                      Center(
-                        child: Text(
-                          groupInfo.getName(),
-                          style: TextStyle(
-                            fontSize: 28,
-                            color: Colors.white,
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                  backgroundColor: Colors.black,
+                  bottom: TabBar(
+                    indicatorColor: Colors.amber,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    tabs: [
+                      new Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          new Icon(
+                            Icons.info_outline,
+                            color: Colors.white,
+                            //size: 25,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              'Info',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      new Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.people_outline,
+                            color: Colors.white,
+                            //size: 25,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              'Members',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-                backgroundColor: Colors.black,
-                bottom: TabBar(
-                  indicatorColor: Colors.amber,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  tabs: [
-                    new Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        new Icon(
-                          Icons.group_add,
-                          color: Colors.white,
-                          //size: 25,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 8),
-                          child: Text(
-                            'Invite',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    new Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.people_outline,
-                          color: Colors.white,
-                          //size: 25,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 8),
-                          child: Text(
-                            'Members',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    new Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.settings,
-                          color: Colors.white,
-                          //size: 25,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 8),
-                          child: Text(
-                            'Settings',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              body: Stack(
-                children: <Widget>[
+                body: Stack(children: <Widget>[
                   TabBarView(
                     children: [
                       //tab 1
                       Center(
                         child: Container(
-                          alignment: Alignment(0, 0),
-                          child: RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                              text: 'Display group code here + copy icon',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 50),
-                            ),
-                          ),
-                        ),
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+
+                              children: [
+                                Padding(padding: EdgeInsets.only(top: 40.0)),
+
+                                Text(
+                                  snapshot.data.getName(),
+                                  style: TextStyle(color: Colors.amber,
+                                      fontSize: 36,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Padding(padding: EdgeInsets.only(top: 40.0)),
+
+                                Text(
+                                  snapshot.data.getDescription(),
+                                  style: TextStyle(color: Colors.white,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                Padding(padding: EdgeInsets.only(top: 80.0)),
+
+                                Text(
+                                  snapshot.data.getGroupCode(),
+                                  style: TextStyle(color: Colors.white),
+                                )
+                              ],
+                            )),
                       ),
 
                       //tab 2
-                      GridView.count(
-                        crossAxisCount: 2,
+                      ListView(
                         padding: EdgeInsets.all(8.0),
-                        crossAxisSpacing: 12.0,
-                        mainAxisSpacing: 12.0,
-                        children: groupInfo.getMembers()
+                        children: snapshot.data
+                            .getMembers()
                             .map((data) =>
                             Card(
-                              color: data.getUserID() == groupInfo.getAdminID()
+                              color: groupdata.isUserPlaying(data)
                                   ? Colors.amber
                                   : Colors.white,
                               child: Center(
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
-                                    child: data.getUserID() == groupInfo.getAdminID()
+                                    child: groupdata.isUserPlaying(data)
                                         ? Center(
                                       child: Column(
                                         mainAxisAlignment:
@@ -198,7 +222,7 @@ class GameScreen extends StatelessWidget {
                                                 FontWeight.bold),
                                           ),
                                           Text(
-                                            'Admin',
+                                            'ready',
                                             style: new TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 15.0,
@@ -208,86 +232,126 @@ class GameScreen extends StatelessWidget {
                                         ],
                                       ),
                                     )
-                                        : Text(
-                                      data.getUsername(),
-                                      style: new TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+                                        : Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text(
+                                            data.getUsername(),
+                                            style: new TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 20.0,
+                                                fontWeight:
+                                                FontWeight.bold),
+                                          ),
+                                          Text(
+                                            'Not ready',
+                                            style: new TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15.0,
+                                                fontWeight:
+                                                FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    )
                                   )),
                             ))
                             .toList(),
-                      ),
-
-                      //tab 3
-                      new Text(
-                        'settings',
-                        style: new TextStyle(
-                            color: Colors.white, fontSize: 20.0),
                       ),
                     ],
                   ),
                   Align(
                       alignment: Alignment.bottomCenter,
-                      child: _buildBottomCard(width, height, context)),
-                ],
+                      child: _buildBottomCard(context))
+                ]),
               ),
             ),
-          ),
+          );
+        });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        theme: new ThemeData(
+          scaffoldBackgroundColor: Colors.black,
         ),
-      );
+        home: Scaffold(
+          body: _buildBody(),
+        ));
+  }
+
+
+  Widget _onGroupDataUpdate(GroupData groupData) {
+    GroupData groupInfo = groupData;
+    bool loaded;
+
+    if (groupInfo == null) {
+      // Laadscherm
+      loaded = false;
+      print("NULL LOADED");
+    } else {
+      // Refresh content
+      loaded = true;
+      print("DATA LOADED");
+      groupInfo.printData();
     }
+  }
 
-    Widget _buildBottomCard(double width, double, BuildContext context) {
-      final width = MediaQuery
-          .of(context)
-          .size
-          .width;
-      final height = MediaQuery
-          .of(context)
-          .size
-          .height;
-
-      return Container(
-        width: width,
-        height: height / 11,
-        padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-        decoration: BoxDecoration(
+  Widget _buildBottomCardChildren(BuildContext context) {
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          FlatButton(
             color: Colors.amber,
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(32), topLeft: Radius.circular(32))),
-        child: _buildBottomCardChildren(context),
-      );
-    }
+            onPressed: () {
+              if(groupdata.isUserPlaying(Constants.getUserData())) {
+                groupdata.removePlayingUser(Constants.getUserData());
+                _database.updateGroup(groupdata);
+              }
+              else{
+                groupdata.setPlayingUser(Constants.getUserData());
+                _database.updateGroup(groupdata);
+              }
 
-    Widget _buildBottomCardChildren(BuildContext context) {
-      return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          WaitingScreen(groupInfo),
-                    ));
-              },
-              icon: Icon(
-                Icons.play_arrow,
-                size: 50,
-              ),
-              padding: EdgeInsets.all(2),
+              
+            },
+            splashColor: Colors.white,
+            child: Text(
+              "Ready", style: TextStyle(color: Colors.black),
             ),
-            /*Text('Home',
+          )
+          /*Text('Home',
                     style: TextStyle(
                         fontSize: 12,
                         color: Colors.black,
                         fontWeight: FontWeight.bold
                     ),
                   ),*/
-          ]);
+        ]);
+  }
+
+  Widget _buildBottomCard(BuildContext context) {
+    final width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    final height = MediaQuery
+        .of(context)
+        .size
+        .height;
+
+    return Container(
+      width: width,
+      height: height / 11,
+      padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+      decoration: BoxDecoration(
+          color: Colors.amber,
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(32), topLeft: Radius.circular(32))),
+      child: _buildBottomCardChildren(context),
+    );
   }
 }
-

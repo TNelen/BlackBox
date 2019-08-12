@@ -20,6 +20,10 @@ class Constants{
     return userData.getUsername();
   }
 
+  static UserData getUserData(){
+    return userData;
+  }
+
 
   /// Change the name of the current user
   static void setUsername(String newName)

@@ -15,6 +15,8 @@ class JoinGameScreen extends StatefulWidget {
 
 class _JoinGameScreenState extends State<JoinGameScreen> {
   Database _database;
+  TextEditingController codeController = new TextEditingController();
+
 
   _JoinGameScreenState(Database db) {
     this._database = db;
@@ -37,7 +39,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => GameScreen(_database),
+                    builder: (BuildContext context) => GameScreen(_database, codeController.text),
                   ));
             },
             child: Text("Join Group",
@@ -51,6 +53,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
 
     final codeField = TextField(
       obscureText: false,
+      controller: codeController,
       style: TextStyle(fontSize: 20, color: Colors.black),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
