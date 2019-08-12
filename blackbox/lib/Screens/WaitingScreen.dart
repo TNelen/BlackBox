@@ -4,20 +4,25 @@ import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
 import 'ResultsScreen.dart';
 import 'InstructionScreen.dart';
+import '../Interfaces/Database.dart';
 
 class WaitingScreen extends StatefulWidget {
-  WaitingScreen(this.groupInfo) : super();
+  Database _database;
+
+  WaitingScreen(this.groupInfo, Database db) : super();
   final GroupData groupInfo;
 
   @override
-  _WaitingScreenState createState() => _WaitingScreenState(groupInfo);
+  _WaitingScreenState createState() => _WaitingScreenState(groupInfo, _database);
 }
 
 class _WaitingScreenState extends State<WaitingScreen> {
   GroupData groupInfo;
+  Database _database;
 
-  _WaitingScreenState(GroupData groupinfo) {
+  _WaitingScreenState(GroupData groupinfo, Database db) {
     this.groupInfo = groupinfo;
+    this._database = db;
   }
 
   @override
@@ -82,7 +87,7 @@ MaterialApp adminScreen(BuildContext context) {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (BuildContext context) => ResultScreen(),
+              builder: (BuildContext context) => ResultScreen(_database),
             ));
       }, //change isplaying field in database for this group to TRUE
       child: Text("Play",

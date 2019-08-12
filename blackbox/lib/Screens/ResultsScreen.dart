@@ -3,13 +3,26 @@ import '../main.dart';
 import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
 import 'QuestionScreen.dart';
+import '../Interfaces/Database.dart';
 
 class ResultScreen extends StatefulWidget {
+  Database _database;
+
+  ResultScreen(Database db){
+    this._database = db;
+}
+
   @override
-  ResultScreenState createState() => ResultScreenState();
+  ResultScreenState createState() => ResultScreenState(_database);
 }
 
 class ResultScreenState extends State<ResultScreen> {
+  Database _database;
+
+  ResultScreenState(Database db){
+    this._database =db;
+  }
+
   int currentpage = 2;
 
   final controller = PageController(
@@ -159,7 +172,7 @@ class ResultScreenState extends State<ResultScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => QuestionScreen(),
+                    builder: (BuildContext context) => QuestionScreen(_database),
                   ));
             },
             //change isplaying field in database for this group to TRUE

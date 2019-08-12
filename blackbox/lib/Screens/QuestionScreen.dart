@@ -4,14 +4,26 @@ import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
 import 'ResultsScreen.dart';
 import 'VoteScreen.dart';
+import '../Interfaces/Database.dart';
 
 
 class QuestionScreen extends StatefulWidget {
+  Database _database;
+
   @override
-  _QuestionScreenState createState() => _QuestionScreenState();
+  QuestionScreen(Database db){
+    this._database = db;
+  }
+  _QuestionScreenState createState() => _QuestionScreenState(_database);
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
+  Database _database;
+
+  _QuestionScreenState(Database db){
+    this._database = db;
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -33,7 +45,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => VoteScreen(),
+                  builder: (BuildContext context) => VoteScreen(_database),
                 ));
 
           },

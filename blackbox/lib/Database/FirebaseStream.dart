@@ -28,6 +28,13 @@ class FirebaseStream {
   }
 
 
+
+  void closeController(){
+    _groupController.close();
+    print("controller closed");
+  }
+
+
   /// Getter for the GroupData Stream
   Stream<GroupData> get groupData => _groupController.stream.asBroadcastStream();
 

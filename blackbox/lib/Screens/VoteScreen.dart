@@ -3,15 +3,28 @@ import '../main.dart';
 import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
 import 'ResultsScreen.dart';
+import '../Interfaces/Database.dart';
 
 class VoteScreen extends StatefulWidget {
+  Database _database;
+
+  VoteScreen(Database db){
+    this._database = db;
+  }
+
   @override
-  _VoteScreenState createState() => _VoteScreenState();
+  _VoteScreenState createState() => _VoteScreenState(_database);
 }
 
 class _VoteScreenState extends State<VoteScreen> {
+
+  Database _database;
   Color color;
   String clickedmember;
+
+  _VoteScreenState(Database db){
+    this._database = db;
+  }
 
   @override
   void initState() {
@@ -81,7 +94,7 @@ class _VoteScreenState extends State<VoteScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => ResultScreen(),
+                      builder: (BuildContext context) => ResultScreen(_database),
                     ));
               } else {
                 _showDialog();

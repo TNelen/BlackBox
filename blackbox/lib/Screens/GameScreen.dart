@@ -3,13 +3,13 @@ import '../Interfaces/Database.dart';
 
 import '../Database/FirebaseStream.dart';
 import '../DataContainers/GroupData.dart';
-import 'WaitingScreen.dart';
 import 'JoinGameScreen.dart';
 import '../Constants.dart';
+import 'QuestionScreen.dart';
 
 class GameScreen extends StatefulWidget {
   Database _database;
-  GroupData groupInfo;
+  GroupData groupInfo = null;
   String code;
 
   GameScreen(Database db, String code) {
@@ -25,10 +25,10 @@ class _GameScreenState extends State<GameScreen> {
   Database _database;
   FirebaseStream stream;
   String code;
+  bool joined = false;
 
   bool _loadingInProgress;
   GroupData groupdata;
-
 
   _GameScreenState(Database db, String code) {
     this._database = db;
@@ -38,6 +38,7 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   void initState() {
+    groupdata = null;
     super.initState();
     _loadingInProgress = true;
     print("listen to stream");
@@ -54,6 +55,7 @@ class _GameScreenState extends State<GameScreen> {
   @override
   void dispose() {
     super.dispose();
+    stream.closeController();
 
     ///Something to close the stream goes here
   }
@@ -67,6 +69,13 @@ class _GameScreenState extends State<GameScreen> {
           if (!snapshot.hasData) {
             return new Center(child: new CircularProgressIndicator());
           }
+          if (!joined) {
+            groupdata.addMember(Constants.getUserData());
+            _database.updateGroup(groupdata);
+            joined = true;
+            print("joined Group");
+          }
+
           return new Scaffold(
             body: DefaultTabController(
               length: 2,
@@ -83,8 +92,11 @@ class _GameScreenState extends State<GameScreen> {
                                   MaterialPageRoute(
                                     builder: (BuildContext context) =>
                                         JoinGameScreen(_database),
-
                                   ));
+                              groupdata.removeMember(Constants.getUserData());
+                              _database.updateGroup(groupdata);
+
+                              dispose();
                             },
                             child: Padding(
                               padding: EdgeInsets.only(right: 20),
@@ -166,26 +178,24 @@ class _GameScreenState extends State<GameScreen> {
                             alignment: Alignment.center,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
-
                               children: [
                                 Padding(padding: EdgeInsets.only(top: 40.0)),
-
                                 Text(
                                   snapshot.data.getName(),
-                                  style: TextStyle(color: Colors.amber,
+                                  style: TextStyle(
+                                      color: Colors.amber,
                                       fontSize: 36,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Padding(padding: EdgeInsets.only(top: 40.0)),
-
                                 Text(
                                   snapshot.data.getDescription(),
-                                  style: TextStyle(color: Colors.white,
+                                  style: TextStyle(
+                                      color: Colors.white,
                                       fontSize: 24,
                                       fontWeight: FontWeight.w400),
                                 ),
                                 Padding(padding: EdgeInsets.only(top: 80.0)),
-
                                 Text(
                                   snapshot.data.getGroupCode(),
                                   style: TextStyle(color: Colors.white),
@@ -199,65 +209,69 @@ class _GameScreenState extends State<GameScreen> {
                         padding: EdgeInsets.all(8.0),
                         children: snapshot.data
                             .getMembers()
-                            .map((data) =>
-                            Card(
-                              color: groupdata.isUserPlaying(data)
-                                  ? Colors.amber
-                                  : Colors.white,
-                              child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: groupdata.isUserPlaying(data)
-                                        ? Center(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            data.getUsername(),
-                                            style: new TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 20.0,
-                                                fontWeight:
-                                                FontWeight.bold),
-                                          ),
-                                          Text(
-                                            'ready',
-                                            style: new TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 15.0,
-                                                fontWeight:
-                                                FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                        : Center(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            data.getUsername(),
-                                            style: new TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 20.0,
-                                                fontWeight:
-                                                FontWeight.bold),
-                                          ),
-                                          Text(
-                                            'Not ready',
-                                            style: new TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 15.0,
-                                                fontWeight:
-                                                FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  )),
-                            ))
+                            .map((data) => Card(
+                                  color: groupdata.isUserPlaying(data)
+                                      ? Colors.amber
+                                      : Colors.white,
+                                  child: Center(
+                                      child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: groupdata.isUserPlaying(data)
+                                              ? Center(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      Text(
+                                                        data.getUsername(),
+                                                        style: new TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 20.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      Text(
+                                                        'ready',
+                                                        style: new TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 15.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              : Center(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      Text(
+                                                        data.getUsername(),
+                                                        style: new TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 20.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      Text(
+                                                        'Not ready',
+                                                        style: new TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 15.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ))),
+                                ))
                             .toList(),
                       ),
                     ],
@@ -283,7 +297,6 @@ class _GameScreenState extends State<GameScreen> {
         ));
   }
 
-
   Widget _onGroupDataUpdate(GroupData groupData) {
     GroupData groupInfo = groupData;
     bool loaded;
@@ -301,47 +314,68 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Widget _buildBottomCardChildren(BuildContext context) {
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          FlatButton(
-            color: Colors.amber,
-            onPressed: () {
-              if(groupdata.isUserPlaying(Constants.getUserData())) {
-                groupdata.removePlayingUser(Constants.getUserData());
-                _database.updateGroup(groupdata);
-              }
-              else{
-                groupdata.setPlayingUser(Constants.getUserData());
-                _database.updateGroup(groupdata);
-              }
-
-              
-            },
-            splashColor: Colors.white,
-            child: Text(
-              "Ready", style: TextStyle(color: Colors.black),
-            ),
-          )
-          /*Text('Home',
+    ///Check if all members are ready to go to questionscreen
+    return groupdata.getPlaying().length != groupdata.getMembers().length
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+                FlatButton(
+                  color: Colors.amber,
+                  onPressed: () {
+                    if (groupdata.isUserPlaying(Constants.getUserData())) {
+                      groupdata.removePlayingUser(Constants.getUserData());
+                      _database.updateGroup(groupdata);
+                    } else {
+                      groupdata.setPlayingUser(Constants.getUserData());
+                      _database.updateGroup(groupdata);
+                    }
+                  },
+                  splashColor: Colors.white,
+                  child: Text(
+                    "Ready",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                )
+                /*Text('Home',
                     style: TextStyle(
                         fontSize: 12,
                         color: Colors.black,
                         fontWeight: FontWeight.bold
                     ),
                   ),*/
-        ]);
+              ])
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+                FlatButton(
+                  color: Colors.amber,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              QuestionScreen(_database),
+                        ));
+                  },
+                  splashColor: Colors.white,
+                  child: Text(
+                    "Start Game",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                )
+                /*Text('Home',
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),*/
+              ]);
   }
 
   Widget _buildBottomCard(BuildContext context) {
-    final width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    final height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
 
     return Container(
       width: width,
