@@ -32,7 +32,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
     else
       return userScreen(context);
   }
-}
+
 
 MaterialApp userScreen(BuildContext context) {
   return MaterialApp(
@@ -132,4 +132,5 @@ MaterialApp adminScreen(BuildContext context) {
       ),
     ),
   );
+}
 }
