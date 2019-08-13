@@ -355,7 +355,7 @@ class _GameScreenState extends State<GameScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              QuestionScreen(_database),
+                              QuestionScreen(_database, groupdata),
                         ));
                   },
                   splashColor: Colors.white,

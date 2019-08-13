@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'GameScreen.dart';
 import '../Interfaces/Database.dart';
+import 'HomeScreen.dart';
 
 class JoinGameScreen extends StatefulWidget {
   Database _database;
@@ -16,7 +17,6 @@ class JoinGameScreen extends StatefulWidget {
 class _JoinGameScreenState extends State<JoinGameScreen> {
   Database _database;
   TextEditingController codeController = new TextEditingController();
-
 
   _JoinGameScreenState(Database db) {
     this._database = db;
@@ -39,7 +39,8 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => GameScreen(_database, codeController.text),
+                    builder: (BuildContext context) =>
+                        GameScreen(_database, codeController.text),
                   ));
             },
             child: Text("Join Group",
@@ -74,7 +75,14 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   InkWell(
-                      onTap: () => Navigator.pop(context),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  HomeScreen(_database),
+                            ));
+                      },
                       child: Padding(
                         padding: EdgeInsets.only(right: 20),
                         child: const Icon(

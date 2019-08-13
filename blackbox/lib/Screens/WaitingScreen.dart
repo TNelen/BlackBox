@@ -87,7 +87,7 @@ MaterialApp adminScreen(BuildContext context) {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (BuildContext context) => ResultScreen(_database),
+              builder: (BuildContext context) => ResultScreen(_database, groupInfo),
             ));
       }, //change isplaying field in database for this group to TRUE
       child: Text("Play",

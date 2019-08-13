@@ -5,23 +5,28 @@ import '../Constants.dart';
 import 'ResultsScreen.dart';
 import 'VoteScreen.dart';
 import '../Interfaces/Database.dart';
+import '../DataContainers/GroupData.dart';
 
 
 class QuestionScreen extends StatefulWidget {
   Database _database;
+  GroupData groupData;
 
   @override
-  QuestionScreen(Database db){
+  QuestionScreen(Database db, GroupData gd){
     this._database = db;
+    this.groupData = gd;
   }
-  _QuestionScreenState createState() => _QuestionScreenState(_database);
+  _QuestionScreenState createState() => _QuestionScreenState(_database, groupData);
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
   Database _database;
+  GroupData groupData;
 
-  _QuestionScreenState(Database db){
+  _QuestionScreenState(Database db, GroupData groupData){
     this._database = db;
+    this.groupData = groupData;
   }
 
   @override
@@ -45,7 +50,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => VoteScreen(_database),
+                  builder: (BuildContext context) => VoteScreen(_database, groupData),
                 ));
 
           },

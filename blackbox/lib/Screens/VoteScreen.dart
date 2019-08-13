@@ -4,26 +4,32 @@ import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
 import 'ResultsScreen.dart';
 import '../Interfaces/Database.dart';
+import '../DataContainers/GroupData.dart';
 
 class VoteScreen extends StatefulWidget {
   Database _database;
+  GroupData groupData;
 
-  VoteScreen(Database db){
+
+  VoteScreen(Database db, GroupData groupData){
     this._database = db;
+    this.groupData = groupData;
   }
 
   @override
-  _VoteScreenState createState() => _VoteScreenState(_database);
+  _VoteScreenState createState() => _VoteScreenState(_database, groupData);
 }
 
 class _VoteScreenState extends State<VoteScreen> {
 
   Database _database;
+  GroupData groupData;
   Color color;
   String clickedmember;
 
-  _VoteScreenState(Database db){
+  _VoteScreenState(Database db, GroupData groupData){
     this._database = db;
+    this.groupData = groupData;
   }
 
   @override
@@ -76,7 +82,7 @@ class _VoteScreenState extends State<VoteScreen> {
     final height = MediaQuery.of(context).size.height;
 
     ///used to choose between different groups to get the members
-    final int index = 5;
+    final int index = groupData.getNumPlaying()-1;
 
     final voteButton = Hero(
       tag: 'submit',
@@ -91,10 +97,13 @@ class _VoteScreenState extends State<VoteScreen> {
             padding: EdgeInsets.fromLTRB(1.0, 15.0, 20.0, 15.0),
             onPressed: () {
               if (clickedmember != null) {
+
+                _database.voteOnUser(groupData, clickedmember);
+
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => ResultScreen(_database),
+                      builder: (BuildContext context) => ResultScreen(_database, groupData),
                     ));
               } else {
                 _showDialog();
@@ -131,8 +140,7 @@ class _VoteScreenState extends State<VoteScreen> {
                 padding: EdgeInsets.all(8.0),
                 crossAxisSpacing: 12.0,
                 mainAxisSpacing: 12.0,
-                children: Constants.groupData[index]
-                    .getMembers()
+                children: groupData.getMembers()
                     .map((data) => Card(
                           color: data.getUserID() == clickedmember
                               ? Colors.amber
@@ -153,7 +161,7 @@ class _VoteScreenState extends State<VoteScreen> {
                                   child: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
-                                  data.getUserID(),
+                                  data.getUsername(),
                                   style: new TextStyle(
                                       color: Colors.black,
                                       fontSize: 20.0,

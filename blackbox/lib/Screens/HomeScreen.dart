@@ -35,16 +35,19 @@ class _HomeScreenState extends State<HomeScreen> {
     this.database = db;
 
     /// Log a user in and update variables accordingly
-    try {
-      GoogleUserHandler guh = new GoogleUserHandler();
-      guh.handleSignIn().then((user) {
-        /// Log the retreived user in and update the data in the database
-        Constants.setUserData(user);
-        database.updateUser(user);
-      });
 
-    } catch (e) {
-      print(e.toString());
+    if (Constants.getUserID() == "GPY2pK6fqsdU0AU5IlGXhJpK8ej1" ) {
+      ///check if user isn't loged in via google already when returning to homescreen
+      try {
+        GoogleUserHandler guh = new GoogleUserHandler();
+        guh.handleSignIn().then((user) {
+          /// Log the retreived user in and update the data in the database
+          Constants.setUserData(user);
+          database.updateUser(user);
+        });
+      } catch (e) {
+        print(e.toString());
+      }
     }
 
     /* Example on how to add questions!

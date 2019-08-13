@@ -4,23 +4,28 @@ import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
 import 'QuestionScreen.dart';
 import '../Interfaces/Database.dart';
+import '../DataContainers/GroupData.dart';
 
 class ResultScreen extends StatefulWidget {
   Database _database;
+  GroupData groupData;
 
-  ResultScreen(Database db){
+  ResultScreen(Database db, GroupData groupData){
     this._database = db;
+    this.groupData = groupData;
 }
 
   @override
-  ResultScreenState createState() => ResultScreenState(_database);
+  ResultScreenState createState() => ResultScreenState(_database, groupData);
 }
 
 class ResultScreenState extends State<ResultScreen> {
   Database _database;
+  GroupData groupData;
 
-  ResultScreenState(Database db){
+  ResultScreenState(Database db, GroupData groupData){
     this._database =db;
+    this.groupData = groupData;
   }
 
   int currentpage = 2;
@@ -172,7 +177,7 @@ class ResultScreenState extends State<ResultScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => QuestionScreen(_database),
+                    builder: (BuildContext context) => QuestionScreen(_database, groupData),
                   ));
             },
             //change isplaying field in database for this group to TRUE
