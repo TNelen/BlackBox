@@ -319,16 +319,16 @@ class Firebase implements Database{
     return exists;
   }
 
-    @override
+  @override
   Future< bool > doesQuestionExist( String questionID ) async
   {
     bool exists = false;
 
     /// Get group with ID
     var documentSnap = await Firestore.instance
-        .collection("groups")
+        .collection("questions")
         .document( questionID ).get().then( (document) {
-
+          
           // Group exists!
           if ( document.exists )
             exists = true;
@@ -338,6 +338,28 @@ class Firebase implements Database{
     return exists;
   }
 
+  /// Check if this same question already exists
+  Future< bool > _hasIdenticalQuestion( String question ) async
+  {
+    bool exists = false;
+
+    /// Get group with ID
+    var documentSnap = await Firestore.instance
+        .collection("questions")
+        .where( "question", isEqualTo: question  )
+        .getDocuments()
+        .then( (documents) {
+          
+          documents.documents.forEach( (document){
+            /// Group exists!
+            if ( document.exists )
+              exists = true;
+          } );        
+
+        } );
+
+    return exists;
+  }
 
   /// -------
   /// Setters
@@ -345,7 +367,7 @@ class Firebase implements Database{
 
 
   @override
-  void updateGroup(GroupData groupData) async {
+  Future< bool > updateGroup(GroupData groupData) async {
     String code = groupData.getGroupCode();
     String userID = Constants.getUserID();
 
@@ -449,7 +471,7 @@ class Firebase implements Database{
 
 
   @override
-  void updateUser(UserData userData) async {
+  Future< bool > updateUser(UserData userData) async {
     String uniqueID = userData.getUserID();
       
     var data = new Map<String, dynamic>();
@@ -462,8 +484,14 @@ class Firebase implements Database{
   }
 
   @override
-  void updateQuestion( Question question ) async
+  Future< bool > updateQuestion( Question question ) async
   {
+
+    if ( await _hasIdenticalQuestion( question.getQuestion() ) )
+    {
+        return false;
+    }
+
     var data = new Map<String, dynamic>();
     data['question'] = question.getQuestion();
     data['category'] = question.getCategory();
@@ -513,6 +541,9 @@ class Firebase implements Database{
                 .document( uniqueID );
       transaction.set(docRef, data);
     });
+
+    return true;
+
   }
 
 
@@ -540,16 +571,43 @@ class Firebase implements Database{
 
   @override
   Future< bool > deleteQuestion(Question question) async {
-    
+
     if ( ! await doesQuestionExist( question.getQuestionID() ) )
     {
       return false;
     }
 
+    Firestore.instance.runTransaction((Transaction transaction) async {
+            
+      DocumentReference listRef = Firestore.instance
+                                  .collection('questions')
+                                  .document( 'questionList' );
+
+      /// Get list of questions
+      List<String> questions = new List<String>();
+      await transaction.get( listRef ).then(
+        (snap) {
+          List<dynamic> existing = snap.data['questions'];
+          questions = existing.cast<String>().toList();
+        }
+      );
+
+      questions.remove( question.getQuestionID() );
+
+
+      Map<String, dynamic> newList = new Map<String, dynamic>();
+      newList['questionList'] = questions;
+
+      /// Update list
+      await transaction.set(listRef, newList);
+    });
+
+    /// Delete question document
     await Firestore.instance
       .collection('questions')
       .document( question.getQuestionID() )
       .delete();
+
 
     return true;
 

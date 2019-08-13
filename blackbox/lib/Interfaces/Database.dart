@@ -64,13 +64,20 @@ abstract class Database {
   
 
   /// Updates the user with the same unique ID in the database to the one provided. If the user does not exist, they will be added
-  void updateUser( UserData userData );
+  /// Returns true when completed
+  /// Never returns false
+  Future< bool > updateUser( UserData userData );
 
   /// Updates the group with the same unique ID. If it doesn't exist, it will be added
-  void updateGroup( GroupData groupData );
+  /// Returns true when completed
+  /// Never returns false
+  Future< bool > updateGroup( GroupData groupData );
 
   /// Updates the question with the same unique ID. If it doesn't exist, it will be added
-  void updateQuestion( Question question );
+  /// If an identical question (just question, not the ID) already exists, the action will fail silently
+  /// Returns true when completed
+  /// Returns false when the question already exists
+  Future< bool > updateQuestion( Question question );
 
 
   /// --------
