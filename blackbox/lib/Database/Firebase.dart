@@ -365,6 +365,39 @@ class Firebase implements Database{
   /// Setters
   /// -------
 
+  @override
+  Future< bool > voteOnUser(GroupData groupData, String voteeID) async {
+
+    Firestore.instance.runTransaction((Transaction transaction) async {
+      DocumentReference groupRef = Firestore.instance
+                                    .collection("groups")
+                                    .document( groupData.getGroupCode() );
+      
+      DocumentSnapshot ds = await transaction.get( groupRef );
+    
+      /// Initialize lists
+      Map<dynamic, dynamic> dbData = ds.data['newVotes'];
+      Map<String, int> convertedData = new Map<String, int>();
+
+      /// Loop the database Map and add values as Strings to the data Map
+      dbData.forEach( (key, value) {
+        convertedData[key.toString()] = value;
+      } );
+
+      if (convertedData.containsKey( voteeID ))
+        convertedData[voteeID] += 1;
+      else convertedData[voteeID] = 1;
+
+      Map<String, dynamic> upd = new Map<String, dynamic>();
+      upd['newVotes'] = convertedData;
+
+      await transaction.update(groupRef, upd);
+
+    });
+
+    return true;
+
+  }
 
   @override
   Future< bool > updateGroup(GroupData groupData) async {

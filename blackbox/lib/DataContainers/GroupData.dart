@@ -290,6 +290,16 @@ class GroupData {
   /// Will be added to the newVotes list
   void addVote(String voteeID)
   {
+    /// Make change in database
+    Constants.database.voteOnUser(this, voteeID);
+
+    /// Make change locally
+    offlineVote(voteeID);
+  }
+
+  /// Do NOT use. This vote will not be officially registered!
+  void offlineVote(String voteeID)
+  {
     if ( _newVotes.containsKey(voteeID) )
       _newVotes[voteeID] = _newVotes[voteeID] + 1;
     else

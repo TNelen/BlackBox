@@ -62,6 +62,11 @@ abstract class Database {
   /// Setters
   /// -------
   
+  /// Cast a vote on the user with id voteeID
+  /// Does not check if the votee exists
+  /// Does not check if this user has voted already
+  /// Returns true upon completion
+  Future< bool > voteOnUser(GroupData groupData, String voteeID);
 
   /// Updates the user with the same unique ID in the database to the one provided. If the user does not exist, they will be added
   /// Returns true when completed

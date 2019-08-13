@@ -4,6 +4,7 @@ import 'package:blackbox/Screens/groupList.dart';
 import 'package:blackbox/Screens/ProfileScreen.dart';
 import 'package:blackbox/Screens/YourGroupsScreen.dart';
 import 'package:blackbox/Screens/HomeScreen.dart';
+import 'Constants.dart';
 
 
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         //home: YourGroups(new Firebase()));
-        home: HomeScreen(new Firebase()));
+        home: HomeScreen( Constants.database ));
   }
 }
 
