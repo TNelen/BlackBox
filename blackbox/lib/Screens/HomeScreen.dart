@@ -8,6 +8,7 @@ import 'ProfileScreen.dart';
 import '../Interfaces/Database.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:blackbox/DataContainers/GroupData.dart';
+import 'package:blackbox/DataContainers/Question.dart';
 
 class HomeScreen extends StatefulWidget {
   Database database;
@@ -44,6 +45,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
     } catch (e) {
       print(e.toString());
+    }
+
+    /* Example on how to add questions!
+    /// Duplicates cannot be added so running it twice is not a problem
+    List<String> questions = new List<String>();
+    questions.add("Who will be the first person to have a hangover (again)?");
+    questions.add("Who is the biggest beer fan?");
+    _addQuestions( questions );
+    */
+  }
+
+  @Deprecated('Must be deleted before release!')
+  void _addQuestions( List<String> questions ) async
+  {
+    for (String q in questions)
+    {
+        await database.updateQuestion( new Question.addDefault(q) );
     }
   }
 
