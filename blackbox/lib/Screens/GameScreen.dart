@@ -13,7 +13,6 @@ class GameScreen extends StatefulWidget {
   String code;
 
   GameScreen(Database db, String code) {
-    print("Join code: " + code);
     this._database = db;
     this.code = code;
   }
@@ -42,9 +41,7 @@ class _GameScreenState extends State<GameScreen> {
     groupdata = null;
     super.initState();
     _loadingInProgress = true;
-    print("listen to stream");
     FirebaseStream(code).groupData.listen((_onGroupDataUpdate) {
-      print("DataReceived");
     }, onDone: () {
       print("Task Done");
       _loadingInProgress = false;
@@ -56,7 +53,7 @@ class _GameScreenState extends State<GameScreen> {
   @override
   void dispose() {
     super.dispose();
-    stream.closeController();
+    FirebaseStream.closeController();
 
     ///Something to close the stream goes here
   }

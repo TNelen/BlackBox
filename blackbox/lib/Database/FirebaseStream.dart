@@ -7,31 +7,36 @@ class FirebaseStream {
 
   static String _groupID;
   static StreamController<GroupData> _groupController;
-  StreamSubscription< DocumentSnapshot > _subscription;
+  static StreamSubscription< DocumentSnapshot > _subscription;
+
 
   /// Singleton pattern
   static final FirebaseStream _firebaseStream = new FirebaseStream._internal();
 
+  /// Singleton constructor
   factory FirebaseStream( String groupID ) {
     
-    _groupController = new StreamController<GroupData>.broadcast();
-
     _groupID = groupID;
+
+    closeController();
+
+    if (_groupController == null)
+      _groupController = new StreamController<GroupData>.broadcast();
+
+    
     FirebaseStream._internal();
     
     return _firebaseStream;
   }
 
+
   FirebaseStream._internal() {
 
-    if ( _groupController.isClosed )
+    closeController();
+
+    if ( _groupController == null || _groupController.isClosed )
     {
       _groupController = new StreamController<GroupData>.broadcast();
-      print("Opened controller due to _internal() call");
-    }
-
-    if (_subscription != null ) {
-      _subscription.cancel();
     }
 
     /// Subscribe to group changes and update the variable
@@ -44,13 +49,16 @@ class FirebaseStream {
   }
 
 
+  static void closeController(){
 
-  void closeController(){
     if ( _subscription != null ) {
       _subscription.cancel();
-      _subscription = null;
     }
-    _groupController.close();
+
+    if (_groupController != null) {
+      _groupController.close();
+    }
+    
   }
 
 
@@ -62,16 +70,19 @@ class FirebaseStream {
   /// Update groupData in the Stream
   void _groupDataUpdated ( DocumentSnapshot ds )
   {
-    if (_groupController.isClosed)
+
+    print("GroupData update detected!");
+
+    if ( _groupController == null || _groupController.isClosed)
     {
       FirebaseStream._internal();
     }
   
     try {
-    if ( ! ds.exists)
-      throw new GroupNotFoundException( _groupID );
-    else
-      _groupController.add( GroupData.fromDocumentSnapshot( ds ) );
+      if ( ds.exists)
+        _groupController.add( GroupData.fromDocumentSnapshot( ds ) );
+      else
+        throw new GroupNotFoundException( _groupID );
     } catch(e) {
       print(e);
     }
