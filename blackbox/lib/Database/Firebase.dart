@@ -410,11 +410,11 @@ class Firebase implements Database{
       GroupData freshData;
       DocumentReference docRef = Firestore.instance.collection("groups").document( code );
       DocumentSnapshot snap = await transaction.get( docRef );
-      freshData = new GroupData.fromDocumentSnapshot( snap );
-      //freshData = GroupData.fromDocumentSnapshot( await Firestore.instance
-      //    .collection( "groups" )
-      //    .document( code ).get()
-      //);
+      
+      if (snap.exists)
+        freshData = new GroupData.fromDocumentSnapshot( snap );
+      else
+        freshData = groupData;
       
 
       var data = new Map<String, dynamic>();
@@ -424,16 +424,19 @@ class Firebase implements Database{
       /// Handle members
       /// 
       
-      Map<String, dynamic> newMemberList = new Map<String, dynamic>(); 
-      newMemberList = freshData.getMembersAsMap();
+      Map<String, dynamic> newMemberList = new Map<String, dynamic>();
+      /// Get members from database or local GroupData 
+      if (freshData.getMembersAsMap() != null) {
+        newMemberList = freshData.getMembersAsMap();
+      } else 
+        newMemberList = groupData.getMembersAsMap();
 
       /// Add user if he is still a member
+      /// If user is in both lists, the username will just be updated 
       if (groupData.getMembersAsMap().containsKey( userID ))
       {
-        print("new member!");
         newMemberList[ userID ] = Constants.getUsername();
       } else {
-        print("Remove member!");
         newMemberList.remove( userID );
       }
 
@@ -444,7 +447,12 @@ class Firebase implements Database{
       /// 
       
       List<String> newList = new List<String>();
-      newList = freshData.getPlaying();
+      /// Get playing data from database or local GroupData
+      if (freshData.getPlaying() != null)
+        newList = freshData.getPlaying();
+      else
+        newList = groupData.getPlaying();
+
       if ( groupData.getPlaying().contains( userID ) )
       {
         newList.add( userID );
@@ -458,14 +466,30 @@ class Firebase implements Database{
       
       ///
       /// Handle votes -> Always get most up-to-date values!
+      /// Unless it is a new group or the data does not exist!
       /// 
-      data['lastVotes'] = freshData.getLastVotes();
-      data['newVotes'] = freshData.getNewVotes();
-      data['totalVotes'] = freshData.getTotalVotes();
+      
+      /// Handle last votes 
+      if (freshData.getLastVotes() != null)
+        data['lastVotes'] = freshData.getLastVotes();
+      else 
+        data['lastVotes'] = groupData.getLastVotes();
+
+      /// Handle new votes
+      if (freshData.getNewVotes() != null)
+        data['newVotes'] = freshData.getNewVotes();
+      else 
+        data['newVotes'] = groupData.getNewVotes();
+
+      /// Handle total votes
+      if (freshData.getTotalVotes() != null)
+        data['totalVotes'] = freshData.getTotalVotes();
+      else 
+        data['totalVotes'] = groupData.getTotalVotes();
 
 
       /// If user is admin -> Overwrite permissions!
-      if ( freshData.getAdminID() == Constants.getUserID() )
+      if ( freshData.getAdminID() == Constants.getUserID() || freshData.getQuestion() == null)
       {
         data['name'] = groupData.getName();
         data['description'] = groupData.getDescription();
@@ -493,14 +517,12 @@ class Firebase implements Database{
 
       /// Add the new data
       await transaction.set(docRef, data);
-      //await Firestore.instance
-      //  .collection("groups")
-      //  .document( code )
-      //  .setData( data );
 
       });
-  }
 
+    return true;
+
+  }
 
 
   @override
@@ -514,7 +536,10 @@ class Firebase implements Database{
       DocumentReference docRef = Firestore.instance.collection("users").document( uniqueID );
       transaction.set(docRef, data);
     });
+
+    return true;
   }
+
 
   @override
   Future< bool > updateQuestion( Question question ) async
