@@ -19,8 +19,8 @@ class GroupData {
   Map<String, String> _members = new Map<String, String>(); /// A list of unique IDs of all members in this group
 
   /// Status information about this group
-  Question _nextQuestion;
-  Question _lastQuestion;
+  Question _nextQuestion = new Question.empty();  /// Data container for the current/next question
+  Question _lastQuestion = new Question.empty();  /// Data container for the previous question
   Map<String, int> _lastVotes;  /// Mapping unique IDs to the number of last votes a member had
   Map<String, int> _newVotes;   /// Mapping unique IDs to the new number of votes a member had
   Map<String, int> _totalVotes; /// Mapping unique IDs to the total amount of votes for that user
@@ -271,10 +271,9 @@ class GroupData {
   /// Does not affect the member list
   void setPlayingUser( UserData user )
   {
-    if ( isUserPlaying( user ) )
-      return;
-    else 
+    if (  !_playing.contains(user.getUserID()) ) {
       _playing.add( user.getUserID() );
+    }
   }
 
 
