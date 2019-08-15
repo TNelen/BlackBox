@@ -559,7 +559,11 @@ class Firebase implements Database{
     Firestore.instance.runTransaction((Transaction transaction) async {
 
       /// Generate a unique ID
-      String uniqueID = question.getQuestionID();
+      String uniqueID;
+      if (question.getQuestionID() != null)
+        uniqueID = question.getQuestionID();
+      else 
+        uniqueID = "";
       
       if (uniqueID == "")
       {
