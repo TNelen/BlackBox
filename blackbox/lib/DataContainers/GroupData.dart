@@ -142,6 +142,7 @@ class GroupData {
     return _groupDescription;
   }
 
+
   /// Set the description of this group
   void setDescription(String newDescription)
   {
@@ -150,7 +151,7 @@ class GroupData {
 
 
   /// Get the username of the member with the provided ID
-  /// Might return null
+  /// Might return null if the ID is unknown
   String getUserName( String ID )
   {
     return _members[ID];
@@ -230,8 +231,12 @@ class GroupData {
     if (admin.getUserID() != _adminID)
       return;
 
+    /// Move the questions
     _lastQuestion = _nextQuestion;
     _nextQuestion = nextQuestion;
+
+    /// Move the votes
+    _transferVotes( admin );
   }
 
 
@@ -251,9 +256,7 @@ class GroupData {
   /// Check wheter or not a user is playing
   bool isUserPlaying( UserData user )
   {
-    if (_playing.contains( user.getUserID() ))
-      return true;
-    else return false;
+    return _playing.contains( user.getUserID() );
   }
 
 
@@ -261,11 +264,10 @@ class GroupData {
   /// Does not affect the member list
   void setPlayingUser( UserData user )
   {
-
     if ( isUserPlaying( user ) )
       return;
-    
-    _playing.add( user.getUserID() );
+    else 
+      _playing.add( user.getUserID() );
   }
 
 
@@ -276,10 +278,10 @@ class GroupData {
   {
     String id = user.getUserID();
 
-    _playing.remove( id );
-    _lastVotes.remove( id );
-    _newVotes.remove( id );
-    _totalVotes.remove( id );
+    _playing    .remove( id );
+    _lastVotes  .remove( id );
+    _newVotes   .remove( id );
+    _totalVotes .remove( id );
   }
 
 
@@ -288,6 +290,7 @@ class GroupData {
   {
     return _playing;
   }
+
 
   /// Get the amount of playing users
   int getNumPlaying()
@@ -304,11 +307,13 @@ class GroupData {
     Constants.database.voteOnUser(this, voteeID);
 
     /// Make change locally
-    offlineVote(voteeID);
+    _offlineVote(voteeID);
   }
 
-  /// Do NOT use. This vote will not be officially registered!
-  void offlineVote(String voteeID)
+
+  /// This vote will not be officially registered!
+  /// This is only for local votes
+  void _offlineVote(String voteeID)
   {
     if ( _newVotes.containsKey(voteeID) )
       _newVotes[voteeID] = _newVotes[voteeID] + 1;
@@ -321,7 +326,7 @@ class GroupData {
   /// Adds newVotes to totalVotes
   /// Copies newVotes to lastVotes
   /// Requires admin authentication, otherwise this action will be canceled
-  void transferVotes(UserData admin)
+  void _transferVotes(UserData admin)
   {
     /// Admin authentication
     if ( admin.getUserID() != _adminID )
@@ -345,12 +350,17 @@ class GroupData {
 
 
   /// Get the new votes, from this round
+  /// Unique user IDs are mapped to the amount of votes
+  /// Get the name of a user with: GroupData#getUserName( String ID )
   Map<String, int> getNewVotes()
   {
     return _newVotes;
   }
 
+
   /// Get the votes from last round
+  /// Unique user IDs are mapped to the amount of votes
+  /// Get the name of a user with: GroupData#getUserName( String ID )
   Map<String, int> getLastVotes()
   {
     return _lastVotes;
@@ -358,10 +368,13 @@ class GroupData {
 
 
   /// Get the votes of all rounds combined
+  /// Unique user IDs are mapped to the amount of votes
+  /// Get the name of a user with: GroupData#getUserName( String ID )
   Map<String, int> getTotalVotes()
   {
     return _totalVotes;
   }
+
 
   /// A temporary method for testing by printing the contents of this group
   @Deprecated('Will be deleted before release!')
