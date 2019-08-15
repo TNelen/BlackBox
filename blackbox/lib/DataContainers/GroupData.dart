@@ -192,6 +192,7 @@ class GroupData {
 
   /// Removes a user from this group
   /// User will be removed from all lists (all vote lists + playing lists)
+  /// If the last user leaves, this group will be deleted from the database!
   void removeMember( UserData user )
   {
     _members.remove( user.getUserID() );
@@ -200,6 +201,12 @@ class GroupData {
     _lastVotes.remove( user.getUserID() );
     _newVotes.remove( user.getUserID() );
     _totalVotes.remove( user.getUserID() );
+
+    if ( _members.length == 0 )
+    {
+      Constants.database.deleteGroup( this );
+    }
+
   }
 
 
