@@ -45,7 +45,13 @@ class Question {
   
 
   /// Create a Question by providing all data
-  Question(this._questionID, this._question, this._category, this._creatorID, this._creatorName);
+  Question(this._questionID, this._question, this._category, this._creatorID, this._creatorName) {
+    if (_questionID == null)    _questionID   = "";
+    if (_question == null)      _question     = "";
+    if (_category == null)      _category     = Category.Default;
+    if (_creatorID == null)     _creatorID    = "";
+    if (_creatorName == null)   _creatorName  = "";
+  }
 
 
   /// Create a basic question

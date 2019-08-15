@@ -188,7 +188,7 @@ class Firebase implements Database{
           .then (
             (document) {
               /// Convert List<dynamic> to List<String>
-              List<dynamic> existing = document.data['questions'];
+              List<dynamic> existing = document.data['questionList'];
               List<String> questions = existing.cast<String>().toList();
 
               int randomID;
@@ -499,6 +499,12 @@ class Firebase implements Database{
         data['nextQuestionCategory'] = groupData.getQuestion().getCategory();
         data['nextQuestionCreatorID'] = groupData.getQuestion().getCreatorID();
         data['nextQuestionCreatorName'] = groupData.getQuestion().getCreatorName();
+
+        data['lastQuestion'] = groupData.getLastQuestion().getQuestion() ?? "";
+        data['lastQuestionID'] = groupData.getLastQuestion().getQuestionID() ?? "";
+        data['lastQuestionCategory'] = groupData.getLastQuestion().getCategory() ?? "Default";
+        data['lastQuestionCreatorID'] = groupData.getLastQuestion().getCreatorID() ?? "";
+        data['lastQuestionCreatorName'] = groupData.getLastQuestion().getCreatorName() ?? "";
       } else {  /// Otherwise: use current data
         data['name'] = freshData.getName();
         data['description'] = freshData.getDescription();
@@ -508,6 +514,12 @@ class Firebase implements Database{
         data['nextQuestionCategory'] = freshData.getQuestion().getCategory();
         data['nextQuestionCreatorID'] = freshData.getQuestion().getCreatorID();
         data['nextQuestionCreatorName'] = freshData.getQuestion().getCreatorName();
+
+        data['lastQuestion'] = freshData.getLastQuestion().getQuestion() ?? "";
+        data['lastQuestionID'] = freshData.getLastQuestion().getQuestionID() ?? "";
+        data['lastQuestionCategory'] = freshData.getLastQuestion().getCategory() ?? "Default";
+        data['lastQuestionCreatorID'] = freshData.getLastQuestion().getCreatorID() ?? "";
+        data['lastQuestionCreatorName'] = freshData.getLastQuestion().getCreatorName() ?? "";
       }
 
 
@@ -581,7 +593,7 @@ class Firebase implements Database{
             .then (
               (document) {
                 /// Convert List<dynamic> to List<String>
-                List<dynamic> existing = document.data['questions'];
+                List<dynamic> existing = document.data['questionList'];
                 questions = existing.cast<String>().toList();
 
               }
@@ -591,7 +603,7 @@ class Firebase implements Database{
       {
         questions.add( uniqueID );
         var newData = new Map<String, dynamic>();
-        newData['questions'] = questions;
+        newData['questionList'] = questions;
 
         transaction.set(docRef, newData );
       }

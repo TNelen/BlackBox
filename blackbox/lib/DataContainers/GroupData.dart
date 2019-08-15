@@ -20,6 +20,7 @@ class GroupData {
 
   /// Status information about this group
   Question _nextQuestion;
+  Question _lastQuestion;
   Map<String, int> _lastVotes;  /// Mapping unique IDs to the number of last votes a member had
   Map<String, int> _newVotes;   /// Mapping unique IDs to the new number of votes a member had
   Map<String, int> _totalVotes; /// Mapping unique IDs to the total amount of votes for that user
@@ -59,6 +60,7 @@ class GroupData {
     _adminID = snap.data['admin'],
     /// Get status data
     _nextQuestion = new Question( snap.data['nextQuestionID'], snap.data['nextQuestion'], Question.getCategoryFromString(snap.data['nextQuestionCategory']), snap.data['nextQuestionCreatorID'], snap.data['nextQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
+    _lastQuestion = new Question( snap.data['lastQuestionID'], snap.data['lastQuestion'], Question.getCategoryFromString(snap.data['lastQuestionCategory']), snap.data['lastQuestionCreatorID'], snap.data['lastQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
     _members = _convertFirebaseMapString( snap.data['members'] ),
     _lastVotes = _convertFirebaseMapInt( snap.data['lastVotes'] ),
     _newVotes = _convertFirebaseMapInt( snap.data['newVotes'] ),
@@ -220,6 +222,7 @@ class GroupData {
   
 
   /// Set a new question
+  /// Last question will be replaced by the current question automatically
   /// Admin account must be provided for authentication
   /// Non-admins will cause this function to fail silently
   void setNextQuestion(Question nextQuestion, UserData admin)
@@ -227,6 +230,7 @@ class GroupData {
     if (admin.getUserID() != _adminID)
       return;
 
+    _lastQuestion = _nextQuestion;
     _nextQuestion = nextQuestion;
   }
 
@@ -235,6 +239,12 @@ class GroupData {
   Question getQuestion()
   {
     return _nextQuestion;
+  }
+
+  /// Get the previous question of this group
+  Question getLastQuestion()
+  {
+    return _lastQuestion;
   }
 
 
