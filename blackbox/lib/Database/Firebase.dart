@@ -453,7 +453,7 @@ class Firebase implements Database{
       else
         newList = groupData.getPlaying();
 
-      if ( groupData.getPlaying().contains( userID ) )
+      if ( groupData.getPlaying().contains( userID ) && ! ( newList.contains(userID) ) )
       {
         newList.add( userID );
       } else {
