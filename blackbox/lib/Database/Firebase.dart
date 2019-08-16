@@ -199,7 +199,6 @@ class Firebase implements Database{
 
               randomQuestionID = questions[randomID];
               print ("RANDOM QUESTION: " + randomQuestionID);
-              print("Num questions: " + questions.length.toString());
             }
           );
 
@@ -211,6 +210,11 @@ class Firebase implements Database{
               for (Category cat in Category.values)
               {
                 String comparableCategory = cat.toString().split('.').last;
+                if (document.data['category'] == null)
+                {
+                  cat = Category.Default;
+                }
+
                 if ( comparableCategory == document.data['category'] )
                 {
                   category = cat;
@@ -457,7 +461,7 @@ class Firebase implements Database{
       if ( groupData.getPlaying().contains( userID ) && ! ( newList.contains(userID) ) )
       {
         newList.add( userID );
-      } else {
+      } else if ( ! groupData.getPlaying().contains( userID )) {
         newList.remove( userID );
       }
 
