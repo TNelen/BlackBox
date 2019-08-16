@@ -399,6 +399,7 @@ class Firebase implements Database{
 
   }
 
+
   @override
   Future< bool > updateGroup(GroupData groupData) async {
     String code = groupData.getGroupCode();
@@ -466,26 +467,31 @@ class Firebase implements Database{
       
       ///
       /// Handle votes -> Always get most up-to-date values!
-      /// Unless it is a new group or the data does not exist!
+      /// Unless it is a new group, the data does not exist or a question transfer is in progress!
       /// 
       
-      /// Handle last votes 
-      if (freshData.getLastVotes() != null)
-        data['lastVotes'] = freshData.getLastVotes();
-      else 
+      
+      bool transfer = (Constants.getUserID() == groupData.getAdminID() && freshData.getQuestion() != null
+                        && freshData.getQuestion() == groupData.getLastQuestion())
+                        || (freshData.getQuestion() == null);
+
+       /// Handle last votes 
+      if (freshData.getLastVotes() == null || transfer)
         data['lastVotes'] = groupData.getLastVotes();
+      else 
+        data['lastVotes'] = freshData.getLastVotes();
 
       /// Handle new votes
-      if (freshData.getNewVotes() != null)
-        data['newVotes'] = freshData.getNewVotes();
-      else 
+      if (freshData.getNewVotes() == null || transfer)
         data['newVotes'] = groupData.getNewVotes();
+      else 
+        data['newVotes'] = freshData.getNewVotes();
 
       /// Handle total votes
-      if (freshData.getTotalVotes() != null)
-        data['totalVotes'] = freshData.getTotalVotes();
-      else 
+      if (freshData.getTotalVotes() == null || transfer)
         data['totalVotes'] = groupData.getTotalVotes();
+      else 
+        data['totalVotes'] = freshData.getTotalVotes();
 
 
       /// If user is admin -> Overwrite permissions!
@@ -522,10 +528,6 @@ class Firebase implements Database{
         data['lastQuestionCreatorName'] = freshData.getLastQuestion().getCreatorName() ?? "";
       }
 
-
-      data.forEach( (key, value) {
-        print(key + ": " + value.toString());
-      });
 
       /// Add the new data
       await transaction.set(docRef, data);

@@ -62,6 +62,7 @@ abstract class Database {
   /// Setters
   /// -------
   
+  
   /// Cast a vote on the user with id voteeID
   /// Does not check if the votee exists
   /// Does not check if this user has voted already
@@ -74,6 +75,7 @@ abstract class Database {
   Future< bool > updateUser( UserData userData );
 
   /// Updates the group with the same unique ID. If it doesn't exist, it will be added
+  /// Will automatically detect a question transfer and perform it
   /// Returns true when completed
   /// Never returns false
   Future< bool > updateGroup( GroupData groupData );
