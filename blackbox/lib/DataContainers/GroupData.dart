@@ -233,18 +233,22 @@ class GroupData {
   /// Last question will be replaced by the current question automatically
   /// Admin account must be provided for authentication
   /// Non-admins will cause this function to fail silently
-  void setNextQuestion(Question nextQuestion, UserData admin)
+  void setNextQuestion(Question newQuestion, UserData admin)
   {
-    if (admin.getUserID() != _adminID)
-      return;
+    if (admin.getUserID() == _adminID) {
+      /// Move the questions 
+      _lastQuestion = new Question( _nextQuestion.getQuestionID(), 
+                                    _nextQuestion.getQuestion(), 
+                                    _nextQuestion.getCategoryAsCategory(), 
+                                    _nextQuestion.getCreatorID(), 
+                                    _nextQuestion.getCreatorName());
 
-    /// Move the questions
-    _lastQuestion = _nextQuestion;
-    _nextQuestion = nextQuestion;
+      _nextQuestion = newQuestion;
 
-    /// Move the votes
-    _transferVotes( admin );
-    Constants.database.updateGroup(this);
+      /// Move the votes
+      _transferVotes( admin );
+      Constants.database.updateGroup(this);
+    }
   }
 
 
@@ -461,9 +465,15 @@ class GroupData {
           membersString += member + ", ";
       });
 
+    String playingString = "";
+    _playing.forEach( (player) {
+      playingString += player + ", ";
+    } );
+
     print("-----");
     print("GroupTileData debug message");
-    print("Name: " + _groupName + "\nGroupID: " + _groupID + "\nadminID: " + _adminID + "\nmembers:" + membersString);
+    print("Name: " + _groupName + "\nGroupID: " + _groupID + "\nadminID: " + _adminID + "\nmembers:" + membersString + "\nPlaying:" + playingString);
+    print("Question: " + _nextQuestion.getQuestionID() + "\nNext Question: " + _lastQuestion.getQuestionID());
     _totalVotes.forEach( (key, value) { print("ID: " + key); print("Votes: " + value.toString()); } );
     print("-----");
   }
