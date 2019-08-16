@@ -514,14 +514,6 @@ class Firebase implements Database{
                         && freshData.getQuestion().getQuestionID() == groupData.getLastQuestion().getQuestionID())
                         || (freshData.getQuestion() == null);
 
-      print("-----");
-      print("Updating group");
-      print("Fresh: " + freshData.getQuestion().getQuestion());
-      print("Local: " + groupData.getLastQuestion().getQuestion());
-      print("Question fresh: " + (freshData.getQuestion() == groupData.getLastQuestion()).toString());
-      print("Transfering votes: " + transfer.toString());
-      print("-----");
-
        /// Handle last votes 
       if (freshData.getLastVotes() == null || transfer)
         data['lastVotes'] = groupData.getLastVotes();
