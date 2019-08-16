@@ -449,12 +449,14 @@ class Firebase implements Database{
       
       List<String> newList = new List<String>();
       /// Get playing data from database or local GroupData
-      if (freshData.getPlaying() != null)
+      bool newGroup = freshData.getPlaying() != null;
+      if ( newGroup )
         newList = freshData.getPlaying();
       else
         newList = groupData.getPlaying();
 
-      if ( groupData.getPlaying().contains( userID ) && ! ( newList.contains(userID) ) )
+      if ( groupData.getPlaying().contains( userID ) 
+           && ( !(newList.contains(userID)) || newGroup ))
       {
         newList.add( userID );
       } else {
