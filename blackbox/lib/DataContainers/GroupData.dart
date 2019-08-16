@@ -340,7 +340,7 @@ class GroupData {
   String getWinner(){
     String winner = null;
     int winnervotes = 0;
-    _newVotes.forEach((userID, numVotes){
+    _lastVotes.forEach((userID, numVotes){
       if (numVotes > winnervotes){
         winner = getUserName(userID);
         winnervotes = numVotes;
@@ -357,7 +357,7 @@ class GroupData {
     int oneVotes =0;
     int twoVotes = 0;
     int threeVotes = 0;
-    _newVotes.forEach((userID, numVotes){
+    _lastVotes.forEach((userID, numVotes){
       if (numVotes > oneVotes){
         top[1] = top[0];
         top[2]= top[1];

@@ -72,11 +72,11 @@ class _GameScreenState extends State<GameScreen> {
             return new Center(child: new CircularProgressIndicator());
           }
           if (!joined) {
+
             groupdata.addMember(Constants.getUserData());
-            _database.updateGroup(groupdata);
             joined = true;
             print("joined Group");
-            getRandomNexQuestion();
+            //_database.updateGroup(groupdata);
 
           }
 
@@ -356,6 +356,10 @@ class _GameScreenState extends State<GameScreen> {
                 FlatButton(
                   color: Colors.amber,
                   onPressed: () {
+
+                    getRandomNexQuestion();
+
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(

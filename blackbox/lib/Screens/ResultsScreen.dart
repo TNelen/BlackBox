@@ -101,6 +101,9 @@ class ResultScreenState extends State<ResultScreen> {
                   getRandomNexQuestion();
                   print('admin set next question');
                   print(groupData.getQuestionID());
+
+
+                  print('currentQuestion ID = '+ currentQuestion)  ;
                 }
 
 
