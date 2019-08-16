@@ -408,23 +408,22 @@ class GroupData {
   void _transferVotes(UserData admin)
   {
     /// Admin authentication
-    if ( admin.getUserID() != _adminID )
-      return;
+    if ( admin.getUserID() == _adminID ) {
 
-    /// Add votes to total count
-    _newVotes.forEach( (userID, numVotes) {
-        if (_totalVotes.containsKey(userID))
-          _totalVotes[userID] += numVotes;
-        else
-          _totalVotes[userID] = numVotes;
-    });
+      /// Add votes to total count
+      _newVotes.forEach( (userID, numVotes) {
+          if (_totalVotes.containsKey(userID))
+            _totalVotes[userID] += numVotes;
+          else
+            _totalVotes[userID] = numVotes;
+      });
 
-    /// Copy new votes to the old list 
-    _lastVotes = _newVotes;
+      /// Copy new votes to the old list 
+      _lastVotes = _newVotes;
 
-    /// Reset new votes
-    _newVotes = new Map<String, int>();
-
+      /// Reset new votes
+      _newVotes = new Map<String, int>();
+    }
   }
 
 

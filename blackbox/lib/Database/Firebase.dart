@@ -3,7 +3,6 @@ import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:blackbox/Exceptions/GroupNotFoundException.dart';
 import '../DataContainers/Question.dart';
-import 'package:blackbox/Database/FirebaseStream.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Interfaces/Database.dart';
 import 'dart:math';
@@ -474,28 +473,6 @@ class Firebase implements Database{
       /// Unless it is a new group, the data does not exist or a question transfer is in progress!
       /// 
       
-      
-      bool transfer = (Constants.getUserID() == groupData.getAdminID() && freshData.getQuestion() != null
-                        && freshData.getQuestion() == groupData.getLastQuestion())
-                        || (freshData.getQuestion() == null);
-
-       /// Handle last votes 
-      if (freshData.getLastVotes() == null || transfer)
-        data['lastVotes'] = groupData.getLastVotes();
-      else 
-        data['lastVotes'] = freshData.getLastVotes();
-
-      /// Handle new votes
-      if (freshData.getNewVotes() == null || transfer)
-        data['newVotes'] = groupData.getNewVotes();
-      else 
-        data['newVotes'] = freshData.getNewVotes();
-
-      /// Handle total votes
-      if (freshData.getTotalVotes() == null || transfer)
-        data['totalVotes'] = groupData.getTotalVotes();
-      else 
-        data['totalVotes'] = freshData.getTotalVotes();
 
 
       /// If user is admin -> Overwrite permissions!
@@ -532,6 +509,36 @@ class Firebase implements Database{
         data['lastQuestionCreatorName'] = freshData.getLastQuestion().getCreatorName() ?? "";
       }
 
+
+      bool transfer = (Constants.getUserID() == groupData.getAdminID() && freshData.getQuestion() != null
+                        && freshData.getQuestion().getQuestionID() == groupData.getLastQuestion().getQuestionID())
+                        || (freshData.getQuestion() == null);
+
+      print("-----");
+      print("Updating group");
+      print("Fresh: " + freshData.getQuestion().getQuestion());
+      print("Local: " + groupData.getLastQuestion().getQuestion());
+      print("Question fresh: " + (freshData.getQuestion() == groupData.getLastQuestion()).toString());
+      print("Transfering votes: " + transfer.toString());
+      print("-----");
+
+       /// Handle last votes 
+      if (freshData.getLastVotes() == null || transfer)
+        data['lastVotes'] = groupData.getLastVotes();
+      else 
+        data['lastVotes'] = freshData.getLastVotes();
+
+      /// Handle new votes
+      if (freshData.getNewVotes() == null || transfer)
+        data['newVotes'] = groupData.getNewVotes();
+      else 
+        data['newVotes'] = freshData.getNewVotes();
+
+      /// Handle total votes
+      if (freshData.getTotalVotes() == null || transfer)
+        data['totalVotes'] = groupData.getTotalVotes();
+      else 
+        data['totalVotes'] = freshData.getTotalVotes();
 
       /// Add the new data
       await transaction.set(docRef, data);
