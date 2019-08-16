@@ -80,6 +80,7 @@ class _GameScreenState extends State<GameScreen> {
 
           }
 
+          getRandomNexQuestion();
 
 
           return new Scaffold(
@@ -357,7 +358,6 @@ class _GameScreenState extends State<GameScreen> {
                   color: Colors.amber,
                   onPressed: () {
 
-                    getRandomNexQuestion();
 
 
                     Navigator.push(

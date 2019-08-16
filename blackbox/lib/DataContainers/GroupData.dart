@@ -364,12 +364,12 @@ class GroupData {
         top[0] = getUserName(userID);
         oneVotes = numVotes;
       }
-      else if (numVotes >= twoVotes && numVotes <oneVotes){
+      else if (numVotes >= twoVotes && numVotes <= oneVotes){
         top[2]=top[1];
        top[1] = getUserName(userID);
        twoVotes = numVotes;
       }
-      else if (numVotes >= threeVotes && numVotes <twoVotes)
+      else if (numVotes >= threeVotes && numVotes <= twoVotes)
         top[2] = getUserName(userID);
         threeVotes = numVotes;
     });
