@@ -175,7 +175,7 @@ class Firebase implements Database{
   }
 
   @override
-  Future< Question > getRandomQuestion( Category category ) async
+  Future< Question > getRandomQuestion( GroupData groupData, Category category ) async
   {
     Question randomQuestion;
     String randomQuestionID;
@@ -192,11 +192,26 @@ class Firebase implements Database{
 
               int randomID;
               if (questions.length > 1) {
+                bool isSearching;
                 var random = new Random();
-                randomID = random.nextInt( questions.length );
+
+                do {
+                  isSearching = false;
+                  randomID = random.nextInt( questions.length );
+                  randomQuestionID = questions[randomID];
+
+                  /// Make sure the question is not a duplicate
+                  if (groupData.getLastQuestion().getQuestionID() == randomQuestionID) 
+                    isSearching = true;
+                  else if (groupData.getQuestion().getQuestionID() == randomQuestionID)
+                    isSearching = true;
+                  else 
+                    isSearching = false;
+                  
+                } while (isSearching && questions.length > 3);
+
               } else randomID = 0;
 
-              randomQuestionID = questions[randomID];
               print ("RANDOM QUESTION: " + randomQuestionID);
             }
           );

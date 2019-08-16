@@ -60,7 +60,7 @@ class _GameScreenState extends State<GameScreen> {
   }*/
 
    void getRandomNexQuestion()async{
-    groupdata.setNextQuestion(await _database.getRandomQuestion(Category.Any), Constants.getUserData());  }
+    groupdata.setNextQuestion(await _database.getRandomQuestion(groupdata, Category.Any), Constants.getUserData());  }
 
   Widget _buildBody() {
     return StreamBuilder(
@@ -76,7 +76,7 @@ class _GameScreenState extends State<GameScreen> {
             groupdata.addMember(Constants.getUserData());
             joined = true;
             print("joined Group");
-            getRandomNexQuestion();
+            
 
 
             //_database.updateGroup(groupdata);
@@ -338,6 +338,7 @@ class _GameScreenState extends State<GameScreen> {
                       groupdata.setPlayingUser(Constants.getUserData());
                       _database.updateGroup(groupdata);
                     }
+                    getRandomNexQuestion();
                   },
                   splashColor: Colors.white,
                   child: Text(

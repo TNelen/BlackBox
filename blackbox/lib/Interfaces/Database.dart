@@ -44,9 +44,10 @@ abstract class Database {
   Future< String > generateUniqueGroupCode();
 
   /// Get a random question within the provided category
+  /// The question is guaranteed to not have appeared in the two rounds before
   /// For a list of categories: check DataContainers/Question.dart
   /// The category is currently ignored
-  Future< Question > getRandomQuestion( Category category );
+  Future< Question > getRandomQuestion( GroupData groupData, Category category );
 
   /// Check whether or not a group actually exists
   Future< bool > doesGroupExist( String groupID );
