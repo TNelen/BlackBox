@@ -36,7 +36,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   Widget build(BuildContext context) {
 
-    groupData.setNextQuestion(groupData.getQuestion(), Constants.getUserData() );
+    // Tijdelijk even uitgeschakeld
+    // groupData.setNextQuestion(groupData.getQuestion(), Constants.getUserData() );
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
