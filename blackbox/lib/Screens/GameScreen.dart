@@ -76,9 +76,11 @@ class _GameScreenState extends State<GameScreen> {
             _database.updateGroup(groupdata);
             joined = true;
             print("joined Group");
+            getRandomNexQuestion();
+
           }
 
-          getRandomNexQuestion();
+
 
           return new Scaffold(
             body: DefaultTabController(

@@ -80,6 +80,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     code, Constants.getUserID(), members));
               });
             }
+
           },
           child: Text("Create",
               textAlign: TextAlign.center,

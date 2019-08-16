@@ -13,17 +13,19 @@ class ResultScreen extends StatefulWidget {
   GroupData groupData;
   String code;
   String currentQuestion;
+  String currentQuestionString;
 
-  ResultScreen(Database db, GroupData groupData, String code, String currentQuestion) {
+  ResultScreen(Database db, GroupData groupData, String code, String currentQuestion, String currentQuestionString) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
     this.currentQuestion = currentQuestion;
+    this.currentQuestionString = currentQuestionString;
   }
 
   @override
   ResultScreenState createState() =>
-      ResultScreenState(_database, groupData, code, currentQuestion);
+      ResultScreenState(_database, groupData, code, currentQuestion, currentQuestionString);
 }
 
 class ResultScreenState extends State<ResultScreen> {
@@ -31,15 +33,17 @@ class ResultScreenState extends State<ResultScreen> {
   GroupData groupData;
   String code;
   String currentQuestion;
+  String currentQuestionString;
   FirebaseStream stream;
   bool joined = false;
   bool _loadingInProgress;
 
-  ResultScreenState(Database db, GroupData groupData, String code, String currentQuestion) {
+  ResultScreenState(Database db, GroupData groupData, String code, String currentQuestion, String currentQuestionString) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
     this.currentQuestion = currentQuestion;
+    this.currentQuestionString = currentQuestionString;
     this.stream = new FirebaseStream(code);
   }
 
@@ -96,6 +100,7 @@ class ResultScreenState extends State<ResultScreen> {
                 if(groupData.getNumVotes() == groupData.getNumPlaying()){
                   getRandomNexQuestion();
                   print('admin set next question');
+                  print(groupData.getQuestionID());
                 }
 
 
@@ -136,7 +141,7 @@ class ResultScreenState extends State<ResultScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            groupData.getLastQuestionString(),
+                            currentQuestionString,
                             textAlign: TextAlign.center,
                             style: new TextStyle(
                                 color: Colors.amber,

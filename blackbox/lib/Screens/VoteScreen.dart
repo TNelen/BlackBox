@@ -30,6 +30,7 @@ class _VoteScreenState extends State<VoteScreen> {
   String code;
   String clickedmember;
   String currentQuestion;
+  String currentQuestionString;
 
   _VoteScreenState(Database db, GroupData groupData, String code){
     this._database = db;
@@ -105,11 +106,14 @@ class _VoteScreenState extends State<VoteScreen> {
 
                 _database.voteOnUser(groupData, clickedmember);
                 currentQuestion = groupData.getQuestionID();
+                currentQuestionString = groupData.getNextQuestionString();
+                print(currentQuestionString);
+
 
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => ResultScreen(_database, groupData, code, currentQuestion),
+                      builder: (BuildContext context) => ResultScreen(_database, groupData, code, currentQuestion, currentQuestionString),
                     ));
               } else {
                 _showDialog();

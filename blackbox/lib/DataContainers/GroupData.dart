@@ -244,6 +244,7 @@ class GroupData {
 
     /// Move the votes
     _transferVotes( admin );
+    Constants.database.updateGroup(this);
   }
 
 
@@ -261,6 +262,11 @@ class GroupData {
   Question getLastQuestion()
   {
     return _lastQuestion;
+  }
+
+  String getLastQuestionID()
+  {
+    return _lastQuestion.getQuestionID();
   }
 
   String getLastQuestionString()
