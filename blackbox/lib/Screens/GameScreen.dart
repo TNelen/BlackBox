@@ -76,11 +76,13 @@ class _GameScreenState extends State<GameScreen> {
             groupdata.addMember(Constants.getUserData());
             joined = true;
             print("joined Group");
+            getRandomNexQuestion();
+
+
             //_database.updateGroup(groupdata);
 
           }
 
-          getRandomNexQuestion();
 
 
           return new Scaffold(
