@@ -253,10 +253,24 @@ class GroupData {
     return _nextQuestion;
   }
 
+  String getQuestionID(){
+    return _nextQuestion.getQuestionID();
+  }
+
   /// Get the previous question of this group
   Question getLastQuestion()
   {
     return _lastQuestion;
+  }
+
+  String getLastQuestionString()
+  {
+    return _lastQuestion.getQuestion();
+  }
+
+  String getNextQuestionString()
+  {
+    return _nextQuestion.getQuestion();
   }
 
 
@@ -302,6 +316,55 @@ class GroupData {
   int getNumPlaying()
   {
     return _playing.length;
+  }
+
+  ///returns the number of votes submitted this round
+  int getNumVotes(){
+    int totalvotes = 0;
+    _newVotes.forEach((userID, numVotes){
+      totalvotes = totalvotes +  numVotes;
+    });
+    return totalvotes;
+  }
+
+  String getWinner(){
+    String winner = null;
+    int winnervotes = 0;
+    _newVotes.forEach((userID, numVotes){
+      if (numVotes > winnervotes){
+        winner = getUserName(userID);
+        winnervotes = numVotes;
+      }
+      else if (numVotes == winnervotes){
+        winner = winner + " + " + getUserName(userID);
+    }});
+    return winner;
+
+  }
+
+  List<String> getTopThree(){
+    List<String> top = new List(3); top[0] = '';top[1] = '';top[2] = '';
+    int oneVotes =0;
+    int twoVotes = 0;
+    int threeVotes = 0;
+    _newVotes.forEach((userID, numVotes){
+      if (numVotes > oneVotes){
+        top[1] = top[0];
+        top[2]= top[1];
+        top[0] = getUserName(userID);
+        oneVotes = numVotes;
+      }
+      else if (numVotes >= twoVotes && numVotes <oneVotes){
+        top[2]=top[1];
+       top[1] = getUserName(userID);
+       twoVotes = numVotes;
+      }
+      else if (numVotes >= threeVotes && numVotes <twoVotes)
+        top[2] = getUserName(userID);
+        threeVotes = numVotes;
+    });
+    return top;
+
   }
 
 

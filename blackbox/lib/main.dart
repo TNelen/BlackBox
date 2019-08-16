@@ -10,8 +10,6 @@ import 'Constants.dart';
 
 void main() => runApp(MyApp());
 
-//String username = 'timo';
-
 class MyApp extends StatelessWidget {
 
 

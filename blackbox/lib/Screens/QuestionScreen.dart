@@ -11,26 +11,32 @@ import '../DataContainers/GroupData.dart';
 class QuestionScreen extends StatefulWidget {
   Database _database;
   GroupData groupData;
+  String code;
 
   @override
-  QuestionScreen(Database db, GroupData gd){
+  QuestionScreen(Database db, GroupData gd, String code){
     this._database = db;
     this.groupData = gd;
+    this.code = code;
   }
-  _QuestionScreenState createState() => _QuestionScreenState(_database, groupData);
+  _QuestionScreenState createState() => _QuestionScreenState(_database, groupData, code);
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
   Database _database;
   GroupData groupData;
+  String code;
 
-  _QuestionScreenState(Database db, GroupData groupData){
+  _QuestionScreenState(Database db, GroupData groupData, String code){
     this._database = db;
     this.groupData = groupData;
+    this.code = code;
   }
 
   @override
   Widget build(BuildContext context) {
+
+    groupData.setNextQuestion(groupData.getQuestion(), Constants.getUserData() );
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
@@ -50,7 +56,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => VoteScreen(_database, groupData),
+                  builder: (BuildContext context) => VoteScreen(_database, groupData, code),
                 ));
 
           },
@@ -97,7 +103,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              'QUESTION + NR',
+                              'Question',
                               style: new TextStyle(
                                   color: Colors.black,
                                   fontSize: 20.0,
@@ -105,7 +111,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                             ),
                             SizedBox(height: 30),
                             Text(
-                              'Hier komt de vraag terecht',
+                              groupData.getNextQuestionString(),
                               style: new TextStyle(
                                   color: Colors.amber,
                                   fontSize: 20.0,

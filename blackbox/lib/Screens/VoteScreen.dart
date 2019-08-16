@@ -9,15 +9,17 @@ import '../DataContainers/GroupData.dart';
 class VoteScreen extends StatefulWidget {
   Database _database;
   GroupData groupData;
+  String code;
 
 
-  VoteScreen(Database db, GroupData groupData){
+  VoteScreen(Database db, GroupData groupData, String code){
     this._database = db;
     this.groupData = groupData;
+    this.code = code;
   }
 
   @override
-  _VoteScreenState createState() => _VoteScreenState(_database, groupData);
+  _VoteScreenState createState() => _VoteScreenState(_database, groupData, code);
 }
 
 class _VoteScreenState extends State<VoteScreen> {
@@ -25,11 +27,14 @@ class _VoteScreenState extends State<VoteScreen> {
   Database _database;
   GroupData groupData;
   Color color;
+  String code;
   String clickedmember;
+  String currentQuestion;
 
-  _VoteScreenState(Database db, GroupData groupData){
+  _VoteScreenState(Database db, GroupData groupData, String code){
     this._database = db;
     this.groupData = groupData;
+    this.code = code;
   }
 
   @override
@@ -99,11 +104,12 @@ class _VoteScreenState extends State<VoteScreen> {
               if (clickedmember != null) {
 
                 _database.voteOnUser(groupData, clickedmember);
+                currentQuestion = groupData.getQuestionID();
 
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => ResultScreen(_database, groupData),
+                      builder: (BuildContext context) => ResultScreen(_database, groupData, code, currentQuestion),
                     ));
               } else {
                 _showDialog();

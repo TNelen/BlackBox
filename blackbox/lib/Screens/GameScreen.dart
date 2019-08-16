@@ -6,6 +6,7 @@ import '../DataContainers/GroupData.dart';
 import 'JoinGameScreen.dart';
 import '../Constants.dart';
 import 'QuestionScreen.dart';
+import '../DataContainers/Question.dart';
 
 class GameScreen extends StatefulWidget {
   Database _database;
@@ -50,13 +51,16 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
-  @override
+ /* @override
   void dispose() {
     super.dispose();
     FirebaseStream.closeController();
 
     ///Something to close the stream goes here
-  }
+  }*/
+
+   void getRandomNexQuestion()async{
+    groupdata.setNextQuestion(await _database.getRandomQuestion(Category.Any), Constants.getUserData());  }
 
   Widget _buildBody() {
     return StreamBuilder(
@@ -73,6 +77,8 @@ class _GameScreenState extends State<GameScreen> {
             joined = true;
             print("joined Group");
           }
+
+          getRandomNexQuestion();
 
           return new Scaffold(
             body: DefaultTabController(
@@ -352,7 +358,7 @@ class _GameScreenState extends State<GameScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              QuestionScreen(_database, groupdata),
+                              QuestionScreen(_database, groupdata, code),
                         ));
                   },
                   splashColor: Colors.white,
