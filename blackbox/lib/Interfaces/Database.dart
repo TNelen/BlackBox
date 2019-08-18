@@ -2,7 +2,15 @@ import '../DataContainers/GroupData.dart';
 import '../DataContainers/UserData.dart';
 import '../DataContainers/Question.dart';
 
+/// An enum, designated to reporting a question
+enum ReportType {
+    CATEGORY,
+    GRAMMAR,
+    DISTURBING
+}
+
 abstract class Database {
+
 
 
   /// -----------
@@ -86,6 +94,16 @@ abstract class Database {
   /// Returns true when completed
   /// Returns false when the question already exists
   Future< bool > updateQuestion( Question question );
+
+  /// Add a report to the database for the given question
+  /// This will only update report fields AND fields that do not exist in the database for this question
+  /// Possible report types are: 
+  /// CATEGORY    ->  When the category of this question is not correct  
+  /// GRAMMAR     ->  When the question contains a spelling or grammar mistake
+  /// DISTURBING  ->  When the content of the question violates the BlackBox rules
+  /// Will return true once completed
+  /// Returns false if this question does not exist in the database
+  Future< bool > reportQuestion( Question q, ReportType reportType );
 
 
   /// --------

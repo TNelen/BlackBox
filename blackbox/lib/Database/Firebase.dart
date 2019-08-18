@@ -386,7 +386,7 @@ class Firebase implements Database{
   @override
   Future< bool > voteOnUser(GroupData groupData, String voteeID) async {
 
-    Firestore.instance.runTransaction((Transaction transaction) async {
+    await Firestore.instance.runTransaction((Transaction transaction) async {
       DocumentReference groupRef = Firestore.instance
                                     .collection("groups")
                                     .document( groupData.getGroupCode() );
@@ -423,7 +423,7 @@ class Firebase implements Database{
     String code = groupData.getGroupCode();
     String userID = Constants.getUserID();
 
-    Firestore.instance.runTransaction((Transaction transaction) async {
+    await Firestore.instance.runTransaction((Transaction transaction) async {
 
       /// Get up-to-date data
       GroupData freshData;
@@ -564,7 +564,7 @@ class Firebase implements Database{
     var data = new Map<String, dynamic>();
     data['name'] = userData.getUsername();
 
-    Firestore.instance.runTransaction((Transaction transaction) async {
+    await Firestore.instance.runTransaction((Transaction transaction) async {
       DocumentReference docRef = Firestore.instance.collection("users").document( uniqueID );
       transaction.set(docRef, data);
     });
@@ -588,7 +588,7 @@ class Firebase implements Database{
     data['creatorID'] = question.getCreatorID();
     data['creatorName'] = question.getCreatorName();
     
-    Firestore.instance.runTransaction((Transaction transaction) async {
+    await Firestore.instance.runTransaction((Transaction transaction) async {
 
       /// Generate a unique ID
       String uniqueID;
@@ -640,6 +640,81 @@ class Firebase implements Database{
 
   }
 
+  @override
+  Future< bool > reportQuestion(Question question, ReportType reportType) async
+  {
+      bool updateComplete = false;
+
+      /// Get basic question information
+      var data = new Map<String, dynamic>();
+      data['question'] = question.getQuestion();
+      data['category'] = question.getCategory();
+      data['creatorID'] = question.getCreatorID();
+      data['creatorName'] = question.getCreatorName();
+
+      /// start of transaction
+      await Firestore.instance.runTransaction((Transaction transaction) async {
+
+        DocumentReference docRef = Firestore.instance
+                                    .collection("questions")
+                                    .document( question.getQuestionID() );
+
+        /// Get the amount of current reports for each type
+        DocumentSnapshot live = await transaction.get( docRef );
+        
+
+        data['categoryReports'] = 0;
+        data['grammarReports'] = 0;
+        data['disturbingReports'] = 0;
+        if (live.exists) {
+          /// Get basic info from database, if existant
+          if (live.data['question'] != null)
+            data['question'] = live.data['question'];
+
+          if (live.data['category'] != null)
+            data['category'] = live.data['category'];
+
+          if (live.data['creatorID'] != null)
+            data['creatorID'] = live.data['creatorID'];
+
+          if (live.data['creatorName'] != null)
+            data['creatorName'] = live.data['creatorName'];
+
+
+
+          if (live.data['categoryReports'] != null)
+            data['categoryReports'] = live.data['categoryReports'];
+          
+          if (live.data['grammarReports'] != null)
+            data['grammarReports'] = live.data['grammarReports'];
+
+          if (live.data['disturbingReports'] != null)
+            data['disturbingReports'] = live.data['disturbingReports'];
+        
+          switch (reportType) {
+            case ReportType.CATEGORY:
+              data['categoryReports'] = data['categoryReports'] + 1;
+              break;
+            case ReportType.GRAMMAR:
+              data['grammarReports'] = data['grammarReports'] + 1;
+              break;
+            case ReportType.DISTURBING:
+              data['disturbingReports'] = data['disturbingReports'] + 1;
+              break;
+          }     
+
+          updateComplete = true;
+          await transaction.set(docRef, data);
+
+        } else {
+          updateComplete = false;
+        }
+
+      });
+
+    return updateComplete;
+
+  }
 
   /// --------
   /// Deleters
