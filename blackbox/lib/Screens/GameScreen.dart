@@ -47,7 +47,7 @@ class _GameScreenState extends State<GameScreen> {
       print("Task Done");
       _loadingInProgress = false;
     }, onError: (error) {
-      print("Some Error");
+      _errorPopup(error);
     });
   }
 
@@ -60,7 +60,7 @@ class _GameScreenState extends State<GameScreen> {
   }*/
 
    void getRandomNexQuestion()async{
-    groupdata.setNextQuestion(await _database.getRandomQuestion(Category.Any), Constants.getUserData());  }
+    groupdata.setNextQuestion(await _database.getRandomQuestion(groupdata, Category.Any), Constants.getUserData());  }
 
   Widget _buildBody() {
     return StreamBuilder(
@@ -337,9 +337,7 @@ class _GameScreenState extends State<GameScreen> {
                       groupdata.setPlayingUser(Constants.getUserData());
                       _database.updateGroup(groupdata);
                     }
-
                     getRandomNexQuestion();
-
                   },
                   splashColor: Colors.white,
                   child: Text(
@@ -402,4 +400,32 @@ class _GameScreenState extends State<GameScreen> {
       child: _buildBottomCardChildren(context),
     );
   }
+
+
+void _errorPopup (String error)
+{
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Oops!"),
+          content: new Text( error ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+}
+
+
 }

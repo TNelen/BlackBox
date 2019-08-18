@@ -75,7 +75,7 @@ class ResultScreenState extends State<ResultScreen> {
   }
 
   void getRandomNexQuestion()async{
-    groupData.setNextQuestion(await _database.getRandomQuestion(Category.Any), Constants.getUserData());  }
+    groupData.setNextQuestion(await _database.getRandomQuestion(groupData, Category.Any), Constants.getUserData());  }
 
   @override
   Widget _buildBody(BuildContext context) {

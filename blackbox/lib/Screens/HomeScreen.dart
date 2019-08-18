@@ -35,8 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
     this.database = db;
 
     /// Log a user in and update variables accordingly
-/*
-    if (Constants.getUserID() == "GPY2pK6fqsdU0AU5IlGXhJpK8ej1" ) {
+
+    if (Constants.getUserID() == "GPY2pK6fqsdU0AU5IlGXhJpK8ej1" || Constants.getUserID() == "" ) {
       ///check if user isn't loged in via google already when returning to homescreen
       try {
         GoogleUserHandler guh = new GoogleUserHandler();
@@ -48,7 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
       } catch (e) {
         print(e.toString());
       }
-    }*/
+    }
+
 
     /* Example on how to add questions!
     /// Duplicates cannot be added so running it twice is not a problem
