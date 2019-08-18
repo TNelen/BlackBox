@@ -82,7 +82,7 @@ class FirebaseStream {
       if ( ds.exists)
         _groupController.add( GroupData.fromDocumentSnapshot( ds ) );
       else
-        throw new GroupNotFoundException( _groupID );
+        _groupController.addError(new GroupNotFoundException( _groupID ).getCause());
     } catch(e) {
       print(e);
     }
