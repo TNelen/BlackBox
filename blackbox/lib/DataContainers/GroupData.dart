@@ -359,8 +359,9 @@ class GroupData {
     int threeVotes = 0;
     _lastVotes.forEach((userID, numVotes){
       if (numVotes > oneVotes){
-        top[1] = top[0];
         top[2]= top[1];
+        top[1] = top[0];
+
         top[0] = getUserName(userID);
         oneVotes = numVotes;
       }

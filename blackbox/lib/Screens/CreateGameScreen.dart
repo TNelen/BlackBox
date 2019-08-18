@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../Constants.dart';
 import '../DataContainers/GroupData.dart';
 import '../Interfaces/Database.dart';
+import 'GameScreen.dart';
 
 class CreateGameScreen extends StatefulWidget {
   Database _database;
@@ -80,6 +81,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     code, Constants.getUserID(), members));
               });
             }
+
+
 
           },
           child: Text("Create",

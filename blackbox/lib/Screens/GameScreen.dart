@@ -76,7 +76,6 @@ class _GameScreenState extends State<GameScreen> {
             groupdata.addMember(Constants.getUserData());
             joined = true;
             print("joined Group");
-            getRandomNexQuestion();
 
 
             //_database.updateGroup(groupdata);
@@ -338,6 +337,9 @@ class _GameScreenState extends State<GameScreen> {
                       groupdata.setPlayingUser(Constants.getUserData());
                       _database.updateGroup(groupdata);
                     }
+
+                    getRandomNexQuestion();
+
                   },
                   splashColor: Colors.white,
                   child: Text(
