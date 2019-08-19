@@ -150,6 +150,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final height = MediaQuery.of(context).size.height;
 
     return MaterialApp(
+debugShowCheckedModeBanner: false,
+
       theme: new ThemeData(
         scaffoldBackgroundColor: Colors.black,
       ),

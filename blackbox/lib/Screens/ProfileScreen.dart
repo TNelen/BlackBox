@@ -7,7 +7,9 @@ class ProfileScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BlackBox',
+        debugShowCheckedModeBanner: false,
+
+        title: 'BlackBox',
       theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
       home: Scaffold(
         appBar: AppBar(

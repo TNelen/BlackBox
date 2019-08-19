@@ -109,6 +109,8 @@ class ResultScreenState extends State<ResultScreen> {
 
               }
               return MaterialApp(
+                debugShowCheckedModeBanner: false,
+
                 theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
                 home: Scaffold(
                   body: Center(

@@ -14,6 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         //home: YourGroups(new Firebase()));
+        debugShowCheckedModeBanner: false,
+
         home: HomeScreen( Constants.database ));
   }
 }

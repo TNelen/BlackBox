@@ -71,6 +71,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
     return new WillPopScope(
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+
         theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
         home: Scaffold(
           appBar: AppBar(

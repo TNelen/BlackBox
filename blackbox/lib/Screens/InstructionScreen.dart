@@ -20,6 +20,8 @@ MaterialApp instructions(BuildContext context) {
 
 
   return MaterialApp(
+    debugShowCheckedModeBanner: false,
+
     theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
     home: Scaffold(
       appBar: AppBar(

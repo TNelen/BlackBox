@@ -149,6 +149,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     );
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+
       theme: new ThemeData(
         scaffoldBackgroundColor: Colors.black,
       ),
