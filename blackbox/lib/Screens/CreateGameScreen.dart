@@ -7,8 +7,6 @@ import 'package:flutter/services.dart';
 import 'GameScreen.dart';
 import 'package:share/share.dart';
 
-
-
 class CreateGameScreen extends StatefulWidget {
   Database _database;
 
@@ -57,15 +55,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               ),
               IconButton(
                   icon: Icon(
-                    Icons.content_copy,
-                    color: Colors.black,
-                  ),
-                  onPressed: () {
-                    Clipboard.setData(new ClipboardData(text: code));
-                  }),
-              SizedBox(width: 10,),
-              IconButton(
-                  icon: Icon(
                     Icons.share,
                     color: Colors.black,
                   ),
@@ -73,8 +62,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     final RenderBox box = context.findRenderObject();
                     Share.share(code,
                         sharePositionOrigin:
-                        box.localToGlobal(Offset.zero) &
-                        box.size);
+                            box.localToGlobal(Offset.zero) & box.size);
                   }),
             ],
           ),
@@ -146,8 +134,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             if (_groupName.length != 0 && _groupDescription.length != 0) {
               // Generate a unique ID and save the group
               _database.generateUniqueGroupCode().then((code) {
-                 _database.updateGroup(new GroupData(_groupName,
-                 _groupDescription, code, Constants.getUserID(), members));
+                _database.updateGroup(new GroupData(_groupName,
+                    _groupDescription, code, Constants.getUserID(), members));
                 _showDialog(code);
               });
             }
