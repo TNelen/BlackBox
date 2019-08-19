@@ -3,6 +3,11 @@ import '../Constants.dart';
 import '../DataContainers/GroupData.dart';
 import '../Interfaces/Database.dart';
 import 'GameScreen.dart';
+import 'package:flutter/services.dart';
+import 'GameScreen.dart';
+import 'package:share/share.dart';
+
+
 
 class CreateGameScreen extends StatefulWidget {
   Database _database;
@@ -20,8 +25,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   TextEditingController nameController = new TextEditingController();
   TextEditingController descController = new TextEditingController();
 
-
-
   _CreateGameScreenState(Database db) {
     this._database = db;
   }
@@ -31,7 +34,73 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   String _groupID;
   String _groupAdmin = Constants.getUserID();
 
-  final _formKey = GlobalKey<FormState>();
+  void _showDialog(String code) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0))),
+          title: new Text(
+            "Group Code",
+            style: TextStyle(
+                color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+          ),
+          content: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                code,
+                style: TextStyle(color: Colors.black, fontSize: 25),
+              ),
+              IconButton(
+                  icon: Icon(
+                    Icons.content_copy,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    Clipboard.setData(new ClipboardData(text: code));
+                  }),
+              SizedBox(width: 10,),
+              IconButton(
+                  icon: Icon(
+                    Icons.share,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    final RenderBox box = context.findRenderObject();
+                    Share.share(code,
+                        sharePositionOrigin:
+                        box.localToGlobal(Offset.zero) &
+                        box.size);
+                  }),
+            ],
+          ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text(
+                "Start",
+                style: TextStyle(
+                    color: Colors.amber,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            GameScreen(_database, code)));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,16 +143,14 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             members[Constants.getUserID()] = Constants.getUsername();
             _groupName = nameController.text;
             _groupDescription = descController.text;
-            if(_groupName.length != 0 && _groupDescription.length != 0) {
+            if (_groupName.length != 0 && _groupDescription.length != 0) {
               // Generate a unique ID and save the group
               _database.generateUniqueGroupCode().then((code) {
-                _database.updateGroup(new GroupData(_groupName, _groupDescription,
-                    code, Constants.getUserID(), members));
+                 _database.updateGroup(new GroupData(_groupName,
+                 _groupDescription, code, Constants.getUserID(), members));
+                _showDialog(code);
               });
             }
-
-
-
           },
           child: Text("Create",
               textAlign: TextAlign.center,
