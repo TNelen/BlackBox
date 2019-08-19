@@ -40,7 +40,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) =>
-                        GameScreen(_database, codeController.text),
+                        GameScreen(_database, codeController.text.toUpperCase()),
                   ));
             },
             child: Text("Join Group",
@@ -53,6 +53,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
     );
 
     final codeField = TextField(
+      maxLength: 5,
       obscureText: false,
       controller: codeController,
       style: TextStyle(fontSize: 20, color: Colors.black),
