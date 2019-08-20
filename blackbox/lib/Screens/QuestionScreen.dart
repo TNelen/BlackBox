@@ -89,11 +89,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
       ),
     );
 
-    return  WillPopScope(
-        onWillPop: (){
-          Navigator.of(context).pop(false);
-        },
-        child: MaterialApp(
+   return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
           home: Scaffold(
@@ -173,7 +169,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
               ],
             ),
           ),
-        ),
+
     );
 
   }
