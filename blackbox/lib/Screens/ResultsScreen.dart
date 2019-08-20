@@ -7,6 +7,8 @@ import '../Interfaces/Database.dart';
 import '../DataContainers/GroupData.dart';
 import '../Database/FirebaseStream.dart';
 import '../DataContainers/Question.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
+
 
 class ResultScreen extends StatefulWidget {
   Database _database;
@@ -58,6 +60,7 @@ class ResultScreenState extends State<ResultScreen> {
   @override
   dispose() {
     controller.dispose();
+    BackButtonInterceptor.remove(myInterceptor);
     super.dispose();
   }
 
@@ -72,7 +75,15 @@ class ResultScreenState extends State<ResultScreen> {
     }, onError: (error) {
       print("Some Error");
     });
+
+    BackButtonInterceptor.add(myInterceptor);
   }
+
+  bool myInterceptor(bool stopDefaultButtonEvent) {
+    print("BACK BUTTON!"); // Do some stuff.
+    return true;
+  }
+
 
   void getRandomNexQuestion()async{
     groupData.setNextQuestion(await _database.getRandomQuestion(groupData, Category.Any), Constants.getUserData());  }
@@ -108,7 +119,9 @@ class ResultScreenState extends State<ResultScreen> {
 
 
               }
-              return MaterialApp(
+              return  new WillPopScope(
+                onWillPop: () async => false,
+                child: MaterialApp(
                 debugShowCheckedModeBanner: false,
 
                 theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
@@ -123,7 +136,7 @@ class ResultScreenState extends State<ResultScreen> {
                     ),
                   ),
                 ),
-              );
+              ));
             }
 
           }
@@ -272,7 +285,7 @@ class ResultScreenState extends State<ResultScreen> {
               margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
               padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
               child: Material(
-                elevation: 5.0,
+                elevation: 0.0,
                 borderRadius: BorderRadius.circular(32.0),
                 color: Colors.amber,
                 child: MaterialButton(

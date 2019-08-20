@@ -5,6 +5,8 @@ import '../Constants.dart';
 import 'ResultsScreen.dart';
 import '../Interfaces/Database.dart';
 import '../DataContainers/GroupData.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
+
 
 class VoteScreen extends StatefulWidget {
   Database _database;
@@ -41,9 +43,22 @@ class _VoteScreenState extends State<VoteScreen> {
   @override
   void initState() {
     super.initState();
+    BackButtonInterceptor.add(myInterceptor);
 
     color = Colors.white;
   }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent) {
+    print("BACK BUTTON!"); // Do some stuff.
+    return true;
+  }
+
 
   void _showDialog() {
     // flutter defined function

@@ -6,6 +6,8 @@ import 'ResultsScreen.dart';
 import 'VoteScreen.dart';
 import '../Interfaces/Database.dart';
 import '../DataContainers/GroupData.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
+
 
 class QuestionScreen extends StatefulWidget {
   Database _database;
@@ -33,6 +35,24 @@ class _QuestionScreenState extends State<QuestionScreen> {
     this.groupData = groupData;
     this.code = code;
   }
+
+  @override
+  void initState() {
+    super.initState();
+    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent) {
+    print("BACK BUTTON!"); // Do some stuff.
+    return true;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +89,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
       ),
     );
 
-    return new WillPopScope(
+    return  WillPopScope(
+        onWillPop: (){
+          Navigator.of(context).pop(false);
+        },
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
@@ -80,7 +103,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   InkWell(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => Navigator.of(context).pop(true),
                     child: Padding(
                       padding: EdgeInsets.only(right: 20),
                       child: const Icon(
@@ -151,8 +174,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
             ),
           ),
         ),
-        onWillPop: () {
-          print('back');
-        });
+    );
+
   }
 }
