@@ -134,15 +134,30 @@ class _VoteScreenState extends State<VoteScreen> {
       theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
       home: Scaffold(
         appBar: AppBar(
-          title: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.amber,
+        backgroundColor: Colors.black,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            InkWell(
+              onTap: () => Navigator.pop(context),
+              child: Padding(
+                padding: EdgeInsets.only(right: 20),
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.amber,
+                ),
+              ),
             ),
-            onPressed: () => Navigator.pop(context),
-          ),
-          backgroundColor: Colors.black,
+            Text(
+              'Question',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.amber,
+              ),
+            ),
+          ],
         ),
+      ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

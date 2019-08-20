@@ -172,10 +172,10 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 ),
               ),
               Text(
-                'Create new Game',
+                'Back',
                 style: TextStyle(
-                  fontSize: 28,
-                  color: Colors.white,
+                  fontSize: 20,
+                  color: Colors.amber,
                 ),
               ),
             ],
@@ -188,8 +188,14 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               padding: const EdgeInsets.all(36.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
+                  Text(
+                    'Create new game',
+                    style: new TextStyle(color: Colors.white, fontSize: 40.0),
+                  ),
+                  SizedBox(height: 80.0),
+
                   Text(
                     'Enter game details',
                     style: new TextStyle(color: Colors.amber, fontSize: 25.0),

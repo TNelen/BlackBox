@@ -7,6 +7,7 @@ import 'JoinGameScreen.dart';
 import '../Constants.dart';
 import 'QuestionScreen.dart';
 import '../DataContainers/Question.dart';
+import 'HomeScreen.dart';
 
 class GameScreen extends StatefulWidget {
   Database _database;
@@ -42,8 +43,7 @@ class _GameScreenState extends State<GameScreen> {
     groupdata = null;
     super.initState();
     _loadingInProgress = true;
-    FirebaseStream(code).groupData.listen((_onGroupDataUpdate) {
-    }, onDone: () {
+    FirebaseStream(code).groupData.listen((_onGroupDataUpdate) {}, onDone: () {
       print("Task Done");
       _loadingInProgress = false;
     }, onError: (error) {
@@ -51,7 +51,7 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
- /* @override
+  /* @override
   void dispose() {
     super.dispose();
     FirebaseStream.closeController();
@@ -59,8 +59,11 @@ class _GameScreenState extends State<GameScreen> {
     ///Something to close the stream goes here
   }*/
 
-   void getRandomNexQuestion()async{
-    groupdata.setNextQuestion(await _database.getRandomQuestion(groupdata, Category.Any), Constants.getUserData());  }
+  void getRandomNexQuestion() async {
+    groupdata.setNextQuestion(
+        await _database.getRandomQuestion(groupdata, Category.Any),
+        Constants.getUserData());
+  }
 
   Widget _buildBody() {
     return StreamBuilder(
@@ -72,17 +75,13 @@ class _GameScreenState extends State<GameScreen> {
             return new Center(child: new CircularProgressIndicator());
           }
           if (!joined) {
-
             groupdata.addMember(Constants.getUserData());
             joined = true;
             print("joined Group");
 
-
             //_database.updateGroup(groupdata);
 
           }
-
-
 
           return new Scaffold(
             body: DefaultTabController(
@@ -90,18 +89,16 @@ class _GameScreenState extends State<GameScreen> {
               child: Scaffold(
                 appBar: AppBar(
                   title: Container(
-                    padding: EdgeInsets.only(bottom: 5),
+                    padding: EdgeInsets.only(bottom: 10),
                     child: Row(
                       children: [
                         InkWell(
                             onTap: () {
-
-
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        JoinGameScreen(_database),
+                                        HomeScreen(_database),
                                   ));
                               groupdata.removeMember(Constants.getUserData());
                               _database.updateGroup(groupdata);
@@ -117,10 +114,10 @@ class _GameScreenState extends State<GameScreen> {
                             )),
                         Center(
                           child: Text(
-                            snapshot.data.getName(),
+                            'Home',
                             style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.white,
+                              fontSize: 20,
+                              color: Colors.amber,
                             ),
                           ),
                         ),
@@ -300,7 +297,6 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-
         theme: new ThemeData(
           scaffoldBackgroundColor: Colors.black,
         ),
@@ -363,9 +359,6 @@ class _GameScreenState extends State<GameScreen> {
                 FlatButton(
                   color: Colors.amber,
                   onPressed: () {
-
-
-
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -405,15 +398,13 @@ class _GameScreenState extends State<GameScreen> {
     );
   }
 
-
-void _errorPopup (String error)
-{
+  void _errorPopup(String error) {
     // flutter defined function
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
-                return AlertDialog(
+        return AlertDialog(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30.0))),
           title: new Text(
@@ -443,7 +434,5 @@ void _errorPopup (String error)
         );
       },
     );
-}
-
-
+  }
 }
