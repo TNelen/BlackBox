@@ -7,7 +7,7 @@ import '../Interfaces/Database.dart';
 import '../Database/FirebaseStream.dart';
 import '../DataContainers/Question.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'HomeScreen.dart';
+import 'GameScreen.dart';
 
 class ResultScreen extends StatefulWidget {
   Database _database;
@@ -330,13 +330,13 @@ class ResultScreenState extends State<ResultScreen> {
                 title: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                   FlatButton(
                     onPressed: () {
-                      groupData.removeMember(Constants.getUserData());
+                      groupData.removePlayingUser(Constants.getUserData());
                       _database.updateGroup(groupData);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                HomeScreen(_database),
+                                GameScreen(_database, code),
                           ));
                     },
                     child: Text(

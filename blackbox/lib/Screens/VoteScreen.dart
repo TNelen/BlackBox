@@ -6,7 +6,7 @@ import 'ResultsScreen.dart';
 import '../Interfaces/Database.dart';
 import '../DataContainers/GroupData.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'HomeScreen.dart';
+import 'GameScreen.dart';
 
 class VoteScreen extends StatefulWidget {
   Database _database;
@@ -176,13 +176,13 @@ class _VoteScreenState extends State<VoteScreen> {
               ),
               FlatButton(
                 onPressed: () {
-                  groupData.removeMember(Constants.getUserData());
+                  groupData.removePlayingUser(Constants.getUserData());
                   _database.updateGroup(groupData);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) =>
-                            HomeScreen(_database),
+                            GameScreen(_database, code),
                       ));
                 },
                 child: Text(
