@@ -206,30 +206,47 @@ class ResultScreenState extends State<ResultScreen> {
                           'TOP 3',
                           style: new TextStyle(
                               color: Colors.amber,
-                              fontSize: 20.0,
+                              fontSize: 30.0,
                               fontWeight: FontWeight.bold),
                         ),
+                        SizedBox(height: 40),
+
                         Text(
-                          '1. ' + groupData.getTopThree()[0],
+                          '1. ' +
+                              groupData.getTopThree()[0] +
+                              '   ' +
+                              groupData.getTopThree()[3],
                           style: new TextStyle(
                               color: Colors.black,
                               fontSize: 25.0,
                               fontWeight: FontWeight.bold),
                         ),
+                        SizedBox(height: 5),
+
                         Text(
-                          '2. ' + groupData.getTopThree()[1],
+                          '2. ' +
+                              groupData.getTopThree()[1] +
+                              '   ' +
+                              groupData.getTopThree()[4],
                           style: new TextStyle(
                               color: Colors.black,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
                         ),
+                        SizedBox(height: 5),
+
                         Text(
-                          '3. ' + groupData.getTopThree()[2],
+                          '3. ' +
+                              groupData.getTopThree()[2] +
+                              '   ' +
+                              groupData.getTopThree()[5],
                           style: new TextStyle(
                               color: Colors.black,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
                         ),
+                        SizedBox(height: 20),
+
                       ],
                     ),
                   ),
@@ -310,26 +327,24 @@ class ResultScreenState extends State<ResultScreen> {
             home: Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.black,
-                title: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FlatButton(
-                        onPressed: () {
-                          groupData.removeMember(Constants.getUserData());
-                          _database.updateGroup(groupData);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    HomeScreen(_database),
-                              ));
-                        },
-                        child: Text(
-                          "Leave",
-                          style: TextStyle(fontSize: 20.0, color: Colors.amber),
-                        ),
-                      )
-                    ]),
+                title: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  FlatButton(
+                    onPressed: () {
+                      groupData.removeMember(Constants.getUserData());
+                      _database.updateGroup(groupData);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                HomeScreen(_database),
+                          ));
+                    },
+                    child: Text(
+                      "Leave",
+                      style: TextStyle(fontSize: 20.0, color: Colors.amber),
+                    ),
+                  )
+                ]),
               ),
               body: PageView(
                 controller: controller,
