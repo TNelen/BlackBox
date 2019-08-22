@@ -25,7 +25,8 @@ class QuestionScreen extends StatefulWidget {
       _QuestionScreenState(_database, groupData, code);
 }
 
-class _QuestionScreenState extends State<QuestionScreen> {
+class _QuestionScreenState extends State<QuestionScreen>
+    with WidgetsBindingObserver {
   Database _database;
   GroupData groupData;
   String code;
@@ -39,18 +40,33 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
     BackButtonInterceptor.add(myInterceptor);
   }
 
   @override
   void dispose() {
     BackButtonInterceptor.remove(myInterceptor);
+    WidgetsBinding.instance.removeObserver(this);
+
     super.dispose();
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent) {
     print("BACK BUTTON!"); // Do some stuff.
     return true;
+  }
+
+  AppLifecycleState appState;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state);
+
+    if (state == AppLifecycleState.paused) {
+      print('game paused');
+    }
   }
 
   @override
@@ -126,7 +142,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         builder: (BuildContext context) =>
                             GameScreen(_database, code),
                       ));
-
                 },
                 child: Text(
                   "Leave",
