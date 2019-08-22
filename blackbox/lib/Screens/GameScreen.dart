@@ -426,8 +426,12 @@ class _GameScreenState extends State<GameScreen> {
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          HomeScreen(_database),
+                    ));
               },
             ),
           ],

@@ -4,11 +4,10 @@ import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
 import 'QuestionScreen.dart';
 import '../Interfaces/Database.dart';
-import '../DataContainers/GroupData.dart';
 import '../Database/FirebaseStream.dart';
 import '../DataContainers/Question.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-
+import 'HomeScreen.dart';
 
 class ResultScreen extends StatefulWidget {
   Database _database;
@@ -17,7 +16,8 @@ class ResultScreen extends StatefulWidget {
   String currentQuestion;
   String currentQuestionString;
 
-  ResultScreen(Database db, GroupData groupData, String code, String currentQuestion, String currentQuestionString) {
+  ResultScreen(Database db, GroupData groupData, String code,
+      String currentQuestion, String currentQuestionString) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
@@ -26,8 +26,8 @@ class ResultScreen extends StatefulWidget {
   }
 
   @override
-  ResultScreenState createState() =>
-      ResultScreenState(_database, groupData, code, currentQuestion, currentQuestionString);
+  ResultScreenState createState() => ResultScreenState(
+      _database, groupData, code, currentQuestion, currentQuestionString);
 }
 
 class ResultScreenState extends State<ResultScreen> {
@@ -40,7 +40,8 @@ class ResultScreenState extends State<ResultScreen> {
   bool joined = false;
   bool _loadingInProgress;
 
-  ResultScreenState(Database db, GroupData groupData, String code, String currentQuestion, String currentQuestionString) {
+  ResultScreenState(Database db, GroupData groupData, String code,
+      String currentQuestion, String currentQuestionString) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
@@ -84,15 +85,16 @@ class ResultScreenState extends State<ResultScreen> {
     return true;
   }
 
-
-  void getRandomNexQuestion()async{
-    groupData.setNextQuestion(await _database.getRandomQuestion(groupData, Category.Any), Constants.getUserData());  }
+  void getRandomNexQuestion() async {
+    groupData.setNextQuestion(
+        await _database.getRandomQuestion(groupData, Category.Any),
+        Constants.getUserData());
+  }
 
   @override
   Widget _buildBody(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-
 
     return StreamBuilder(
         stream: stream.groupData,
@@ -105,40 +107,34 @@ class ResultScreenState extends State<ResultScreen> {
           if (snapshot.hasData) {
             print(groupData.getNumVotes());
 
-
-            if(currentQuestion == groupData.getQuestionID()){
+            if (currentQuestion == groupData.getQuestionID()) {
               if (groupData.getAdminID() == Constants.getUserID()) {
-                if(groupData.getNumVotes() == groupData.getNumPlaying()){
+                if (groupData.getNumVotes() == groupData.getNumPlaying()) {
                   getRandomNexQuestion();
                   print('admin set next question');
                   print(groupData.getQuestionID());
 
-
-                  print('currentQuestion ID = '+ currentQuestion)  ;
+                  print('currentQuestion ID = ' + currentQuestion);
                 }
-
-
               }
-              return  new WillPopScope(
-                onWillPop: () async => false,
-                child: MaterialApp(
-                debugShowCheckedModeBanner: false,
-
-                theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
-                home: Scaffold(
-                  body: Center(
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        text: 'Collecting votes...',
-                        style: TextStyle(color: Colors.white, fontSize: 30),
+              return new WillPopScope(
+                  onWillPop: () async => false,
+                  child: MaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
+                    home: Scaffold(
+                      body: Center(
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: 'Collecting votes...',
+                            style: TextStyle(color: Colors.white, fontSize: 30),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ));
+                  ));
             }
-
           }
 
           final winner = Hero(
@@ -214,21 +210,21 @@ class ResultScreenState extends State<ResultScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          '1. '+groupData.getTopThree()[0],
+                          '1. ' + groupData.getTopThree()[0],
                           style: new TextStyle(
                               color: Colors.black,
                               fontSize: 25.0,
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                            '2. '+groupData.getTopThree()[1],
+                          '2. ' + groupData.getTopThree()[1],
                           style: new TextStyle(
                               color: Colors.black,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
                         ),
                         Text(
-                            '3. '+groupData.getTopThree()[2],
+                          '3. ' + groupData.getTopThree()[2],
                           style: new TextStyle(
                               color: Colors.black,
                               fontSize: 20.0,
@@ -309,12 +305,32 @@ class ResultScreenState extends State<ResultScreen> {
             ),
           );
 
-
-
-
           return MaterialApp(
             theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
             home: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.black,
+                title: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FlatButton(
+                        onPressed: () {
+                          groupData.removeMember(Constants.getUserData());
+                          _database.updateGroup(groupData);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    HomeScreen(_database),
+                              ));
+                        },
+                        child: Text(
+                          "Leave",
+                          style: TextStyle(fontSize: 20.0, color: Colors.amber),
+                        ),
+                      )
+                    ]),
+              ),
               body: PageView(
                 controller: controller,
                 children: <Widget>[
@@ -327,8 +343,6 @@ class ResultScreenState extends State<ResultScreen> {
             ),
           );
         });
-
-
   }
 
   @override

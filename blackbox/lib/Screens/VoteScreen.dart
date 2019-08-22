@@ -6,26 +6,25 @@ import 'ResultsScreen.dart';
 import '../Interfaces/Database.dart';
 import '../DataContainers/GroupData.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-
+import 'HomeScreen.dart';
 
 class VoteScreen extends StatefulWidget {
   Database _database;
   GroupData groupData;
   String code;
 
-
-  VoteScreen(Database db, GroupData groupData, String code){
+  VoteScreen(Database db, GroupData groupData, String code) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
   }
 
   @override
-  _VoteScreenState createState() => _VoteScreenState(_database, groupData, code);
+  _VoteScreenState createState() =>
+      _VoteScreenState(_database, groupData, code);
 }
 
 class _VoteScreenState extends State<VoteScreen> {
-
   Database _database;
   GroupData groupData;
   Color color;
@@ -34,7 +33,7 @@ class _VoteScreenState extends State<VoteScreen> {
   String currentQuestion;
   String currentQuestionString;
 
-  _VoteScreenState(Database db, GroupData groupData, String code){
+  _VoteScreenState(Database db, GroupData groupData, String code) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
@@ -58,7 +57,6 @@ class _VoteScreenState extends State<VoteScreen> {
     print("BACK BUTTON!"); // Do some stuff.
     return true;
   }
-
 
   void _showDialog() {
     // flutter defined function
@@ -103,7 +101,7 @@ class _VoteScreenState extends State<VoteScreen> {
     final height = MediaQuery.of(context).size.height;
 
     ///used to choose between different groups to get the members
-    final int index = groupData.getNumPlaying()-1;
+    final int index = groupData.getNumPlaying() - 1;
 
     final voteButton = Hero(
       tag: 'submit',
@@ -118,17 +116,20 @@ class _VoteScreenState extends State<VoteScreen> {
             padding: EdgeInsets.fromLTRB(1.0, 15.0, 20.0, 15.0),
             onPressed: () {
               if (clickedmember != null) {
-
                 _database.voteOnUser(groupData, clickedmember);
                 currentQuestion = groupData.getQuestionID();
                 currentQuestionString = groupData.getNextQuestionString();
                 print(currentQuestionString);
 
-
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => ResultScreen(_database, groupData, code, currentQuestion, currentQuestionString),
+                      builder: (BuildContext context) => ResultScreen(
+                          _database,
+                          groupData,
+                          code,
+                          currentQuestion,
+                          currentQuestionString),
                     ));
               } else {
                 _showDialog();
@@ -145,34 +146,53 @@ class _VoteScreenState extends State<VoteScreen> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
       theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
       home: Scaffold(
         appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            InkWell(
-              onTap: () => Navigator.pop(context),
-              child: Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.amber,
+          backgroundColor: Colors.black,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () => Navigator.pop(context),
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 20),
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.amber,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Question',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.amber,
+                    ),
+                  ),
+                ],
+              ),
+              FlatButton(
+                onPressed: () {
+                  groupData.removeMember(Constants.getUserData());
+                  _database.updateGroup(groupData);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            HomeScreen(_database),
+                      ));
+                },
+                child: Text(
+                  "Leave",
+                  style: TextStyle(fontSize: 20.0, color: Colors.amber),
                 ),
-              ),
-            ),
-            Text(
-              'Question',
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.amber,
-              ),
-            ),
-          ],
+              )
+            ],
+          ),
         ),
-      ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -182,7 +202,8 @@ class _VoteScreenState extends State<VoteScreen> {
                 padding: EdgeInsets.all(8.0),
                 crossAxisSpacing: 12.0,
                 mainAxisSpacing: 12.0,
-                children: groupData.getMembers()
+                children: groupData
+                    .getMembers()
                     .map((data) => Card(
                           color: data.getUserID() == clickedmember
                               ? Colors.amber
