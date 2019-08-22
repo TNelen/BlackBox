@@ -103,7 +103,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     child: Padding(
                       padding: EdgeInsets.only(right: 20),
                       child: const Icon(
-                        Icons.arrow_back_ios,
+                        Icons.arrow_back,
                         color: Colors.amber,
                       ),
                     ),
