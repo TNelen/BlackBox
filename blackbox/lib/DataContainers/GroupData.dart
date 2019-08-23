@@ -192,11 +192,33 @@ class GroupData {
 
   /// Removes a user from this group
   /// User will be removed from all lists (all vote lists + playing lists)
+  /// If the user that leaves is an admin, a new one will be assigned automatically
   /// If the last user leaves, this group will be deleted from the database!
   void removeMember( UserData user )
   {
+    
+    bool findNewAdmin;
+
+    /// If the leaving user is admin
+    if (_adminID == Constants.getUserID())
+    {
+      findNewAdmin = true;
+    } else {
+      findNewAdmin = false;
+    }
+
     _members.remove( user.getUserID() );
     removePlayingUser(user);
+
+    /// Assign a new admin, if necessary
+    if ( findNewAdmin )
+    {
+      if (_members.length > 0) {
+
+        _adminID = _members.keys.first;
+        
+      }
+    }
 
     _lastVotes.remove( user.getUserID() );
     _newVotes.remove( user.getUserID() );
