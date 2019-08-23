@@ -255,6 +255,7 @@ class GroupData {
   /// Last question will be replaced by the current question automatically
   /// Admin account must be provided for authentication
   /// Non-admins will cause this function to fail silently
+  /// The database is updated automatically with this change
   void setNextQuestion(Question newQuestion, UserData admin)
   {
     if (admin.getUserID() == _adminID) {
@@ -334,6 +335,16 @@ class GroupData {
     _lastVotes  .remove( id );
     _newVotes   .remove( id );
     _totalVotes .remove( id );
+
+    /// If the user is admin, set a new admin
+    if (_adminID == id)
+    {
+      if (_playing.length > 0)
+      {
+        _adminID = _playing.first;
+      }
+    }
+
   }
 
 
