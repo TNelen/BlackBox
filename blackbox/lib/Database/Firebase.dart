@@ -356,21 +356,24 @@ class Firebase implements Database{
     return exists;
   }
 
+
   /// Check if this same question already exists
-  Future< bool > _hasIdenticalQuestion( String question ) async
+  /// Returns true if the question exists and has a different ID
+  /// Returns false if the existing question has the same ID or if the question does not exist
+  Future< bool > _hasIdenticalQuestion( Question question ) async
   {
     bool exists = false;
 
     /// Get group with ID
     var documentSnap = await Firestore.instance
         .collection("questions")
-        .where( "question", isEqualTo: question  )
+        .where( "question", isEqualTo: question.getQuestion()  )
         .getDocuments()
         .then( (documents) {
           
           documents.documents.forEach( (document){
             /// Group exists!
-            if ( document.exists )
+            if ( document.exists && document.documentID != question.getQuestionID())
               exists = true;
           } );        
 
@@ -577,9 +580,9 @@ class Firebase implements Database{
   Future< bool > updateQuestion( Question question ) async
   {
 
-    if ( await _hasIdenticalQuestion( question.getQuestion() ) )
+    if ( await _hasIdenticalQuestion( question ) )
     {
-        return false;
+      return false;
     }
 
     var data = new Map<String, dynamic>();

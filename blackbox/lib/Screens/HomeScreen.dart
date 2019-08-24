@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     /// Log a user in and update variables accordingly
 
-    if (Constants.getUserID() == "GPY2pK6fqsdU0AU5IlGXhJpK8ej1" || Constants.getUserID() == "" ) {
+    if (Constants.getUserID() == "id2" || Constants.getUserID() == "" ) {
       ///check if user isn't loged in via google already when returning to homescreen
       try {
         GoogleUserHandler guh = new GoogleUserHandler();
@@ -42,6 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
           /// Log the retreived user in and update the data in the database
           Constants.setUserData(user);
           database.updateUser(user);
+
+          _test();
+
         });
       } catch (e) {
         print(e.toString());
@@ -57,6 +60,14 @@ class _HomeScreenState extends State<HomeScreen> {
     _addQuestions( questions );
     */
   }
+
+
+  @Deprecated('For async testing only. Must be deleted before release!')
+  void _test() async
+  {
+    /// Do some async testing here
+  }
+
 
   @Deprecated('Must be deleted before release!')
   void _addQuestions( List<String> questions ) async
