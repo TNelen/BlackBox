@@ -65,10 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @Deprecated('For async testing only. Must be deleted before release!')
   void _test() async
   {
-    /// Do some async testing here
-    Question dupe = new Question("TestQuestion", "BIIIIER", Category.Default, "Jeff", "");
-    bool done = await database.updateQuestion( dupe );
-    print ("Update: " + done.toString());
+    await database.updateQuestion( new Question.add("Who would eat anything?", Category.Community) );
   }
 
 

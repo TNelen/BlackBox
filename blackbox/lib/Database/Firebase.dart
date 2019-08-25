@@ -180,6 +180,7 @@ class Firebase implements Database{
     Question randomQuestion;
     String randomQuestionID;
 
+    /// Select a random ID from the right category
     var doc = await Firestore.instance
           .collection("questions")
           .document("questionList")
@@ -187,7 +188,7 @@ class Firebase implements Database{
           .then (
             (document) {
               /// Convert List<dynamic> to List<String>
-              List<dynamic> existing = document.data['questionList'];
+              List<dynamic> existing = document.data[ Question.getStringFromCategory( category ) ];
               List<String> questions = existing.cast<String>().toList();
 
               int randomID;
@@ -210,12 +211,17 @@ class Firebase implements Database{
                   
                 } while (isSearching && questions.length > 3);
 
-              } else randomID = 0;
-
-              print ("RANDOM QUESTION: " + randomQuestionID);
+              } else if (questions[0] != null) {
+                randomQuestionID = questions[0];
+              } else {
+                return new Question.add("Something went wrong wile fetching the question!", Category.Default);
+              }
             }
           );
 
+      
+
+      /// Get a random question
       var documentSnap = await Firestore.instance
             .collection("questions")
             .document( randomQuestionID ).get().then( (document) {
@@ -386,15 +392,20 @@ class Firebase implements Database{
   {
     bool exists = false;
 
+    if (question.getQuestionID() == null || question.getQuestionID() == "")
+    {
+      return false;
+    }
+
     /// Get group with ID
-    var documentSnap = await Firestore.instance
+    await Firestore.instance
         .collection("questions")
         .document( question.getQuestionID() )
         .get()
         .then( (document) {
           
           /// Group with the same ID exists!
-          if ( document.exists)
+          if ( document != null && document.exists)
             exists = true;      
 
         } );
@@ -626,18 +637,18 @@ class Firebase implements Database{
       uniqueID = await _generateUniqueQuestionCode();
     }
 
+    bool doesQuestionIDExist = await _doesQuestionIDExist( question );
 
     /// Update the question document
-    await Firestore.instance.runTransaction((Transaction transaction) async {
-
-      bool doesQuestionIDExist = await _doesQuestionIDExist( question );
+    await Firestore.instance.runTransaction((Transaction transaction) async {      
 
       if (doesQuestionIDExist)
       {
+        print("Exists");
         /// get current reports
         DocumentReference reportRef = Firestore.instance
                                       .collection("questions")
-                                      .document( question.getQuestionID() );
+                                      .document( uniqueID );
 
         DocumentSnapshot reports = await transaction.get( reportRef );
         /// Add them to the data map
@@ -647,15 +658,21 @@ class Firebase implements Database{
           data['disturbingReports'] = reports.data['disturbingReports'];
         if (reports.data['grammarReports'] != null)
           data['grammarReports'] = reports.data['grammarReports'];
+
+        print("Got report data");
       }
 
+      print("Start saving");
 
       /// Save question
       DocumentReference qRef = Firestore.instance
                 .collection("questions")
                 .document( uniqueID );
+      print("DocRef made");
 
       await transaction.set(qRef, data);
+
+      print("Transaction set");
 
     });
 
