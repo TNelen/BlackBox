@@ -1,21 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:blackbox/DataContainers/UserData.dart';
 
 class GoogleUserHandler {
   
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final Firestore _db = Firestore.instance;
+  static final GoogleSignIn _googleSignIn = GoogleSignIn();
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  static Future< bool > isLoggedIn()
+  {
+    return _googleSignIn.isSignedIn();
+  }
 
   Future< UserData > handleSignIn() async {
     
     GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-    AuthCredential cred = await GoogleAuthProvider.getCredential(
+    AuthCredential cred = GoogleAuthProvider.getCredential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken
     );
