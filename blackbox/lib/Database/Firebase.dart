@@ -659,6 +659,23 @@ class Firebase implements Database{
 
     });
 
+    /// Save question to the lists
+    Question q = new Question(uniqueID, question.getQuestion(), question.getCategoryAsCategory(),question.getCreatorID(), question.getCreatorName());
+    List<Category> categories = new List<Category>();
+    categories.add( Category.Any );
+    categories.add( question.getCategoryAsCategory() );
+
+    await _saveQuestionToList( q, categories );
+    
+    return true;
+
+  }
+
+  /// Saves a question to the lists of the given categories
+  /// The question will be removed from other arrays it is listed in. 
+  /// Will create a list if none exists yet
+  Future< void > _saveQuestionToList (Question question, List<Category> categories) async
+  {
 
     /// Update the question list
     await Firestore.instance.runTransaction((Transaction transaction) async {
@@ -666,33 +683,57 @@ class Firebase implements Database{
       /// Update question list
       DocumentReference listRef = Firestore.instance
                   .collection("questions")
-                  .document("questionList");
+                  .document( "questionList" );
 
-      List<String> questions;
-      await transaction.get(listRef)
-        .then (
-          (document) {
-            /// Convert List<dynamic> to List<String>
-            List<dynamic> existing = document.data['questionList'];
-            questions = existing.cast<String>().toList();
+      DocumentSnapshot doc = await transaction.get( listRef );
 
-          }
-        );
+      Map<String, dynamic> newData = new Map<String, dynamic>(); 
 
-      /// Save updated question list
-      if ( ! questions.contains(uniqueID) )
+      /// Update every relevant category list
+      for (Category cat in Question.getCategoriesAsList())
       {
-        questions.add( uniqueID );
-        var newData = new Map<String, dynamic>();
-        newData['questionList'] = questions;
 
-        await transaction.set(listRef, newData );
+        /// Get the category as String
+        String category = cat.toString().split('.').last;
+
+        /// Get the current List or create a new one
+        List<String> questions;
+        if (doc.data[ category ] != null)
+        {
+          List< dynamic > current = doc.data[ category ];
+          questions = current.cast<String>().toList();
+        } else {
+          questions = new List<String>();
+        }
+
+        /// If the question SHOULD be in this list
+        if (categories.contains(cat)) {
+
+          if ( ! questions.contains( question.getQuestionID() ))
+          {
+            questions.add( question.getQuestionID() );
+          }
+
+          /// Set the new list
+          newData[ category ] = questions;
+        } 
+        /// If the question should NOT be in this list
+        else {
+          /// Update the list
+          questions.remove( question.getQuestionID() );
+
+          /// Set the new list
+          newData[ category ] = questions;
+        }
       }
 
-    });
-    return true;
 
+      await transaction.update(listRef, newData );
+
+
+    });
   }
+
 
   @override
   Future< bool > reportQuestion(Question question, ReportType reportType) async
@@ -802,27 +843,39 @@ class Firebase implements Database{
 
     Firestore.instance.runTransaction((Transaction transaction) async {
             
+      /// Get the document containing the lists
       DocumentReference listRef = Firestore.instance
                                   .collection('questions')
                                   .document( 'questionList' );
+      DocumentSnapshot snap = await transaction.get( listRef );
 
-      /// Get list of questions
-      List<String> questions = new List<String>();
-      await transaction.get( listRef ).then(
-        (snap) {
-          List<dynamic> existing = snap.data['questionList'];
+
+      /// Create empty Map
+      Map<String, dynamic> newLists = new Map<String, dynamic>();
+      /// Fill the Map with new data, based on the current data
+      for (Category cat in Question.getCategoriesAsList())
+      {
+        /// Convert to String
+        String catString = Question.getStringFromCategory( cat );
+
+        /// Get list of questions
+        List<String> questions;
+        
+        if (snap.data[catString] != null)
+        {
+          List<dynamic> existing = snap.data[ catString ];
           questions = existing.cast<String>().toList();
+
+          questions.remove( question.getQuestionID() );
+        } else {
+          questions = new List<String>();
         }
-      );
 
-      questions.remove( question.getQuestionID() );
-
-
-      Map<String, dynamic> newList = new Map<String, dynamic>();
-      newList['questionList'] = questions;
+        newLists[ catString ] = questions;
+      }
 
       /// Update list
-      await transaction.set(listRef, newList);
+      await transaction.set(listRef, newLists);
     });
 
     /// Delete question document

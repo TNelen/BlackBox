@@ -4,6 +4,8 @@
 import 'UserData.dart';
   
 /// All question Categories should be put in here
+/// IMPORTANT NOTE: Also add each new category to Question#getCategoriesAsList()
+/// Otherwise, questions that are transfered from category may be within multiple categories 
 enum Category {
   Any,
   Default,
@@ -11,6 +13,18 @@ enum Category {
 }
 
 class Question {
+
+
+  /// Get a list of all values in the Category enum
+  static List<Category> getCategoriesAsList()
+  {
+    List<Category> categories = new List<Category>();
+    categories.add(Category.Any);
+    categories.add(Category.Default);
+    categories.add(Category.Community);
+    return categories;
+  }
+
 
   /// Convert a String to Category
   /// Will return Category.Default if no match was found
@@ -27,6 +41,15 @@ class Question {
 
     return Category.Default;
   }
+
+
+  /// Turn a Category into a usable String
+  /// This String is display-friendly
+  static String getStringFromCategory(Category category)
+  {
+    return category.toString().split('.').last;
+  }
+
 
   String _questionID  = "";
   String _question    = "";
