@@ -1,8 +1,10 @@
 import 'package:blackbox/Database/GoogleUserHandler.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
+import '../Database/GoogleUserHandler.dart';
 import 'CreateGameScreen.dart';
 import 'JoinGameScreen.dart';
+import 'Popup.dart';
 import '../Interfaces/Database.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:blackbox/DataContainers/GroupData.dart';
@@ -65,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @Deprecated('For async testing only. Must be deleted before release!')
   void _test() async
   {
-    await database.updateQuestion( new Question.add("Who would eat anything?", Category.Community) );
+    
   }
 
 
@@ -104,12 +106,16 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 IconButton(
                   onPressed: () {
+                    if (GoogleUserHandler.isLoggedIn()) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
                               CreateGameScreen(database),
                         ));
+                    } else {
+                      Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
+                    }
                   },
                   icon: Icon(
                     Icons.create,
@@ -131,11 +137,15 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 IconButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => JoinGameScreen(database),
-                        ));
+                    if (GoogleUserHandler.isLoggedIn()) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => JoinGameScreen(database),
+                          ));
+                    } else {
+                      Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
+                    }
                   },
                   icon: Icon(
                     Icons.search,

@@ -5,15 +5,17 @@ import 'package:blackbox/DataContainers/UserData.dart';
 
 class GoogleUserHandler {
   
+  static bool loggedIn = false;
   static final GoogleSignIn _googleSignIn = GoogleSignIn();
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  static Future< bool > isLoggedIn()
+  static bool isLoggedIn()
   {
-    return _googleSignIn.isSignedIn();
+    return loggedIn;
   }
 
   Future< UserData > handleSignIn() async {
+    loggedIn = false;
     
     GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
@@ -24,6 +26,8 @@ class GoogleUserHandler {
     );
 
     FirebaseUser user = await _auth.signInWithCredential(cred);
+
+    loggedIn = true;
 
     UserData userData = new UserData(user.uid, user.displayName);
     

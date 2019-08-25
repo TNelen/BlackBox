@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'GameScreen.dart';
 import '../Interfaces/Database.dart';
 import 'HomeScreen.dart';
+import 'Popup.dart';
+import '../Constants.dart';
 
 class JoinGameScreen extends StatefulWidget {
   Database _database;
@@ -34,12 +36,17 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => GameScreen(
-                        _database, codeController.text.toUpperCase()),
-                  ));
+              String groupCode = codeController.text.toUpperCase();
+              if (groupCode.length == Constants.groupCodeLength) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => GameScreen(
+                          _database, codeController.text.toUpperCase()),
+                    ));
+              } else {
+                Popup.makePopup(context, "Please check your code", "A code should contain " + Constants.groupCodeLength.toString() + " symbols!");
+              }
             },
             child: Text("Join",
                 textAlign: TextAlign.center,

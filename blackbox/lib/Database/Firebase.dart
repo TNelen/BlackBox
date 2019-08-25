@@ -258,7 +258,7 @@ class Firebase implements Database{
     while ( isTaken )
     {
         // Generate a random ID
-        newRandom = _getRandomID(5);
+        newRandom = _getRandomID( Constants.groupCodeLength );
 
         // Check whether or not the generated ID exists 
         var documentSnap = await Firestore.instance

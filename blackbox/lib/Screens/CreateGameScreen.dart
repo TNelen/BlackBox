@@ -3,7 +3,7 @@ import '../Constants.dart';
 import '../DataContainers/GroupData.dart';
 import '../Interfaces/Database.dart';
 import 'GameScreen.dart';
-import 'package:flutter/services.dart';
+import 'Popup.dart';
 import 'GameScreen.dart';
 import 'package:share/share.dart';
 
@@ -138,6 +138,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     _groupDescription, code, Constants.getUserID(), members));
                 _showDialog(code);
               });
+            } else {
+              Popup.makePopup(context, "Woops!", "Please fill in all fields!");
             }
           },
           child: Text("Create",
@@ -215,4 +217,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       ),
     );
   }
+
+  
 }
