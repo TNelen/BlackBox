@@ -644,7 +644,6 @@ class Firebase implements Database{
 
       if (doesQuestionIDExist)
       {
-        print("Exists");
         /// get current reports
         DocumentReference reportRef = Firestore.instance
                                       .collection("questions")
@@ -658,22 +657,15 @@ class Firebase implements Database{
           data['disturbingReports'] = reports.data['disturbingReports'];
         if (reports.data['grammarReports'] != null)
           data['grammarReports'] = reports.data['grammarReports'];
-
-        print("Got report data");
       }
 
-      print("Start saving");
 
       /// Save question
       DocumentReference qRef = Firestore.instance
                 .collection("questions")
                 .document( uniqueID );
-      print("DocRef made");
 
       await transaction.set(qRef, data);
-
-      print("Transaction set");
-
     });
 
     /// Save question to the lists
