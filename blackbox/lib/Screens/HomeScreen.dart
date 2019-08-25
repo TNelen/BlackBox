@@ -52,8 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
 
-    /* Example on how to add questions!
-    /// Duplicates cannot be added so running it twice is not a problem
+    /* Example on how to add questions
+    /// Duplicates cannot be added so running this code twice is not a problem
     List<String> questions = new List<String>();
     questions.add("Who will be the first person to have a hangover (again)?");
     questions.add("Who is the biggest beer fan?");
@@ -66,6 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void _test() async
   {
     /// Do some async testing here
+    Question dupe = new Question("TestQuestion", "BIIIIER", Category.Default, "Jeff", "");
+    bool done = await database.updateQuestion( dupe );
+    print ("Update: " + done.toString());
   }
 
 
