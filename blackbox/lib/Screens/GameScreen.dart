@@ -76,6 +76,7 @@ class _GameScreenState extends State<GameScreen> {
           }
           if (!joined) {
             groupdata.addMember(Constants.getUserData());
+            Constants.database.updateGroup( groupdata );
             joined = true;
             print("joined Group");
 
