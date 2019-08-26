@@ -78,6 +78,13 @@ abstract class Database {
   /// Returns true upon completion
   Future< bool > voteOnUser(GroupData groupData, String voteeID);
 
+  /// Cast a vote on this community question
+  /// Users can vote multiple times, no check is included
+  /// Returns false if the question is not a community question or when the question has no ID
+  /// Will also return false if the question was not found in the database
+  /// Returns true upon completion
+  Future< bool > voteOnQuestion(Question q);
+
   /// Updates the user with the same unique ID in the database to the one provided. If the user does not exist, they will be added
   /// Returns true when completed
   /// Never returns false

@@ -451,6 +451,52 @@ class Firebase implements Database{
 
   }
 
+    @override
+  Future< bool > voteOnQuestion(Question q) async
+  {
+    /// Perform checks
+    if (q.getCategoryAsCategory() != Category.Community)
+      return false;
+    
+    if (q.getQuestionID() == null || q.getQuestionID() == "")
+      return false;
+
+    bool isSuccess;
+
+    await Firestore.instance.runTransaction((Transaction transaction) async {
+      DocumentReference qRef = Firestore.instance
+                                    .collection("questions")
+                                    .document( q.getQuestionID() );
+      
+      DocumentSnapshot ds = await transaction.get( qRef );
+    
+      if (ds.exists) {
+        /// Get current document votes and update
+        int currentVotes = ds.data['votes'];
+        int newVotes;
+
+        if (currentVotes != null) {
+          newVotes = currentVotes + 1;
+        } else {
+          newVotes = 1;
+        }
+
+        /// Add the data to be saved
+        Map<String, dynamic> upd = new Map<String, dynamic>();
+        upd['votes'] = newVotes;
+
+        /// Perform transaction
+        await transaction.update(qRef, upd);
+        isSuccess = true;
+      } else {
+        isSuccess = false;
+      }
+    });
+
+    return isSuccess;
+
+  }
+
 
   @override
   Future< bool > updateGroup(GroupData groupData) async {
@@ -657,6 +703,8 @@ class Firebase implements Database{
           data['disturbingReports'] = reports.data['disturbingReports'];
         if (reports.data['grammarReports'] != null)
           data['grammarReports'] = reports.data['grammarReports'];
+        if (reports.data['votes'] != null && reports.data["category"] == Question.getStringFromCategory( Category.Community ))
+          data['votes'] = reports.data['votes'];
       }
 
 
@@ -703,7 +751,7 @@ class Firebase implements Database{
       {
 
         /// Get the category as String
-        String category = cat.toString().split('.').last;
+        String category = Question.getStringFromCategory( cat );
 
         /// Get the current List or create a new one
         List<String> questions;

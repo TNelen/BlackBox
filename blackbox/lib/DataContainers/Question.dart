@@ -1,5 +1,5 @@
   
-  import 'package:cloud_firestore/cloud_firestore.dart';
+  import '../Constants.dart';
 
 import 'UserData.dart';
   
@@ -182,4 +182,21 @@ class Question {
   {
     _questionID = newID;
   }
+
+
+  /// ------------------ \\\
+  /// Database functions \\\
+  /// ------------------ \\\
+  
+
+  /// Cast a vote on this Category.Community question
+  /// Will fail silently if the category does not match
+  Future< bool > castVoteOnQuestion() async
+  {
+    if (_category != Category.Community)
+      return false;
+
+    return Constants.database.voteOnQuestion(this);
+  }
+
 }

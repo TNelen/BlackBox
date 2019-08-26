@@ -67,7 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @Deprecated('For async testing only. Must be deleted before release!')
   void _test() async
   {
-    
+    print("Async start");
+    /// Your async testing code here
+    print("Async completed");
   }
 
 
