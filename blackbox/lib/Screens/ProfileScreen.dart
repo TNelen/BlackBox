@@ -26,59 +26,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
         theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Constants.iBlack,
-            title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              InkWell(
-                onTap: () => Navigator.pop(context),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 20),
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color: Constants.iAccent,
+            appBar: AppBar(
+              backgroundColor: Constants.iBlack,
+              title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                InkWell(
+                  onTap: () => Navigator.pop(context),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: Constants.iAccent,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Back',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Constants.iAccent,
+                      Text(
+                        'Back',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Constants.iAccent,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ]),
-          ),
-          body: Center(child: Container(
-            color: Constants.iBlack,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Card(
-                      color: Constants.iDarkGrey,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                      child: Icon(Icons.perm_identity, size: 200, color: Constants.iAccent,)),
-                  SizedBox(height: 20.0),
-
-                  Text(
-                    'ProfileScreen',
-                    style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w300),
+                    ],
                   ),
-                  SizedBox(height: 80.0),
-                ]),
-          ),
-        )));
+                ),
+              ]),
+            ),
+            body: Center(
+              child: Container(
+                color: Constants.iBlack,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Card(
+                          color: Constants.iDarkGrey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          child: Icon(
+                            Icons.perm_identity,
+                            size: 200,
+                            color: Constants.iAccent,
+                          )),
+                      SizedBox(height: 20.0),
+                      Text(
+                        'ProfileScreen',
+                        style: new TextStyle(
+                            color: Constants.iWhite,
+                            fontSize: 40.0,
+                            fontWeight: FontWeight.w300),
+                      ),
+                      SizedBox(height: 80.0),
+                    ]),
+              ),
+            )));
   }
 }

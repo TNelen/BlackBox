@@ -359,7 +359,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 25,
                     ),
                     Text(
-                      'BlackBox - The - Game',
+                      ' BlackBox - The - Game ',
                       style: TextStyle(
                           color: Constants.iAccent,
                           fontSize: 25,
