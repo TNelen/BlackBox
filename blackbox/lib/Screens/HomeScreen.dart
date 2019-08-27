@@ -108,16 +108,16 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 IconButton(
                   onPressed: () {
-                    if (GoogleUserHandler.isLoggedIn()) {
+                   // if (GoogleUserHandler.isLoggedIn()) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
                               CreateGameScreen(database),
                         ));
-                    } else {
-                      Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
-                    }
+                   // } else {
+                     // Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
+                  //  }
                   },
                   icon: Icon(
                     Icons.create,
@@ -139,15 +139,15 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 IconButton(
                   onPressed: () {
-                    if (GoogleUserHandler.isLoggedIn()) {
+                   // if (GoogleUserHandler.isLoggedIn()) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) => JoinGameScreen(database),
                           ));
-                    } else {
-                      Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
-                    }
+                   // } else {
+                    //  Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
+                   // }
                   },
                   icon: Icon(
                     Icons.search,
