@@ -181,15 +181,14 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             children: [
               InkWell(
                 onTap: () => Navigator.pop(context),
-                child: Padding(
+                child: Row(children: [Padding(
                   padding: EdgeInsets.only(right: 20),
                   child: const Icon(
                     Icons.arrow_back,
                     color: Constants.iAccent,
                   ),
                 ),
-              ),
-              Text(
+                Text(
                 'Back',
                 style: TextStyle(
                   fontSize: 20,
@@ -199,6 +198,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             ],
           ),
         ),
+        ]),),
         body: Center(
           child: Container(
             color: Constants.iBlack,
@@ -210,7 +210,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 children: <Widget>[
                   Text(
                     'Create new game',
-                    style: new TextStyle(color: Constants.iWhite, fontSize: 40.0),
+                    style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w300),
                   ),
                   SizedBox(height: 80.0),
                   Text(

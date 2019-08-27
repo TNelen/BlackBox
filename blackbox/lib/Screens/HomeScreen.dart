@@ -4,10 +4,11 @@ import '../Constants.dart';
 import '../Database/GoogleUserHandler.dart';
 import 'CreateGameScreen.dart';
 import 'JoinGameScreen.dart';
-import 'Popup.dart';
+import 'ReportScreen.dart';
+import 'SubmitQuestionScreen.dart';
 import '../Interfaces/Database.dart';
-import 'package:blackbox/DataContainers/UserData.dart';
-import 'package:blackbox/DataContainers/GroupData.dart';
+import 'ProfileScreen.dart';
+import 'SettingsScreen.dart';
 import 'package:blackbox/DataContainers/Question.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 
@@ -166,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
     viewportFraction: 0.55,
   );
 
-  final profileCard = Container(
+  Widget profileCard(BuildContext context) { return Container(
       padding: EdgeInsets.symmetric(horizontal: 6),
       child: Card(
           color: Constants.iDarkGrey,
@@ -176,7 +177,13 @@ class _HomeScreenState extends State<HomeScreen> {
           child: InkWell(
               splashColor: Constants.iAccent,
               onTap: () {
-                ///nothing yet
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          ProfileScreen(database),
+                    ));
+
               },
               child: Container(
                   padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
@@ -196,9 +203,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 15, color: Constants.iWhite),
                       )
                     ],
-                  )))));
+                  )))));}
 
-  final settingsCard = Container(
+  Widget settingsCard(BuildContext context){ return Container(
       padding: EdgeInsets.symmetric(horizontal: 6),
       child: Card(
           color: Constants.iDarkGrey,
@@ -208,7 +215,13 @@ class _HomeScreenState extends State<HomeScreen> {
           child: InkWell(
               splashColor: Constants.iAccent,
               onTap: () {
-                ///nothing yet
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          SettingsScreen(database),
+                    ));
+
               },
               child: Container(
                   padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
@@ -228,9 +241,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 15, color: Constants.iWhite),
                       )
                     ],
-                  )))));
+                  )))));}
 
-  final reportIssueCard = Container(
+  Widget reportIssueCard(BuildContext context){ return Container(
       padding: EdgeInsets.symmetric(horizontal: 6),
       child: Card(
           color: Constants.iDarkGrey,
@@ -240,14 +253,15 @@ class _HomeScreenState extends State<HomeScreen> {
           child: InkWell(
               splashColor: Constants.iAccent,
               onTap: () {
-                ///nothing yet
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          ReportScreen(database),
+                    ));
+
               },
-              child: InkWell(
-                  splashColor: Constants.iAccent,
-                  onTap: () {
-                    ///nothing yet
-                  },
-                  child: Container(
+              child: Container(
                       padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
                       child: Column(
                         children: <Widget>[
@@ -265,9 +279,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontSize: 15, color: Constants.iWhite),
                           )
                         ],
-                      ))))));
+                      ))))); }
 
-  final submitQuestionCard = Container(
+  Widget submitQuestionCard(BuildContext context) {
+  return Container(
       padding: EdgeInsets.symmetric(horizontal: 6),
       child: Card(
           color: Constants.iDarkGrey,
@@ -277,7 +292,13 @@ class _HomeScreenState extends State<HomeScreen> {
           child: InkWell(
               splashColor: Constants.iAccent,
               onTap: () {
-                ///nothing yet
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          SubmitQuestionScreen(database),
+                    ));
+
               },
               child: Container(
                   padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
@@ -297,7 +318,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 15, color: Constants.iWhite),
                       )
                     ],
-                  )))));
+                  )))));}
 
   void pageChanged(int index) {
     setState(() {
@@ -356,10 +377,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         scrollDirection: Axis.horizontal,
                         controller: controller,
                         children: <Widget>[
-                          profileCard,
-                          settingsCard,
-                          reportIssueCard,
-                          submitQuestionCard,
+                          profileCard(context),
+                          settingsCard(context),
+                          reportIssueCard(context),
+                          submitQuestionCard(context),
                         ],
                       ),
                     ),

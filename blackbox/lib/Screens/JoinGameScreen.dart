@@ -83,34 +83,28 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
           appBar: AppBar(
             backgroundColor: Constants.iBlack,
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                HomeScreen(_database),
-                          ));
-                    },
-                    child: Padding(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () => Navigator.pop(context),
+                    child: Row(children: [Padding(
                       padding: EdgeInsets.only(right: 20),
                       child: const Icon(
                         Icons.arrow_back,
                         color: Constants.iAccent,
                       ),
-                    )),
-                Text(
-                  'Back',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Constants.iAccent,
+                    ),
+                      Text(
+                        'Back',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Constants.iAccent,
+                        ),
+                      ),
+                    ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
+                ]),),
           body: Center(
             child: Container(
               color: Constants.iBlack,
@@ -122,12 +116,12 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                   children: <Widget>[
                     Text(
                       'Join Group',
-                      style: new TextStyle(color: Constants.iWhite, fontSize: 40.0),
+                      style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w300),
                     ),
                     SizedBox(height: 80.0),
                     Text(
                       'Enter group code below',
-                      style: new TextStyle(color: Constants.iAccent, fontSize: 25.0),
+                      style: new TextStyle(color: Constants.iAccent, fontSize: 25.0, ),
                     ),
                     SizedBox(height: 25.0),
                     codeField,
