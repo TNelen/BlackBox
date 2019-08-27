@@ -327,7 +327,7 @@ class ResultScreenState extends State<ResultScreen> {
             tag: 'button',
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
-              padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
+              padding: EdgeInsets.only(top: height / 9.6, bottom: height / 9.6),
               child: Material(
                 elevation: 0.0,
                 borderRadius: BorderRadius.circular(32.0),
