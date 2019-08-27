@@ -6,6 +6,7 @@ import 'GameScreen.dart';
 import 'Popup.dart';
 import 'GameScreen.dart';
 import 'package:share/share.dart';
+import '../DataContainers/Question.dart';
 
 class CreateGameScreen extends StatefulWidget {
   Database _database;
@@ -28,9 +29,11 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   }
 
   String _groupName;
-  String _groupDescription;
+  String _groupCategory;
   String _groupID;
   String _groupAdmin = Constants.getUserID();
+
+  String dropdownValue = 'Default';
 
   void _showDialog(String code) {
     // flutter defined function
@@ -104,18 +107,32 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
-    final descrField = TextField(
-      obscureText: false,
-      controller: descController,
-      style: TextStyle(fontSize: 20, color: Colors.black),
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          fillColor: Colors.white,
-          filled: true,
-          hintText: "Description",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
+
+    final categoryField = Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(32.0),
+          border: Border.all(
+              color: Colors.amber, style: BorderStyle.solid, width: 0.01),
+        ),
+        child: DropdownButton<String>(
+          value: dropdownValue,
+          onChanged: (String newValue) {
+            setState(() {
+              dropdownValue = newValue;
+            });
+          },
+          items: Question.getCategoriesAsStringList()
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ));
+
     final createButton = Hero(
       tag: 'tobutton',
       child: Material(
@@ -130,12 +147,12 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             Map<String, String> members = new Map<String, String>();
             members[Constants.getUserID()] = Constants.getUsername();
             _groupName = nameController.text;
-            _groupDescription = descController.text;
-            if (_groupName.length != 0 && _groupDescription.length != 0) {
+            _groupCategory = dropdownValue;
+            if (_groupName.length != 0 && _groupCategory  != null) {
               // Generate a unique ID and save the group
               _database.generateUniqueGroupCode().then((code) {
                 _database.updateGroup(new GroupData(_groupName,
-                    _groupDescription, code, Constants.getUserID(), members));
+                    _groupCategory, code, Constants.getUserID(), members));
                 _showDialog(code);
               });
             } else {
@@ -152,7 +169,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
       theme: new ThemeData(
         scaffoldBackgroundColor: Colors.black,
       ),
@@ -197,7 +213,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     style: new TextStyle(color: Colors.white, fontSize: 40.0),
                   ),
                   SizedBox(height: 80.0),
-
                   Text(
                     'Enter game details',
                     style: new TextStyle(color: Colors.amber, fontSize: 25.0),
@@ -205,7 +220,12 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   SizedBox(height: 45.0),
                   nameField,
                   SizedBox(height: 25.0),
-                  descrField,
+                  Text(
+                    'Select a category',
+                    style: new TextStyle(color: Colors.white, fontSize: 20.0),
+                  ),
+                  SizedBox(height: 15.0),
+                  categoryField,
                   SizedBox(height: 35.0),
                   createButton,
                   SizedBox(height: 15.0),
@@ -217,6 +237,4 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       ),
     );
   }
-
-  
 }

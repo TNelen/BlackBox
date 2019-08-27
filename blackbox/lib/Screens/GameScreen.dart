@@ -76,7 +76,7 @@ class _GameScreenState extends State<GameScreen> {
           }
           if (!joined) {
             groupdata.addMember(Constants.getUserData());
-            Constants.database.updateGroup( groupdata );
+            Constants.database.updateGroup(groupdata);
             joined = true;
             print("joined Group");
 
@@ -86,7 +86,7 @@ class _GameScreenState extends State<GameScreen> {
 
           return new Scaffold(
             body: DefaultTabController(
-              length: 2,
+              length: 3,
               child: Scaffold(
                 appBar: AppBar(
                   title: Container(
@@ -165,6 +165,28 @@ class _GameScreenState extends State<GameScreen> {
                             margin: const EdgeInsets.only(top: 8),
                             child: Text(
                               'Members',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      new Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          new Icon(
+                            Icons.help_outline,
+                            color: Colors.white,
+                            //size: 25,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              'Help',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w400,
@@ -282,6 +304,96 @@ class _GameScreenState extends State<GameScreen> {
                                 ))
                             .toList(),
                       ),
+
+                      //tab3
+                      Center(
+                          child: ListView(
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(20.0),
+                        children: [
+                          SizedBox(height: 20),
+                          Text(
+                            'Rules',
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 25.0,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Vote on a group member' +
+                                '\n'
+                                    'Once a vote is submitted, it can not be changed.',
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'Questions',
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 25.0,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Questions are generated in a random order.' +
+                                '\n'
+                                    'The category of the questions is chosen on group creation',
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'Timeout',
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 25.0,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'You have XXXX seconds to submit a vote on the next question.' +
+                                '\n'
+                                    'If you fail to vote in time, you will be kicked from the group.',
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'Leave',
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 25.0,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Leave a running game by clicking on the leave button ingame.' +
+                                '\n'
+                                    'Please do not close the app before leaving an active game.',
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          Text(
+                            'If there are no more players in a group, the group is deleted',
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          SizedBox(height: 60),
+
+                        ],
+                      ))
                     ],
                   ),
                   Align(
@@ -430,8 +542,7 @@ class _GameScreenState extends State<GameScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          HomeScreen(_database),
+                      builder: (BuildContext context) => HomeScreen(_database),
                     ));
               },
             ),
