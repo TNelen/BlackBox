@@ -9,6 +9,7 @@ import '../Interfaces/Database.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/Question.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   Database database;
@@ -28,6 +29,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Database database;
+  int pageIndex = 0;
 
   _HomeScreenState(Database db) {
     this.database = db;
@@ -158,97 +160,149 @@ class _HomeScreenState extends State<HomeScreen> {
         ));
   }
 
-  Widget createCustomizationRow() {
-    return Row(
-      children: <Widget>[
-        Card(
-            color: Constants.iDarkGrey,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: InkWell(
-                splashColor: Constants.iAccent,
-                onTap: () {
-                  ///nothing yet
-                },
-                child: Container(
-                    padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-                    child: Column(
-                      children: <Widget>[
-                        Icon(Icons.perm_identity, color: Constants.iAccent,size: 30,),
-                        Text('Profile', style: new TextStyle(fontSize: 15, color: Constants.iWhite),)
-                      ],
-                    )))),
-        SizedBox(width: 8,),
-        Card(
-            color: Constants.iDarkGrey,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: InkWell(
-                splashColor: Constants.iAccent,
-                onTap: () {
-                  ///nothing yet
-                },
-                child: Container(
-                    padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-                    child: Column(
-                      children: <Widget>[
-                        Icon(Icons.settings, color: Constants.iAccent, size: 30,),
-                        Text('Settings', style: new TextStyle(
-                            fontSize: 15, color: Constants.iWhite),)
-                      ],
-                    )))),
-        SizedBox(width: 8,),
-        Card(
-            color: Constants.iDarkGrey,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: InkWell(
-                splashColor: Constants.iAccent,
-                onTap: () {
-                  ///nothing yet
-                },
-                child: Container(
-                    padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-                    child: Column(
-                      children: <Widget>[
-                        Icon(Icons.report_problem, color: Constants.iAccent, size:  30,),
-                        Text('Report Issue', style: new TextStyle(
-                            fontSize: 15, color: Constants.iWhite),)
-                      ],
-                    )))),
-      ],
-    );
-  }
+  final controller = PageController(
+    initialPage: 0,
+    keepPage: false,
+    viewportFraction: 0.55,
+  );
 
-  Widget submitQuestionRow() {
-    return Row(
-      children: <Widget>[
+  final profileCard = Container(
+      padding: EdgeInsets.symmetric(horizontal: 6),
+      child: Card(
+          color: Constants.iDarkGrey,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: InkWell(
+              splashColor: Constants.iAccent,
+              onTap: () {
+                ///nothing yet
+              },
+              child: Container(
+                  padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+                  child: Column(
+                    children: <Widget>[
+                      Icon(
+                        Icons.perm_identity,
+                        color: Constants.iAccent,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Profile',
+                        style: new TextStyle(
+                            fontSize: 15, color: Constants.iWhite),
+                      )
+                    ],
+                  )))));
 
-        Card(
-            color: Constants.iDarkGrey,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: InkWell(
-                splashColor: Constants.iAccent,
-                onTap: () {
-                  ///nothing yet
-                },
-                child: Container(
-                    padding: EdgeInsets.fromLTRB(50, 50, 50, 50),
-                    child: Column(
-                      children: <Widget>[
-                        Icon(Icons.library_add, color: Constants.iAccent, size:  30,),
-                        SizedBox(height: 10,),
-                        Text('Submit Question', style: new TextStyle(
-                            fontSize: 15, color: Constants.iWhite),)
-                      ],
-                    )))),
-      ],
-    );
+  final settingsCard = Container(
+      padding: EdgeInsets.symmetric(horizontal: 6),
+      child: Card(
+          color: Constants.iDarkGrey,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: InkWell(
+              splashColor: Constants.iAccent,
+              onTap: () {
+                ///nothing yet
+              },
+              child: Container(
+                  padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+                  child: Column(
+                    children: <Widget>[
+                      Icon(
+                        Icons.settings,
+                        color: Constants.iAccent,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Settings',
+                        style: new TextStyle(
+                            fontSize: 15, color: Constants.iWhite),
+                      )
+                    ],
+                  )))));
+
+  final reportIssueCard = Container(
+      padding: EdgeInsets.symmetric(horizontal: 6),
+      child: Card(
+          color: Constants.iDarkGrey,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: InkWell(
+              splashColor: Constants.iAccent,
+              onTap: () {
+                ///nothing yet
+              },
+              child: InkWell(
+                  splashColor: Constants.iAccent,
+                  onTap: () {
+                    ///nothing yet
+                  },
+                  child: Container(
+                      padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+                      child: Column(
+                        children: <Widget>[
+                          Icon(
+                            Icons.report_problem,
+                            color: Constants.iAccent,
+                            size: 30,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Report problem',
+                            style: new TextStyle(
+                                fontSize: 15, color: Constants.iWhite),
+                          )
+                        ],
+                      ))))));
+
+  final submitQuestionCard = Container(
+      padding: EdgeInsets.symmetric(horizontal: 6),
+      child: Card(
+          color: Constants.iDarkGrey,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: InkWell(
+              splashColor: Constants.iAccent,
+              onTap: () {
+                ///nothing yet
+              },
+              child: Container(
+                  padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+                  child: Column(
+                    children: <Widget>[
+                      Icon(
+                        Icons.library_add,
+                        color: Constants.iAccent,
+                        size: 30,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Submit Question',
+                        style: new TextStyle(
+                            fontSize: 15, color: Constants.iWhite),
+                      )
+                    ],
+                  )))));
+
+  void pageChanged(int index) {
+    setState(() {
+      pageIndex = index;
+    });
   }
 
   @override
@@ -264,36 +318,85 @@ class _HomeScreenState extends State<HomeScreen> {
       home: Scaffold(
         backgroundColor: Constants.iBlack,
         body: Container(
-          margin: EdgeInsets.only(top: 16,left: 8, right: 8),
+          margin: EdgeInsets.only(top: 16, left: 8, right: 8),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(top: height / 10, left: 10, right: 10),
-                alignment: Alignment.topCenter,
-                child: Text(
-                  'Hi ' + Constants.getUsername() + '!',
-                  style: TextStyle(
-                      color: Constants.iWhite,
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold),
-                ),
+                  padding:
+                      EdgeInsets.only(top: height / 10, left: 10, right: 10),
+                  alignment: Alignment.topCenter,
+                  child: Column(children: <Widget>[
+                    Text(
+                      'Hi ' + Constants.getUsername() + '!',
+                      style: TextStyle(
+                          color: Constants.iWhite,
+                          fontSize: 50,
+                          fontWeight: FontWeight.w300),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Text(
+                      'BlackBox - The - Game',
+                      style: TextStyle(
+                          color: Constants.iAccent,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w300),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Container(
+                      height: 120,
+                      child: PageView(
+                        onPageChanged: (index) {
+                          pageChanged(index);
+                        },
+                        scrollDirection: Axis.horizontal,
+                        controller: controller,
+                        children: <Widget>[
+                          profileCard,
+                          settingsCard,
+                          reportIssueCard,
+                          submitQuestionCard,
+                        ],
+                      ),
+                    ),
+                    DotsIndicator(
+                      dotsCount: 4,
+                      position: pageIndex,
+                      decorator: DotsDecorator(
+                        color: Constants.iWhite,
+                        activeColor: Constants.iAccent,
+                      ),
+                    )
+                  ])),
+              Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(left: 10, bottom: 10),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Start playing',
+                        style: TextStyle(
+                            fontSize: 30,
+                            color: Constants.iWhite,
+                            fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                  ),
+                  CreateGameBox(),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  JoinGameBox(),
+                  SizedBox(
+                    height: 35,
+                  )
+                ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              CreateGameBox(),
-              SizedBox(
-                height: 20,
-              ),
-              JoinGameBox(),
-              SizedBox(
-                height: 20,
-              ),
-              createCustomizationRow(),
-              SizedBox(
-                height: 20,
-              ),
-              submitQuestionRow(),
             ],
           ),
         ),

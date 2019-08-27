@@ -113,7 +113,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
           ),
           body: Center(
             child: Container(
-              color: Colors.black,
+              color: Constants.iBlack,
               child: Padding(
                 padding: const EdgeInsets.all(36.0),
                 child: Column(

@@ -24,6 +24,7 @@ dependencies:
   flutter_speed_dial: ^1.2.1
   unicorndial: ^1.1.5
   flutter_launcher_icons: 0.7.2+1
+  dots_indicator: ^1.0.0
 
 
 
