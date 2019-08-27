@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'GameScreen.dart';
 import '../Interfaces/Database.dart';
-import 'HomeScreen.dart';
-import 'Popup.dart';
+import '../DataContainers/Issue.dart';
 import '../Constants.dart';
 
 class ReportScreen extends StatefulWidget {
@@ -19,6 +17,9 @@ class ReportScreen extends StatefulWidget {
 class _ReportScreenState extends State<ReportScreen> {
   Database _database;
   TextEditingController problemController = new TextEditingController();
+  String categoryValue = 'Bug';
+  String locationValue = 'Home page';
+  Issue newIssue = new Issue();
 
   _ReportScreenState(Database db) {
     this._database = db;
@@ -26,22 +27,21 @@ class _ReportScreenState extends State<ReportScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final QuestionFieled = TextField(
+    final IssueField = TextField(
       obscureText: false,
       keyboardType: TextInputType.multiline,
-      maxLength: 200,
-      maxLines: 5,
       controller: problemController,
-      style: TextStyle(fontSize: 20, color: Colors.black),
+      style: TextStyle(fontSize: 20, color: Constants.iBlack),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
           fillColor: Constants.iWhite,
           filled: true,
-          hintText: "Max 5 lines, 200 charachters",
+          hintText: "start typing here...",
+          hintStyle: TextStyle(fontSize: 18, color: Constants.iDarkGrey),
           counterText: problemController.text.length.toString(),
-          counterStyle: TextStyle(color: Constants.iBlack),
+          counterStyle: TextStyle(color: Constants.iGrey),
           border:
-          OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
 
     final SubmitButton = Material(
@@ -57,10 +57,84 @@ class _ReportScreenState extends State<ReportScreen> {
         },
         child: Text("Submit",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20)
-                .copyWith(color: Constants.iWhite, fontWeight: FontWeight.bold)),
+            style: TextStyle(fontSize: 20).copyWith(
+                color: Constants.iWhite, fontWeight: FontWeight.bold)),
       ),
     );
+
+    Widget categoryField = Container(
+        height: 50,
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: Constants.iWhite,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(
+              color: Constants.iDarkGrey, style: BorderStyle.solid, width: 0.01),
+        ),
+        child: DropdownButton<String>(
+          value: categoryValue,
+          style: TextStyle(fontSize: 18, color: Constants.iDarkGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              categoryValue = newValue;
+            });
+          },
+          items: [
+            'Bug',
+            'Crashes',
+            'issue 2',
+            'issue 3',
+            'issue 4',
+            'issue 5',
+            'Other (Describe below)'
+          ].map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(
+                value,
+              ),
+            );
+          }).toList(),
+        ));
+
+    Widget locationFiled = Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        height: 50,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: Constants.iWhite,
+          borderRadius: BorderRadius.circular(16.0),
+          border: Border.all(
+              color: Constants.iDarkGrey, style: BorderStyle.solid, width: 0.01),
+        ),
+        child: DropdownButton<String>(
+          value: locationValue,
+          style: TextStyle(fontSize: 18, color: Constants.iDarkGrey),
+          onChanged: (String newValue) {
+            setState(() {
+              locationValue = newValue;
+            });
+          },
+          items: [
+            'Home page',
+            'ProfileScreen',
+            'Settings Screen',
+            'Game Lobby',
+            'Vote Screen',
+            'Question Card',
+            'Results',
+            'collecting results',
+            'Other  (Describe below)'
+          ].map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(
+                value,
+              ),
+            );
+          }).toList(),
+        ));
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -69,9 +143,7 @@ class _ReportScreenState extends State<ReportScreen> {
         home: Scaffold(
             appBar: AppBar(
               backgroundColor: Constants.iBlack,
-              title: Row(
-
-                  mainAxisAlignment: MainAxisAlignment.start, children: [
+              title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 InkWell(
                   onTap: () => Navigator.pop(context),
                   child: Row(
@@ -99,9 +171,10 @@ class _ReportScreenState extends State<ReportScreen> {
               child: Container(
                 padding: EdgeInsets.all(10),
                 color: Constants.iBlack,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
+                child: ListView(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(20.0),
+                    children: [
                       SizedBox(height: 40.0),
                       Text(
                         'Ran into an issue?',
@@ -128,14 +201,43 @@ class _ReportScreenState extends State<ReportScreen> {
                             fontSize: 20.0,
                             fontWeight: FontWeight.normal),
                       ),
+                      SizedBox(height: 30.0),
+                      Text(
+                        'What is the type of issue',
+                        textAlign: TextAlign.left,
+                        style: new TextStyle(
+                            color: Constants.iWhite,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.normal),
+                      ),
+                      SizedBox(height: 10.0),
+                      categoryField,
                       SizedBox(height: 20.0),
-                      QuestionFieled,
+                      Text(
+                        'Where is the issue located',
+                        textAlign: TextAlign.left,
+                        style: new TextStyle(
+                            color: Constants.iWhite,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.normal),
+                      ),
+                      SizedBox(height: 10.0),
+                      locationFiled,
+                      SizedBox(height: 20.0),
+                      Text(
+                        'Describe the issue as precise as possible',
+                        textAlign: TextAlign.left,
+                        style: new TextStyle(
+                            color: Constants.iWhite,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.normal),
+                      ),
+                      SizedBox(height: 10.0),
+                      IssueField,
                       SizedBox(height: 20.0),
                       SubmitButton,
-
                     ]),
               ),
             )));
   }
 }
-

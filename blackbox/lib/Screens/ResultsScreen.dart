@@ -347,7 +347,7 @@ class ResultScreenState extends State<ResultScreen> {
                   child: Text("Next Question",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 30).copyWith(
-                          color: Constants.iWhite, fontWeight: FontWeight.bold)),
+                          color: Constants.iBlack, fontWeight: FontWeight.bold)),
                 ),
               ),
             ),

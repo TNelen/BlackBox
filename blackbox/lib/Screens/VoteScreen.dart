@@ -138,7 +138,7 @@ class _VoteScreenState extends State<VoteScreen> {
             child: Text("Submit choice",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20).copyWith(
-                    color: Constants.iWhite, fontWeight: FontWeight.bold)),
+                    color: Constants.iBlack, fontWeight: FontWeight.bold)),
           ),
         ),
       ),

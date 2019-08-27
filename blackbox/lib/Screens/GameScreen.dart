@@ -91,40 +91,39 @@ class _GameScreenState extends State<GameScreen> {
                 appBar: AppBar(
                   title: Container(
                     padding: EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      children: [
-                        InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        HomeScreen(_database),
-                                  ));
-                              groupdata.removeMember(Constants.getUserData());
-                              _database.updateGroup(groupdata);
 
-                              dispose();
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.only(right: 20),
-                              child: const Icon(
-                                Icons.arrow_back,
-                                color: Constants.iAccent,
-                              ),
-                            )),
-                        Center(
-                          child: Text(
-                            'Home',
-                            style: TextStyle(
-                              fontSize: 20,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      HomeScreen(_database),
+                                ));
+                            groupdata.removeMember(Constants.getUserData());
+                            _database.updateGroup(groupdata);
+
+                            dispose();
+                          },
+                          child: Row(children: [Padding(
+                            padding: EdgeInsets.only(right: 20),
+                            child: const Icon(
+                              Icons.arrow_back,
                               color: Constants.iAccent,
                             ),
                           ),
+                            Text(
+                              'Back',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Constants.iAccent,
+                              ),
+                            ),
+                          ],
+                          ),
                         ),
-                      ],
                     ),
-                  ),
+
                   backgroundColor: Constants.iBlack,
                   bottom: TabBar(
                     indicatorColor: Constants.iAccent,

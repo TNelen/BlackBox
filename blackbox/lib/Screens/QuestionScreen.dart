@@ -98,7 +98,7 @@ class _QuestionScreenState extends State<QuestionScreen>
             child: Text("Vote",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20).copyWith(
-                    color: Constants.iWhite, fontWeight: FontWeight.bold)),
+                    color: Constants.iBlack, fontWeight: FontWeight.bold)),
           ),
         ),
       ),
