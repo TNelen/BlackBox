@@ -42,25 +42,30 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
           counterText: questionController.text.length.toString(),
           counterStyle: TextStyle(color: Constants.iBlack),
           border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
+          OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
 
     final SubmitButton = Material(
-        elevation: 5.0,
-        borderRadius: BorderRadius.circular(16.0),
-        color: Constants.iDarkGrey,
-        child: MaterialButton(
-          minWidth: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          onPressed: () {
-           ///Take action here
-          },
-          child: Text("Submit Question",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20)
-                  .copyWith(color: Constants.iWhite, fontWeight: FontWeight.bold)),
-        ),
-      );
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(16.0),
+      color: Constants.iDarkGrey,
+      child: MaterialButton(
+        minWidth: MediaQuery
+            .of(context)
+            .size
+            .width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          ///Take action here
+          ///if text.length !=null....
+        },
+        child: Text("Submit",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20)
+                .copyWith(
+                color: Constants.iWhite, fontWeight: FontWeight.bold)),
+      ),
+    );
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -70,7 +75,7 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
             appBar: AppBar(
               backgroundColor: Constants.iBlack,
               title: Row(
-                 
+
                   mainAxisAlignment: MainAxisAlignment.start, children: [
                 InkWell(
                   onTap: () => Navigator.pop(context),
@@ -125,7 +130,7 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
                         textAlign: TextAlign.center,
                         style: new TextStyle(
                             color: Constants.iWhite,
-                            fontSize: 25.0,
+                            fontSize: 20.0,
                             fontWeight: FontWeight.normal),
                       ),
                       SizedBox(height: 20.0),
