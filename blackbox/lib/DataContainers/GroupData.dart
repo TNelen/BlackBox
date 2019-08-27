@@ -399,7 +399,14 @@ class GroupData {
 
   }
 
-  List<String> getTopThree(){
+  List<String> getTopThree(String Type){
+    Map<String, int> list = null;
+    String type = Type;
+    switch(type) {
+      case 'previous': list = _lastVotes; break;
+      case 'alltime' : list = _totalVotes; break;
+    }
+
     ///first three elements return the player name, last three return the number of votes
     List<String> top = new List(6); top[0] = '';top[1] = '';top[2] = ''; top[3] = '';top[4] = '';top[5] = '';
     int oneVotes =0;
@@ -411,7 +418,7 @@ class GroupData {
     int twoVotesR = 0;
     int threeVotesR = 0;
 
-    _lastVotes.forEach((userID, numVotes){
+    list.forEach((userID, numVotes){
       if (numVotes > oneVotes){
         top[2]= top[1];
         top[1] = top[0];
@@ -429,7 +436,7 @@ class GroupData {
         threeVotes = numVotes;
     });
 
-    _lastVotes.forEach((userID,numVotes){
+    list.forEach((userID,numVotes){
       if (getUserName(userID) == top[0]){
         oneVotesR = numVotes;
       }

@@ -213,9 +213,9 @@ class ResultScreenState extends State<ResultScreen> {
 
                         Text(
                           '1. ' +
-                              groupData.getTopThree()[0] +
+                              groupData.getTopThree('previous')[0] +
                               '   ' +
-                              groupData.getTopThree()[3],
+                              groupData.getTopThree('previous')[3],
                           style: new TextStyle(
                               color: Colors.black,
                               fontSize: 25.0,
@@ -225,9 +225,9 @@ class ResultScreenState extends State<ResultScreen> {
 
                         Text(
                           '2. ' +
-                              groupData.getTopThree()[1] +
+                              groupData.getTopThree('previous')[1] +
                               '   ' +
-                              groupData.getTopThree()[4],
+                              groupData.getTopThree('previous')[4],
                           style: new TextStyle(
                               color: Colors.black,
                               fontSize: 20.0,
@@ -237,9 +237,9 @@ class ResultScreenState extends State<ResultScreen> {
 
                         Text(
                           '3. ' +
-                              groupData.getTopThree()[2] +
+                              groupData.getTopThree('previous')[2] +
                               '   ' +
-                              groupData.getTopThree()[5],
+                              groupData.getTopThree('previous')[5],
                           style: new TextStyle(
                               color: Colors.black,
                               fontSize: 20.0,
@@ -271,19 +271,50 @@ class ResultScreenState extends State<ResultScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'ALL TIME TOP 3',
+                          'Alltime TOP 3',
                           style: new TextStyle(
-                              color: Colors.black,
-                              fontSize: 20.0,
+                              color: Colors.amber,
+                              fontSize: 30.0,
                               fontWeight: FontWeight.bold),
                         ),
+                        SizedBox(height: 40),
+
                         Text(
-                          'top 3 van alle vragen',
+                          '1. ' +
+                              groupData.getTopThree('alltime')[0] +
+                              '   ' +
+                              groupData.getTopThree('alltime')[3],
+                          style: new TextStyle(
+                              color: Colors.black,
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 5),
+
+                        Text(
+                          '2. ' +
+                              groupData.getTopThree('alltime')[1] +
+                              '   ' +
+                              groupData.getTopThree('alltime')[4],
                           style: new TextStyle(
                               color: Colors.black,
                               fontSize: 20.0,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.normal),
                         ),
+                        SizedBox(height: 5),
+
+                        Text(
+                          '3. ' +
+                              groupData.getTopThree('alltime')[2] +
+                              '   ' +
+                              groupData.getTopThree('alltime')[5],
+                          style: new TextStyle(
+                              color: Colors.black,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.normal),
+                        ),
+                        SizedBox(height: 20),
+
                       ],
                     ),
                   ),
