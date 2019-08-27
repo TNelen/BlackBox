@@ -203,7 +203,7 @@ class _VoteScreenState extends State<VoteScreen> {
                 crossAxisSpacing: 12.0,
                 mainAxisSpacing: 12.0,
                 children: groupData
-                    .getMembers()
+                    .getPlayingUserdata()
                     .map((data) => Card(
                           color: data.getUserID() == clickedmember
                               ? Colors.amber

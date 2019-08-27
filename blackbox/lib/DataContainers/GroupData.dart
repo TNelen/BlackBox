@@ -171,7 +171,7 @@ class GroupData {
 
     return users;
   }
-
+  
 
   /// Get all members in this group as a Map
   /// Their IDs will serve as key while their usernames will be the values
@@ -352,6 +352,20 @@ class GroupData {
   List<String> getPlaying()
   {
     return _playing;
+  }
+
+  /// Get the current list of playing members (their IDs)
+  List< UserData> getPlayingUserdata()
+  {
+    List< UserData > users = new List<UserData>();
+
+    _playing.forEach(
+            (ID) {
+          users.add( new UserData(ID, getUserName(ID)) );
+        }
+    );
+
+    return users;
   }
 
 
