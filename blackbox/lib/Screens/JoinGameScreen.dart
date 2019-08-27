@@ -28,32 +28,37 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
   Widget build(BuildContext context) {
     final joinButton = Hero(
       tag: 'tobutton',
-        child: Material(
-          elevation: 5.0,
-          borderRadius: BorderRadius.circular(32.0),
-          color: Colors.amber,
-          child: MaterialButton(
-            minWidth: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            onPressed: () {
-              String groupCode = codeController.text.toUpperCase();
-              if (groupCode.length == Constants.groupCodeLength) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => GameScreen(
-                          _database, codeController.text.toUpperCase()),
-                    ));
-              } else {
-                Popup.makePopup(context, "Please check your code", "A code should contain " + Constants.groupCodeLength.toString() + " symbols!");
-              }
-            },
-            child: Text("Join",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20).copyWith(
-                    color: Colors.white, fontWeight: FontWeight.bold)),
-          ),
+      child: Material(
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(16.0),
+        color: Constants.iDarkGrey,
+        child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          onPressed: () {
+            String groupCode = codeController.text.toUpperCase();
+            if (groupCode.length == Constants.groupCodeLength) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => GameScreen(
+                        _database, codeController.text.toUpperCase()),
+                  ));
+            } else {
+              Popup.makePopup(
+                  context,
+                  "Please check your code",
+                  "A code should contain " +
+                      Constants.groupCodeLength.toString() +
+                      " symbols!");
+            }
+          },
+          child: Text("Join",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20)
+                  .copyWith(color: Constants.iWhite, fontWeight: FontWeight.bold)),
         ),
+      ),
     );
 
     final codeField = TextField(
@@ -63,11 +68,11 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
       style: TextStyle(fontSize: 20, color: Colors.black),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          fillColor: Colors.white,
+          fillColor: Constants.iWhite,
           filled: true,
           hintText: "Game code",
           border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
 
     return MaterialApp(
@@ -76,7 +81,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
         theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
         home: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.black,
+            backgroundColor: Constants.iBlack,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -93,14 +98,14 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                       padding: EdgeInsets.only(right: 20),
                       child: const Icon(
                         Icons.arrow_back,
-                        color: Colors.amber,
+                        color: Constants.iAccent,
                       ),
                     )),
                 Text(
                   'Back',
                   style: TextStyle(
                     fontSize: 20,
-                    color: Colors.amber,
+                    color: Constants.iAccent,
                   ),
                 ),
               ],
@@ -117,12 +122,12 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                   children: <Widget>[
                     Text(
                       'Join Group',
-                      style: new TextStyle(color: Colors.white, fontSize: 40.0),
+                      style: new TextStyle(color: Constants.iWhite, fontSize: 40.0),
                     ),
                     SizedBox(height: 80.0),
                     Text(
                       'Enter group code below',
-                      style: new TextStyle(color: Colors.amber, fontSize: 25.0),
+                      style: new TextStyle(color: Constants.iAccent, fontSize: 25.0),
                     ),
                     SizedBox(height: 25.0),
                     codeField,

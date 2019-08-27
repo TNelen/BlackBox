@@ -121,14 +121,14 @@ class ResultScreenState extends State<ResultScreen> {
                   onWillPop: () async => false,
                   child: MaterialApp(
                     debugShowCheckedModeBanner: false,
-                    theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
+                    theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
                     home: Scaffold(
                       body: Center(
                         child: RichText(
                           textAlign: TextAlign.center,
                           text: TextSpan(
                             text: 'Collecting votes...',
-                            style: TextStyle(color: Colors.white, fontSize: 30),
+                            style: TextStyle(color: Constants.iWhite, fontSize: 30),
                           ),
                         ),
                       ),
@@ -144,9 +144,9 @@ class ResultScreenState extends State<ResultScreen> {
               padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
               child: Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.0),
+                  borderRadius: BorderRadius.circular(16.0),
                 ),
-                color: Colors.white,
+                color: Constants.iDarkGrey,
                 child: Center(
                   child: Padding(
                     padding: const EdgeInsets.all(20),
@@ -158,7 +158,7 @@ class ResultScreenState extends State<ResultScreen> {
                             currentQuestionString,
                             textAlign: TextAlign.center,
                             style: new TextStyle(
-                                color: Colors.amber,
+                                color: Constants.iAccent,
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -166,7 +166,7 @@ class ResultScreenState extends State<ResultScreen> {
                           Text(
                             'WINNER',
                             style: new TextStyle(
-                                color: Colors.black,
+                                color: Constants.iWhite,
                                 fontSize: 30.0,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -174,7 +174,7 @@ class ResultScreenState extends State<ResultScreen> {
                           Text(
                             groupData.getWinner(),
                             style: new TextStyle(
-                                color: Colors.black,
+                                color: Constants.iWhite,
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -192,9 +192,9 @@ class ResultScreenState extends State<ResultScreen> {
             padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
             child: Card(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(32.0),
+                borderRadius: BorderRadius.circular(16.0),
               ),
-              color: Colors.white,
+              color: Constants.iDarkGrey,
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
@@ -205,7 +205,7 @@ class ResultScreenState extends State<ResultScreen> {
                         Text(
                           'TOP 3',
                           style: new TextStyle(
-                              color: Colors.amber,
+                              color: Constants.iAccent,
                               fontSize: 30.0,
                               fontWeight: FontWeight.bold),
                         ),
@@ -217,7 +217,7 @@ class ResultScreenState extends State<ResultScreen> {
                               '   ' +
                               groupData.getTopThree('previous')[3],
                           style: new TextStyle(
-                              color: Colors.black,
+                              color: Constants.iWhite,
                               fontSize: 25.0,
                               fontWeight: FontWeight.bold),
                         ),
@@ -229,7 +229,7 @@ class ResultScreenState extends State<ResultScreen> {
                               '   ' +
                               groupData.getTopThree('previous')[4],
                           style: new TextStyle(
-                              color: Colors.black,
+                              color: Constants.iWhite,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
                         ),
@@ -241,7 +241,7 @@ class ResultScreenState extends State<ResultScreen> {
                               '   ' +
                               groupData.getTopThree('previous')[5],
                           style: new TextStyle(
-                              color: Colors.black,
+                              color: Constants.iWhite,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
                         ),
@@ -260,9 +260,9 @@ class ResultScreenState extends State<ResultScreen> {
             padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
             child: Card(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(32.0),
+                borderRadius: BorderRadius.circular(16.0),
               ),
-              color: Colors.white,
+              color: Constants.iDarkGrey,
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
@@ -273,7 +273,7 @@ class ResultScreenState extends State<ResultScreen> {
                         Text(
                           'Alltime TOP 3',
                           style: new TextStyle(
-                              color: Colors.amber,
+                              color: Constants.iAccent,
                               fontSize: 30.0,
                               fontWeight: FontWeight.bold),
                         ),
@@ -285,7 +285,7 @@ class ResultScreenState extends State<ResultScreen> {
                               '   ' +
                               groupData.getTopThree('alltime')[3],
                           style: new TextStyle(
-                              color: Colors.black,
+                              color: Constants.iWhite,
                               fontSize: 25.0,
                               fontWeight: FontWeight.bold),
                         ),
@@ -297,7 +297,7 @@ class ResultScreenState extends State<ResultScreen> {
                               '   ' +
                               groupData.getTopThree('alltime')[4],
                           style: new TextStyle(
-                              color: Colors.black,
+                              color: Constants.iWhite,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
                         ),
@@ -309,7 +309,7 @@ class ResultScreenState extends State<ResultScreen> {
                               '   ' +
                               groupData.getTopThree('alltime')[5],
                           style: new TextStyle(
-                              color: Colors.black,
+                              color: Constants.iWhite,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
                         ),
@@ -330,8 +330,8 @@ class ResultScreenState extends State<ResultScreen> {
               padding: EdgeInsets.only(top: height / 9.6, bottom: height / 9.6),
               child: Material(
                 elevation: 0.0,
-                borderRadius: BorderRadius.circular(32.0),
-                color: Colors.amber,
+                borderRadius: BorderRadius.circular(16.0),
+                color: Constants.iAccent,
                 child: MaterialButton(
                   minWidth: MediaQuery.of(context).size.width,
                   padding: const EdgeInsets.all(20),
@@ -347,7 +347,7 @@ class ResultScreenState extends State<ResultScreen> {
                   child: Text("Next Question",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 30).copyWith(
-                          color: Colors.white, fontWeight: FontWeight.bold)),
+                          color: Constants.iWhite, fontWeight: FontWeight.bold)),
                 ),
               ),
             ),
@@ -357,7 +357,7 @@ class ResultScreenState extends State<ResultScreen> {
             theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
             home: Scaffold(
               appBar: AppBar(
-                backgroundColor: Colors.black,
+                backgroundColor: Constants.iBlack,
                 title: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                   FlatButton(
                     onPressed: () {
@@ -372,7 +372,7 @@ class ResultScreenState extends State<ResultScreen> {
                     },
                     child: Text(
                       "Leave",
-                      style: TextStyle(fontSize: 20.0, color: Colors.amber),
+                      style: TextStyle(fontSize: 20.0, color: Constants.iAccent),
                     ),
                   )
                 ]),
@@ -395,7 +395,7 @@ class ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: new ThemeData(
-          scaffoldBackgroundColor: Colors.black,
+          scaffoldBackgroundColor: Constants.iBlack,
         ),
         home: Scaffold(
           body: _buildBody(context),

@@ -66,14 +66,14 @@ class _VoteScreenState extends State<VoteScreen> {
         // return object of type Dialog
         return AlertDialog(
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30.0))),
+              borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: new Text(
             "No members selected",
-            style: TextStyle(color: Colors.black, fontSize: 25),
+            style: TextStyle(color: Constants.iBlack, fontSize: 25),
           ),
           content: new Text(
             "Please make a valid choice",
-            style: TextStyle(color: Colors.black, fontSize: 20),
+            style: TextStyle(color: Constants.iBlack, fontSize: 20),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
@@ -81,7 +81,7 @@ class _VoteScreenState extends State<VoteScreen> {
               child: new Text(
                 "Close",
                 style: TextStyle(
-                    color: Colors.amber,
+                    color: Constants.iAccent,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
@@ -109,8 +109,8 @@ class _VoteScreenState extends State<VoteScreen> {
         padding: const EdgeInsets.all(20),
         child: Material(
           elevation: 5.0,
-          borderRadius: BorderRadius.circular(30.0),
-          color: Colors.amber,
+          borderRadius: BorderRadius.circular(16.0),
+          color: Constants.iAccent,
           child: MaterialButton(
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(1.0, 15.0, 20.0, 15.0),
@@ -138,7 +138,7 @@ class _VoteScreenState extends State<VoteScreen> {
             child: Text("Submit choice",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20).copyWith(
-                    color: Colors.white, fontWeight: FontWeight.bold)),
+                    color: Constants.iWhite, fontWeight: FontWeight.bold)),
           ),
         ),
       ),
@@ -146,10 +146,10 @@ class _VoteScreenState extends State<VoteScreen> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
+      theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: Constants.iBlack,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -161,7 +161,7 @@ class _VoteScreenState extends State<VoteScreen> {
                       padding: EdgeInsets.only(right: 1),
                       child: const Icon(
                         Icons.arrow_back,
-                        color: Colors.amber,
+                        color: Constants.iAccent,
                       ),
                     ),
                   ),
@@ -171,7 +171,7 @@ class _VoteScreenState extends State<VoteScreen> {
                     },
                     child: Text(
                       "Question",
-                      style: TextStyle(fontSize: 20.0, color: Colors.amber),
+                      style: TextStyle(fontSize: 20.0, color: Constants.iAccent),
                     ),
                   ),
                 ],
@@ -189,7 +189,7 @@ class _VoteScreenState extends State<VoteScreen> {
                 },
                 child: Text(
                   "Leave",
-                  style: TextStyle(fontSize: 20.0, color: Colors.amber),
+                  style: TextStyle(fontSize: 20.0, color: Constants.iAccent),
                 ),
               )
             ],
@@ -208,16 +208,16 @@ class _VoteScreenState extends State<VoteScreen> {
                     .getPlayingUserdata()
                     .map((data) => Card(
                           color: data.getUserID() == clickedmember
-                              ? Colors.amber
-                              : Colors.white,
+                              ? Constants.iLight
+                              : Constants.iDarkGrey,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32.0),
+                            borderRadius: BorderRadius.circular(16.0),
                           ),
                           child: InkWell(
-                            splashColor: Colors.amber.withAlpha(60),
+                            splashColor: Constants.iAccent,
                             onTap: () {
                               setState(() {
-                                color = Colors.amber;
+                                color = Constants.iAccent;
                                 clickedmember = data.getUserID();
                               });
                             },
@@ -228,7 +228,10 @@ class _VoteScreenState extends State<VoteScreen> {
                                 child: Text(
                                   data.getUsername(),
                                   style: new TextStyle(
-                                      color: Colors.black,
+                                      color: data.getUserID() == clickedmember
+                                          ? Constants.iDarkGrey
+                                          : Constants.iWhite,
+
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold),
                                 ),

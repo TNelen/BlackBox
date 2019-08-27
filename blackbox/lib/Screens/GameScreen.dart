@@ -110,7 +110,7 @@ class _GameScreenState extends State<GameScreen> {
                               padding: EdgeInsets.only(right: 20),
                               child: const Icon(
                                 Icons.arrow_back,
-                                color: Colors.amber,
+                                color: Constants.iAccent,
                               ),
                             )),
                         Center(
@@ -118,16 +118,16 @@ class _GameScreenState extends State<GameScreen> {
                             'Home',
                             style: TextStyle(
                               fontSize: 20,
-                              color: Colors.amber,
+                              color: Constants.iAccent,
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  backgroundColor: Colors.black,
+                  backgroundColor: Constants.iBlack,
                   bottom: TabBar(
-                    indicatorColor: Colors.amber,
+                    indicatorColor: Constants.iAccent,
                     indicatorSize: TabBarIndicatorSize.label,
                     tabs: [
                       new Column(
@@ -136,7 +136,7 @@ class _GameScreenState extends State<GameScreen> {
                         children: [
                           new Icon(
                             Icons.info_outline,
-                            color: Colors.white,
+                            color: Constants.iWhite,
                             //size: 25,
                           ),
                           Container(
@@ -146,7 +146,7 @@ class _GameScreenState extends State<GameScreen> {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                                color: Constants.iWhite,
                               ),
                             ),
                           ),
@@ -158,7 +158,7 @@ class _GameScreenState extends State<GameScreen> {
                         children: [
                           Icon(
                             Icons.people_outline,
-                            color: Colors.white,
+                            color: Constants.iWhite,
                             //size: 25,
                           ),
                           Container(
@@ -168,7 +168,7 @@ class _GameScreenState extends State<GameScreen> {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                                color: Constants.iWhite,
                               ),
                             ),
                           ),
@@ -180,7 +180,7 @@ class _GameScreenState extends State<GameScreen> {
                         children: [
                           new Icon(
                             Icons.help_outline,
-                            color: Colors.white,
+                            color: Constants.iWhite,
                             //size: 25,
                           ),
                           Container(
@@ -190,7 +190,7 @@ class _GameScreenState extends State<GameScreen> {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                                color: Constants.iWhite,
                               ),
                             ),
                           ),
@@ -213,7 +213,7 @@ class _GameScreenState extends State<GameScreen> {
                                 Text(
                                   snapshot.data.getName(),
                                   style: TextStyle(
-                                      color: Colors.amber,
+                                      color: Constants.iAccent,
                                       fontSize: 36,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -221,14 +221,14 @@ class _GameScreenState extends State<GameScreen> {
                                 Text(
                                   snapshot.data.getDescription(),
                                   style: TextStyle(
-                                      color: Colors.white,
+                                      color: Constants.iWhite,
                                       fontSize: 24,
                                       fontWeight: FontWeight.w400),
                                 ),
                                 Padding(padding: EdgeInsets.only(top: 80.0)),
                                 Text(
                                   snapshot.data.getGroupCode(),
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Constants.iWhite),
                                 )
                               ],
                             )),
@@ -241,8 +241,8 @@ class _GameScreenState extends State<GameScreen> {
                             .getMembers()
                             .map((data) => Card(
                                   color: groupdata.isUserPlaying(data)
-                                      ? Colors.amber
-                                      : Colors.white,
+                                      ? Constants.iAccent
+                                      : Constants.iWhite,
                                   child: Center(
                                       child: Padding(
                                           padding: const EdgeInsets.all(10.0),
@@ -256,7 +256,7 @@ class _GameScreenState extends State<GameScreen> {
                                                       Text(
                                                         data.getUsername(),
                                                         style: new TextStyle(
-                                                            color: Colors.black,
+                                                            color: Constants.iBlack,
                                                             fontSize: 20.0,
                                                             fontWeight:
                                                                 FontWeight
@@ -265,7 +265,7 @@ class _GameScreenState extends State<GameScreen> {
                                                       Text(
                                                         'ready',
                                                         style: new TextStyle(
-                                                            color: Colors.black,
+                                                            color: Constants.iBlack,
                                                             fontSize: 15.0,
                                                             fontWeight:
                                                                 FontWeight
@@ -283,7 +283,7 @@ class _GameScreenState extends State<GameScreen> {
                                                       Text(
                                                         data.getUsername(),
                                                         style: new TextStyle(
-                                                            color: Colors.black,
+                                                            color: Constants.iBlack,
                                                             fontSize: 20.0,
                                                             fontWeight:
                                                                 FontWeight
@@ -292,7 +292,7 @@ class _GameScreenState extends State<GameScreen> {
                                                       Text(
                                                         'Not ready',
                                                         style: new TextStyle(
-                                                            color: Colors.black,
+                                                            color: Constants.iBlack,
                                                             fontSize: 15.0,
                                                             fontWeight:
                                                                 FontWeight
@@ -313,9 +313,27 @@ class _GameScreenState extends State<GameScreen> {
                         children: [
                           SizedBox(height: 20),
                           Text(
+                            'Start Game',
+                            style: new TextStyle(
+                              color: Constants.iAccent,
+                              fontSize: 25.0,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Press ready to set yourself in ready state' +
+                                '\n'
+                                    'When all players are ready, the button on the bottom becomes the start button, press start to begin the game.',
+                            style: new TextStyle(
+                              color: Constants.iWhite,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
                             'Rules',
                             style: new TextStyle(
-                              color: Colors.white,
+                              color: Constants.iAccent,
                               fontSize: 25.0,
                             ),
                           ),
@@ -325,7 +343,7 @@ class _GameScreenState extends State<GameScreen> {
                                 '\n'
                                     'Once a vote is submitted, it can not be changed.',
                             style: new TextStyle(
-                              color: Colors.white,
+                              color: Constants.iWhite,
                               fontSize: 18.0,
                             ),
                           ),
@@ -333,7 +351,7 @@ class _GameScreenState extends State<GameScreen> {
                           Text(
                             'Questions',
                             style: new TextStyle(
-                              color: Colors.white,
+                              color: Constants.iAccent,
                               fontSize: 25.0,
                             ),
                           ),
@@ -343,7 +361,7 @@ class _GameScreenState extends State<GameScreen> {
                                 '\n'
                                     'The category of the questions is chosen on group creation',
                             style: new TextStyle(
-                              color: Colors.white,
+                              color: Constants.iWhite,
                               fontSize: 18.0,
                             ),
                           ),
@@ -351,7 +369,7 @@ class _GameScreenState extends State<GameScreen> {
                           Text(
                             'Timeout',
                             style: new TextStyle(
-                              color: Colors.white,
+                              color: Constants.iAccent,
                               fontSize: 25.0,
                             ),
                           ),
@@ -361,7 +379,7 @@ class _GameScreenState extends State<GameScreen> {
                                 '\n'
                                     'If you fail to vote in time, you will be kicked from the group.',
                             style: new TextStyle(
-                              color: Colors.white,
+                              color: Constants.iWhite,
                               fontSize: 18.0,
                             ),
                           ),
@@ -369,7 +387,7 @@ class _GameScreenState extends State<GameScreen> {
                           Text(
                             'Leave',
                             style: new TextStyle(
-                              color: Colors.white,
+                              color: Constants.iAccent,
                               fontSize: 25.0,
                             ),
                           ),
@@ -379,14 +397,14 @@ class _GameScreenState extends State<GameScreen> {
                                 '\n'
                                     'Please do not close the app before leaving an active game.',
                             style: new TextStyle(
-                              color: Colors.white,
+                              color: Constants.iWhite,
                               fontSize: 18.0,
                             ),
                           ),
                           Text(
                             'If there are no more players in a group, the group is deleted',
                             style: new TextStyle(
-                              color: Colors.white,
+                              color: Constants.iWhite,
                               fontSize: 18.0,
                             ),
                           ),
@@ -411,7 +429,7 @@ class _GameScreenState extends State<GameScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: new ThemeData(
-          scaffoldBackgroundColor: Colors.black,
+          scaffoldBackgroundColor: Constants.iBlack,
         ),
         home: Scaffold(
           body: _buildBody(),
@@ -441,7 +459,7 @@ class _GameScreenState extends State<GameScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
                 FlatButton(
-                  color: Colors.amber,
+                  color: Constants.iDarkGrey,
                   onPressed: () {
                     if (groupdata.isUserPlaying(Constants.getUserData())) {
                       groupdata.removePlayingUser(Constants.getUserData());
@@ -452,10 +470,13 @@ class _GameScreenState extends State<GameScreen> {
                     }
                     getRandomNexQuestion();
                   },
-                  splashColor: Colors.white,
+                  splashColor: Constants.iWhite,
                   child: Text(
                     "Ready",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(
+                        color: Constants.iWhite,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                   ),
                 )
                 /*Text('Home',
@@ -470,7 +491,7 @@ class _GameScreenState extends State<GameScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
                 FlatButton(
-                  color: Colors.amber,
+                  color: Constants.iDarkGrey,
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -479,10 +500,10 @@ class _GameScreenState extends State<GameScreen> {
                               QuestionScreen(_database, groupdata, code),
                         ));
                   },
-                  splashColor: Colors.white,
+                  splashColor: Constants.iAccent,
                   child: Text(
                     "Start Game",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Constants.iWhite, fontSize: 25),
                   ),
                 )
                 /*Text('Home',
@@ -504,9 +525,9 @@ class _GameScreenState extends State<GameScreen> {
       height: height / 11,
       padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
       decoration: BoxDecoration(
-          color: Colors.amber,
+          color: Constants.iDarkGrey,
           borderRadius: BorderRadius.only(
-              topRight: Radius.circular(32), topLeft: Radius.circular(32))),
+              topRight: Radius.circular(16), topLeft: Radius.circular(16))),
       child: _buildBottomCardChildren(context),
     );
   }
@@ -518,15 +539,16 @@ class _GameScreenState extends State<GameScreen> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
+          backgroundColor: Constants.iWhite ,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30.0))),
           title: new Text(
             "Oops!",
-            style: TextStyle(color: Colors.black, fontSize: 25),
+            style: TextStyle(color: Constants.iBlack, fontSize: 25),
           ),
           content: new Text(
             error,
-            style: TextStyle(color: Colors.black, fontSize: 20),
+            style: TextStyle(color: Constants.iBlack, fontSize: 20),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
@@ -534,7 +556,7 @@ class _GameScreenState extends State<GameScreen> {
               child: new Text(
                 "Close",
                 style: TextStyle(
-                    color: Colors.amber,
+                    color: Constants.iAccent,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),

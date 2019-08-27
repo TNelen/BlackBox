@@ -82,8 +82,8 @@ class _QuestionScreenState extends State<QuestionScreen>
         padding: const EdgeInsets.all(20),
         child: Material(
           elevation: 5.0,
-          borderRadius: BorderRadius.circular(30.0),
-          color: Colors.amber,
+          borderRadius: BorderRadius.circular(16.0),
+          color: Constants.iAccent,
           child: MaterialButton(
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -98,7 +98,7 @@ class _QuestionScreenState extends State<QuestionScreen>
             child: Text("Vote",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20).copyWith(
-                    color: Colors.white, fontWeight: FontWeight.bold)),
+                    color: Constants.iWhite, fontWeight: FontWeight.bold)),
           ),
         ),
       ),
@@ -106,10 +106,10 @@ class _QuestionScreenState extends State<QuestionScreen>
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
+      theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: Constants.iBlack,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -120,7 +120,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                     padding: EdgeInsets.only(right: 1),
                     child: const Icon(
                       Icons.arrow_back,
-                      color: Colors.amber,
+                      color: Constants.iAccent,
                     ),
                   ),
                 ),
@@ -130,7 +130,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                   },
                   child: Text(
                     "Results",
-                    style: TextStyle(fontSize: 20.0, color: Colors.amber),
+                    style: TextStyle(fontSize: 20.0, color: Constants.iAccent),
                   ),
                 ),
               ]),
@@ -147,7 +147,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                 },
                 child: Text(
                   "Leave",
-                  style: TextStyle(fontSize: 20.0, color: Colors.amber),
+                  style: TextStyle(fontSize: 20.0, color: Constants.iAccent),
                 ),
               )
             ],
@@ -164,9 +164,9 @@ class _QuestionScreenState extends State<QuestionScreen>
                   tag: 'questionToVote',
                   child: Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32.0),
+                      borderRadius: BorderRadius.circular(16.0),
                     ),
-                    color: Colors.white,
+                    color: Constants.iDarkGrey,
                     child: Center(
                       child: Padding(
                         padding: const EdgeInsets.all(20),
@@ -177,7 +177,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                               Text(
                                 'Question',
                                 style: new TextStyle(
-                                    color: Colors.black,
+                                    color: Constants.iAccent,
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -185,7 +185,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                               Text(
                                 groupData.getNextQuestionString(),
                                 style: new TextStyle(
-                                    color: Colors.amber,
+                                    color: Constants.iWhite,
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.bold),
                               ),

@@ -43,23 +43,23 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
         // return object of type Dialog
         return AlertDialog(
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30.0))),
+              borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: new Text(
             "Group Code",
             style: TextStyle(
-                color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+                color: Constants.iBlack, fontSize: 25, fontWeight: FontWeight.bold),
           ),
           content: new Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
                 code,
-                style: TextStyle(color: Colors.black, fontSize: 25),
+                style: TextStyle(color:Constants.iBlack, fontSize: 25),
               ),
               IconButton(
                   icon: Icon(
                     Icons.share,
-                    color: Colors.black,
+                    color: Constants.iBlack,
                   ),
                   onPressed: () {
                     final RenderBox box = context.findRenderObject();
@@ -75,7 +75,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               child: new Text(
                 "Start",
                 style: TextStyle(
-                    color: Colors.amber,
+                    color: Constants.iAccent,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
@@ -101,19 +101,19 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       style: TextStyle(fontSize: 20, color: Colors.black),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          fillColor: Colors.white,
+          fillColor: Constants.iWhite,
           filled: true,
           hintText: "Group Name",
           border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
 
     final categoryField = Container(
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(32.0),
+          color: Constants.iWhite,
+          borderRadius: BorderRadius.circular(16.0),
           border: Border.all(
               color: Colors.amber, style: BorderStyle.solid, width: 0.01),
         ),
@@ -128,7 +128,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value),
+              child: Text(value, ),
             );
           }).toList(),
         ));
@@ -137,8 +137,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       tag: 'tobutton',
       child: Material(
         elevation: 5.0,
-        borderRadius: BorderRadius.circular(32.0),
-        color: Colors.amber,
+        borderRadius: BorderRadius.circular(16.0),
+        color: Constants.iDarkGrey,
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -162,7 +162,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           child: Text("Create",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20)
-                  .copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+                  .copyWith(color: Constants.iWhite, fontWeight: FontWeight.bold)),
         ),
       ),
     );
@@ -170,12 +170,12 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: Constants.iBlack,
       ),
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: Constants.iBlack,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -185,7 +185,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   padding: EdgeInsets.only(right: 20),
                   child: const Icon(
                     Icons.arrow_back,
-                    color: Colors.amber,
+                    color: Constants.iAccent,
                   ),
                 ),
               ),
@@ -193,7 +193,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 'Back',
                 style: TextStyle(
                   fontSize: 20,
-                  color: Colors.amber,
+                  color: Constants.iAccent,
                 ),
               ),
             ],
@@ -201,7 +201,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
         ),
         body: Center(
           child: Container(
-            color: Colors.black,
+            color: Constants.iBlack,
             child: Padding(
               padding: const EdgeInsets.all(36.0),
               child: Column(
@@ -210,19 +210,19 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 children: <Widget>[
                   Text(
                     'Create new game',
-                    style: new TextStyle(color: Colors.white, fontSize: 40.0),
+                    style: new TextStyle(color: Constants.iWhite, fontSize: 40.0),
                   ),
                   SizedBox(height: 80.0),
                   Text(
                     'Enter game details',
-                    style: new TextStyle(color: Colors.amber, fontSize: 25.0),
+                    style: new TextStyle(color: Constants.iAccent, fontSize: 25.0),
                   ),
                   SizedBox(height: 45.0),
                   nameField,
                   SizedBox(height: 25.0),
                   Text(
                     'Select a category',
-                    style: new TextStyle(color: Colors.white, fontSize: 20.0),
+                    style: new TextStyle(color: Constants.iWhite, fontSize: 20.0),
                   ),
                   SizedBox(height: 15.0),
                   categoryField,

@@ -26,8 +26,6 @@ class HomeScreen extends StatefulWidget {
   }
 }
 
-enum PopupNew { create, join }
-
 class _HomeScreenState extends State<HomeScreen> {
   Database database;
 
@@ -36,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     /// Log a user in and update variables accordingly
 
-    if (Constants.getUserID() == "id2" || Constants.getUserID() == "" ) {
+    if (Constants.getUserID() == "id2" || Constants.getUserID() == "") {
       ///check if user isn't loged in via google already when returning to homescreen
       try {
         GoogleUserHandler guh = new GoogleUserHandler();
@@ -46,13 +44,11 @@ class _HomeScreenState extends State<HomeScreen> {
           database.updateUser(user);
 
           _test();
-
         });
       } catch (e) {
         print(e.toString());
       }
     }
-
 
     /* Example on how to add questions
     /// Duplicates cannot be added so running this code twice is not a problem
@@ -63,107 +59,196 @@ class _HomeScreenState extends State<HomeScreen> {
     */
   }
 
-
   @Deprecated('For async testing only. Must be deleted before release!')
-  void _test() async
-  {
+  void _test() async {
     print("Async start");
+
     /// Your async testing code here
     print("Async completed");
   }
 
-
   @Deprecated('Must be deleted before release!')
-  void _addQuestions( List<String> questions ) async
-  {
-    for (String q in questions)
-    {
-        await database.updateQuestion( new Question.addDefault(q) );
+  void _addQuestions(List<String> questions) async {
+    for (String q in questions) {
+      await database.updateQuestion(new Question.addDefault(q));
     }
   }
 
-  Widget _buildBottomCard(double width, double height) {
+  Widget CreateGameBox() {
     return Hero(
-      tag: 'tobutton',
-      child: Container(
-        width: width,
-        height: height / 2,
-        padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-        decoration: BoxDecoration(
-            color: Colors.amber,
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(32), topLeft: Radius.circular(32))),
-        child: _buildBottomCardChildren(),
-      ),
+        tag: 'toberutton',
+        child: Card(
+          color: Constants.iDarkGrey,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: InkWell(
+              splashColor: Constants.iAccent,
+              onTap: () {
+                // if (GoogleUserHandler.isLoggedIn()) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          CreateGameScreen(database),
+                    ));
+                // } else {
+                // Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
+                //  }
+              },
+              child: Container(
+                padding: EdgeInsets.fromLTRB(15, 25, 15, 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(
+                      Icons.create,
+                      color: Constants.iAccent,
+                      size: 50,
+                    ),
+                    Text(
+                      "Create Game",
+                      style: TextStyle(fontSize: 20.0, color: Constants.iWhite),
+                    ),
+                  ],
+                ),
+              )),
+        ));
+  }
+
+  Widget JoinGameBox() {
+    return Hero(
+        tag: 'frfr',
+        child: Card(
+          color: Constants.iDarkGrey,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: InkWell(
+              splashColor: Constants.iAccent,
+              onTap: () {
+                // if (GoogleUserHandler.isLoggedIn()) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          JoinGameScreen(database),
+                    ));
+                // } else {
+                // Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
+                //  }
+              },
+              child: Container(
+                padding: EdgeInsets.fromLTRB(15, 25, 15, 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(
+                      Icons.search,
+                      color: Constants.iAccent,
+                      size: 50,
+                    ),
+                    Text(
+                      "Join Game",
+                      style: TextStyle(fontSize: 20.0, color: Constants.iWhite),
+                    ),
+                  ],
+                ),
+              )),
+        ));
+  }
+
+  Widget createCustomizationRow() {
+    return Row(
+      children: <Widget>[
+        Card(
+            color: Constants.iDarkGrey,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: InkWell(
+                splashColor: Constants.iAccent,
+                onTap: () {
+                  ///nothing yet
+                },
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+                    child: Column(
+                      children: <Widget>[
+                        Icon(Icons.perm_identity, color: Constants.iAccent,size: 30,),
+                        Text('Profile', style: new TextStyle(fontSize: 15, color: Constants.iWhite),)
+                      ],
+                    )))),
+        SizedBox(width: 8,),
+        Card(
+            color: Constants.iDarkGrey,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: InkWell(
+                splashColor: Constants.iAccent,
+                onTap: () {
+                  ///nothing yet
+                },
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+                    child: Column(
+                      children: <Widget>[
+                        Icon(Icons.settings, color: Constants.iAccent, size: 30,),
+                        Text('Settings', style: new TextStyle(
+                            fontSize: 15, color: Constants.iWhite),)
+                      ],
+                    )))),
+        SizedBox(width: 8,),
+        Card(
+            color: Constants.iDarkGrey,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: InkWell(
+                splashColor: Constants.iAccent,
+                onTap: () {
+                  ///nothing yet
+                },
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+                    child: Column(
+                      children: <Widget>[
+                        Icon(Icons.report_problem, color: Constants.iAccent, size:  30,),
+                        Text('Report Issue', style: new TextStyle(
+                            fontSize: 15, color: Constants.iWhite),)
+                      ],
+                    )))),
+      ],
     );
   }
 
-  Widget _buildBottomCardChildren() {
+  Widget submitQuestionRow() {
     return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                IconButton(
-                  onPressed: () {
-                   // if (GoogleUserHandler.isLoggedIn()) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              CreateGameScreen(database),
-                        ));
-                   // } else {
-                     // Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
-                  //  }
-                  },
-                  icon: Icon(
-                    Icons.create,
-                    size: 40,
-                  ),
-                  padding: EdgeInsets.all(2),
-                ),
-                Text(
-                  'Create Game',
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                ),
-              ]),
-          Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                IconButton(
-                  onPressed: () {
-                   // if (GoogleUserHandler.isLoggedIn()) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => JoinGameScreen(database),
-                          ));
-                   // } else {
-                    //  Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
-                   // }
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    size: 40,
-                  ),
-                  padding: EdgeInsets.all(2),
-                ),
-                Text(
-                  'Join Game',
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                ),
-              ]),
-        ]);
+      children: <Widget>[
+
+        Card(
+            color: Constants.iDarkGrey,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: InkWell(
+                splashColor: Constants.iAccent,
+                onTap: () {
+                  ///nothing yet
+                },
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(50, 50, 50, 50),
+                    child: Column(
+                      children: <Widget>[
+                        Icon(Icons.library_add, color: Constants.iAccent, size:  30,),
+                        SizedBox(height: 10,),
+                        Text('Submit Question', style: new TextStyle(
+                            fontSize: 15, color: Constants.iWhite),)
+                      ],
+                    )))),
+      ],
+    );
   }
 
   @override
@@ -172,29 +257,43 @@ class _HomeScreenState extends State<HomeScreen> {
     final height = MediaQuery.of(context).size.height;
 
     return MaterialApp(
-debugShowCheckedModeBanner: false,
-
+      debugShowCheckedModeBanner: false,
       theme: new ThemeData(
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: Constants.iBlack,
       ),
       home: Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Constants.iBlack,
         body: Container(
-          margin: EdgeInsets.only(top: 16),
-          child: Stack(
+          margin: EdgeInsets.only(top: 16,left: 8, right: 8),
+          child: Column(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(top: height / 10),
+                padding: EdgeInsets.only(top: height / 10, left: 10, right: 10),
                 alignment: Alignment.topCenter,
                 child: Text(
                   'Hi ' + Constants.getUsername() + '!',
-                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Constants.iWhite,
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: _buildBottomCard(width, height)),
-              //_buildCardsList(),
+              SizedBox(
+                height: 20,
+              ),
+              CreateGameBox(),
+              SizedBox(
+                height: 20,
+              ),
+              JoinGameBox(),
+              SizedBox(
+                height: 20,
+              ),
+              createCustomizationRow(),
+              SizedBox(
+                height: 20,
+              ),
+              submitQuestionRow(),
             ],
           ),
         ),
