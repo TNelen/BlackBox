@@ -26,6 +26,20 @@ class Question {
   }
 
 
+  /// Get a List of all categories in their String format
+  static List<String> getCategoriesAsStringList()
+  {
+    List<Category> categories = getCategoriesAsList();
+    List<String> asString = new List<String>();
+    for (Category cat in categories)
+    {
+      asString.add( getStringFromCategory( cat ) );
+    }
+
+    return asString;
+  }
+
+
   /// Convert a String to Category
   /// Will return Category.Default if no match was found
   static Category getCategoryFromString(String category)
