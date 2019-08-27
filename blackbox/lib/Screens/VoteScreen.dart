@@ -158,18 +158,20 @@ class _VoteScreenState extends State<VoteScreen> {
                   InkWell(
                     onTap: () => Navigator.pop(context),
                     child: Padding(
-                      padding: EdgeInsets.only(right: 20),
+                      padding: EdgeInsets.only(right: 1),
                       child: const Icon(
                         Icons.arrow_back,
                         color: Colors.amber,
                       ),
                     ),
                   ),
-                  Text(
-                    'Question',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.amber,
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "Question",
+                      style: TextStyle(fontSize: 20.0, color: Colors.amber),
                     ),
                   ),
                 ],

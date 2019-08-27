@@ -117,18 +117,20 @@ class _QuestionScreenState extends State<QuestionScreen>
                 InkWell(
                   onTap: () => Navigator.of(context).pop(true),
                   child: Padding(
-                    padding: EdgeInsets.only(right: 20),
+                    padding: EdgeInsets.only(right: 1),
                     child: const Icon(
                       Icons.arrow_back,
                       color: Colors.amber,
                     ),
                   ),
                 ),
-                Text(
-                  'Results',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.amber,
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "Results",
+                    style: TextStyle(fontSize: 20.0, color: Colors.amber),
                   ),
                 ),
               ]),
