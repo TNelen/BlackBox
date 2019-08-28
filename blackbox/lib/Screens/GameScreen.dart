@@ -91,39 +91,39 @@ class _GameScreenState extends State<GameScreen> {
                 appBar: AppBar(
                   title: Container(
                     padding: EdgeInsets.only(bottom: 10),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  HomeScreen(_database),
+                            ));
+                        groupdata.removeMember(Constants.getUserData());
+                        _database.updateGroup(groupdata);
 
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      HomeScreen(_database),
-                                ));
-                            groupdata.removeMember(Constants.getUserData());
-                            _database.updateGroup(groupdata);
-
-                            dispose();
-                          },
-                          child: Row(children: [Padding(
+                        dispose();
+                      },
+                      child: Row(
+                        children: [
+                          Padding(
                             padding: EdgeInsets.only(right: 20),
                             child: const Icon(
                               Icons.arrow_back,
                               color: Constants.iAccent,
                             ),
                           ),
-                            Text(
-                              'Back',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Constants.iAccent,
-                              ),
+                          Text(
+                            'Back',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Constants.iAccent,
                             ),
-                          ],
                           ),
-                        ),
+                        ],
+                      ),
                     ),
-
+                  ),
                   backgroundColor: Constants.iBlack,
                   bottom: TabBar(
                     indicatorColor: Constants.iAccent,
@@ -206,29 +206,129 @@ class _GameScreenState extends State<GameScreen> {
                         child: Container(
                             alignment: Alignment.center,
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(padding: EdgeInsets.only(top: 40.0)),
-                                Text(
-                                  snapshot.data.getName(),
-                                  style: TextStyle(
-                                      color: Constants.iAccent,
-                                      fontSize: 36,
-                                      fontWeight: FontWeight.bold),
+                              children: <Widget>[
+                                SizedBox(height: 35),
+                                Card(
+                                  color: Constants.iDarkGrey,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                  ),
+                                  child: Container(
+                                    padding:
+                                        EdgeInsets.fromLTRB(15, 25, 15, 25),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Group Name",
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              color: Constants.iAccent),
+                                        ),
+                                        Text(
+                                          snapshot.data.getName(),
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              color: Constants.iWhite),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                                Padding(padding: EdgeInsets.only(top: 40.0)),
-                                Text(
-                                  snapshot.data.getDescription(),
-                                  style: TextStyle(
-                                      color: Constants.iWhite,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w400),
+                                SizedBox(height: 7),
+                                Card(
+                                  color: Constants.iDarkGrey,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                  ),
+                                  child: Container(
+                                    padding:
+                                        EdgeInsets.fromLTRB(15, 25, 15, 25),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Category",
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              color: Constants.iAccent),
+                                        ),
+                                        Text(
+                                          snapshot.data.getDescription(),
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              color: Constants.iWhite),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                                Padding(padding: EdgeInsets.only(top: 80.0)),
-                                Text(
-                                  snapshot.data.getGroupCode(),
-                                  style: TextStyle(color: Constants.iWhite),
-                                )
+                                SizedBox(height: 7),
+                                Card(
+                                  color: Constants.iDarkGrey,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                  ),
+                                  child: Container(
+                                    padding:
+                                        EdgeInsets.fromLTRB(15, 25, 15, 25),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Group Code",
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              color: Constants.iAccent),
+                                        ),
+                                        Text(
+                                          snapshot.data.getGroupCode(),
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              color: Constants.iWhite),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 7),
+                                Card(
+                                  color: Constants.iDarkGrey,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                  ),
+                                  child: Container(
+                                    padding:
+                                        EdgeInsets.fromLTRB(15, 25, 15, 25),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Players ready",
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              color: Constants.iAccent),
+                                        ),
+                                        Text(
+                                          snapshot.data
+                                                  .getNumPlaying()
+                                                  .toString() +
+                                              ' / ' +
+                                              snapshot.data
+                                                  .getNumMembers()
+                                                  .toString(),
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              color: Constants.iWhite),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ],
                             )),
                       ),
@@ -239,64 +339,68 @@ class _GameScreenState extends State<GameScreen> {
                         children: snapshot.data
                             .getMembers()
                             .map((data) => Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                  ),
                                   color: groupdata.isUserPlaying(data)
-                                      ? Constants.iAccent
+                                      ? Constants.iWhite
                                       : Constants.iWhite,
                                   child: Center(
                                       child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
+                                          padding: const EdgeInsets.only(
+                                              top: 15.0,
+                                              bottom: 15,
+                                              left: 20,
+                                              right: 25),
                                           child: groupdata.isUserPlaying(data)
                                               ? Center(
-                                                  child: Column(
+                                                  child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
-                                                            .center,
+                                                            .spaceBetween,
                                                     children: <Widget>[
                                                       Text(
                                                         data.getUsername(),
                                                         style: new TextStyle(
-                                                            color: Constants.iBlack,
+                                                            color: Constants
+                                                                .iBlack,
                                                             fontSize: 20.0,
                                                             fontWeight:
                                                                 FontWeight
-                                                                    .bold),
+                                                                    .w500),
                                                       ),
-                                                      Text(
-                                                        'ready',
-                                                        style: new TextStyle(
-                                                            color: Constants.iBlack,
-                                                            fontSize: 15.0,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
+                                                      Icon(
+                                                        Icons.check_box,
+                                                        size: 25,
+                                                        color:
+                                                            Constants.iAccent,
+                                                      )
                                                     ],
                                                   ),
                                                 )
                                               : Center(
-                                                  child: Column(
+                                                  child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
-                                                            .center,
+                                                            .spaceBetween,
                                                     children: <Widget>[
                                                       Text(
                                                         data.getUsername(),
                                                         style: new TextStyle(
-                                                            color: Constants.iBlack,
+                                                            color: Constants
+                                                                .iBlack,
                                                             fontSize: 20.0,
                                                             fontWeight:
                                                                 FontWeight
-                                                                    .bold),
+                                                                    .w500),
                                                       ),
-                                                      Text(
-                                                        'Not ready',
-                                                        style: new TextStyle(
-                                                            color: Constants.iBlack,
-                                                            fontSize: 15.0,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
+                                                      Icon(
+                                                        Icons
+                                                            .check_box_outline_blank,
+                                                        size: 25,
+                                                        color:
+                                                            Constants.iDarkGrey,
+                                                      )
                                                     ],
                                                   ),
                                                 ))),
@@ -408,7 +512,6 @@ class _GameScreenState extends State<GameScreen> {
                             ),
                           ),
                           SizedBox(height: 60),
-
                         ],
                       ))
                     ],
@@ -457,77 +560,44 @@ class _GameScreenState extends State<GameScreen> {
         ? Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-                FlatButton(
-                  color: Constants.iDarkGrey,
-                  onPressed: () {
-                    if (groupdata.isUserPlaying(Constants.getUserData())) {
-                      groupdata.removePlayingUser(Constants.getUserData());
-                      _database.updateGroup(groupdata);
-                    } else {
-                      groupdata.setPlayingUser(Constants.getUserData());
-                      _database.updateGroup(groupdata);
-                    }
-                    getRandomNexQuestion();
-                  },
-                  splashColor: Constants.iWhite,
-                  child: Text(
-                    "Ready",
-                    style: TextStyle(
-                        color: Constants.iWhite,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                )
-                /*Text('Home',
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),*/
+                Text(
+                  "Ready",
+                  style: TextStyle(
+                      color: Constants.iBlack,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w500),
+                ),
               ])
         : Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-                FlatButton(
-                  color: Constants.iDarkGrey,
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              QuestionScreen(_database, groupdata, code),
-                        ));
-                  },
-                  splashColor: Constants.iAccent,
-                  child: Text(
-                    "Start Game",
-                    style: TextStyle(color: Constants.iWhite, fontSize: 25),
-                  ),
+                Text(
+                  "Start Game",
+                  style: TextStyle(color: Constants.iBlack, fontSize: 22),
                 )
-                /*Text('Home',
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),*/
               ]);
   }
 
   Widget _buildBottomCard(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
-
-    return Container(
-      width: width,
-      height: height / 11,
-      padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-      decoration: BoxDecoration(
-          color: Constants.iDarkGrey,
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(16), topLeft: Radius.circular(16))),
-      child: _buildBottomCardChildren(context),
+    return Card(
+      color: Constants.iAccent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: InkWell(
+          splashColor: Constants.iAccent,
+          onTap: () {
+            if (groupdata.isUserPlaying(Constants.getUserData())) {
+              groupdata.removePlayingUser(Constants.getUserData());
+              _database.updateGroup(groupdata);
+            } else {
+              groupdata.setPlayingUser(Constants.getUserData());
+              _database.updateGroup(groupdata);
+            }
+          },
+          child: Container(
+              padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+              child: _buildBottomCardChildren(context))),
     );
   }
 
@@ -538,7 +608,7 @@ class _GameScreenState extends State<GameScreen> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          backgroundColor: Constants.iWhite ,
+          backgroundColor: Constants.iWhite,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30.0))),
           title: new Text(

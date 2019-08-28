@@ -375,6 +375,11 @@ class GroupData {
     return _playing.length;
   }
 
+  int getNumMembers()
+  {
+    return _members.length;
+  }
+
   ///returns the number of votes submitted this round
   int getNumVotes(){
     int totalvotes = 0;
