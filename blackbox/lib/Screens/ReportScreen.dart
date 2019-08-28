@@ -180,11 +180,13 @@ class _ReportScreenState extends State<ReportScreen> {
                     padding: const EdgeInsets.all(20.0),
                     children: [
                       SizedBox(height: 20.0),
-                      Icon(
+                      Hero(
+                          tag: 'topicon3',
+                          child: Icon(
                                 Icons.report_problem,
                                 size: 75,
                                 color: Constants.iAccent,
-                              ),
+                              )),
                       SizedBox(height: 20.0),
 
                       Container(height: 1.5, color: Constants.iWhite,),

@@ -60,54 +60,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
             body: Center(
               child: Container(
                 color: Constants.iBlack,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Card(
-                          color: Constants.iDarkGrey,
-                          shape: RoundedRectangleBorder(
-                            side: new BorderSide(
-                                color: Constants.iWhite, width: 3),
-                            borderRadius: BorderRadius.circular(88.0),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(12),
-                              child: Icon(
-                            Icons.perm_identity,
-                            size: 125,
-                            color: Constants.iAccent,
-                          ))),
-                      SizedBox(height: 20.0),
-                      Text(
-                        'Your profile',
-                        style: new TextStyle(
-                            color: Constants.iAccent,
-                            fontSize: 40.0,
-                            fontWeight: FontWeight.w300),
-                      ),
-                      SizedBox(height: 20.0),
-                      new Container(
-                        height: 1.5,
-                        width: 300,
-                        color: Constants.iWhite,
-                      ),
-                      SizedBox(height: 40.0),
-                      Text(
-                        'Nothing to see here... Yet!',
-                        style: new TextStyle(
-                            color: Constants.iWhite,
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.w300),
-                      ),
-                      SizedBox(height: 20.0),
-                      Text(
-                        'Stay tuned for future updates!',
-                        style: new TextStyle(
-                            color: Constants.iAccent,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w300),
-                      ),
-                    ]),
+                child: ListView(
+
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(20.0),
+                  children: [
+                    SizedBox(height: 20.0),
+                    Hero(
+                        tag: 'topicon1',
+                        child: Icon(
+                          Icons.perm_identity,
+                          size: 75,
+                          color: Constants.iAccent,
+                        )),
+                    SizedBox(height: 20.0),
+                    Container(
+                      height: 1.5,
+                      color: Constants.iWhite,
+                    ),
+                    SizedBox(height: 40.0),
+                    Text(
+                      'Your Profile',
+                      style: new TextStyle(
+                          color: Constants.iWhite,
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.w300),
+                    ),
+                  ],
+                ),
               ),
             )));
   }

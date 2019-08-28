@@ -52,8 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
         print(e.toString());
       }
     }
-
-
   }
 
   @Deprecated('For async testing only. Must be deleted before release!')
@@ -161,158 +159,169 @@ class _HomeScreenState extends State<HomeScreen> {
     viewportFraction: 0.55,
   );
 
-  Widget profileCard(BuildContext context) { return Container(
-      padding: EdgeInsets.symmetric(horizontal: 6),
-      child: Card(
-          color: Constants.iDarkGrey,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
-          ),
-          child: InkWell(
-              splashColor: Constants.iAccent,
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          ProfileScreen(database),
-                    ));
+  Widget profileCard(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 6),
+        child: Card(
+            color: Constants.iDarkGrey,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: InkWell(
+                splashColor: Constants.iAccent,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            ProfileScreen(database),
+                      ));
+                },
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+                    child: Column(
+                      children: <Widget>[
+                        Hero(
+                            tag: 'topicon1',
+                            child: Icon(
+                              Icons.perm_identity,
+                              color: Constants.iAccent,
+                              size: 30,
+                            )),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Profile',
+                          style: new TextStyle(
+                              fontSize: 15, color: Constants.iWhite),
+                        )
+                      ],
+                    )))));
+  }
 
-              },
-              child: Container(
-                  padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(
-                        Icons.perm_identity,
-                        color: Constants.iAccent,
-                        size: 30,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Profile',
-                        style: new TextStyle(
-                            fontSize: 15, color: Constants.iWhite),
-                      )
-                    ],
-                  )))));}
+  Widget settingsCard(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 6),
+        child: Card(
+            color: Constants.iDarkGrey,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: InkWell(
+                splashColor: Constants.iAccent,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            SettingsScreen(database),
+                      ));
+                },
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+                    child: Column(
+                      children: <Widget>[
+                        Hero(
+                            tag: 'topicon2',
+                            child: Icon(
+                              Icons.settings,
+                              color: Constants.iAccent,
+                              size: 30,
+                            )),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Settings',
+                          style: new TextStyle(
+                              fontSize: 15, color: Constants.iWhite),
+                        )
+                      ],
+                    )))));
+  }
 
-  Widget settingsCard(BuildContext context){ return Container(
-      padding: EdgeInsets.symmetric(horizontal: 6),
-      child: Card(
-          color: Constants.iDarkGrey,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
-          ),
-          child: InkWell(
-              splashColor: Constants.iAccent,
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          SettingsScreen(database),
-                    ));
-
-              },
-              child: Container(
-                  padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(
-                        Icons.settings,
-                        color: Constants.iAccent,
-                        size: 30,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Settings',
-                        style: new TextStyle(
-                            fontSize: 15, color: Constants.iWhite),
-                      )
-                    ],
-                  )))));}
-
-  Widget reportIssueCard(BuildContext context){ return Container(
-      padding: EdgeInsets.symmetric(horizontal: 6),
-      child: Card(
-          color: Constants.iDarkGrey,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
-          ),
-          child: InkWell(
-              splashColor: Constants.iAccent,
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          ReportScreen(database),
-                    ));
-
-              },
-              child: Container(
-                      padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-                      child: Column(
-                        children: <Widget>[
-                          Icon(
-                            Icons.report_problem,
-                            color: Constants.iAccent,
-                            size: 30,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Report problem',
-                            style: new TextStyle(
-                                fontSize: 15, color: Constants.iWhite),
-                          )
-                        ],
-                      ))))); }
+  Widget reportIssueCard(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 6),
+        child: Card(
+            color: Constants.iDarkGrey,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: InkWell(
+                splashColor: Constants.iAccent,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            ReportScreen(database),
+                      ));
+                },
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+                    child: Column(
+                      children: <Widget>[
+                        Hero(
+                            tag: 'topicon3',
+                            child: Icon(
+                              Icons.report_problem,
+                              color: Constants.iAccent,
+                              size: 30,
+                            )),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Report problem',
+                          style: new TextStyle(
+                              fontSize: 15, color: Constants.iWhite),
+                        )
+                      ],
+                    )))));
+  }
 
   Widget submitQuestionCard(BuildContext context) {
-  return Container(
-      padding: EdgeInsets.symmetric(horizontal: 6),
-      child: Card(
-          color: Constants.iDarkGrey,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
-          ),
-          child: InkWell(
-              splashColor: Constants.iAccent,
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          SubmitQuestionScreen(database),
-                    ));
-
-              },
-              child: Container(
-                  padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(
-                        Icons.library_add,
-                        color: Constants.iAccent,
-                        size: 30,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Submit Question',
-                        style: new TextStyle(
-                            fontSize: 15, color: Constants.iWhite),
-                      )
-                    ],
-                  )))));}
+    return Hero(
+        tag: 'topicon4',
+        child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 6),
+            child: Card(
+                color: Constants.iDarkGrey,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                child: InkWell(
+                    splashColor: Constants.iAccent,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                SubmitQuestionScreen(database),
+                          ));
+                    },
+                    child: Container(
+                        padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+                        child: Column(
+                          children: <Widget>[
+                            Icon(
+                              Icons.library_add,
+                              color: Constants.iAccent,
+                              size: 30,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Submit Question',
+                              style: new TextStyle(
+                                  fontSize: 15, color: Constants.iWhite),
+                            )
+                          ],
+                        ))))));
+  }
 
   void pageChanged(int index) {
     setState(() {
@@ -337,57 +346,61 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Container(
-                  padding:
-                      EdgeInsets.only(top: height / 10, left: 10, right: 10),
-                  alignment: Alignment.topCenter,
-                  child: Column(children: <Widget>[
-                    Text(
+              Column(children: <Widget>[
+                Container(
+                    padding:
+                        EdgeInsets.only(top: height / 10, left: 10, right: 10),
+                    child: Text(
                       'Hi ' + Constants.getUsername() + '!',
                       style: TextStyle(
                           color: Constants.iWhite,
                           fontSize: 50,
                           fontWeight: FontWeight.w300),
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Text(
+                    )),
+                SizedBox(
+                  height: 25,
+                ),
+                Container(
+                    padding:
+                        EdgeInsets.only(left: 10, right: 10),
+                    child: Text(
                       ' BlackBox - The - Game ',
                       style: TextStyle(
                           color: Constants.iAccent,
                           fontSize: 25,
                           fontWeight: FontWeight.w300),
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Container(
-                      height: 120,
-                      child: PageView(
-                        onPageChanged: (index) {
-                          pageChanged(index);
-                        },
-                        scrollDirection: Axis.horizontal,
-                        controller: controller,
-                        children: <Widget>[
-                          profileCard(context),
-                          settingsCard(context),
-                          reportIssueCard(context),
-                          submitQuestionCard(context),
-                        ],
-                      ),
-                    ),
-                    DotsIndicator(
-                      dotsCount: 4,
-                      position: pageIndex,
-                      decorator: DotsDecorator(
-                        color: Constants.iWhite,
-                        activeColor: Constants.iAccent,
-                      ),
-                    )
-                  ])),
-              Column(
+                    )),
+                SizedBox(
+                  height: 25,
+                ),
+                Container(
+                  height: 120,
+                  child: PageView(
+                    onPageChanged: (index) {
+                      pageChanged(index);
+                    },
+                    scrollDirection: Axis.horizontal,
+                    controller: controller,
+                    children: <Widget>[
+                      profileCard(context),
+                      settingsCard(context),
+                      reportIssueCard(context),
+                      submitQuestionCard(context),
+                    ],
+                  ),
+                ),
+                DotsIndicator(
+                  dotsCount: 4,
+                  position: pageIndex,
+                  decorator: DotsDecorator(
+                    color: Constants.iWhite,
+                    activeColor: Constants.iAccent,
+                  ),
+                )
+              ]),
+      Container(
+        padding:
+        EdgeInsets.only(left: 10, right: 10),child: Column(
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.only(left: 10, bottom: 10),
@@ -411,7 +424,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 35,
                   )
                 ],
-              ),
+              )),
             ],
           ),
         ),

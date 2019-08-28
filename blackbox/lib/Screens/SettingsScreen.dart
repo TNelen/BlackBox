@@ -26,7 +26,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
@@ -58,31 +57,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ]),
             ),
-            body: Center(child: Container(
+            body: Center(
+                child: Container(
               color: Constants.iBlack,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Card(
-                        color: Constants.iDarkGrey,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        child: Icon(Icons.settings, size: 75, color: Constants.iAccent,)),
-                    SizedBox(height: 20.0),
+              child: ListView(
 
-                    Text(
-                      'Settings',
-                      style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w300),
-                    ),
-                    SizedBox(height: 80.0),
-                    Text(
-                      'Nothing to see here... Yet!',
-                      style: new TextStyle(color: Constants.iAccent, fontSize: 30.0, fontWeight: FontWeight.w300),
-                    ),
-                    SizedBox(height: 80.0),
-                  ]),
-            ),
-            )));
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(20.0),
+                children: [
+                  SizedBox(height: 20.0),
+                  Hero(
+                      tag: 'topicon2',
+                      child: Icon(
+                        Icons.settings,
+                        size: 75,
+                        color: Constants.iAccent,
+                      )),
+                  SizedBox(height: 20.0),
+                  Container(
+                    height: 1.5,
+                    color: Constants.iWhite,
+                  ),
+                  SizedBox(height: 40.0),
+                  Text(
+                    'Settings',
+                    style: new TextStyle(
+                        color: Constants.iWhite,
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.w300),
+                  ),
+                ],
+              ),
+            ))));
   }
 }
