@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 //  }
               },
               child: Container(
-                padding: EdgeInsets.fromLTRB(15, 25, 15, 25),
+                padding: EdgeInsets.fromLTRB(15, 25, 25, 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 //  }
               },
               child: Container(
-                padding: EdgeInsets.fromLTRB(15, 25, 15, 25),
+                padding: EdgeInsets.fromLTRB(15, 25, 25, 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
