@@ -4,6 +4,7 @@ import '../Interfaces/Database.dart';
 import 'HomeScreen.dart';
 import 'Popup.dart';
 import '../Constants.dart';
+import '../DataContainers/Question.dart';
 
 class SubmitQuestionScreen extends StatefulWidget {
   Database _database;
@@ -25,6 +26,12 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
     this._database = db;
   }
 
+  void _addQuestions(List<String> questions) async {
+    for (String q in questions) {
+      await _database.updateQuestion(new Question.addDefault(q));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final QuestionFieled = TextField(
@@ -42,7 +49,7 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
           counterText: questionController.text.length.toString(),
           counterStyle: TextStyle(color: Constants.iBlack),
           border:
-          OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
 
     final SubmitButton = Material(
@@ -50,19 +57,21 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
       borderRadius: BorderRadius.circular(16.0),
       color: Constants.iDarkGrey,
       child: MaterialButton(
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
+        minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          ///Take action here
-          ///if text.length !=null....
+          String question = questionController.text;
+          print(question);
+
+          ///Add question
+          List<String> questions = new List<String>();
+          questions.add(question);
+          _addQuestions(questions);
+          Navigator.pop(context);
         },
         child: Text("Submit",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20)
-                .copyWith(
+            style: TextStyle(fontSize: 20).copyWith(
                 color: Constants.iWhite, fontWeight: FontWeight.bold)),
       ),
     );
@@ -74,9 +83,7 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
         home: Scaffold(
             appBar: AppBar(
               backgroundColor: Constants.iBlack,
-              title: Row(
-
-                  mainAxisAlignment: MainAxisAlignment.start, children: [
+              title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 InkWell(
                   onTap: () => Navigator.pop(context),
                   child: Row(
@@ -137,7 +144,6 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
                       QuestionFieled,
                       SizedBox(height: 20.0),
                       SubmitButton,
-
                     ]),
               ),
             )));

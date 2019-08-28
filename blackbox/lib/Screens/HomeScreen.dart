@@ -53,13 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
 
-    /* Example on how to add questions
-    /// Duplicates cannot be added so running this code twice is not a problem
-    List<String> questions = new List<String>();
-    questions.add("Who will be the first person to have a hangover (again)?");
-    questions.add("Who is the biggest beer fan?");
-    _addQuestions( questions );
-    */
+
   }
 
   @Deprecated('For async testing only. Must be deleted before release!')
