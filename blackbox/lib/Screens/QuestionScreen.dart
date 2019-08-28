@@ -9,6 +9,7 @@ import '../DataContainers/GroupData.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
 import '../Timer.dart';
+import 'Popup.dart';
 
 class QuestionScreen extends StatefulWidget {
   Database _database;
@@ -32,7 +33,6 @@ class _QuestionScreenState extends State<QuestionScreen>
   GroupData groupData;
   String code;
 
-
   _QuestionScreenState(Database db, GroupData groupData, String code) {
     this._database = db;
     this.groupData = groupData;
@@ -44,8 +44,6 @@ class _QuestionScreenState extends State<QuestionScreen>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     BackButtonInterceptor.add(myInterceptor);
-
-
   }
 
   @override
@@ -78,6 +76,24 @@ class _QuestionScreenState extends State<QuestionScreen>
     // groupData.setNextQuestion(groupData.getQuestion(), Constants.getUserData() );
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
+
+
+    final reportButton = FlatButton(
+      onPressed: () {
+        Popup.makeReportPopup(context, _database, groupData,code);
+      },
+      child: Row(
+      children: <Widget>[
+        Icon(Icons.report, color: Constants.iWhite, size: 20),
+        SizedBox(width: 20,),
+
+        Text(
+          'Give Feedback on this question',
+          style: TextStyle(fontSize: 15, color: Constants.iWhite),
+        ),
+      ],
+    ));
 
     final voteButton = Hero(
       tag: 'button',
@@ -177,6 +193,8 @@ class _QuestionScreenState extends State<QuestionScreen>
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
+                              SizedBox(height: 50),
+
                               Text(
                                 'Question',
                                 style: new TextStyle(
@@ -192,6 +210,9 @@ class _QuestionScreenState extends State<QuestionScreen>
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.bold),
                               ),
+                              SizedBox(height: 80),
+                              groupData.getQuestion().getCategory() == 'Community' ?
+                              reportButton: SizedBox(height:0.0001),
                             ],
                           ),
                         ),
@@ -201,7 +222,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                 ),
               ),
             ),
-            voteButton,
+            voteButton
           ],
         ),
       ),
