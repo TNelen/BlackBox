@@ -86,6 +86,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         fontSize: 40.0,
                         fontWeight: FontWeight.w300),
                   ),
+                  SizedBox(height: 40.0),
+                  Text(
+                    'Nothing here yet! Stay tuned for future updates!',
+                    style: new TextStyle(
+                        color: Constants.iAccent,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w300),
+                  ),
                 ],
               ),
             ))));

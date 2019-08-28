@@ -41,6 +41,8 @@ class ResultScreenState extends State<ResultScreen> {
   bool joined = false;
   bool _loadingInProgress;
 
+  bool timeout;
+
   ResultScreenState(Database db, GroupData groupData, String code,
       String currentQuestion, String currentQuestionString) {
     this._database = db;
@@ -49,6 +51,7 @@ class ResultScreenState extends State<ResultScreen> {
     this.currentQuestion = currentQuestion;
     this.currentQuestionString = currentQuestionString;
     this.stream = new FirebaseStream(code);
+
   }
 
   int currentpage = 2;
@@ -59,6 +62,8 @@ class ResultScreenState extends State<ResultScreen> {
     keepPage: false,
     viewportFraction: 0.85,
   );
+
+
 
   @override
   dispose() {
@@ -77,7 +82,9 @@ class ResultScreenState extends State<ResultScreen> {
       _loadingInProgress = false;
     }, onError: (error) {
       print("Some Error");
-    });
+    }
+
+    );
 
     BackButtonInterceptor.add(myInterceptor);
 
@@ -91,7 +98,7 @@ class ResultScreenState extends State<ResultScreen> {
 
   void getRandomNexQuestion() async {
     groupData.setNextQuestion(
-        await _database.getRandomQuestion(groupData, Category.Any),
+        await _database.getRandomQuestion(groupData, Question.getCategoryFromString(groupData.getDescription())),
         Constants.getUserData());
   }
 
@@ -99,6 +106,7 @@ class ResultScreenState extends State<ResultScreen> {
   Widget _buildBody(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
 
 
     return StreamBuilder(

@@ -61,7 +61,7 @@ class _GameScreenState extends State<GameScreen> {
 
   void getRandomNexQuestion() async {
     groupdata.setNextQuestion(
-        await _database.getRandomQuestion(groupdata, Category.Any),
+        await _database.getRandomQuestion(groupdata, Question.getCategoryFromString(groupdata.getDescription())),
         Constants.getUserData());
   }
 
