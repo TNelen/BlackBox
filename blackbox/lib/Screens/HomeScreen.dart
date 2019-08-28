@@ -156,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final controller = PageController(
     initialPage: 0,
     keepPage: false,
-    viewportFraction: 0.55,
+    viewportFraction: 0.5,
   );
 
   Widget profileCard(BuildContext context) {
