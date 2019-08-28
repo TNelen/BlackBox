@@ -5,6 +5,7 @@ import 'HomeScreen.dart';
 import 'Popup.dart';
 import '../Constants.dart';
 import '../DataContainers/Question.dart';
+import 'Popup.dart';
 
 class SubmitQuestionScreen extends StatefulWidget {
   Database _database;
@@ -28,7 +29,8 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
 
   void _addQuestions(List<String> questions) async {
     for (String q in questions) {
-      await _database.updateQuestion(new Question.addFromUser(q, Constants.userData));
+      await _database
+          .updateQuestion(new Question.addFromUser(q, Constants.userData));
     }
   }
 
@@ -37,6 +39,7 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
     final QuestionFieled = TextField(
       obscureText: false,
       keyboardType: TextInputType.multiline,
+      autocorrect: false,
       maxLength: 100,
       maxLines: 2,
       controller: questionController,
@@ -61,13 +64,25 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           String question = questionController.text;
-          print('----' + question + '---- Added to database');
+          //print('-' + question+ '-');
+          if (question.length == 0) {
+            Popup.makePopup(
+                context, 'Whoops!', 'You cannot submit an empty question');
+          } else if (question.length >= 20) {
+            if (question.endsWith('?')) {
+              print('----' + question + '---- Added to database');
 
-          ///Add question to database
-          List<String> questions = new List<String>();
-          questions.add(question);
-          _addQuestions(questions);
-          Navigator.pop(context);
+              ///Add question to database
+              List<String> questions = new List<String>();
+              questions.add(question);
+              _addQuestions(questions);
+              Navigator.pop(context);
+            } else
+              Popup.makePopup(context, 'Whoops',
+                  'Please end your question with a question mark');
+          } else
+            Popup.makePopup(
+                context, 'Whoops!', 'You cannot submit a question shorter than 20 characters');
         },
         child: Text("Submit",
             textAlign: TextAlign.center,
