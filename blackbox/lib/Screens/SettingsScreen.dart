@@ -72,7 +72,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     SizedBox(height: 20.0),
 
                     Text(
-                      'SettingsScreen',
+                      'Settings',
                       style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w300),
                     ),
                     SizedBox(height: 80.0),

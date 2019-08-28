@@ -61,27 +61,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Container(
                 color: Constants.iBlack,
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Card(
                           color: Constants.iDarkGrey,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0),
+                            side: new BorderSide(
+                                color: Constants.iWhite, width: 3),
+                            borderRadius: BorderRadius.circular(88.0),
                           ),
-                          child: Icon(
+                          child: Padding(
+                            padding: EdgeInsets.all(12),
+                              child: Icon(
                             Icons.perm_identity,
-                            size: 200,
+                            size: 125,
                             color: Constants.iAccent,
-                          )),
+                          ))),
                       SizedBox(height: 20.0),
                       Text(
-                        'ProfileScreen',
+                        'Your profile',
                         style: new TextStyle(
-                            color: Constants.iWhite,
+                            color: Constants.iAccent,
                             fontSize: 40.0,
                             fontWeight: FontWeight.w300),
                       ),
-                      SizedBox(height: 80.0),
+                      SizedBox(height: 20.0),
+                      new Container(
+                        height: 1.5,
+                        width: 300,
+                        color: Constants.iWhite,
+                      ),
+                      SizedBox(height: 40.0),
+                      Text(
+                        'Nothing to see here... Yet!',
+                        style: new TextStyle(
+                            color: Constants.iWhite,
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.w300),
+                      ),
+                      SizedBox(height: 20.0),
+                      Text(
+                        'Stay tuned for future updates!',
+                        style: new TextStyle(
+                            color: Constants.iAccent,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w300),
+                      ),
                     ]),
               ),
             )));

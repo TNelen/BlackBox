@@ -70,7 +70,9 @@ class _ReportScreenState extends State<ReportScreen> {
           color: Constants.iWhite,
           borderRadius: BorderRadius.circular(16.0),
           border: Border.all(
-              color: Constants.iDarkGrey, style: BorderStyle.solid, width: 0.01),
+              color: Constants.iDarkGrey,
+              style: BorderStyle.solid,
+              width: 0.01),
         ),
         child: DropdownButton<String>(
           value: categoryValue,
@@ -106,7 +108,9 @@ class _ReportScreenState extends State<ReportScreen> {
           color: Constants.iWhite,
           borderRadius: BorderRadius.circular(16.0),
           border: Border.all(
-              color: Constants.iDarkGrey, style: BorderStyle.solid, width: 0.01),
+              color: Constants.iDarkGrey,
+              style: BorderStyle.solid,
+              width: 0.01),
         ),
         child: DropdownButton<String>(
           value: locationValue,
@@ -175,6 +179,15 @@ class _ReportScreenState extends State<ReportScreen> {
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(20.0),
                     children: [
+                      SizedBox(height: 20.0),
+                      Icon(
+                                Icons.report_problem,
+                                size: 75,
+                                color: Constants.iAccent,
+                              ),
+                      SizedBox(height: 20.0),
+
+                      Container(height: 1.5, color: Constants.iWhite,),
                       SizedBox(height: 40.0),
                       Text(
                         'Ran into an issue?',
