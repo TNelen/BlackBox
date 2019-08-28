@@ -68,12 +68,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.0),
                         ),
-                        child: Icon(Icons.settings, size: 200, color: Constants.iAccent,)),
+                        child: Icon(Icons.settings, size: 75, color: Constants.iAccent,)),
                     SizedBox(height: 20.0),
 
                     Text(
                       'SettingsScreen',
                       style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w300),
+                    ),
+                    SizedBox(height: 80.0),
+                    Text(
+                      'Nothing to see here... Yet!',
+                      style: new TextStyle(color: Constants.iAccent, fontSize: 30.0, fontWeight: FontWeight.w300),
                     ),
                     SizedBox(height: 80.0),
                   ]),

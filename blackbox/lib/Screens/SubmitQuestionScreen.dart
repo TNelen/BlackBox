@@ -148,7 +148,7 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
                       ),
                       SizedBox(height: 20.0),
                       Text(
-                        'Try to be as clear as possible',
+                        'Submit it here to get featured in the app!',
                         textAlign: TextAlign.center,
                         style: new TextStyle(
                             color: Constants.iWhite,
