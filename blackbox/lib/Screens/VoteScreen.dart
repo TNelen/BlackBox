@@ -7,13 +7,15 @@ import '../Interfaces/Database.dart';
 import '../DataContainers/GroupData.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
+import '../Timer.dart';
 
 class VoteScreen extends StatefulWidget {
   Database _database;
   GroupData groupData;
   String code;
 
-  VoteScreen(Database db, GroupData groupData, String code) {
+
+  VoteScreen(Database db, GroupData groupData, String code ) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
@@ -33,10 +35,13 @@ class _VoteScreenState extends State<VoteScreen> {
   String currentQuestion;
   String currentQuestionString;
 
-  _VoteScreenState(Database db, GroupData groupData, String code) {
+
+  _VoteScreenState(
+      Database db, GroupData groupData, String code ) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
+
   }
 
   @override
@@ -125,11 +130,13 @@ class _VoteScreenState extends State<VoteScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) => ResultScreen(
-                          _database,
-                          groupData,
-                          code,
-                          currentQuestion,
-                          currentQuestionString),
+                        _database,
+                        groupData,
+                        code,
+                        currentQuestion,
+                        currentQuestionString,
+
+                      ),
                     ));
               } else {
                 _showDialog();
@@ -171,7 +178,8 @@ class _VoteScreenState extends State<VoteScreen> {
                     },
                     child: Text(
                       "Question",
-                      style: TextStyle(fontSize: 20.0, color: Constants.iAccent),
+                      style:
+                          TextStyle(fontSize: 20.0, color: Constants.iAccent),
                     ),
                   ),
                 ],
@@ -231,7 +239,6 @@ class _VoteScreenState extends State<VoteScreen> {
                                       color: data.getUserID() == clickedmember
                                           ? Constants.iDarkGrey
                                           : Constants.iWhite,
-
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold),
                                 ),

@@ -8,6 +8,7 @@ import '../Database/FirebaseStream.dart';
 import '../DataContainers/Question.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
+import '../Timer.dart';
 
 class ResultScreen extends StatefulWidget {
   Database _database;
@@ -26,8 +27,8 @@ class ResultScreen extends StatefulWidget {
   }
 
   @override
-  ResultScreenState createState() => ResultScreenState(
-      _database, groupData, code, currentQuestion, currentQuestionString);
+  ResultScreenState createState() => ResultScreenState(_database, groupData,
+      code, currentQuestion, currentQuestionString);
 }
 
 class ResultScreenState extends State<ResultScreen> {
@@ -51,6 +52,7 @@ class ResultScreenState extends State<ResultScreen> {
   }
 
   int currentpage = 2;
+
 
   final controller = PageController(
     initialPage: 0,
@@ -78,6 +80,8 @@ class ResultScreenState extends State<ResultScreen> {
     });
 
     BackButtonInterceptor.add(myInterceptor);
+
+
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent) {
@@ -96,6 +100,7 @@ class ResultScreenState extends State<ResultScreen> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
+
     return StreamBuilder(
         stream: stream.groupData,
         builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
@@ -106,34 +111,40 @@ class ResultScreenState extends State<ResultScreen> {
           }
           if (snapshot.hasData) {
             print(groupData.getNumVotes());
-
             if (currentQuestion == groupData.getQuestionID()) {
               if (groupData.getAdminID() == Constants.getUserID()) {
-                if (groupData.getNumVotes() == groupData.getNumPlaying()) {
+                if (groupData.getNumVotes() == groupData.getNumPlaying() ) {
+
+
                   getRandomNexQuestion();
                   print('admin set next question');
                   print(groupData.getQuestionID());
 
                   print('currentQuestion ID = ' + currentQuestion);
                 }
+
               }
               return new WillPopScope(
                   onWillPop: () async => false,
                   child: MaterialApp(
                     debugShowCheckedModeBanner: false,
-                    theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
+                    theme: new ThemeData(
+                        scaffoldBackgroundColor: Constants.iBlack),
                     home: Scaffold(
                       body: Center(
                         child: RichText(
                           textAlign: TextAlign.center,
                           text: TextSpan(
                             text: 'Collecting votes...',
-                            style: TextStyle(color: Constants.iWhite, fontSize: 30),
+                            style: TextStyle(
+                                color: Constants.iWhite, fontSize: 30),
                           ),
                         ),
                       ),
                     ),
-                  ));
+                  )
+
+              );
             }
           }
 
@@ -210,7 +221,6 @@ class ResultScreenState extends State<ResultScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 40),
-
                         Text(
                           '1. ' +
                               groupData.getTopThree('previous')[0] +
@@ -222,7 +232,6 @@ class ResultScreenState extends State<ResultScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 5),
-
                         Text(
                           '2. ' +
                               groupData.getTopThree('previous')[1] +
@@ -234,7 +243,6 @@ class ResultScreenState extends State<ResultScreen> {
                               fontWeight: FontWeight.normal),
                         ),
                         SizedBox(height: 5),
-
                         Text(
                           '3. ' +
                               groupData.getTopThree('previous')[2] +
@@ -246,7 +254,6 @@ class ResultScreenState extends State<ResultScreen> {
                               fontWeight: FontWeight.normal),
                         ),
                         SizedBox(height: 20),
-
                       ],
                     ),
                   ),
@@ -278,7 +285,6 @@ class ResultScreenState extends State<ResultScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 40),
-
                         Text(
                           '1. ' +
                               groupData.getTopThree('alltime')[0] +
@@ -290,7 +296,6 @@ class ResultScreenState extends State<ResultScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 5),
-
                         Text(
                           '2. ' +
                               groupData.getTopThree('alltime')[1] +
@@ -302,7 +307,6 @@ class ResultScreenState extends State<ResultScreen> {
                               fontWeight: FontWeight.normal),
                         ),
                         SizedBox(height: 5),
-
                         Text(
                           '3. ' +
                               groupData.getTopThree('alltime')[2] +
@@ -314,7 +318,6 @@ class ResultScreenState extends State<ResultScreen> {
                               fontWeight: FontWeight.normal),
                         ),
                         SizedBox(height: 20),
-
                       ],
                     ),
                   ),
@@ -347,14 +350,15 @@ class ResultScreenState extends State<ResultScreen> {
                   child: Text("Next Question",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 30).copyWith(
-                          color: Constants.iBlack, fontWeight: FontWeight.bold)),
+                          color: Constants.iBlack,
+                          fontWeight: FontWeight.bold)),
                 ),
               ),
             ),
           );
 
           return MaterialApp(
-            theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
+            theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
             home: Scaffold(
               appBar: AppBar(
                 backgroundColor: Constants.iBlack,
@@ -372,7 +376,8 @@ class ResultScreenState extends State<ResultScreen> {
                     },
                     child: Text(
                       "Leave",
-                      style: TextStyle(fontSize: 20.0, color: Constants.iAccent),
+                      style:
+                          TextStyle(fontSize: 20.0, color: Constants.iAccent),
                     ),
                   )
                 ]),

@@ -1,6 +1,20 @@
 class Timer {
 
-  Stopwatch stopwatch = null;
+  Stopwatch stopwatch = new Stopwatch()..start();
+  int duration;
+
+
+
+  Timer(int duration){
+    ///duration in seconds
+    this.duration = duration;
+  }
+
+  Stopwatch getTimer(){
+    return stopwatch;
+  }
+
+
 
   void createStopWatch(){
     var stopwatch = new Stopwatch()..start();
@@ -18,12 +32,8 @@ class Timer {
     stopwatch.stop();
   }
 
-  int elapsedMilliseconds(){
-    return stopwatch.elapsedMicroseconds;
-  }
-
-  int elapsedMicroseconds(){
-    return stopwatch.elapsedMicroseconds;
+  int showTimeLeft(){
+    return duration-(stopwatch.elapsedMicroseconds/1000000).round();
   }
 
   int elapsedSeconds(){

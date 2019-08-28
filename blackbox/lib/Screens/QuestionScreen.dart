@@ -8,6 +8,7 @@ import '../Interfaces/Database.dart';
 import '../DataContainers/GroupData.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
+import '../Timer.dart';
 
 class QuestionScreen extends StatefulWidget {
   Database _database;
@@ -31,6 +32,7 @@ class _QuestionScreenState extends State<QuestionScreen>
   GroupData groupData;
   String code;
 
+
   _QuestionScreenState(Database db, GroupData groupData, String code) {
     this._database = db;
     this.groupData = groupData;
@@ -41,8 +43,9 @@ class _QuestionScreenState extends State<QuestionScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-
     BackButtonInterceptor.add(myInterceptor);
+
+
   }
 
   @override
