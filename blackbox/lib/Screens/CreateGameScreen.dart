@@ -33,7 +33,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   String _groupID;
   String _groupAdmin = Constants.getUserID();
 
-  String dropdownValue = 'Default';
+  String selectedCategory;
+  Color color = Constants.iDarkGrey;
 
   void _showDialog(String code) {
     // flutter defined function
@@ -47,14 +48,16 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           title: new Text(
             "Group Code",
             style: TextStyle(
-                color: Constants.iBlack, fontSize: 25, fontWeight: FontWeight.bold),
+                color: Constants.iBlack,
+                fontSize: 25,
+                fontWeight: FontWeight.bold),
           ),
           content: new Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
                 code,
-                style: TextStyle(color:Constants.iBlack, fontSize: 25),
+                style: TextStyle(color: Constants.iBlack, fontSize: 25),
               ),
               IconButton(
                   icon: Icon(
@@ -108,30 +111,49 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
 
-    final categoryField = Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          color: Constants.iWhite,
-          borderRadius: BorderRadius.circular(16.0),
-          border: Border.all(
-              color: Colors.amber, style: BorderStyle.solid, width: 0.01),
-        ),
-        child: DropdownButton<String>(
-          value: dropdownValue,
-          onChanged: (String newValue) {
-            setState(() {
-              dropdownValue = newValue;
-            });
-          },
-          items: Question.getCategoriesAsStringList()
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value, ),
-            );
-          }).toList(),
-        ));
+    final categoryField = Flexible(
+      child: GridView.count(
+        crossAxisCount: 2,
+        crossAxisSpacing: 12.0,
+        mainAxisSpacing: 12.0,
+        childAspectRatio: (3 / 1),
+
+        children: Question.getCategoriesAsStringList()
+            .map((data) => Card(
+                  color: data == selectedCategory
+                      ? Constants.iLight
+                      : Constants.iDarkGrey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: InkWell(
+                    splashColor: Constants.iAccent,
+                    onTap: () {
+                      setState(() {
+                        color = Constants.iAccent;
+                        selectedCategory = data;
+                      });
+                    },
+                    child: Container(
+                      child: Center(
+                          child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0, right: 10),
+                        child: Text(
+                          data,
+                          style: new TextStyle(
+                              color: data == selectedCategory
+                                  ? Constants.iDarkGrey
+                                  : Constants.iWhite,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
+                )))
+            .toList(),
+      ),
+    );
 
     final createButton = Hero(
       tag: 'tobutton',
@@ -147,12 +169,12 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             Map<String, String> members = new Map<String, String>();
             members[Constants.getUserID()] = Constants.getUsername();
             _groupName = nameController.text;
-            _groupCategory = dropdownValue;
-            if (_groupName.length != 0 && _groupCategory  != null) {
+            _groupCategory = selectedCategory;
+            if (_groupName.length != 0 && _groupCategory != null) {
               // Generate a unique ID and save the group
               _database.generateUniqueGroupCode().then((code) {
-                _database.updateGroup(new GroupData(_groupName,
-                    _groupCategory, code, Constants.getUserID(), members));
+                _database.updateGroup(new GroupData(_groupName, _groupCategory,
+                    code, Constants.getUserID(), members));
                 _showDialog(code);
               });
             } else {
@@ -161,8 +183,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           },
           child: Text("Create",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20)
-                  .copyWith(color: Constants.iWhite, fontWeight: FontWeight.bold)),
+              style: TextStyle(fontSize: 20).copyWith(
+                  color: Constants.iWhite, fontWeight: FontWeight.bold)),
         ),
       ),
     );
@@ -176,29 +198,30 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           backgroundColor: Constants.iBlack,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              InkWell(
-                onTap: () => Navigator.pop(context),
-                child: Row(children: [Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: Constants.iAccent,
+          title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            InkWell(
+              onTap: () => Navigator.pop(context),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: Constants.iAccent,
+                    ),
                   ),
-                ),
-                Text(
-                'Back',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Constants.iAccent,
-                ),
+                  Text(
+                    'Back',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Constants.iAccent,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ]),
         ),
-        ]),),
         body: Center(
           child: Container(
             color: Constants.iBlack,
@@ -210,19 +233,24 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 children: <Widget>[
                   Text(
                     'Create new game',
-                    style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w300),
+                    style: new TextStyle(
+                        color: Constants.iWhite,
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.w300),
                   ),
                   SizedBox(height: 80.0),
                   Text(
                     'Enter game details',
-                    style: new TextStyle(color: Constants.iAccent, fontSize: 25.0),
+                    style:
+                        new TextStyle(color: Constants.iAccent, fontSize: 25.0),
                   ),
                   SizedBox(height: 45.0),
                   nameField,
                   SizedBox(height: 25.0),
                   Text(
                     'Select a category',
-                    style: new TextStyle(color: Constants.iWhite, fontSize: 20.0),
+                    style:
+                        new TextStyle(color: Constants.iWhite, fontSize: 20.0),
                   ),
                   SizedBox(height: 15.0),
                   categoryField,
