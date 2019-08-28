@@ -28,7 +28,7 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
 
   void _addQuestions(List<String> questions) async {
     for (String q in questions) {
-      await _database.updateQuestion(new Question.addDefault(q));
+      await _database.updateQuestion(new Question.addFromUser(q, Constants.userData));
     }
   }
 
@@ -61,9 +61,9 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           String question = questionController.text;
-          print(question);
+          print('----' + question + '---- Added to database');
 
-          ///Add question
+          ///Add question to database
           List<String> questions = new List<String>();
           questions.add(question);
           _addQuestions(questions);
