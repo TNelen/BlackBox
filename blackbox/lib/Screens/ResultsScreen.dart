@@ -9,6 +9,7 @@ import '../DataContainers/Question.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
 import '../Timer.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class ResultScreen extends StatefulWidget {
   Database _database;
@@ -27,8 +28,8 @@ class ResultScreen extends StatefulWidget {
   }
 
   @override
-  ResultScreenState createState() => ResultScreenState(_database, groupData,
-      code, currentQuestion, currentQuestionString);
+  ResultScreenState createState() => ResultScreenState(
+      _database, groupData, code, currentQuestion, currentQuestionString);
 }
 
 class ResultScreenState extends State<ResultScreen> {
@@ -51,19 +52,15 @@ class ResultScreenState extends State<ResultScreen> {
     this.currentQuestion = currentQuestion;
     this.currentQuestionString = currentQuestionString;
     this.stream = new FirebaseStream(code);
-
   }
 
   int currentpage = 2;
-
 
   final controller = PageController(
     initialPage: 0,
     keepPage: false,
     viewportFraction: 0.85,
   );
-
-
 
   @override
   dispose() {
@@ -82,13 +79,9 @@ class ResultScreenState extends State<ResultScreen> {
       _loadingInProgress = false;
     }, onError: (error) {
       print("Some Error");
-    }
-
-    );
+    });
 
     BackButtonInterceptor.add(myInterceptor);
-
-
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent) {
@@ -98,7 +91,8 @@ class ResultScreenState extends State<ResultScreen> {
 
   void getRandomNexQuestion() async {
     groupData.setNextQuestion(
-        await _database.getRandomQuestion(groupData, Question.getCategoryFromString(groupData.getDescription())),
+        await _database.getRandomQuestion(groupData,
+            Question.getCategoryFromString(groupData.getDescription())),
         Constants.getUserData());
   }
 
@@ -106,8 +100,6 @@ class ResultScreenState extends State<ResultScreen> {
   Widget _buildBody(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-
-
 
     return StreamBuilder(
         stream: stream.groupData,
@@ -121,16 +113,13 @@ class ResultScreenState extends State<ResultScreen> {
             print(groupData.getNumVotes());
             if (currentQuestion == groupData.getQuestionID()) {
               if (groupData.getAdminID() == Constants.getUserID()) {
-                if (groupData.getNumVotes() == groupData.getNumPlaying() ) {
-
-
+                if (groupData.getNumVotes() == groupData.getNumPlaying()) {
                   getRandomNexQuestion();
                   print('admin set next question');
                   print(groupData.getQuestionID());
 
                   print('currentQuestion ID = ' + currentQuestion);
                 }
-
               }
               return new WillPopScope(
                   onWillPop: () async => false,
@@ -140,19 +129,26 @@ class ResultScreenState extends State<ResultScreen> {
                         scaffoldBackgroundColor: Constants.iBlack),
                     home: Scaffold(
                       body: Center(
-                        child: RichText(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                        RichText(
                           textAlign: TextAlign.center,
                           text: TextSpan(
                             text: 'Collecting votes...',
                             style: TextStyle(
-                                color: Constants.iWhite, fontSize: 30),
+                                color: Constants.iWhite, fontSize: 35, fontWeight: FontWeight.w300),
                           ),
                         ),
-                      ),
-                    ),
-                  )
 
-              );
+                        SizedBox(height: 25,),
+                        Text(
+                            (groupData.getNumPlaying()-groupData.getNumVotes()).toString() + ' person(s) remaining',
+                          style: TextStyle(fontSize: 25, color: Constants.colors[Constants.colorindex]),
+                        )
+                      ])),
+                    ),
+                  ));
             }
           }
 
@@ -229,7 +225,7 @@ class ResultScreenState extends State<ResultScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 40),
-                        Text(
+                        AutoSizeText(
                           '1. ' +
                               groupData.getTopThree('previous')[0] +
                               '   ' +
@@ -238,9 +234,10 @@ class ResultScreenState extends State<ResultScreen> {
                               color: Constants.iWhite,
                               fontSize: 25.0,
                               fontWeight: FontWeight.bold),
+                          maxLines: 1,
                         ),
                         SizedBox(height: 5),
-                        Text(
+                        AutoSizeText(
                           '2. ' +
                               groupData.getTopThree('previous')[1] +
                               '   ' +
@@ -249,9 +246,10 @@ class ResultScreenState extends State<ResultScreen> {
                               color: Constants.iWhite,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
+                          maxLines: 1,
                         ),
                         SizedBox(height: 5),
-                        Text(
+                        AutoSizeText(
                           '3. ' +
                               groupData.getTopThree('previous')[2] +
                               '   ' +
@@ -260,6 +258,7 @@ class ResultScreenState extends State<ResultScreen> {
                               color: Constants.iWhite,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
+                          maxLines: 1,
                         ),
                         SizedBox(height: 20),
                       ],
@@ -293,7 +292,7 @@ class ResultScreenState extends State<ResultScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 40),
-                        Text(
+                        AutoSizeText(
                           '1. ' +
                               groupData.getTopThree('alltime')[0] +
                               '   ' +
@@ -302,9 +301,10 @@ class ResultScreenState extends State<ResultScreen> {
                               color: Constants.iWhite,
                               fontSize: 25.0,
                               fontWeight: FontWeight.bold),
+                          maxLines: 1,
                         ),
                         SizedBox(height: 5),
-                        Text(
+                        AutoSizeText(
                           '2. ' +
                               groupData.getTopThree('alltime')[1] +
                               '   ' +
@@ -313,9 +313,10 @@ class ResultScreenState extends State<ResultScreen> {
                               color: Constants.iWhite,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
+                          maxLines: 1,
                         ),
                         SizedBox(height: 5),
-                        Text(
+                        AutoSizeText(
                           '3. ' +
                               groupData.getTopThree('alltime')[2] +
                               '   ' +
@@ -324,6 +325,7 @@ class ResultScreenState extends State<ResultScreen> {
                               color: Constants.iWhite,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
+                          maxLines: 1,
                         ),
                         SizedBox(height: 20),
                       ],
@@ -384,8 +386,9 @@ class ResultScreenState extends State<ResultScreen> {
                     },
                     child: Text(
                       "Leave",
-                      style:
-                          TextStyle(fontSize: 20.0, color: Constants.colors[Constants.colorindex]),
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          color: Constants.colors[Constants.colorindex]),
                     ),
                   )
                 ]),
