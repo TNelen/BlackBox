@@ -1,4 +1,5 @@
 import 'package:blackbox/Constants.dart';
+import 'package:blackbox/DataContainers/Appinfo.dart';
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:blackbox/DataContainers/Issue.dart';
@@ -412,6 +413,33 @@ class Firebase implements Database{
         } );
 
     return exists;
+  }
+
+  Future< Appinfo > getAppInfo() async
+  {
+    Appinfo appinfo;
+    await Firestore.instance.runTransaction((Transaction transaction) async {
+      /// Get the app info document
+      DocumentReference docRef = Firestore.instance.collection("appinfo").document("info");
+      DocumentSnapshot snap = await transaction.get(docRef);
+
+      if (snap.exists)
+      {
+        if (snap.data['current_version'] != null && snap.data['current_version'] != "")
+        {
+          String msg = "";
+          if (snap.data['login_message'] != null && snap.data['login_message'] != "")
+          {
+            msg = snap.data['login_message'];
+          }
+
+          appinfo = new Appinfo(snap.data['current_version'], msg);
+
+        }
+      }
+
+    });
+    return appinfo;
   }
 
   /// -------
