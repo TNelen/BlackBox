@@ -232,7 +232,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Create new game',
+                    'Create game',
                     style: new TextStyle(
                         color: Constants.iWhite,
                         fontSize: 40.0,

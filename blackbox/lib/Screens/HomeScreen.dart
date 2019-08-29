@@ -11,6 +11,8 @@ import 'ProfileScreen.dart';
 import 'SettingsScreen.dart';
 import 'package:blackbox/DataContainers/Question.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+
 
 class HomeScreen extends StatefulWidget {
   Database database;
@@ -314,11 +316,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               height: 10,
                             ),
-                            Text(
-                              'Submit Question',
-                              style: new TextStyle(
-                                  fontSize: 15, color: Constants.iWhite),
-                            )
+                            AutoSizeText(
+                              "Submit Question",
+                              style: TextStyle(fontSize: 15, color: Constants.iWhite),
+                              maxLines: 1,
+                            ),
+
+
                           ],
                         ))))));
   }
@@ -350,13 +354,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                     padding:
                         EdgeInsets.only(top: height / 10, left: 10, right: 10),
-                    child: Text(
-                      'Hi ' + Constants.getUsername() + '!',
-                      style: TextStyle(
-                          color: Constants.iWhite,
-                          fontSize: 50,
-                          fontWeight: FontWeight.w300),
-                    )),
+                    child: AutoSizeText(
+                        'Hi ' + Constants.getUsername() + '!',
+                      style: TextStyle(fontSize: 50, color: Constants.iWhite, fontWeight: FontWeight.w300),
+                      maxLines: 1,
+                    ),
+                    ),
                 SizedBox(
                   height: 25,
                 ),

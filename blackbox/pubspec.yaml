@@ -26,6 +26,7 @@ dependencies:
   flutter_launcher_icons: 0.7.2+1
   dots_indicator: ^1.0.0
   observable: ^0.22.2
+  auto_size_text: ^2.1.0
 
 
 
