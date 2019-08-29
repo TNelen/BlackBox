@@ -1,6 +1,7 @@
 import 'package:blackbox/Constants.dart';
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
+import 'package:blackbox/DataContainers/Issue.dart';
 import 'package:blackbox/Exceptions/GroupNotFoundException.dart';
 import '../DataContainers/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -866,6 +867,18 @@ class Firebase implements Database{
 
     return updateComplete;
 
+  }
+
+  Future< bool > submitIssue(Issue issue) async {
+    var data = new Map<String, dynamic>();
+    data['category'] = issue.category;
+    data['location'] = issue.location;
+    data['version'] = issue.version;
+    data['description'] = issue.description;
+    data['submitter'] = Constants.getUserID();
+
+    await Firestore.instance.collection("issues").add( data );
+    return true;
   }
 
   /// --------

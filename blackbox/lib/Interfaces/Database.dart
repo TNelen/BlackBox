@@ -1,6 +1,7 @@
 import '../DataContainers/GroupData.dart';
 import '../DataContainers/UserData.dart';
 import '../DataContainers/Question.dart';
+import '../DataContainers/Issue.dart';
 
 /// An enum, designated to reporting a question
 enum ReportType {
@@ -111,6 +112,11 @@ abstract class Database {
   /// Will return true once completed
   /// Returns false if this question does not exist in the database
   Future< bool > reportQuestion( Question q, ReportType reportType );
+
+
+  /// Send a new issue to the database
+  /// Returns true when completed
+  Future< bool > submitIssue(Issue issue);
 
 
   /// --------
