@@ -7,6 +7,8 @@ import 'Popup.dart';
 import 'GameScreen.dart';
 import 'package:share/share.dart';
 import '../DataContainers/Question.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+
 
 class CreateGameScreen extends StatefulWidget {
   Database _database;
@@ -231,14 +233,16 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    'Create game',
+                  AutoSizeText(
+                    "Create new Game",
                     style: new TextStyle(
                         color: Constants.iWhite,
                         fontSize: 40.0,
                         fontWeight: FontWeight.w300),
+                    maxLines: 1,
                   ),
-                  SizedBox(height: 80.0),
+
+                  SizedBox(height: 60.0),
                   Text(
                     'Enter game details',
                     style:
