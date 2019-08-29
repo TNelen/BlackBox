@@ -12,6 +12,8 @@ import 'SettingsScreen.dart';
 import 'package:blackbox/DataContainers/Question.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:package_info/package_info.dart';
+
 
 
 class HomeScreen extends StatefulWidget {
@@ -36,6 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _HomeScreenState(Database db) {
     this.database = db;
+    String versionNameYAML;
+    String versionCodeYAML;
+
 
     /// Log a user in and update variables accordingly
 
@@ -54,7 +59,21 @@ class _HomeScreenState extends State<HomeScreen> {
         print(e.toString());
       }
     }
+
+
   }
+
+  void getPackageInfoFromYAML() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String versionNameYAML = packageInfo.version;
+    String versionCodeYAML = packageInfo.buildNumber;
+  }
+
+  void getPackageInfoFromDataBase() async {
+
+    String versionCodeDatabase = packageInfo.buildNumber;
+  }
+
 
   @Deprecated('For async testing only. Must be deleted before release!')
   void _test() async {
