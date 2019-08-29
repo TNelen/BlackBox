@@ -102,12 +102,12 @@ class Firebase implements Database{
 
   @override
   Future<GroupData> getGroupByCode(String code) async {
-    // TODO: implement getGroupByCode
-    return null;
+    return await FirebaseGetters.getGroupByCode( code );
   }
 
 
   @override
+  @Deprecated("This will be removed")
   Future<GroupData> getGroupFromUser(UserData userData) async {
     return await FirebaseGetters.getGroupFromUser( userData );
   }
