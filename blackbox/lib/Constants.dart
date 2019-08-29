@@ -15,10 +15,7 @@ class Constants{
   static const iWhite = Color(0xFFE6E7EB);
   static const iAccent = Color(0xFFA2DAAF );
 
-  static const List<String> choices = ['Create','Join'];
-  // static List<GroupData> groupData = [new GroupData('group1','Dit is de descriptionsshghmgh', 'id1', 'klootzak',['lid1','lid2','klootzak','lid2','lid2']),new GroupData('group2','Dit is de blablalala', 'id2', 'timo',['lid1','timo','lid2']),new GroupData('group3','I hope this text is showing with overflow on max 2 lines as it is supposed to do in case of an overflow', 'id3', 'lid2',['lid1','lid2']),new GroupData('group4','Elon = GOD', 'id4', 'timo',['lid1','lid2','timo','lid1','lid2']),new GroupData('group5','Falcon Heavy rocks', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5','Im a musk fanboy', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5','test for string overflow to see what the list tile layout does', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']),new GroupData('group5','out of inspiration', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578']), new GroupData('groupX','Hello There!', 'id5', 'lid8',['lid1','lid4','lid1','lid8','lid1','lid25578','lid1','lid1','lid1','lid1','lid1','lid1'])];
-  static List<GroupData> groupData = [new GroupData('group1','Dit is de descriptionsshghmgh', 'id1', 'klootzak', {'lid1':'name','lid2':'name2','klootzak':'KlootzakNaam','lid3':'name3','lid4':'name4'})];
-  static UserData userData = new UserData("id2", "Timo laptop");
+   static UserData userData = new UserData("Some ID", "Elon Muskrat");
   static final Database database = new Firebase();
 
 
@@ -52,10 +49,5 @@ class Constants{
   }
 
 
-  ///get the users of the group
-  static List< UserData > getMembers(index)
-  {
-    return groupData[index].getMembers();
-  }
 }
 

@@ -12,7 +12,8 @@ import 'SettingsScreen.dart';
 import 'package:blackbox/DataContainers/Question.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-
+import '../DataContainers/Appinfo.dart';
+import 'Popup.dart';
 
 class HomeScreen extends StatefulWidget {
   Database database;
@@ -33,9 +34,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Database database;
   int pageIndex = 0;
+  String version = '1.0.0+1';
 
   _HomeScreenState(Database db) {
     this.database = db;
+
 
     /// Log a user in and update variables accordingly
 
@@ -54,6 +57,14 @@ class _HomeScreenState extends State<HomeScreen> {
         print(e.toString());
       }
     }
+
+
+
+
+
+    /*if (versionCodeDatabase != versionCodeYAML){
+      Popup.makePopup(context, 'Whooohooo!', 'There is a new app version available!');
+    }*/
   }
 
   @Deprecated('For async testing only. Must be deleted before release!')
@@ -195,7 +206,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         AutoSizeText(
                           "Profile",
-                          style: TextStyle(fontSize: 15, color: Constants.iWhite),
+                          style:
+                              TextStyle(fontSize: 15, color: Constants.iWhite),
                           maxLines: 1,
                         ),
                       ],
@@ -236,7 +248,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         AutoSizeText(
                           "Settings",
-                          style: TextStyle(fontSize: 15, color: Constants.iWhite),
+                          style:
+                              TextStyle(fontSize: 15, color: Constants.iWhite),
                           maxLines: 1,
                         ),
                       ],
@@ -277,7 +290,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         AutoSizeText(
                           "Report Problem",
-                          style: TextStyle(fontSize: 15, color: Constants.iWhite),
+                          style:
+                              TextStyle(fontSize: 15, color: Constants.iWhite),
                           maxLines: 1,
                         ),
                       ],
@@ -318,11 +332,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             AutoSizeText(
                               "Submit Question",
-                              style: TextStyle(fontSize: 15, color: Constants.iWhite),
+                              style: TextStyle(
+                                  fontSize: 15, color: Constants.iWhite),
                               maxLines: 1,
                             ),
-
-
                           ],
                         ))))));
   }
@@ -333,10 +346,25 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void isAppUpToDate() async {
+    Appinfo appinfo;
+
+    appinfo = await database.getAppInfo();
+    String versionCodeDatabase = appinfo.getVersion().toString();
+    print(versionCodeDatabase);
+    if(versionCodeDatabase != version){
+      Popup.makePopup(context, 'Whooohooo!', 'A new app version is available! \n\nUpdate your app to get the best experience.' );
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
+    isAppUpToDate();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -352,20 +380,22 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               Column(children: <Widget>[
                 Container(
-                    padding:
-                        EdgeInsets.only(top: height / 10, left: 10, right: 10),
-                    child: AutoSizeText(
-                        'Hi ' + Constants.getUsername() + '!',
-                      style: TextStyle(fontSize: 50, color: Constants.iWhite, fontWeight: FontWeight.w300),
-                      maxLines: 1,
-                    ),
-                    ),
+                  padding:
+                      EdgeInsets.only(top: height / 10, left: 10, right: 10),
+                  child: AutoSizeText(
+                    'Hi ' + Constants.getUsername() + '!',
+                    style: TextStyle(
+                        fontSize: 50,
+                        color: Constants.iWhite,
+                        fontWeight: FontWeight.w300),
+                    maxLines: 1,
+                  ),
+                ),
                 SizedBox(
                   height: 25,
                 ),
                 Container(
-                    padding:
-                        EdgeInsets.only(left: 10, right: 10),
+                    padding: EdgeInsets.only(left: 10, right: 10),
                     child: Text(
                       ' BlackBox - The - Game ',
                       style: TextStyle(
@@ -401,33 +431,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 )
               ]),
-      Container(
-        padding:
-        EdgeInsets.only(left: 10, right: 10),child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(left: 10, bottom: 10),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Start playing',
-                        style: TextStyle(
-                            fontSize: 30,
-                            color: Constants.iWhite,
-                            fontWeight: FontWeight.w300),
+              Container(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(left: 10, bottom: 10),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Start playing',
+                            style: TextStyle(
+                                fontSize: 30,
+                                color: Constants.iWhite,
+                                fontWeight: FontWeight.w300),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  CreateGameBox(),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  JoinGameBox(),
-                  SizedBox(
-                    height: 35,
-                  )
-                ],
-              )),
+                      CreateGameBox(),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      JoinGameBox(),
+                      SizedBox(
+                        height: 35,
+                      )
+                    ],
+                  )),
             ],
           ),
         ),

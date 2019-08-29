@@ -15,7 +15,6 @@ enum ReportType {
 abstract class Database {
 
 
-
   /// -----------
   /// Connections
   /// -----------
