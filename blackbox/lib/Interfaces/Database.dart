@@ -1,3 +1,5 @@
+import 'package:blackbox/DataContainers/Appinfo.dart';
+
 import '../DataContainers/GroupData.dart';
 import '../DataContainers/UserData.dart';
 import '../DataContainers/Question.dart';
@@ -22,6 +24,7 @@ abstract class Database {
   /// Performs actions to set up the connection to the database
   void openConnection();
 
+
   /// Closes the connection to the database
   void closeConnection();
 
@@ -35,22 +38,27 @@ abstract class Database {
   @Deprecated('Multiple groups are no longer supported!')
   Future< List<GroupData> > getGroups(String uniqueUserID);
 
+
   /// Get the group of a given user
   /// Returns null if no group was found
   @Deprecated('Please use FirebaseStream instead!')
   Future< GroupData > getGroupFromUser( UserData userData );
 
+
   /// Get the unique ID of a group by providing the code
   /// Will return null if the group does not exist
   Future< GroupData > getGroupByCode(String code);
+
 
   /// Get UserData from a given user ID
   /// Will return null if user does not exist
   Future< UserData > getUserByID(String uniqueID);
 
+
   /// Generates and returns a unique group ID
   /// This ID is ONLY unique for groups!!
   Future< String > generateUniqueGroupCode();
+
 
   /// Get a random question within the provided category
   /// The question is guaranteed to not have a, Category anyppeared in the two rounds before
@@ -58,15 +66,21 @@ abstract class Database {
   /// The category is currently ignored
   Future< Question > getRandomQuestion( GroupData groupData, Category category );
 
+
   /// Check whether or not a group actually exists
   Future< bool > doesGroupExist( String groupID );
+
 
   /// Check whether or not a user actually exists
   Future< bool > doesUserExist( String userID );
 
+
   /// Check whether or not a question actually exists
   Future< bool > doesQuestionExist( String questionID );
 
+
+  /// Get the most up-to-date app info
+  Future< Appinfo > getAppInfo();
 
   /// -------
   /// Setters
@@ -79,6 +93,7 @@ abstract class Database {
   /// Returns true upon completion
   Future< bool > voteOnUser(GroupData groupData, String voteeID);
 
+
   /// Cast a vote on this community question
   /// Users can vote multiple times, no check is included
   /// Returns false if the question is not a community question or when the question has no ID
@@ -86,10 +101,12 @@ abstract class Database {
   /// Returns true upon completion
   Future< bool > voteOnQuestion(Question q);
 
+
   /// Updates the user with the same unique ID in the database to the one provided. If the user does not exist, they will be added
   /// Returns true when completed
   /// Never returns false
   Future< bool > updateUser( UserData userData );
+
 
   /// Updates the group with the same unique ID. If it doesn't exist, it will be added
   /// Will automatically detect a question transfer and perform it
@@ -97,11 +114,13 @@ abstract class Database {
   /// Never returns false
   Future< bool > updateGroup( GroupData groupData );
 
+
   /// Updates the question with the same unique ID. If it doesn't exist, it will be added
   /// If an identical question (just question, not the ID) already exists, the action will fail silently
   /// Returns true when completed
   /// Returns false when the question already exists
   Future< bool > updateQuestion( Question question );
+
 
   /// Add a report to the database for the given question
   /// This will only update report fields AND fields that do not exist in the database for this question
