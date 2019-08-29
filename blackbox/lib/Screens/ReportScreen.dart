@@ -37,7 +37,7 @@ class _ReportScreenState extends State<ReportScreen> {
           contentPadding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
           fillColor: Constants.iWhite,
           filled: true,
-          hintText: "start typing here...",
+          hintText: "Start typing here...",
           hintStyle: TextStyle(fontSize: 18, color: Constants.iDarkGrey),
           counterText: problemController.text.length.toString(),
           counterStyle: TextStyle(color: Constants.iGrey),
@@ -92,11 +92,12 @@ class _ReportScreenState extends State<ReportScreen> {
           },
           items: [
             'Bug',
-            'Crashes',
-            'issue 2',
-            'issue 3',
-            'issue 4',
-            'issue 5',
+            'App crashes',
+            'App is not responding',
+            'Vote is not submitted',
+            'Problem creating group ',
+            'Problem joining group',
+            'Problem Starting game',
             'Other (Describe below)'
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
@@ -136,7 +137,7 @@ class _ReportScreenState extends State<ReportScreen> {
             'Vote Screen',
             'Question Card',
             'Results',
-            'collecting results',
+            'Collecting results',
             'Other  (Describe below)'
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
@@ -226,7 +227,7 @@ class _ReportScreenState extends State<ReportScreen> {
                       ),
                       SizedBox(height: 30.0),
                       Text(
-                        'What is the type of issue',
+                        'What is the type of issue?',
                         textAlign: TextAlign.left,
                         style: new TextStyle(
                             color: Constants.iWhite,
@@ -237,7 +238,7 @@ class _ReportScreenState extends State<ReportScreen> {
                       categoryField,
                       SizedBox(height: 20.0),
                       Text(
-                        'Where is the issue located',
+                        'Where is the issue located?',
                         textAlign: TextAlign.left,
                         style: new TextStyle(
                             color: Constants.iWhite,
@@ -248,7 +249,7 @@ class _ReportScreenState extends State<ReportScreen> {
                       locationFiled,
                       SizedBox(height: 20.0),
                       Text(
-                        'Describe the issue as precise as possible',
+                        'Describe the issue as precise as possible.',
                         textAlign: TextAlign.left,
                         style: new TextStyle(
                             color: Constants.iWhite,

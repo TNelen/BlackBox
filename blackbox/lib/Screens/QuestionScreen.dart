@@ -188,7 +188,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                     color: Constants.iDarkGrey,
                     child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(5),
                         child: Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,

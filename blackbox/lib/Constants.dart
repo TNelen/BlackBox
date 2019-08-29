@@ -23,6 +23,8 @@ class Constants{
 
  static int colorindex = 1;
 
+
+ //accent color list
   static const colors = [Color(0xFF92dff3), Color(0xFFffbf00), Color(0xFFed2939), Color(0xFFA2DAAF)];
 
 

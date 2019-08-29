@@ -140,7 +140,7 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
                       ),
                       SizedBox(height: 80.0),
                       Text(
-                        'Have an good idea for a question?',
+                        'Have a good idea for a question?',
                         textAlign: TextAlign.center,
                         style: new TextStyle(
                             color: Constants.colors[Constants.colorindex],
