@@ -183,6 +183,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               Popup.makePopup(context, "Woops!", "Please fill in all fields!");
             }
           },
+
           child: Text("Create",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20).copyWith(
