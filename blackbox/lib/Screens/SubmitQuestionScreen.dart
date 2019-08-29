@@ -126,9 +126,10 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
               child: Container(
                 padding: EdgeInsets.all(10),
                 color: Constants.iBlack,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
+                child: ListView(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(20.0),
+                    children: [
                       SizedBox(height: 40.0),
                       Text(
                         'Submit Question',
