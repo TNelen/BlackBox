@@ -1,5 +1,6 @@
 import '../DataContainers/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../Constants.dart';
 import 'dart:math';
 
 class FirebaseUtility {
@@ -58,7 +59,7 @@ class FirebaseUtility {
     return exists;
   }
 
-    static Future< bool > doesQuestionIDExist( Question question ) async
+  static Future< bool > doesQuestionIDExist( Question question ) async
   {
     bool exists = false;
 
@@ -108,7 +109,7 @@ class FirebaseUtility {
     return exists;
   }
 
-    static Future< String > generateUniqueQuestionCode() async
+  static Future< String > generateUniqueQuestionCode() async
   { 
     bool isTaken = true;
     String newRandom;
@@ -122,6 +123,33 @@ class FirebaseUtility {
         // Check whether or not the generated ID exists 
         var documentSnap = await Firestore.instance
             .collection("questions")
+            .document( newRandom ).get().then( (document) {
+
+              // ID does not exist, unique code found!
+              if ( ! document.exists )
+                isTaken = false;
+
+            } );
+    }
+
+    return newRandom;
+
+  }
+
+    static Future< String > generateUniqueGroupCode() async
+  { 
+    bool isTaken = true;
+    String newRandom;
+
+    // While no unique ID has been found
+    while ( isTaken )
+    {
+        // Generate a random ID
+        newRandom = FirebaseUtility.getRandomID( Constants.groupCodeLength );
+
+        // Check whether or not the generated ID exists 
+        var documentSnap = await Firestore.instance
+            .collection("groups")
             .document( newRandom ).get().then( (document) {
 
               // ID does not exist, unique code found!

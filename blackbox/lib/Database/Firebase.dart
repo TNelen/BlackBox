@@ -85,7 +85,7 @@ class Firebase implements Database{
 
   @override
   Future<String> generateUniqueGroupCode() async {
-    return await FirebaseUtility.generateUniqueQuestionCode();
+    return await FirebaseUtility.generateUniqueGroupCode();
   }
 
 

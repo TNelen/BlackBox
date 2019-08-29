@@ -216,34 +216,6 @@ class FirebaseGetters {
   }
 
 
-  static Future< String > generateUniqueGroupCode() async
-  { 
-    bool isTaken = true;
-    String newRandom;
-
-    // While no unique ID has been found
-    while ( isTaken )
-    {
-        // Generate a random ID
-        newRandom = FirebaseUtility.getRandomID( Constants.groupCodeLength );
-
-        // Check whether or not the generated ID exists 
-        var documentSnap = await Firestore.instance
-            .collection("groups")
-            .document( newRandom ).get().then( (document) {
-
-              // ID does not exist, unique code found!
-              if ( ! document.exists )
-                isTaken = false;
-
-            } );
-    }
-
-    return newRandom;
-
-  }
-
-
   static Future< Appinfo > getAppInfo() async
   {
     Appinfo appinfo;
