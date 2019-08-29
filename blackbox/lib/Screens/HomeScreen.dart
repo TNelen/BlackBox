@@ -41,8 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
     /// Log a user in and update variables accordingly
-
-    if (Constants.getUserID() == "id2" || Constants.getUserID() == "") {
+    if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
       ///check if user isn't loged in via google already when returning to homescreen
       try {
         GoogleUserHandler guh = new GoogleUserHandler();
