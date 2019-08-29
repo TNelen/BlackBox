@@ -420,7 +420,7 @@ class Firebase implements Database{
     Appinfo appinfo;
     await Firestore.instance.runTransaction((Transaction transaction) async {
       /// Get the app info document
-      DocumentReference docRef = Firestore.instance.collection("appinfo").document("info");
+      DocumentReference docRef = Firestore.instance.collection("appinfo").document("appinfo");
       DocumentSnapshot snap = await transaction.get(docRef);
 
       if (snap.exists)
