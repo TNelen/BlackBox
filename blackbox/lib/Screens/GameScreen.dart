@@ -470,24 +470,7 @@ class _GameScreenState extends State<GameScreen> {
                               fontSize: 18.0,
                             ),
                           ),
-                          SizedBox(height: 20),
-                          Text(
-                            'Timeout',
-                            style: new TextStyle(
-                              color: Constants.iAccent,
-                              fontSize: 25.0,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            'You have XXXX seconds to submit a vote on the next question.' +
-                                '\n'
-                                    'If you fail to vote in time, you will be kicked from the group.',
-                            style: new TextStyle(
-                              color: Constants.iWhite,
-                              fontSize: 18.0,
-                            ),
-                          ),
+
                           SizedBox(height: 20),
                           Text(
                             'Leave',
@@ -513,7 +496,23 @@ class _GameScreenState extends State<GameScreen> {
                               fontSize: 18.0,
                             ),
                           ),
-                          SizedBox(height: 60),
+                          SizedBox(height: 20),
+                          Text(
+                            'Miscellaneous',
+                            style: new TextStyle(
+                              color: Constants.iAccent,
+                              fontSize: 25.0,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'For the best performance please update the app to the newest version.',
+                            style: new TextStyle(
+                              color: Constants.iWhite,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          SizedBox(height: 80),
                         ],
                       ))
                     ],

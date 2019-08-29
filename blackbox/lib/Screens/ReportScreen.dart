@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
 import '../DataContainers/Issue.dart';
 import '../Constants.dart';
+import 'Popup.dart';
 
 class ReportScreen extends StatefulWidget {
   Database _database;
@@ -52,8 +53,15 @@ class _ReportScreenState extends State<ReportScreen> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          ///Take action here
-          ///if text.length !=null....
+          print('submitted error');
+          Issue issue = new Issue();
+          issue.category = categoryValue.toString();
+          issue.location = locationValue.toString();
+          issue.description = problemController.text.toString();
+          issue.version = '1.0.0';
+          _database.submitIssue(issue);
+          Navigator.pop(context);
+          Popup.makePopup(context, 'Thank You!', 'Your issue is submitted successfully! We will look into it as soon as possible.');
         },
         child: Text("Submit",
             textAlign: TextAlign.center,
