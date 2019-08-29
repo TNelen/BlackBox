@@ -1,13 +1,7 @@
-import 'package:blackbox/Constants.dart';
-import 'package:blackbox/DataContainers/Appinfo.dart';
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
-import 'package:blackbox/DataContainers/Issue.dart';
-import 'package:blackbox/Exceptions/GroupNotFoundException.dart';
 import '../DataContainers/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../Interfaces/Database.dart';
-import 'dart:math';
 
 import 'FirebaseUtility.dart';
 
@@ -29,7 +23,6 @@ class FirebaseDeleters {
 
   }
 
-  @override
   static Future< bool > deleteQuestion(Question question) async {
 
     if ( ! await FirebaseUtility.doesQuestionExist( question.getQuestionID() ) )
@@ -85,7 +78,6 @@ class FirebaseDeleters {
 
   }
 
-  @override
   static Future< bool > deleteUser(UserData user) async {
     
     if ( ! await FirebaseUtility.doesUserExist( user.getUserID() ) )
