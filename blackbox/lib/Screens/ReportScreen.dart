@@ -162,16 +162,16 @@ class _ReportScreenState extends State<ReportScreen> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(right: 20),
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_back,
-                          color: Constants.iAccent,
+                          color: Constants.colors[Constants.colorindex],
                         ),
                       ),
                       Text(
                         'Back',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Constants.iAccent,
+                          color: Constants.colors[Constants.colorindex],
                         ),
                       ),
                     ],
@@ -193,7 +193,7 @@ class _ReportScreenState extends State<ReportScreen> {
                           child: Icon(
                                 Icons.report_problem,
                                 size: 75,
-                                color: Constants.iAccent,
+                                color: Constants.colors[Constants.colorindex],
                               )),
                       SizedBox(height: 20.0),
 
@@ -211,7 +211,7 @@ class _ReportScreenState extends State<ReportScreen> {
                         'Sorry to hear that...  ',
                         textAlign: TextAlign.center,
                         style: new TextStyle(
-                            color: Constants.iAccent,
+                            color: Constants.colors[Constants.colorindex],
                             fontSize: 25.0,
                             fontWeight: FontWeight.normal),
                       ),

@@ -86,7 +86,7 @@ class _VoteScreenState extends State<VoteScreen> {
               child: new Text(
                 "Close",
                 style: TextStyle(
-                    color: Constants.iAccent,
+                    color: Constants.colors[Constants.colorindex],
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
@@ -115,7 +115,7 @@ class _VoteScreenState extends State<VoteScreen> {
         child: Material(
           elevation: 5.0,
           borderRadius: BorderRadius.circular(16.0),
-          color: Constants.iAccent,
+          color: Constants.colors[Constants.colorindex],
           child: MaterialButton(
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(1.0, 15.0, 20.0, 15.0),
@@ -166,9 +166,9 @@ class _VoteScreenState extends State<VoteScreen> {
                     onTap: () => Navigator.pop(context),
                     child: Padding(
                       padding: EdgeInsets.only(right: 1),
-                      child: const Icon(
+                      child: Icon(
                         Icons.arrow_back,
-                        color: Constants.iAccent,
+                        color: Constants.colors[Constants.colorindex],
                       ),
                     ),
                   ),
@@ -179,7 +179,7 @@ class _VoteScreenState extends State<VoteScreen> {
                     child: Text(
                       "Question",
                       style:
-                          TextStyle(fontSize: 20.0, color: Constants.iAccent),
+                          TextStyle(fontSize: 20.0, color: Constants.colors[Constants.colorindex]),
                     ),
                   ),
                 ],
@@ -197,7 +197,7 @@ class _VoteScreenState extends State<VoteScreen> {
                 },
                 child: Text(
                   "Leave",
-                  style: TextStyle(fontSize: 20.0, color: Constants.iAccent),
+                  style: TextStyle(fontSize: 20.0, color: Constants.colors[Constants.colorindex]),
                 ),
               )
             ],
@@ -222,10 +222,10 @@ class _VoteScreenState extends State<VoteScreen> {
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           child: InkWell(
-                            splashColor: Constants.iAccent,
+                            splashColor: Constants.colors[Constants.colorindex],
                             onTap: () {
                               setState(() {
-                                color = Constants.iAccent;
+                                color = Constants.colors[Constants.colorindex];
                                 clickedmember = data.getUserID();
                               });
                             },

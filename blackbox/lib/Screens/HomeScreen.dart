@@ -34,7 +34,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Database database;
   int pageIndex = 0;
-  String version = '1.0.0+1';
+  String version = '1.0.0';
 
   _HomeScreenState(Database db) {
     this.database = db;
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(16.0),
           ),
           child: InkWell(
-              splashColor: Constants.iAccent,
+              splashColor: Constants.colors[Constants.colorindex],
               onTap: () {
                 // if (GoogleUserHandler.isLoggedIn()) {
                 Navigator.push(
@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Icon(
                       Icons.create,
-                      color: Constants.iAccent,
+                      color: Constants.colors[Constants.colorindex],
                       size: 50,
                     ),
                     Text(
@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(16.0),
           ),
           child: InkWell(
-              splashColor: Constants.iAccent,
+              splashColor: Constants.colors[Constants.colorindex],
               onTap: () {
                 // if (GoogleUserHandler.isLoggedIn()) {
                 Navigator.push(
@@ -153,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Icon(
                       Icons.search,
-                      color: Constants.iAccent,
+                      color: Constants.colors[Constants.colorindex],
                       size: 50,
                     ),
                     Text(
@@ -181,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
               borderRadius: BorderRadius.circular(16.0),
             ),
             child: InkWell(
-                splashColor: Constants.iAccent,
+                splashColor: Constants.colors[Constants.colorindex],
                 onTap: () {
                   Navigator.push(
                       context,
@@ -198,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             tag: 'topicon1',
                             child: Icon(
                               Icons.perm_identity,
-                              color: Constants.iAccent,
+                              color: Constants.colors[Constants.colorindex],
                               size: 30,
                             )),
                         SizedBox(
@@ -223,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
               borderRadius: BorderRadius.circular(16.0),
             ),
             child: InkWell(
-                splashColor: Constants.iAccent,
+                splashColor: Constants.colors[Constants.colorindex],
                 onTap: () {
                   Navigator.push(
                       context,
@@ -240,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             tag: 'topicon2',
                             child: Icon(
                               Icons.settings,
-                              color: Constants.iAccent,
+                              color: Constants.colors[Constants.colorindex],
                               size: 30,
                             )),
                         SizedBox(
@@ -265,7 +265,7 @@ class _HomeScreenState extends State<HomeScreen> {
               borderRadius: BorderRadius.circular(16.0),
             ),
             child: InkWell(
-                splashColor: Constants.iAccent,
+                splashColor: Constants.colors[Constants.colorindex],
                 onTap: () {
                   Navigator.push(
                       context,
@@ -282,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             tag: 'topicon3',
                             child: Icon(
                               Icons.report_problem,
-                              color: Constants.iAccent,
+                              color: Constants.colors[Constants.colorindex],
                               size: 30,
                             )),
                         SizedBox(
@@ -309,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(16.0),
                 ),
                 child: InkWell(
-                    splashColor: Constants.iAccent,
+                    splashColor: Constants.colors[Constants.colorindex],
                     onTap: () {
                       Navigator.push(
                           context,
@@ -324,7 +324,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: <Widget>[
                             Icon(
                               Icons.library_add,
-                              color: Constants.iAccent,
+                              color: Constants.colors[Constants.colorindex],
                               size: 30,
                             ),
                             SizedBox(
@@ -399,7 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text(
                       ' BlackBox - The - Game ',
                       style: TextStyle(
-                          color: Constants.iAccent,
+                          color: Constants.colors[Constants.colorindex],
                           fontSize: 25,
                           fontWeight: FontWeight.w300),
                     )),
@@ -427,7 +427,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   position: pageIndex,
                   decorator: DotsDecorator(
                     color: Constants.iWhite,
-                    activeColor: Constants.iAccent,
+                    activeColor: Constants.colors[Constants.colorindex],
                   ),
                 )
               ]),

@@ -80,7 +80,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               child: new Text(
                 "Start",
                 style: TextStyle(
-                    color: Constants.iAccent,
+                    color: Constants.colors[Constants.colorindex],
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
@@ -129,10 +129,10 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: InkWell(
-                    splashColor: Constants.iAccent,
+                    splashColor: Constants.colors[Constants.colorindex],
                     onTap: () {
                       setState(() {
-                        color = Constants.iAccent;
+                        color = Constants.colors[Constants.colorindex];
                         selectedCategory = data;
                       });
                     },
@@ -162,7 +162,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       child: Material(
         elevation: 5.0,
         borderRadius: BorderRadius.circular(16.0),
-        color: Constants.iAccent,
+        color: Constants.colors[Constants.colorindex],
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -183,11 +183,10 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               Popup.makePopup(context, "Woops!", "Please fill in all fields!");
             }
           },
-
           child: Text("Create",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20).copyWith(
-                  color: Constants.iBlack, fontWeight: FontWeight.bold)),
+                  color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
         ),
       ),
     );
@@ -208,16 +207,16 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(right: 20),
-                    child: const Icon(
+                    child:  Icon(
                       Icons.arrow_back,
-                      color: Constants.iAccent,
+                      color: Constants.colors[Constants.colorindex],
                     ),
                   ),
                   Text(
                     'Back',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Constants.iAccent,
+                      color: Constants.colors[Constants.colorindex],
                     ),
                   ),
                 ],
@@ -247,7 +246,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   Text(
                     'Enter game details',
                     style:
-                        new TextStyle(color: Constants.iAccent, fontSize: 25.0),
+                        new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 25.0),
                   ),
                   SizedBox(height: 45.0),
                   nameField,

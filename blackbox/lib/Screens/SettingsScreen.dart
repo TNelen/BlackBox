@@ -26,6 +26,134 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final blueAccent = Card(
+      color: Constants.iDarkGrey,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: InkWell(
+          splashColor: Constants.iAccent1,
+          onTap: () {
+            Constants.setAccentColor(1);
+            setState(() {
+
+            });
+          },
+          child: Container(
+            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Mighty Blue",
+                  style: TextStyle(fontSize: 20.0, color: Constants.iWhite),
+                ),
+                Icon(
+                  Icons.lens,
+                  color: Constants.iAccent1,
+                  size: 30,
+                ),
+              ],
+            ),
+          )),
+    );
+
+    final yellowAccent = Card(
+      color: Constants.iDarkGrey,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: InkWell(
+          splashColor: Constants.iAccent2,
+          onTap: () {
+            Constants.setAccentColor(2);
+            setState(() {
+
+            });
+          },
+          child: Container(
+            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Magnificent Yellow',
+                  style: TextStyle(fontSize: 20.0, color: Constants.iWhite),
+                ),
+                Icon(
+                  Icons.lens,
+                  color: Constants.iAccent2,
+                  size: 30,
+                ),
+              ],
+            ),
+          )),
+    );
+
+    final redAccent = Card(
+      color: Constants.iDarkGrey,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: InkWell(
+          splashColor: Constants.iAccent3,
+          onTap: () {
+            Constants.setAccentColor(3);
+            setState(() {
+
+            });
+          },
+          child: Container(
+            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Marvelous Red',
+                  style: TextStyle(fontSize: 20.0, color: Constants.iWhite),
+                ),
+                Icon(
+                  Icons.lens,
+                  color: Constants.iAccent3,
+                  size: 30,
+                ),
+              ],
+            ),
+          )),
+    );
+
+    final greenAccent = Card(
+      color: Constants.iDarkGrey,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: InkWell(
+          splashColor: Constants.iAccent4,
+          onTap: () {
+            Constants.setAccentColor(4);
+            setState(() {
+
+            });
+          },
+          child: Container(
+            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Majestic Green',
+                  style: TextStyle(fontSize: 20.0, color: Constants.iWhite),
+                ),
+                Icon(
+                  Icons.lens,
+                  color: Constants.iAccent4,
+                  size: 30,
+                ),
+              ],
+            ),
+          )),
+    );
+
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
@@ -40,16 +168,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(right: 20),
-                        child: const Icon(
+                        child:  Icon(
                           Icons.arrow_back,
-                          color: Constants.iAccent,
+                          color: Constants.colors[Constants.colorindex],
                         ),
                       ),
                       Text(
                         'Back',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Constants.iAccent,
+                          color: Constants.colors[Constants.colorindex],
                         ),
                       ),
                     ],
@@ -59,9 +187,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             body: Center(
                 child: Container(
+              alignment: Alignment.center,
               color: Constants.iBlack,
               child: ListView(
-
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(20.0),
                 children: [
@@ -71,7 +199,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       child: Icon(
                         Icons.settings,
                         size: 75,
-                        color: Constants.iAccent,
+                        color: Constants.colors[Constants.colorindex],
                       )),
                   SizedBox(height: 20.0),
                   Container(
@@ -82,18 +210,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Text(
                     'Settings',
                     style: new TextStyle(
-                        color: Constants.iWhite,
+                        color: Constants.colors[Constants.colorindex],
                         fontSize: 40.0,
                         fontWeight: FontWeight.w300),
                   ),
                   SizedBox(height: 40.0),
                   Text(
-                    'Nothing here yet! Stay tuned for future updates!',
+                    'Personalization',
                     style: new TextStyle(
-                        color: Constants.iAccent,
-                        fontSize: 20.0,
+                        color: Constants.colors[Constants.colorindex],
+                        fontSize: 30.0,
                         fontWeight: FontWeight.w300),
                   ),
+                  SizedBox(height: 20.0),
+                  Row(children: <Widget>[
+                    Icon(
+                      Icons.palette,
+                      size: 35,
+                      color: Constants.iWhite,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      'Choose your accent color...',
+                      style: new TextStyle(
+                          color: Constants.iWhite,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w300),
+                    ),
+                  ]),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  blueAccent,
+                  SizedBox(height: 5),
+                  yellowAccent,
+                  SizedBox(height: 5),
+                  redAccent,
+                  SizedBox(height: 5),
+                  greenAccent,
                 ],
               ),
             ))));

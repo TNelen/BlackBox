@@ -177,7 +177,7 @@ class ResultScreenState extends State<ResultScreen> {
                             currentQuestionString,
                             textAlign: TextAlign.center,
                             style: new TextStyle(
-                                color: Constants.iAccent,
+                                color: Constants.colors[Constants.colorindex],
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -224,7 +224,7 @@ class ResultScreenState extends State<ResultScreen> {
                         Text(
                           'TOP 3',
                           style: new TextStyle(
-                              color: Constants.iAccent,
+                              color: Constants.colors[Constants.colorindex],
                               fontSize: 30.0,
                               fontWeight: FontWeight.bold),
                         ),
@@ -288,7 +288,7 @@ class ResultScreenState extends State<ResultScreen> {
                         Text(
                           'Alltime TOP 3',
                           style: new TextStyle(
-                              color: Constants.iAccent,
+                              color: Constants.colors[Constants.colorindex],
                               fontSize: 30.0,
                               fontWeight: FontWeight.bold),
                         ),
@@ -342,7 +342,7 @@ class ResultScreenState extends State<ResultScreen> {
               child: Material(
                 elevation: 0.0,
                 borderRadius: BorderRadius.circular(16.0),
-                color: Constants.iAccent,
+                color: Constants.colors[Constants.colorindex],
                 child: MaterialButton(
                   minWidth: MediaQuery.of(context).size.width,
                   padding: const EdgeInsets.all(20),
@@ -385,7 +385,7 @@ class ResultScreenState extends State<ResultScreen> {
                     child: Text(
                       "Leave",
                       style:
-                          TextStyle(fontSize: 20.0, color: Constants.iAccent),
+                          TextStyle(fontSize: 20.0, color: Constants.colors[Constants.colorindex]),
                     ),
                   )
                 ]),

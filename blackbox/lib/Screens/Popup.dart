@@ -30,7 +30,7 @@ class Popup {
               child: new Text(
                 "Close",
                 style: TextStyle(
-                    color: Constants.iAccent,
+                    color: Constants.colors[Constants.colorindex],
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
@@ -134,7 +134,7 @@ class Popup {
               child: new Text(
                 "Close",
                 style: TextStyle(
-                    color: Constants.iAccent,
+                    color: Constants.colors[Constants.colorindex],
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),

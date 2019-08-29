@@ -110,16 +110,16 @@ class _GameScreenState extends State<GameScreen> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(right: 20),
-                            child: const Icon(
+                            child: Icon(
                               Icons.arrow_back,
-                              color: Constants.iAccent,
+                              color: Constants.colors[Constants.colorindex],
                             ),
                           ),
                           Text(
                             'Back',
                             style: TextStyle(
                               fontSize: 20,
-                              color: Constants.iAccent,
+                              color: Constants.colors[Constants.colorindex],
                             ),
                           ),
                         ],
@@ -128,7 +128,7 @@ class _GameScreenState extends State<GameScreen> {
                   ),
                   backgroundColor: Constants.iBlack,
                   bottom: TabBar(
-                    indicatorColor: Constants.iAccent,
+                    indicatorColor: Constants.colors[Constants.colorindex],
                     indicatorSize: TabBarIndicatorSize.label,
                     tabs: [
                       new Column(
@@ -226,7 +226,7 @@ class _GameScreenState extends State<GameScreen> {
                                           "Group Name",
                                           style: TextStyle(
                                               fontSize: 20.0,
-                                              color: Constants.iAccent),
+                                              color: Constants.colors[Constants.colorindex]),
                                         ),
                                         Text(
                                           snapshot.data.getName(),
@@ -255,7 +255,7 @@ class _GameScreenState extends State<GameScreen> {
                                           "Category",
                                           style: TextStyle(
                                               fontSize: 20.0,
-                                              color: Constants.iAccent),
+                                              color: Constants.colors[Constants.colorindex]),
                                         ),
                                         Text(
                                           snapshot.data.getDescription(),
@@ -284,7 +284,7 @@ class _GameScreenState extends State<GameScreen> {
                                           "Group Code",
                                           style: TextStyle(
                                               fontSize: 20.0,
-                                              color: Constants.iAccent),
+                                              color: Constants.colors[Constants.colorindex]),
                                         ),
                                         Text(
                                           snapshot.data.getGroupCode(),
@@ -313,7 +313,7 @@ class _GameScreenState extends State<GameScreen> {
                                           "Players ready",
                                           style: TextStyle(
                                               fontSize: 20.0,
-                                              color: Constants.iAccent),
+                                              color: Constants.colors[Constants.colorindex]),
                                         ),
                                         Text(
                                           snapshot.data
@@ -375,7 +375,7 @@ class _GameScreenState extends State<GameScreen> {
                                                         Icons.check_box,
                                                         size: 25,
                                                         color:
-                                                            Constants.iAccent,
+                                                        Constants.colors[Constants.colorindex],
                                                       )
                                                     ],
                                                   ),
@@ -420,7 +420,7 @@ class _GameScreenState extends State<GameScreen> {
                           Text(
                             'Start Game',
                             style: new TextStyle(
-                              color: Constants.iAccent,
+                              color: Constants.colors[Constants.colorindex],
                               fontSize: 25.0,
                             ),
                           ),
@@ -438,7 +438,7 @@ class _GameScreenState extends State<GameScreen> {
                           Text(
                             'Rules',
                             style: new TextStyle(
-                              color: Constants.iAccent,
+                              color: Constants.colors[Constants.colorindex],
                               fontSize: 25.0,
                             ),
                           ),
@@ -456,7 +456,7 @@ class _GameScreenState extends State<GameScreen> {
                           Text(
                             'Questions',
                             style: new TextStyle(
-                              color: Constants.iAccent,
+                              color: Constants.colors[Constants.colorindex],
                               fontSize: 25.0,
                             ),
                           ),
@@ -475,7 +475,7 @@ class _GameScreenState extends State<GameScreen> {
                           Text(
                             'Leave',
                             style: new TextStyle(
-                              color: Constants.iAccent,
+                              color: Constants.colors[Constants.colorindex],
                               fontSize: 25.0,
                             ),
                           ),
@@ -500,7 +500,7 @@ class _GameScreenState extends State<GameScreen> {
                           Text(
                             'Miscellaneous',
                             style: new TextStyle(
-                              color: Constants.iAccent,
+                              color: Constants.colors[Constants.colorindex],
                               fontSize: 25.0,
                             ),
                           ),
@@ -562,7 +562,7 @@ class _GameScreenState extends State<GameScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
                 FlatButton(
-                  color: Constants.iAccent,
+                  color: Constants.colors[Constants.colorindex],
                   onPressed: () {
                     if (groupdata.isUserPlaying(Constants.getUserData())) {
                       groupdata.removePlayingUser(Constants.getUserData());
@@ -594,7 +594,7 @@ class _GameScreenState extends State<GameScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
                 FlatButton(
-                  color: Constants.iAccent,
+                  color: Constants.colors[Constants.colorindex],
                   onPressed: () {
 
                         Navigator.push(
@@ -605,7 +605,7 @@ class _GameScreenState extends State<GameScreen> {
                             ));
 
                   },
-                  splashColor: Constants.iAccent,
+                  splashColor: Constants.colors[Constants.colorindex],
                   child: Text(
                     "Start Game",
                     style: TextStyle(color: Constants.iBlack, fontSize: 22),
@@ -623,12 +623,12 @@ class _GameScreenState extends State<GameScreen> {
 
   Widget _buildBottomCard(BuildContext context) {
     return Card(
-      color: Constants.iAccent,
+      color: Constants.colors[Constants.colorindex],
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: InkWell(
-          splashColor: Constants.iAccent,
+          splashColor: Constants.colors[Constants.colorindex],
           onTap: () {
             //nothing yet
           },
@@ -662,7 +662,7 @@ class _GameScreenState extends State<GameScreen> {
               child: new Text(
                 "Close",
                 style: TextStyle(
-                    color: Constants.iAccent,
+                    color: Constants.colors[Constants.colorindex],
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),

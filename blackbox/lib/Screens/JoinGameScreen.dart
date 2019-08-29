@@ -89,16 +89,16 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                     onTap: () => Navigator.pop(context),
                     child: Row(children: [Padding(
                       padding: EdgeInsets.only(right: 20),
-                      child: const Icon(
+                      child: Icon(
                         Icons.arrow_back,
-                        color: Constants.iAccent,
+                        color: Constants.colors[Constants.colorindex],
                       ),
                     ),
                       Text(
                         'Back',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Constants.iAccent,
+                          color: Constants.colors[Constants.colorindex],
                         ),
                       ),
                     ],
@@ -121,7 +121,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                     SizedBox(height: 80.0),
                     Text(
                       'Enter group code below',
-                      style: new TextStyle(color: Constants.iAccent, fontSize: 25.0, ),
+                      style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 25.0, ),
                     ),
                     SizedBox(height: 25.0),
                     codeField,

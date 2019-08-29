@@ -102,7 +102,7 @@ class _QuestionScreenState extends State<QuestionScreen>
         child: Material(
           elevation: 5.0,
           borderRadius: BorderRadius.circular(16.0),
-          color: Constants.iAccent,
+          color: Constants.colors[Constants.colorindex],
           child: MaterialButton(
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -137,9 +137,9 @@ class _QuestionScreenState extends State<QuestionScreen>
                   onTap: () => Navigator.of(context).pop(true),
                   child: Padding(
                     padding: EdgeInsets.only(right: 1),
-                    child: const Icon(
+                    child:  Icon(
                       Icons.arrow_back,
-                      color: Constants.iAccent,
+                      color: Constants.colors[Constants.colorindex],
                     ),
                   ),
                 ),
@@ -149,7 +149,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                   },
                   child: Text(
                     "Results",
-                    style: TextStyle(fontSize: 20.0, color: Constants.iAccent),
+                    style: TextStyle(fontSize: 20.0, color: Constants.colors[Constants.colorindex]),
                   ),
                 ),
               ]),
@@ -166,7 +166,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                 },
                 child: Text(
                   "Leave",
-                  style: TextStyle(fontSize: 20.0, color: Constants.iAccent),
+                  style: TextStyle(fontSize: 20.0, color: Constants.colors[Constants.colorindex]),
                 ),
               )
             ],
@@ -198,7 +198,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                               Text(
                                 'Question',
                                 style: new TextStyle(
-                                    color: Constants.iAccent,
+                                    color: Constants.colors[Constants.colorindex],
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.bold),
                               ),

@@ -40,16 +40,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(right: 20),
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_back,
-                          color: Constants.iAccent,
+                          color: Constants.colors[Constants.colorindex],
                         ),
                       ),
                       Text(
                         'Back',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Constants.iAccent,
+                          color: Constants.colors[Constants.colorindex],
                         ),
                       ),
                     ],
@@ -71,7 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Icon(
                           Icons.perm_identity,
                           size: 75,
-                          color: Constants.iAccent,
+                          color: Constants.colors[Constants.colorindex],
                         )),
                     SizedBox(height: 20.0),
                     Container(
@@ -90,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Text(
                       'Nothing here yet! Stay tuned for future updates!',
                       style: new TextStyle(
-                          color: Constants.iAccent,
+                          color: Constants.colors[Constants.colorindex],
                           fontSize: 20.0,
                           fontWeight: FontWeight.w300),
                     ),
