@@ -162,7 +162,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       child: Material(
         elevation: 5.0,
         borderRadius: BorderRadius.circular(16.0),
-        color: Constants.iDarkGrey,
+        color: Constants.iAccent,
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -186,7 +186,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           child: Text("Create",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20).copyWith(
-                  color: Constants.iWhite, fontWeight: FontWeight.bold)),
+                  color: Constants.iBlack, fontWeight: FontWeight.bold)),
         ),
       ),
     );
