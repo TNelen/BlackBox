@@ -193,11 +193,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          'Profile',
-                          style: new TextStyle(
-                              fontSize: 15, color: Constants.iWhite),
-                        )
+                        AutoSizeText(
+                          "Profile",
+                          style: TextStyle(fontSize: 15, color: Constants.iWhite),
+                          maxLines: 1,
+                        ),
                       ],
                     )))));
   }
@@ -234,11 +234,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          'Settings',
-                          style: new TextStyle(
-                              fontSize: 15, color: Constants.iWhite),
-                        )
+                        AutoSizeText(
+                          "Settings",
+                          style: TextStyle(fontSize: 15, color: Constants.iWhite),
+                          maxLines: 1,
+                        ),
                       ],
                     )))));
   }
@@ -275,11 +275,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          'Report problem',
-                          style: new TextStyle(
-                              fontSize: 15, color: Constants.iWhite),
-                        )
+                        AutoSizeText(
+                          "Report Problem",
+                          style: TextStyle(fontSize: 15, color: Constants.iWhite),
+                          maxLines: 1,
+                        ),
                       ],
                     )))));
   }
