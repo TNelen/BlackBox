@@ -8,7 +8,6 @@ import '../Interfaces/Database.dart';
 import '../DataContainers/GroupData.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
-import '../Timer.dart';
 import 'Popup.dart';
 
 class QuestionScreen extends StatefulWidget {

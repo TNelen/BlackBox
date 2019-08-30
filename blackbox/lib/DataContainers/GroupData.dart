@@ -390,7 +390,7 @@ class GroupData {
   }
 
   String getWinner(){
-    String winner = null;
+    String winner = '';
     int winnervotes = 0;
     _lastVotes.forEach((userID, numVotes){
       if (numVotes > winnervotes){
@@ -452,9 +452,9 @@ class GroupData {
         threeVotesR = numVotes;
       }
     });
-    top[3] = oneVotesR.toString();
-    top[4] =  twoVotesR.toString();
-    top[5] =  threeVotesR.toString();
+    top[3] = oneVotesR>0? oneVotesR.toString():' ';
+    top[4] =  twoVotesR>0? twoVotesR.toString():' ';
+    top[5] =  threeVotesR>0? threeVotesR.toString():' ';
 
     return top;
 

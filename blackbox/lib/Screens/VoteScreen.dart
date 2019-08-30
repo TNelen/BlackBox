@@ -7,7 +7,6 @@ import '../Interfaces/Database.dart';
 import '../DataContainers/GroupData.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
-import '../Timer.dart';
 
 class VoteScreen extends StatefulWidget {
   Database _database;
