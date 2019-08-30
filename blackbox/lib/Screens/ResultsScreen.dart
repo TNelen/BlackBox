@@ -92,6 +92,7 @@ class ResultScreenState extends State<ResultScreen> {
         () {
           _timeleft = _timeleft - 1;
           if (_timeleft <= 0) {
+            timer.cancel();
             timeout = true;
             print('---TIMEOUT---');
           }
