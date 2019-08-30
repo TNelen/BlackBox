@@ -39,7 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
   _HomeScreenState(Database db) {
     this.database = db;
 
-
     /// Log a user in and update variables accordingly
     if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
       ///check if user isn't loged in via google already when returning to homescreen
@@ -56,10 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
         print(e.toString());
       }
     }
-
-
-
-
 
     /*if (versionCodeDatabase != versionCodeYAML){
       Popup.makePopup(context, 'Whooohooo!', 'There is a new app version available!');
@@ -182,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: InkWell(
                 splashColor: Constants.colors[Constants.colorindex],
                 onTap: () {
-                 //  if (GoogleUserHandler.isLoggedIn()) {
+                  //  if (GoogleUserHandler.isLoggedIn()) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -190,8 +185,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ProfileScreen(database),
                       ));
                   // } else {
-                   //Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
-                    //}
+                  //Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
+                  //}
                 },
                 child: Container(
                     padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
@@ -351,29 +346,30 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void isAppUpToDate() async {
     Appinfo appinfo;
-
-    appinfo = await database.getAppInfo();
-    String versionCodeDatabase = appinfo.getVersion().toString();
-    print(versionCodeDatabase);
-    if(versionCodeDatabase != version && Constants.enableMSG[Constants.enableVersionMSG]){
-      Constants.enableVersionMSG = 1;
-      Popup.makePopup(context, 'Whooohooo!', 'A new app version is available! \n\nUpdate your app to get the best experience.' );
+    if (Constants.enableMSG[Constants.enableVersionMSG]) {
+      appinfo = await database.getAppInfo();
+      String versionCodeDatabase = appinfo.getVersion().toString();
+      print(versionCodeDatabase);
+      if (versionCodeDatabase != version) {
+        Constants.enableVersionMSG = 1;
+        Popup.makePopup(context, 'Whooohooo!',
+            'A new app version is available! \n\nUpdate your app to get the best experience.');
+      }
     }
   }
 
-  void isWelcomeMSG() async{
+  void isWelcomeMSG() async {
     Appinfo appinfo;
-
-    appinfo = await database.getAppInfo();
-    String welcomeMessage = appinfo.getLoginMessage();
-    print(welcomeMessage);
-    if(Constants.enableMSG[Constants.enableWelcomeMSG]  && welcomeMessage.length != 0){
-      Constants.enableWelcomeMSG = 1;
-      Popup.makePopup(context, 'Welcome!', welcomeMessage);
+    if (Constants.enableMSG[Constants.enableWelcomeMSG]) {
+      appinfo = await database.getAppInfo();
+      String welcomeMessage = appinfo.getLoginMessage();
+      print(welcomeMessage);
+      if (welcomeMessage.length != 0) {
+        Constants.enableWelcomeMSG = 1;
+        Popup.makePopup(context, 'Welcome!', welcomeMessage);
+      }
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -482,4 +478,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
