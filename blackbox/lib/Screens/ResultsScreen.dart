@@ -72,6 +72,11 @@ class ResultScreenState extends State<ResultScreen> {
 
   @override
   void initState() {
+
+    Constants.enableLove = 0;
+    Constants.enableGrammar = 0;
+    Constants.enableDisturbing = 0;
+
     groupData = null;
     super.initState();
     _loadingInProgress = true;
@@ -131,7 +136,7 @@ class ResultScreenState extends State<ResultScreen> {
             //  groupData.getNumVotes().toString());
             if (currentQuestion == groupData.getQuestionID()) {
               if (groupData.getAdminID() == Constants.getUserID()) {
-                if (groupData.getNumVotes() == groupData.getNumPlaying() ||
+                if (groupData.getNumVotes() >= groupData.getNumPlaying() ||
                     timeout == true) {
                   getRandomNexQuestion();
                   print('admin set next question');

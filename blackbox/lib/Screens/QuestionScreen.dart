@@ -48,9 +48,7 @@ class _QuestionScreenState extends State<QuestionScreen>
     WidgetsBinding.instance.addObserver(this);
     BackButtonInterceptor.add(myInterceptor);
 
-    Constants.enableLove = 0;
-    Constants.enableGrammar = 0;
-    Constants.enableDisturbing = 0;
+
   }
 
   @override
