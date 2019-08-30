@@ -27,7 +27,10 @@ class Constants{
  //accent color list
   static const colors = [Color(0xFF92dff3), Color(0xFFffbf00), Color(0xFFed2939), Color(0xFFA2DAAF)];
 
-  List enableReport = [0,0,0];
+
+  static int enableVersionMSG = 0;
+  static int enableWelcomeMSG = 0;
+  static const enableMSG = [true, false];
 
   static int enableGrammar = 0;
   static int enableDisturbing = 0;

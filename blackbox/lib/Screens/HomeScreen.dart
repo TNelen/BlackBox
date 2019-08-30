@@ -34,7 +34,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Database database;
   int pageIndex = 0;
-  String version = '1.0.0';
+  String version = '1.0.0+1';
 
   _HomeScreenState(Database db) {
     this.database = db;
@@ -355,8 +355,21 @@ class _HomeScreenState extends State<HomeScreen> {
     appinfo = await database.getAppInfo();
     String versionCodeDatabase = appinfo.getVersion().toString();
     print(versionCodeDatabase);
-    if(versionCodeDatabase != version){
+    if(versionCodeDatabase != version && Constants.enableMSG[Constants.enableVersionMSG]){
+      Constants.enableVersionMSG = 1;
       Popup.makePopup(context, 'Whooohooo!', 'A new app version is available! \n\nUpdate your app to get the best experience.' );
+    }
+  }
+
+  void isWelcomeMSG() async{
+    Appinfo appinfo;
+
+    appinfo = await database.getAppInfo();
+    String welcomeMessage = appinfo.getLoginMessage();
+    print(welcomeMessage);
+    if(Constants.enableMSG[Constants.enableWelcomeMSG]  && welcomeMessage.length != 0){
+      Constants.enableWelcomeMSG = 1;
+      Popup.makePopup(context, 'Welcome!', welcomeMessage);
     }
   }
 
@@ -368,6 +381,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final height = MediaQuery.of(context).size.height;
 
     isAppUpToDate();
+    isWelcomeMSG();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
