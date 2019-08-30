@@ -182,12 +182,16 @@ class _HomeScreenState extends State<HomeScreen> {
             child: InkWell(
                 splashColor: Constants.colors[Constants.colorindex],
                 onTap: () {
+                 //  if (GoogleUserHandler.isLoggedIn()) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) =>
                             ProfileScreen(database),
                       ));
+                  // } else {
+                   //Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
+                    //}
                 },
                 child: Container(
                     padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
@@ -464,3 +468,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+

@@ -27,8 +27,23 @@ class Constants{
  //accent color list
   static const colors = [Color(0xFF92dff3), Color(0xFFffbf00), Color(0xFFed2939), Color(0xFFA2DAAF)];
 
+  List enableReport = [0,0,0];
 
+  static int enableGrammar = 0;
+  static int enableDisturbing = 0;
+  static int enableLove = 0;
 
+  static void setGrammar(int bool){
+    enableGrammar = bool;
+  }
+  static void setDisturbing(int bool){
+    enableDisturbing = bool;
+  }
+  static void setLove(int bool){
+    enableLove = bool;
+  }
+
+  static const enable = [true, false];
 
   static UserData userData = new UserData("Some ID", "Elon Muskrat");
   static final Database database = new Firebase();
