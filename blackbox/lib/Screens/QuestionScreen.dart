@@ -11,9 +11,7 @@ import 'GameScreen.dart';
 import 'Popup.dart';
 
 
-bool enableDisturbing = true;
-bool enableGrammar = true;
-bool enableLove = true;
+
 
 class QuestionScreen extends StatefulWidget {
   Database _database;
