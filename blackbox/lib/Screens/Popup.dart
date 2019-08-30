@@ -93,6 +93,7 @@ class Popup {
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
+
                 Constants.setUsername(usernameController.text.toString());
                 database.updateUser(new UserData(
                     Constants.getUserID(), usernameController.text.toString()));
