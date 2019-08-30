@@ -226,7 +226,8 @@ class _GameScreenState extends State<GameScreen> {
                                           "Group Name",
                                           style: TextStyle(
                                               fontSize: 20.0,
-                                              color: Constants.colors[Constants.colorindex]),
+                                              color: Constants.colors[
+                                                  Constants.colorindex]),
                                         ),
                                         Text(
                                           snapshot.data.getName(),
@@ -255,7 +256,8 @@ class _GameScreenState extends State<GameScreen> {
                                           "Category",
                                           style: TextStyle(
                                               fontSize: 20.0,
-                                              color: Constants.colors[Constants.colorindex]),
+                                              color: Constants.colors[
+                                                  Constants.colorindex]),
                                         ),
                                         Text(
                                           snapshot.data.getDescription(),
@@ -284,7 +286,8 @@ class _GameScreenState extends State<GameScreen> {
                                           "Group Code",
                                           style: TextStyle(
                                               fontSize: 20.0,
-                                              color: Constants.colors[Constants.colorindex]),
+                                              color: Constants.colors[
+                                                  Constants.colorindex]),
                                         ),
                                         Text(
                                           snapshot.data.getGroupCode(),
@@ -313,7 +316,8 @@ class _GameScreenState extends State<GameScreen> {
                                           "Players ready",
                                           style: TextStyle(
                                               fontSize: 20.0,
-                                              color: Constants.colors[Constants.colorindex]),
+                                              color: Constants.colors[
+                                                  Constants.colorindex]),
                                         ),
                                         Text(
                                           snapshot.data
@@ -374,8 +378,9 @@ class _GameScreenState extends State<GameScreen> {
                                                       Icon(
                                                         Icons.check_box,
                                                         size: 25,
-                                                        color:
-                                                        Constants.colors[Constants.colorindex],
+                                                        color: Constants.colors[
+                                                            Constants
+                                                                .colorindex],
                                                       )
                                                     ],
                                                   ),
@@ -427,8 +432,8 @@ class _GameScreenState extends State<GameScreen> {
                           SizedBox(height: 10),
                           Text(
                             'Press ready to set yourself in ready state' +
-                                '\n'
-                                    'When all players are ready, the button on the bottom becomes the start button, press start to begin the game.',
+                                '\n' +
+                                'When all players are ready, the button on the bottom becomes the start button, press start to begin the game.',
                             style: new TextStyle(
                               color: Constants.iWhite,
                               fontSize: 18.0,
@@ -436,7 +441,7 @@ class _GameScreenState extends State<GameScreen> {
                           ),
                           SizedBox(height: 20),
                           Text(
-                            'Rules',
+                            'Voting',
                             style: new TextStyle(
                               color: Constants.colors[Constants.colorindex],
                               fontSize: 25.0,
@@ -445,8 +450,34 @@ class _GameScreenState extends State<GameScreen> {
                           SizedBox(height: 10),
                           Text(
                             'Vote on a group member' +
-                                '\n'
-                                    'Once a vote is submitted, it can not be changed.',
+                                '\n' +
+                                'Once a vote is submitted, it can not be changed.' +
+                                '\n' +
+                                'You have 2 minutes to vote for a question.',
+                            style: new TextStyle(
+                              color: Constants.iWhite,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'Collecting results',
+                            style: new TextStyle(
+                              color: Constants.colors[Constants.colorindex],
+                              fontSize: 25.0,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'After you have votes you will enter a collecting results waiting screen.' +
+                                '\n' +
+                                'It shows the number of people that still have to vote.' +
+                                '\n' +
+                                'The admin wil see a countdown timer. It shows the time there is left for the members to vote' +
+                                '\n' +
+                                'When this time is elapsed the players go to the results screen, no matter how many peaple still have to vote.' +
+                                '\n' +
+                                '',
                             style: new TextStyle(
                               color: Constants.iWhite,
                               fontSize: 18.0,
@@ -463,14 +494,13 @@ class _GameScreenState extends State<GameScreen> {
                           SizedBox(height: 10),
                           Text(
                             'Questions are generated in a random order.' +
-                                '\n'
-                                    'The category of the questions is chosen on group creation',
+                                '\n' +
+                                'The category of the questions is chosen on group creation',
                             style: new TextStyle(
                               color: Constants.iWhite,
                               fontSize: 18.0,
                             ),
                           ),
-
                           SizedBox(height: 20),
                           Text(
                             'Leave',
@@ -482,8 +512,8 @@ class _GameScreenState extends State<GameScreen> {
                           SizedBox(height: 10),
                           Text(
                             'Leave a running game by clicking on the leave button ingame.' +
-                                '\n'
-                                    'Please do not close the app before leaving an active game.',
+                                '\n' +
+                                'Please do not close the app before leaving an active game.',
                             style: new TextStyle(
                               color: Constants.iWhite,
                               fontSize: 18.0,
@@ -557,7 +587,8 @@ class _GameScreenState extends State<GameScreen> {
 
   Widget _buildBottomCardChildren(BuildContext context) {
     ///Check if all members are ready to go to questionscreen
-    return groupdata.getPlaying().length != groupdata.getMembers().length || groupdata.getNextQuestionString() == ""
+    return groupdata.getPlaying().length != groupdata.getMembers().length ||
+            groupdata.getNextQuestionString() == ""
         ? Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -596,14 +627,12 @@ class _GameScreenState extends State<GameScreen> {
                 FlatButton(
                   color: Constants.colors[Constants.colorindex],
                   onPressed: () {
-
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  QuestionScreen(_database, groupdata, code),
-                            ));
-
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              QuestionScreen(_database, groupdata, code),
+                        ));
                   },
                   splashColor: Constants.colors[Constants.colorindex],
                   child: Text(

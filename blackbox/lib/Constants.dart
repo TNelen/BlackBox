@@ -30,7 +30,7 @@ class Constants{
 
 
 
-  static UserData userData = new UserData("Some ID", "Elon MuskRat");
+  static UserData userData = new UserData("Some ID", "Elon Muskrat");
   static final Database database = new Firebase();
 
   //setaccentColor
