@@ -1,4 +1,3 @@
-import 'package:blackbox/Constants.dart';
 import 'package:blackbox/DataContainers/Appinfo.dart';
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
@@ -6,8 +5,6 @@ import 'package:blackbox/Exceptions/GroupNotFoundException.dart';
 import '../DataContainers/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
-
-import 'FirebaseUtility.dart';
 
 class FirebaseGetters {
   
@@ -94,7 +91,7 @@ class FirebaseGetters {
     UserData user;
 
     try {
-        var document = await Firestore.instance
+        await Firestore.instance
             .collection("users")
             .document( uniqueID ).get().then( (doc) {
               if (doc.exists) {
@@ -104,13 +101,13 @@ class FirebaseGetters {
                   {
                     user = new UserData.full(doc.documentID, doc.data['name'], doc.data['accent']);
                   } else {
-                    user = new UserData(doc.documentID, doc.data['name']);
+                    user = new UserData.full(doc.documentID, doc.data['name'], 0);
                   }
                 }
               }
             });
         
-        if (user.getUserID() == null || user.getUsername() == null)
+        if (user == null || user.getUserID() == null || user.getUsername() == null)
         {
           return null;
         }
@@ -159,7 +156,7 @@ class FirebaseGetters {
     String randomQuestionID;
 
     /// Select a random ID from the right category
-    var doc = await Firestore.instance
+    await Firestore.instance
           .collection("questions")
           .document("questionList")
           .get()
@@ -200,7 +197,7 @@ class FirebaseGetters {
       
 
       /// Get a random question
-      var documentSnap = await Firestore.instance
+      await Firestore.instance
             .collection("questions")
             .document( randomQuestionID ).get().then( (document) {
               Category category = Category.Official;

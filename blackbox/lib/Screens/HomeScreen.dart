@@ -48,7 +48,13 @@ class _HomeScreenState extends State<HomeScreen> {
         guh.handleSignIn().then((user) async {
           /// Log the retreived user in and update the data in the database
           UserData saved = await database.getUserByID( user.getUserID() );
-          Constants.setUserData( saved );
+          if (saved == null)
+          {
+            database.updateUser( user );
+            Constants.setUserData( user );
+          } else {
+            Constants.setUserData( saved );
+          }
 
           setState(() {
 

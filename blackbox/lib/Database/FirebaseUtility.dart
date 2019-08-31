@@ -10,7 +10,7 @@ class FirebaseUtility {
     bool exists = false;
 
     /// Get group with ID
-    var documentSnap = await Firestore.instance
+    await Firestore.instance
         .collection("groups")
         .document( groupID ).get().then( (document) {
 
@@ -28,7 +28,7 @@ class FirebaseUtility {
     bool exists = false;
 
     /// Get group with ID
-    var documentSnap = await Firestore.instance
+    await Firestore.instance
         .collection("groups")
         .document( userID ).get().then( (document) {
 
@@ -46,7 +46,7 @@ class FirebaseUtility {
     bool exists = false;
 
     /// Get group with ID
-    var documentSnap = await Firestore.instance
+    await Firestore.instance
         .collection("questions")
         .document( questionID ).get().then( (document) {
           
@@ -92,7 +92,7 @@ class FirebaseUtility {
     bool exists = false;
 
     /// Get group with ID
-    var documentSnap = await Firestore.instance
+    await Firestore.instance
         .collection("questions")
         .where( "question", isEqualTo: question.getQuestion()  )
         .getDocuments()
@@ -121,7 +121,7 @@ class FirebaseUtility {
         newRandom = getRandomID(6);
 
         // Check whether or not the generated ID exists 
-        var documentSnap = await Firestore.instance
+        await Firestore.instance
             .collection("questions")
             .document( newRandom ).get().then( (document) {
 
@@ -148,7 +148,7 @@ class FirebaseUtility {
         newRandom = FirebaseUtility.getRandomID( Constants.groupCodeLength );
 
         // Check whether or not the generated ID exists 
-        var documentSnap = await Firestore.instance
+        await Firestore.instance
             .collection("groups")
             .document( newRandom ).get().then( (document) {
 
