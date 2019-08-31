@@ -13,6 +13,7 @@ import 'package:blackbox/DataContainers/Question.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../DataContainers/Appinfo.dart';
+import '../DataContainers/UserData.dart';
 import 'Popup.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -44,10 +45,14 @@ class _HomeScreenState extends State<HomeScreen> {
       ///check if user isn't loged in via google already when returning to homescreen
       try {
         GoogleUserHandler guh = new GoogleUserHandler();
-        guh.handleSignIn().then((user) {
+        guh.handleSignIn().then((user) async {
           /// Log the retreived user in and update the data in the database
-          Constants.setUserData(user);
-          database.updateUser(user);
+          UserData saved = await database.getUserByID( user.getUserID() );
+          Constants.setUserData( saved );
+
+          setState(() {
+
+          });
 
           _test();
         });

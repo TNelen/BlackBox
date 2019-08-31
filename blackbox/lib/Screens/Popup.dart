@@ -95,8 +95,8 @@ class Popup {
               onPressed: () {
 
                 Constants.setUsername(usernameController.text.toString());
-                database.updateUser(new UserData(
-                    Constants.getUserID(), usernameController.text.toString()));
+                database.updateUser(new UserData.full(
+                    Constants.getUserID(), usernameController.text.toString(), Constants.colorindex));
                 Navigator.pop(context);
               },
             ),

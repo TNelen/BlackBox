@@ -97,7 +97,17 @@ class FirebaseGetters {
         var document = await Firestore.instance
             .collection("users")
             .document( uniqueID ).get().then( (doc) {
-              user = new UserData(doc.documentID, doc.data['name']);
+              if (doc.exists) {
+                if (doc.data['name'] != null)
+                {
+                  if (doc.data['accent'] != null)
+                  {
+                    user = new UserData.full(doc.documentID, doc.data['name'], doc.data['accent']);
+                  } else {
+                    user = new UserData(doc.documentID, doc.data['name']);
+                  }
+                }
+              }
             });
         
         if (user.getUserID() == null || user.getUsername() == null)

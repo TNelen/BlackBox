@@ -2,12 +2,11 @@ class UserData {
 
   String _userID;
   String _username;
+  int _accent = 0;
 
-  UserData(String userID, String username)
-  {
-    this._userID = userID;
-    this._username = username;
-  }
+  UserData(this._userID, this._username);
+
+  UserData.full(this._userID, this._username, this._accent);
 
   /// Get this user's display name
   String getUsername()
@@ -27,4 +26,15 @@ class UserData {
     return _userID;
   }
 
+  /// Set the accent of this user
+  void setAccent(int accent)
+  {
+    _accent = accent;
   }
+
+  /// Get the accent of this user
+  int getAccent()
+  {
+    return _accent;
+  }
+}

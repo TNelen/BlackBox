@@ -54,6 +54,8 @@ class Constants{
   //setaccentColor
   static void setAccentColor(int color){
    colorindex = color-1;
+   userData.setAccent( colorindex );
+   database.updateUser( userData );
   }
 
 
@@ -61,6 +63,7 @@ class Constants{
   static void setUserData(UserData newData)
   {
     userData = newData;
+    colorindex = newData.getAccent();
   }
 
   /// Get the name of the user who's logged in

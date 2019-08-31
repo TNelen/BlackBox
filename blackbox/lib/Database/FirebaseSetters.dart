@@ -232,6 +232,7 @@ class FirebaseSetters {
       
     var data = new Map<String, dynamic>();
     data['name'] = userData.getUsername();
+    data['accent'] = userData.getAccent();
 
     await Firestore.instance.runTransaction((Transaction transaction) async {
       DocumentReference docRef = Firestore.instance.collection("users").document( uniqueID );
