@@ -182,7 +182,7 @@ class FirebaseGetters {
               } else if (questions[0] != null) {
                 randomQuestionID = questions[0];
               } else {
-                return new Question.add("Something went wrong wile fetching the question!", Category.Default);
+                return new Question.add("Something went wrong wile fetching the question!", Category.Official);
               }
             }
           );
@@ -193,14 +193,14 @@ class FirebaseGetters {
       var documentSnap = await Firestore.instance
             .collection("questions")
             .document( randomQuestionID ).get().then( (document) {
-              Category category = Category.Default;
+              Category category = Category.Official;
 
               for (Category cat in Category.values)
               {
                 String comparableCategory = cat.toString().split('.').last;
                 if (document.data['category'] == null)
                 {
-                  cat = Category.Default;
+                  cat = Category.Official;
                 }
 
                 if ( comparableCategory == document.data['category'] )

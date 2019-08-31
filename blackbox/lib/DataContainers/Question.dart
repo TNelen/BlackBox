@@ -8,7 +8,7 @@ import 'UserData.dart';
 /// Otherwise, questions that are transfered from category may be within multiple categories 
 enum Category {
   Any,
-  Default,
+  Official,
   Community
 }
 
@@ -20,7 +20,7 @@ class Question {
   {
     List<Category> categories = new List<Category>();
     categories.add(Category.Any);
-    categories.add(Category.Default);
+    categories.add(Category.Official);
     categories.add(Category.Community);
     return categories;
   }
@@ -53,7 +53,7 @@ class Question {
       }
     }
 
-    return Category.Default;
+    return Category.Official;
   }
 
 
@@ -67,7 +67,7 @@ class Question {
 
   String _questionID  = "";
   String _question    = "";
-  Category _category  = Category.Default;
+  Category _category  = Category.Official;
   String _creatorID   = "";
   String _creatorName = "";
 
@@ -85,7 +85,7 @@ class Question {
   Question(this._questionID, this._question, this._category, this._creatorID, this._creatorName) {
     if (_questionID == null)    _questionID   = "";
     if (_question == null)      _question     = "";
-    if (_category == null)      _category     = Category.Default;
+    if (_category == null)      _category     = Category.Official;
     if (_creatorID == null)     _creatorID    = "";
     if (_creatorName == null)   _creatorName  = "";
   }
