@@ -48,17 +48,22 @@ class _HomeScreenState extends State<HomeScreen> {
         guh.handleSignIn().then((user) async {
           /// Log the retreived user in and update the data in the database
           UserData saved = await database.getUserByID( user.getUserID() );
+          /// Save user if the account is new
           if (saved == null)
           {
             database.updateUser( user );
             Constants.setUserData( user );
           } else {
+            /// Otherwise, set the loaded data
             Constants.setUserData( saved );
           }
 
           setState(() {
 
           });
+
+          isAppUpToDate();
+          isWelcomeMSG();
 
           _test();
         });
@@ -386,9 +391,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-
-    isAppUpToDate();
-    isWelcomeMSG();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
