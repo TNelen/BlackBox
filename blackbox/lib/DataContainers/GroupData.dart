@@ -151,10 +151,11 @@ class GroupData {
 
 
   /// Get the username of the member with the provided ID
-  /// Might return null if the ID is unknown
+  /// Will return 'User left' when no user is found
   String getUserName( String ID )
   {
-    return _members[ID];
+    String name = _members[ID];
+    return name != null ? name : "User left";
   }
 
 
