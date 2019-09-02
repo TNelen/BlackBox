@@ -10,9 +10,11 @@ import 'FirebaseUtility.dart';
 
 class FirebaseSetters {
 
-  static Future< bool > voteOnUser(GroupData groupData, String voteeID) async {
+  static bool isNextQuestion; 
 
-    print("Start");
+  static Future< bool > voteOnUser(GroupData groupData, final String voteeID) async {
+
+    isNextQuestion = false;
 
     int previousVotes = 0;
     int newVotes = 0;
@@ -25,6 +27,7 @@ class FirebaseSetters {
       bool newTry = true;
       
       Firestore.instance.runTransaction((Transaction transaction) async {
+        print("Transaction");
         if (newTry) {
           newTry = false;
           print("Transaction start");
@@ -59,7 +62,10 @@ class FirebaseSetters {
         }
       });
     
+      await Future.delayed(Duration(milliseconds: 100));
+
       DocumentSnapshot snap = await Firestore.instance.collection("groups").document( groupData.getGroupCode() ).get();
+      
       Map<String, int> newData = new Map<String, int>();
       snap.data['newVotes'].forEach( (key, value) {
         newData[key.toString()] = value;
@@ -80,9 +86,9 @@ class FirebaseSetters {
 
       numTries++;
 
-      print("Transaction end: try: " + numTries.toString() + " : newVotes: " + newVotes.toString() + " and previousVotes: " + previousVotes.toString());
+      print("Transaction end: " + voteeID + " try: " + numTries.toString() + " : newVotes: " + newVotes.toString() + " and previousVotes: " + previousVotes.toString());
 
-    } while( newVotes == previousVotes && numTries < 5);
+    } while( newVotes == previousVotes && numTries < 5 && !isNextQuestion);
 
 
     return true;
