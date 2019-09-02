@@ -25,8 +25,9 @@ class FirebaseSetters {
       Firestore.instance.runTransaction((Transaction transaction) async {
         print("Transaction start");
         
-        await transaction.get( groupRef ).then( (ds) async {
-          /// Initialize lists
+        DocumentSnapshot ds = await transaction.get( groupRef );
+
+        /// Initialize lists
         Map<dynamic, dynamic> dbData = ds.data['newVotes'];
         Map<String, int> convertedData = new Map<String, int>();
 
@@ -52,7 +53,6 @@ class FirebaseSetters {
 
         await transaction.update(groupRef, upd);
       });
-      } );
     
       DocumentSnapshot snap = await Firestore.instance.collection("groups").document( groupData.getGroupCode() ).get();
       Map<String, int> newData = new Map<String, int>();
