@@ -12,7 +12,10 @@ class FirebaseSetters {
 
   static Future< bool > voteOnUser(GroupData groupData, String voteeID) async {
 
+    print("Start");
+
     await Firestore.instance.runTransaction((Transaction transaction) async {
+       print("Transaction start");
       DocumentReference groupRef = Firestore.instance
                                     .collection("groups")
                                     .document( groupData.getGroupCode() );
@@ -25,22 +28,25 @@ class FirebaseSetters {
 
       /// Loop the database Map and add values as Strings to the data Map
       dbData.forEach( (key, value) {
+         print(key.toString() + " - " + value.toString());
         convertedData[key.toString()] = value;
       } );
 
       if (convertedData.containsKey( voteeID )) {
         convertedData[voteeID] += 1;
+         print("votes: " + convertedData[voteeID].toString());
       } else {
         convertedData[voteeID] = 1;
+        print("Votes: start at one");
       }
 
       Map<String, dynamic> upd = new Map<String, dynamic>();
       upd['newVotes'] = convertedData;
 
       await transaction.update(groupRef, upd);
-
+      print("Transaction done");
     });
-
+    print("Return true");
     return true;
 
   }
