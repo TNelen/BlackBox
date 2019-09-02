@@ -42,7 +42,6 @@ class ResultScreenState extends State<ResultScreen> {
   bool _loadingInProgress;
 
   bool timeout;
-  bool changed;
 
   int _timeleft = 120;
 
@@ -73,8 +72,6 @@ class ResultScreenState extends State<ResultScreen> {
 
   @override
   void initState() {
-
-    changed = false;
     Constants.enableLove = 0;
     Constants.enableGrammar = 0;
     Constants.enableDisturbing = 0;
@@ -139,9 +136,8 @@ class ResultScreenState extends State<ResultScreen> {
             if (currentQuestion == groupData.getQuestionID()) {
               if (groupData.getAdminID() == Constants.getUserID()) {
                 if (groupData.getNumVotes() >= groupData.getNumPlaying() ||
-                    timeout == true && changed != true) {
+                    timeout == true) {
                   getRandomNexQuestion();
-                  changed = true;
                   print('admin set next question');
                   print(groupData.getQuestionID());
 
