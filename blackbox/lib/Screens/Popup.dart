@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Constants.dart';
 import '../Interfaces/Database.dart';
-import 'QuestionScreen.dart';
-import '../DataContainers/GroupData.dart';
 import '../DataContainers/UserData.dart';
 
 class Popup {
@@ -44,8 +42,6 @@ class Popup {
     );
   }
 
-
-
   static void makeChangeUsernamePopup(BuildContext context, Database database) {
     TextEditingController usernameController = new TextEditingController();
 
@@ -77,9 +73,19 @@ class Popup {
               borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: new Text(
             'Change username',
-            style: TextStyle(color: Constants.iBlack, fontSize: 25),
+            style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 25),
           ),
-          content: usernameField,
+          content: Container(
+              height: 230,
+              child: Column(
+                            children: [
+            Text('This name will be shown in the game, make sure others recognise you!', style:TextStyle(
+                color: Constants.iDarkGrey,
+                fontSize: 20,
+                fontWeight: FontWeight.bold),),
+            SizedBox(height: 25),
+            usernameField,
+          ])),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -91,15 +97,14 @@ class Popup {
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
-
-                if (usernameController.text.toString().length < 3){
-                  Popup.makePopup(context, 'Oops!', 'Please enter more then 3 characters');
-                }
-
-                else {
+                if (usernameController.text.toString().length < 3) {
+                  Popup.makePopup(
+                      context, 'Oops!', 'Please enter more then 3 characters');
+                } else {
                   Constants.setUsername(usernameController.text.toString());
                   database.updateUser(new UserData.full(
-                      Constants.getUserID(), usernameController.text.toString(),
+                      Constants.getUserID(),
+                      usernameController.text.toString(),
                       Constants.colorindex));
                   Navigator.pop(context);
                 }

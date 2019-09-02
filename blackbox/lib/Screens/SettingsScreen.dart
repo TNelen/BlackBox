@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'GameScreen.dart';
 import '../Interfaces/Database.dart';
-import 'HomeScreen.dart';
-import 'Popup.dart';
 import '../Constants.dart';
 
 class SettingsScreen extends StatefulWidget {

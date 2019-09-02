@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import '../main.dart';
 import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
-import 'ResultsScreen.dart';
 import 'VoteScreen.dart';
 import '../Interfaces/Database.dart';
-import '../DataContainers/GroupData.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
-import 'Popup.dart';
 import '../Database/FirebaseStream.dart';
 
 class QuestionScreen extends StatefulWidget {

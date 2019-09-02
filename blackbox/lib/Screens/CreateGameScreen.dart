@@ -4,7 +4,6 @@ import '../DataContainers/GroupData.dart';
 import '../Interfaces/Database.dart';
 import 'GameScreen.dart';
 import 'Popup.dart';
-import 'GameScreen.dart';
 import 'package:share/share.dart';
 import '../DataContainers/Question.dart';
 import 'package:auto_size_text/auto_size_text.dart';

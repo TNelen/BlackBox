@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'GameScreen.dart';
 import '../Interfaces/Database.dart';
-import 'HomeScreen.dart';
 import 'Popup.dart';
 import '../Constants.dart';
 
@@ -88,6 +86,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Constants.colors[Constants.colorindex],
                         )),
                     SizedBox(height: 20.0),
+
+                    SizedBox(height: 20.0),
+
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -109,14 +110,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 size: 30),
                           )
                         ]),
-                    SizedBox(height: 40.0),
-                    Text(
-                      'Nothing here yet! Stay tuned for future updates!',
-                      style: new TextStyle(
-                          color: Constants.colors[Constants.colorindex],
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w300),
-                    ),
+                    SizedBox(height: 15.0),
+
                   ],
                 ),
               ),

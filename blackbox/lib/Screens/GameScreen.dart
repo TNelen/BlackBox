@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
-
 import '../Database/FirebaseStream.dart';
 import '../DataContainers/GroupData.dart';
-import 'JoinGameScreen.dart';
 import '../Constants.dart';
 import 'QuestionScreen.dart';
 import '../DataContainers/Question.dart';
 import 'HomeScreen.dart';
-import 'dart:async';
 
 class GameScreen extends StatefulWidget {
   Database _database;
