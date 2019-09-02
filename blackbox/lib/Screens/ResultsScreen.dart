@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../main.dart';
 import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
 import 'QuestionScreen.dart';
@@ -7,8 +8,6 @@ import '../Database/FirebaseStream.dart';
 import '../DataContainers/Question.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'dart:async';
 
 class ResultScreen extends StatefulWidget {
   Database _database;
@@ -27,8 +26,8 @@ class ResultScreen extends StatefulWidget {
   }
 
   @override
-  ResultScreenState createState() => ResultScreenState(
-      _database, groupData, code, currentQuestion, currentQuestionString);
+  ResultScreenState createState() => ResultScreenState(_database, groupData,
+      code, currentQuestion, currentQuestionString);
 }
 
 class ResultScreenState extends State<ResultScreen> {
@@ -43,8 +42,6 @@ class ResultScreenState extends State<ResultScreen> {
 
   bool timeout;
 
-  int _timeleft = 120;
-
   ResultScreenState(Database db, GroupData groupData, String code,
       String currentQuestion, String currentQuestionString) {
     this._database = db;
@@ -53,15 +50,19 @@ class ResultScreenState extends State<ResultScreen> {
     this.currentQuestion = currentQuestion;
     this.currentQuestionString = currentQuestionString;
     this.stream = new FirebaseStream(code);
+
   }
 
   int currentpage = 2;
+
 
   final controller = PageController(
     initialPage: 0,
     keepPage: false,
     viewportFraction: 0.85,
   );
+
+
 
   @override
   dispose() {
@@ -72,10 +73,6 @@ class ResultScreenState extends State<ResultScreen> {
 
   @override
   void initState() {
-    Constants.enableLove = 0;
-    Constants.enableGrammar = 0;
-    Constants.enableDisturbing = 0;
-
     groupData = null;
     super.initState();
     _loadingInProgress = true;
@@ -84,25 +81,13 @@ class ResultScreenState extends State<ResultScreen> {
       _loadingInProgress = false;
     }, onError: (error) {
       print("Some Error");
-    });
+    }
+
+    );
 
     BackButtonInterceptor.add(myInterceptor);
 
-    ///Timer for voting timeout.
 
-    Timer.periodic(
-      Duration(seconds: 1),
-      (Timer timer) => setState(
-        () {
-          _timeleft = _timeleft - 1;
-          if (_timeleft <= 0) {
-            timer.cancel();
-            timeout = true;
-            print('---TIMEOUT---');
-          }
-        },
-      ),
-    );
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent) {
@@ -112,8 +97,7 @@ class ResultScreenState extends State<ResultScreen> {
 
   void getRandomNexQuestion() async {
     groupData.setNextQuestion(
-        await _database.getRandomQuestion(groupData,
-            Question.getCategoryFromString(groupData.getDescription())),
+        await _database.getRandomQuestion(groupData, Question.getCategoryFromString(groupData.getDescription())),
         Constants.getUserData());
   }
 
@@ -121,6 +105,8 @@ class ResultScreenState extends State<ResultScreen> {
   Widget _buildBody(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
+
 
     return StreamBuilder(
         stream: stream.groupData,
@@ -131,18 +117,19 @@ class ResultScreenState extends State<ResultScreen> {
             return new Center(child: new CircularProgressIndicator());
           }
           if (snapshot.hasData) {
-            //print('Number of members votes: ' +
-            //  groupData.getNumVotes().toString());
+            print(groupData.getNumVotes());
             if (currentQuestion == groupData.getQuestionID()) {
               if (groupData.getAdminID() == Constants.getUserID()) {
-                if (groupData.getNumVotes() >= groupData.getNumPlaying() ||
-                    timeout == true) {
+                if (groupData.getNumVotes() == groupData.getNumPlaying() ) {
+
+
                   getRandomNexQuestion();
                   print('admin set next question');
                   print(groupData.getQuestionID());
 
                   print('currentQuestion ID = ' + currentQuestion);
                 }
+
               }
               return new WillPopScope(
                   onWillPop: () async => false,
@@ -152,69 +139,19 @@ class ResultScreenState extends State<ResultScreen> {
                         scaffoldBackgroundColor: Constants.iBlack),
                     home: Scaffold(
                       body: Center(
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                            RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                text: 'Collecting votes...',
-                                style: TextStyle(
-                                    color: Constants.iWhite,
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.w300),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 25,
-                            ),
-                            Text(
-                              (groupData.getNumPlaying() -
-                                          groupData.getNumVotes())
-                                      .toString() +
-                                  ' person(s) remaining',
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  color:
-                                      Constants.colors[Constants.colorindex]),
-                            ),
-                            SizedBox(
-                              height: 25,
-                            ),
-                            SizedBox(
-                              height: 25,
-                            ),
-                            groupData.getAdminID() == Constants.getUserID()
-                                ? Text(
-                                    'Time left for voting',
-                                    style: TextStyle(
-                                        fontSize: 25, color: Constants.iWhite),
-                                  )
-                                : SizedBox(
-                                    height: 0.1,
-                                  ),
-                            SizedBox(
-                              height: 12,
-                            ),
-                            groupData.getAdminID() == Constants.getUserID()
-                                ? Text(
-                                    _timeleft > 69
-                                        ? '1:' + (_timeleft - 60).toString()
-                                        : _timeleft > 60
-                                            ? '1:0' +
-                                                (_timeleft - 60).toString()
-                                            : _timeleft.toString() + 's',
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        color: Constants
-                                            .colors[Constants.colorindex]),
-                                  )
-                                : SizedBox(
-                                    height: 0.1,
-                                  ),
-                          ])),
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: 'Collecting votes...',
+                            style: TextStyle(
+                                color: Constants.iWhite, fontSize: 30),
+                          ),
+                        ),
+                      ),
                     ),
-                  ));
+                  )
+
+              );
             }
           }
 
@@ -291,7 +228,7 @@ class ResultScreenState extends State<ResultScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 40),
-                        AutoSizeText(
+                        Text(
                           '1. ' +
                               groupData.getTopThree('previous')[0] +
                               '   ' +
@@ -300,10 +237,9 @@ class ResultScreenState extends State<ResultScreen> {
                               color: Constants.iWhite,
                               fontSize: 25.0,
                               fontWeight: FontWeight.bold),
-                          maxLines: 1,
                         ),
                         SizedBox(height: 5),
-                        AutoSizeText(
+                        Text(
                           '2. ' +
                               groupData.getTopThree('previous')[1] +
                               '   ' +
@@ -312,10 +248,9 @@ class ResultScreenState extends State<ResultScreen> {
                               color: Constants.iWhite,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
-                          maxLines: 1,
                         ),
                         SizedBox(height: 5),
-                        AutoSizeText(
+                        Text(
                           '3. ' +
                               groupData.getTopThree('previous')[2] +
                               '   ' +
@@ -324,7 +259,6 @@ class ResultScreenState extends State<ResultScreen> {
                               color: Constants.iWhite,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
-                          maxLines: 1,
                         ),
                         SizedBox(height: 20),
                       ],
@@ -358,7 +292,7 @@ class ResultScreenState extends State<ResultScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 40),
-                        AutoSizeText(
+                        Text(
                           '1. ' +
                               groupData.getTopThree('alltime')[0] +
                               '   ' +
@@ -367,10 +301,9 @@ class ResultScreenState extends State<ResultScreen> {
                               color: Constants.iWhite,
                               fontSize: 25.0,
                               fontWeight: FontWeight.bold),
-                          maxLines: 1,
                         ),
                         SizedBox(height: 5),
-                        AutoSizeText(
+                        Text(
                           '2. ' +
                               groupData.getTopThree('alltime')[1] +
                               '   ' +
@@ -379,10 +312,9 @@ class ResultScreenState extends State<ResultScreen> {
                               color: Constants.iWhite,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
-                          maxLines: 1,
                         ),
                         SizedBox(height: 5),
-                        AutoSizeText(
+                        Text(
                           '3. ' +
                               groupData.getTopThree('alltime')[2] +
                               '   ' +
@@ -391,7 +323,6 @@ class ResultScreenState extends State<ResultScreen> {
                               color: Constants.iWhite,
                               fontSize: 20.0,
                               fontWeight: FontWeight.normal),
-                          maxLines: 1,
                         ),
                         SizedBox(height: 20),
                       ],
@@ -452,9 +383,8 @@ class ResultScreenState extends State<ResultScreen> {
                     },
                     child: Text(
                       "Leave",
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          color: Constants.colors[Constants.colorindex]),
+                      style:
+                      TextStyle(fontSize: 20.0, color: Constants.colors[Constants.colorindex]),
                     ),
                   )
                 ]),
