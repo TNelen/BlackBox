@@ -75,8 +75,6 @@ class FirebaseSetters {
 
       numTries++;
 
-      print("Transaction end: try: " + numTries.toString() + " : newVotes: " + newVotes.toString() + " and previousVotes: " + previousVotes.toString());
-
     } while( newVotes == previousVotes && numTries < 5);
 
 
