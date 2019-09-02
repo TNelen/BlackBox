@@ -28,9 +28,11 @@ class FirebaseSetters {
         convertedData[key.toString()] = value;
       } );
 
-      if (convertedData.containsKey( voteeID ))
+      if (convertedData.containsKey( voteeID )) {
         convertedData[voteeID] += 1;
-      else convertedData[voteeID] = 1;
+      } else {
+        convertedData[voteeID] = 1;
+      }
 
       Map<String, dynamic> upd = new Map<String, dynamic>();
       upd['newVotes'] = convertedData;
