@@ -20,8 +20,9 @@ class FirebaseSetters {
                                     .collection("groups")
                                     .document( groupData.getGroupCode() );
       
-      await transaction.get( groupRef ).then( (ds) async {
-        /// Initialize lists
+      DocumentSnapshot ds = await transaction.get( groupRef );
+    
+      /// Initialize lists
       Map<dynamic, dynamic> dbData = ds.data['newVotes'];
       Map<String, int> convertedData = new Map<String, int>();
 
@@ -46,8 +47,6 @@ class FirebaseSetters {
       print("Transaction done");
     });
     print("Return true");
-    } );
-    
     return true;
 
   }
