@@ -6,7 +6,6 @@ import '../Interfaces/Database.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
 import '../Database/FirebaseStream.dart';
-import '../Database/FirebaseSetters.dart';
 
 class QuestionScreen extends StatefulWidget {
   Database _database;
@@ -44,7 +43,6 @@ class _QuestionScreenState extends State<QuestionScreen>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     BackButtonInterceptor.add(myInterceptor);
-    FirebaseSetters.isNextQuestion = true;
   }
 
   @override
