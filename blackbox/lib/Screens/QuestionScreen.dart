@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import '../main.dart';
 import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
-import 'ResultsScreen.dart';
 import 'VoteScreen.dart';
 import '../Interfaces/Database.dart';
-import '../DataContainers/GroupData.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
-import 'Popup.dart';
 import '../Database/FirebaseStream.dart';
 
 class QuestionScreen extends StatefulWidget {
@@ -199,7 +195,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                   Flexible(
                     child: Container(
                       margin:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
+                          EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
                       padding: EdgeInsets.only(
                           top: height / 10, bottom: height / 10),
                       child: Hero(
@@ -235,7 +231,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                                     ),
                                     SizedBox(height: 80),
                                     groupData.getQuestion().getCategory() ==
-                                        'Community'
+                                            'Community'
                                         ? reportButton
                                         : SizedBox(height: 0.0001),
                                   ],
@@ -293,7 +289,7 @@ class _ReportPopupState extends State<ReportPopup> {
         onPressed: () {
           Constants.enable[Constants.enableDisturbing]
               ? database.reportQuestion(
-              groupdata.getQuestion(), ReportType.DISTURBING)
+                  groupdata.getQuestion(), ReportType.DISTURBING)
               : null;
 
           Constants.enableDisturbing = 1;
@@ -303,34 +299,34 @@ class _ReportPopupState extends State<ReportPopup> {
         child: Row(
           children: Constants.enable[Constants.enableDisturbing]
               ? <Widget>[
-            Icon(Icons.sentiment_dissatisfied,
-                color: Constants.iBlack, size: 20),
-            SizedBox(
-              width: 20,
-            ),
-            Text(
-              'Disturbing',
-              style: TextStyle(fontSize: 15, color: Constants.iBlack),
-            ),
-          ]
+                  Icon(Icons.sentiment_dissatisfied,
+                      color: Constants.iBlack, size: 20),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    'Disturbing',
+                    style: TextStyle(fontSize: 15, color: Constants.iBlack),
+                  ),
+                ]
               : <Widget>[
-            Icon(Icons.sentiment_dissatisfied,
-                color: Colors.grey, size: 20),
-            SizedBox(
-              width: 20,
-            ),
-            Text(
-              'Disturbing',
-              style: TextStyle(fontSize: 15, color: Colors.grey),
-            ),
-          ],
+                  Icon(Icons.sentiment_dissatisfied,
+                      color: Colors.grey, size: 20),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    'Disturbing',
+                    style: TextStyle(fontSize: 15, color: Colors.grey),
+                  ),
+                ],
         ));
 
     Widget grammarButton = FlatButton(
         onPressed: () {
           Constants.enable[Constants.enableGrammar]
               ? database.reportQuestion(
-              groupdata.getQuestion(), ReportType.GRAMMAR)
+                  groupdata.getQuestion(), ReportType.GRAMMAR)
               : null;
 
           Constants.enableGrammar = 1;
@@ -340,28 +336,28 @@ class _ReportPopupState extends State<ReportPopup> {
         child: Row(
           children: Constants.enable[Constants.enableGrammar]
               ? <Widget>[
-            Icon(Icons.spellcheck, color: Constants.iBlack, size: 20),
-            SizedBox(
-              width: 20,
-            ),
-            Text(
-              'Grammar Mistake',
-              style: TextStyle(fontSize: 15, color: Constants.iBlack),
-            ),
-          ]
+                  Icon(Icons.spellcheck, color: Constants.iBlack, size: 20),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    'Grammar Mistake',
+                    style: TextStyle(fontSize: 15, color: Constants.iBlack),
+                  ),
+                ]
               : <Widget>[
-            Icon(Icons.spellcheck, color: Colors.grey, size: 20),
-            SizedBox(
-              width: 20,
-            ),
-            Text(
-              'Grammar Mistake',
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.grey,
-              ),
-            ),
-          ],
+                  Icon(Icons.spellcheck, color: Colors.grey, size: 20),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    'Grammar Mistake',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
         ));
 
     Widget loveButton = FlatButton(
@@ -376,25 +372,25 @@ class _ReportPopupState extends State<ReportPopup> {
         child: Row(
           children: Constants.enable[Constants.enableLove]
               ? <Widget>[
-            Icon(Icons.favorite, color: Constants.iBlack, size: 20),
-            SizedBox(
-              width: 20,
-            ),
-            Text(
-              'Love it!',
-              style: TextStyle(fontSize: 15, color: Constants.iBlack),
-            ),
-          ]
+                  Icon(Icons.favorite, color: Constants.iBlack, size: 20),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    'Love it!',
+                    style: TextStyle(fontSize: 15, color: Constants.iBlack),
+                  ),
+                ]
               : <Widget>[
-            Icon(Icons.favorite, color: Colors.red, size: 20),
-            SizedBox(
-              width: 20,
-            ),
-            Text(
-              'Love it!',
-              style: TextStyle(fontSize: 15, color: Colors.grey),
-            ),
-          ],
+                  Icon(Icons.favorite, color: Colors.red, size: 20),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    'Love it!',
+                    style: TextStyle(fontSize: 15, color: Colors.grey),
+                  ),
+                ],
         ));
 
     // flutter defined function
