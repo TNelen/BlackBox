@@ -63,8 +63,6 @@ class Popup {
           filled: true,
           hintText: Constants.getUsername(),
           hintStyle: TextStyle(fontSize: 18, color: Constants.iDarkGrey),
-          counterText: usernameController.text.length.toString(),
-          counterStyle: TextStyle(color: Constants.iGrey),
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
@@ -94,10 +92,17 @@ class Popup {
               ),
               onPressed: () {
 
-                Constants.setUsername(usernameController.text.toString());
-                database.updateUser(new UserData.full(
-                    Constants.getUserID(), usernameController.text.toString(), Constants.colorindex));
-                Navigator.pop(context);
+                if (usernameController.text.toString().length < 3){
+                  Popup.makePopup(context, 'Oops!', 'Please enter more then 3 characters');
+                }
+
+                else {
+                  Constants.setUsername(usernameController.text.toString());
+                  database.updateUser(new UserData.full(
+                      Constants.getUserID(), usernameController.text.toString(),
+                      Constants.colorindex));
+                  Navigator.pop(context);
+                }
               },
             ),
           ],
