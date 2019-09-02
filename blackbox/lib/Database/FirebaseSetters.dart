@@ -10,86 +10,36 @@ import 'FirebaseUtility.dart';
 
 class FirebaseSetters {
 
-  static bool isNextQuestion; 
+  static Future< bool > voteOnUser(GroupData groupData, String voteeID) async {
 
-  static Future< bool > voteOnUser(GroupData groupData, final String voteeID) async {
-
-    isNextQuestion = false;
-
-    int previousVotes = 0;
-    int newVotes = 0;
-    int numTries = 0;
-
-    final DocumentReference groupRef = Firestore.instance.collection("groups").document( groupData.getGroupCode() );
-
-    do {      
-
-      bool newTry = true;
+    await Firestore.instance.runTransaction((Transaction transaction) async {
+      DocumentReference groupRef = Firestore.instance
+                                    .collection("groups")
+                                    .document( groupData.getGroupCode() );
       
-      Firestore.instance.runTransaction((Transaction transaction) async {
-        print("Transaction");
-        if (newTry) {
-          newTry = false;
-          print("Transaction start");
-          
-          DocumentSnapshot ds = await transaction.get( groupRef );
-
-          /// Initialize lists
-          Map<dynamic, dynamic> dbData = ds.data['newVotes'];
-          Map<String, int> convertedData = new Map<String, int>();
-
-          /// Loop the database Map and add values as Strings to the data Map
-          dbData.forEach( (key, value) {
-            convertedData[key.toString()] = value;
-          } );
-
-          previousVotes = convertedData[voteeID];
-          if (previousVotes == null)
-          {
-            previousVotes = 0;
-          }
-
-          if (convertedData.containsKey( voteeID )) {
-            convertedData[voteeID] += 1;
-          } else {
-            convertedData[voteeID] = 1;
-          }
-
-          Map<String, dynamic> upd = new Map<String, dynamic>();
-          upd['newVotes'] = convertedData;
-
-          await transaction.update(groupRef, upd);
-        }
-      });
+      DocumentSnapshot ds = await transaction.get( groupRef );
     
-      await Future.delayed(Duration(milliseconds: 100));
+      /// Initialize lists
+      Map<dynamic, dynamic> dbData = ds.data['newVotes'];
+      Map<String, int> convertedData = new Map<String, int>();
 
-      DocumentSnapshot snap = await Firestore.instance.collection("groups").document( groupData.getGroupCode() ).get();
-      
-      Map<String, int> newData = new Map<String, int>();
-      snap.data['newVotes'].forEach( (key, value) {
-        newData[key.toString()] = value;
+      /// Loop the database Map and add values as Strings to the data Map
+      dbData.forEach( (key, value) {
+        convertedData[key.toString()] = value;
       } );
 
-
-      if (newData.containsKey( voteeID ))
-      {
-        newVotes = newData[voteeID];
+      if (convertedData.containsKey( voteeID )) {
+        convertedData[voteeID] += 1;
       } else {
-        newVotes = 0;
+        convertedData[voteeID] = 1;
       }
 
-      if (newVotes == previousVotes)
-      {
-        await Future.delayed(Duration(seconds: 1));
-      }
+      Map<String, dynamic> upd = new Map<String, dynamic>();
+      upd['newVotes'] = convertedData;
 
-      numTries++;
+      await transaction.update(groupRef, upd);
 
-      print("Transaction end: " + voteeID + " try: " + numTries.toString() + " : newVotes: " + newVotes.toString() + " and previousVotes: " + previousVotes.toString());
-
-    } while( newVotes == previousVotes && numTries < 5 && !isNextQuestion);
-
+    });
 
     return true;
 
