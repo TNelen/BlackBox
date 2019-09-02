@@ -48,7 +48,7 @@ class Constants{
 
   static const enable = [true, false];
 
-  static UserData userData = new UserData("Some ID", "Elon Muskrat");
+  static UserData userData = new UserData("some2 ID", "Elon pc");
   static final Database database = new Firebase();
 
   //setaccentColor
