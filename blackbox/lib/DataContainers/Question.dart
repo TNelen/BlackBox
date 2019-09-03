@@ -1,5 +1,4 @@
-  
-  import '../Constants.dart';
+import '../Constants.dart';
 
 import 'UserData.dart';
   
@@ -7,7 +6,7 @@ import 'UserData.dart';
 /// IMPORTANT NOTE: Also add each new category to Question#getCategoriesAsList()
 /// Otherwise, questions that are transfered from category may be within multiple categories 
 enum Category {
-  Any,
+  All,
   Official,
   Community
 }
@@ -19,7 +18,7 @@ class Question {
   static List<Category> getCategoriesAsList()
   {
     List<Category> categories = new List<Category>();
-    categories.add(Category.Any);
+    categories.add(Category.All);
     categories.add(Category.Official);
     categories.add(Category.Community);
     return categories;

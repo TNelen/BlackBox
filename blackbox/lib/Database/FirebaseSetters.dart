@@ -299,6 +299,7 @@ class FirebaseSetters {
       }
 
 
+
       /// Save question
       DocumentReference qRef = Firestore.instance
                 .collection("questions")
@@ -310,7 +311,7 @@ class FirebaseSetters {
     /// Save question to the lists
     Question q = new Question(uniqueID, question.getQuestion(), question.getCategoryAsCategory(),question.getCreatorID(), question.getCreatorName());
     List<Category> categories = new List<Category>();
-    categories.add( Category.Any );
+    categories.add( Category.All );
     categories.add( question.getCategoryAsCategory() );
 
     await _saveQuestionToList( q, categories );
