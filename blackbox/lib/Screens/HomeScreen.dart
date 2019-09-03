@@ -1,4 +1,5 @@
 import 'package:blackbox/Database/GoogleUserHandler.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
 import '../Database/GoogleUserHandler.dart';
@@ -90,6 +91,21 @@ class _HomeScreenState extends State<HomeScreen> {
     for (String q in questions) {
       await database.updateQuestion(new Question.addDefault(q));
     }
+  }
+
+  /// Renames question category in questionList
+  @Deprecated('Must be deleted before release!')
+  void _renameQuestionCategory( String from, String to) async
+  {
+    DocumentSnapshot snap = await Firestore.instance.collection("questions").document( "questionList" ).get();
+
+    List<dynamic> existing = snap.data[ from ];
+    List<String> newer = existing.cast<String>().toList();
+
+    var newData = new Map<String, dynamic>();
+
+    newData[ to ] = newer;
+    await Firestore.instance.collection("questions").document( "questionList" ).updateData( newData );
   }
 
   Widget CreateGameBox() {
