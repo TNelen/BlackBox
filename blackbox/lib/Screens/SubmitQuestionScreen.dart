@@ -130,6 +130,7 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
                       SizedBox(height: 40.0),
                       Text(
                         'Submit Question',
+                        textAlign: TextAlign.center,
                         style: new TextStyle(
                             color: Constants.iWhite,
                             fontSize: 40.0,

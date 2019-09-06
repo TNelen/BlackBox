@@ -76,6 +76,8 @@ class _HomeScreenState extends State<HomeScreen> {
     /*if (versionCodeDatabase != versionCodeYAML){
       Popup.makePopup(context, 'Whooohooo!', 'There is a new app version available!');
     }*/
+
+
   }
 
   @Deprecated('For async testing only. Must be deleted before release!')
