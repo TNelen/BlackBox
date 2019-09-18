@@ -21,10 +21,10 @@ class GroupData {
   /// Status information about this group
   Question _nextQuestion = new Question.empty();  /// Data container for the current/next question
   Question _lastQuestion = new Question.empty();  /// Data container for the previous question
-  Map<String, int> _lastVotes;  /// Mapping unique IDs to the number of last votes a member had
-  Map<String, int> _newVotes;   /// Mapping unique IDs to the new number of votes a member had
-  Map<String, int> _totalVotes; /// Mapping unique IDs to the total amount of votes for that user
-  List<String> _playing;        /// A list of all IDs of members that are currently playing 
+  Map<String, String> _lastVotes;   /// Mapping the voter to the votee (previous round)
+  Map<String, String> _newVotes;    /// Mapping the voter to the votee (current round)
+  Map<String, int> _totalVotes;     /// Mapping unique IDs to the total amount of votes for that user
+  List<String> _playing;            /// A list of all IDs of members that are currently playing 
   
 
   /// ---------------------- \\\
@@ -35,8 +35,8 @@ class GroupData {
   /// Create a group with the given data fields
   GroupData(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members) {
     _nextQuestion = new Question.empty();
-    _lastVotes = new Map<String, int>();
-    _newVotes = new Map<String, int>();
+    _lastVotes = new Map<String, String>();
+    _newVotes = new Map<String, String>();
     _totalVotes = new Map<String, int>();
     _playing = new List<String>();
   }
@@ -62,8 +62,8 @@ class GroupData {
     _nextQuestion = new Question( snap.data['nextQuestionID'], snap.data['nextQuestion'], Question.getCategoryFromString(snap.data['nextQuestionCategory']), snap.data['nextQuestionCreatorID'], snap.data['nextQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
     _lastQuestion = new Question( snap.data['lastQuestionID'], snap.data['lastQuestion'], Question.getCategoryFromString(snap.data['lastQuestionCategory']), snap.data['lastQuestionCreatorID'], snap.data['lastQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
     _members = _convertFirebaseMapString( snap.data['members'] ),
-    _lastVotes = _convertFirebaseMapInt( snap.data['lastVotes'] ),
-    _newVotes = _convertFirebaseMapInt( snap.data['newVotes'] ),
+    _lastVotes = _convertFirebaseMapString( snap.data['lastVotes'] ),
+    _newVotes = _convertFirebaseMapString( snap.data['newVotes'] ),
     _totalVotes = _convertFirebaseMapInt( snap.data['totalVotes'] ),
     _playing = _convertFirebaseList( snap.data['playing'] );
 
@@ -383,17 +383,13 @@ class GroupData {
 
   ///returns the number of votes submitted this round
   int getNumVotes(){
-    int totalvotes = 0;
-    _newVotes.forEach((userID, numVotes){
-      totalvotes = totalvotes +  numVotes;
-    });
-    return totalvotes;
+    return _newVotes.length;
   }
 
   String getWinner(){
     String winner = '';
     int winnervotes = 0;
-    _lastVotes.forEach((userID, numVotes){
+    _getLastVoteCounts().forEach((userID, numVotes){
       if (numVotes > winnervotes){
         winner = getUserName(userID);
         winnervotes = numVotes;
@@ -409,7 +405,7 @@ class GroupData {
     Map<String, int> list = null;
     String type = Type;
     switch(type) {
-      case 'previous': list = _lastVotes; break;
+      case 'previous': list = _getLastVoteCounts(); break;
       case 'alltime' : list = _totalVotes; break;
     }
 
@@ -478,10 +474,46 @@ class GroupData {
   /// This is only for local votes
   void _offlineVote(String voteeID)
   {
-    if ( _newVotes.containsKey(voteeID) )
-      _newVotes[voteeID] = _newVotes[voteeID] + 1;
-    else
-      _newVotes[voteeID] = 1;
+    _newVotes[ Constants.getUserID() ] = voteeID;
+  }
+
+
+  /// Get the amount of votes each user has gotten in the previous round
+  /// Users without votes will not be in this list
+  Map<String, int> _getLastVoteCounts()
+  {
+    Map<String, int> voteCount = new Map<String, int>();
+
+    _lastVotes.forEach( (voter, votee) {
+      if (voteCount.containsKey( votee ))
+      {
+        voteCount[votee] += 1;
+      } else {
+        voteCount[votee] = 1;
+      }
+    } );
+
+
+    return voteCount;
+  }
+
+
+  /// Get the amount of votes each user has gotten in the current round
+  /// Users without votes will not be in this list
+  Map<String, int> _getNewVoteCounts()
+  {
+    Map<String, int> voteCount = new Map<String, int>();
+
+    _newVotes.forEach( (voter, votee) {
+      if (voteCount.containsKey( votee ))
+      {
+        voteCount[votee] += 1;
+      } else {
+        voteCount[votee] = 1;
+      }
+    } );
+
+    return voteCount;
   }
 
 
@@ -495,7 +527,7 @@ class GroupData {
     if ( admin.getUserID() == _adminID ) {
 
       /// Add votes to total count
-      _newVotes.forEach( (userID, numVotes) {
+      _getNewVoteCounts().forEach( (userID, numVotes) {
           if (_totalVotes.containsKey(userID))
             _totalVotes[userID] += numVotes;
           else
@@ -506,7 +538,7 @@ class GroupData {
       _lastVotes = _newVotes;
 
       /// Reset new votes
-      _newVotes = new Map<String, int>();
+      _newVotes = new Map<String, String>();
     }
   }
 
@@ -516,7 +548,7 @@ class GroupData {
   /// Get the name of a user with: GroupData#getUserName( String ID )
   Map<String, int> getNewVotes()
   {
-    return _newVotes;
+    return _getNewVoteCounts();
   }
 
 
@@ -525,9 +557,20 @@ class GroupData {
   /// Get the name of a user with: GroupData#getUserName( String ID )
   Map<String, int> getLastVotes()
   {
-    return _lastVotes;
+    return _getLastVoteCounts();
   }
 
+  /// Get the votes mapped to voters from the current round
+  Map<String, String> getNewVoteData()
+  {
+    return _newVotes;
+  }  
+
+  /// Get the votes mapped to voters from last round
+  Map<String, String> getLastVoteData()
+  {
+    return _lastVotes;
+  }  
 
   /// Get the votes of all rounds combined
   /// Unique user IDs are mapped to the amount of votes
