@@ -107,19 +107,6 @@ class Firebase implements Database{
 
 
   @override
-  @Deprecated("This will be removed")
-  Future<GroupData> getGroupFromUser(UserData userData) async {
-    return await FirebaseGetters.getGroupFromUser( userData );
-  }
-
-  @override
-  @Deprecated("Will be removed soon")
-  Future<List<GroupData>> getGroups(String uniqueUserID) async {
-    return await FirebaseGetters.getGroups( uniqueUserID );
-  }
-
-
-  @override
   Future<Question> getRandomQuestion(GroupData groupData, Category category) async {
     return await FirebaseGetters.getRandomQuestion( groupData , category );
   }

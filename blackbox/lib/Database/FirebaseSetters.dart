@@ -21,18 +21,14 @@ class FirebaseSetters {
     
       /// Initialize lists
       Map<dynamic, dynamic> dbData = ds.data['newVotes'];
-      Map<String, int> convertedData = new Map<String, int>();
+      Map<String, String> convertedData = new Map<String, String>();
 
       /// Loop the database Map and add values as Strings to the data Map
       dbData.forEach( (key, value) {
-        convertedData[key.toString()] = value;
+        convertedData[key.toString()] = value.toString();
       } );
 
-      if (convertedData.containsKey( voteeID )) {
-        convertedData[voteeID] += 1;
-      } else {
-        convertedData[voteeID] = 1;
-      }
+      convertedData[ Constants.getUserID() ] = voteeID;
 
       Map<String, dynamic> upd = new Map<String, dynamic>();
       upd['newVotes'] = convertedData;
@@ -203,15 +199,15 @@ class FirebaseSetters {
 
        /// Handle last votes 
       if (freshData.getLastVotes() == null || transfer)
-        data['lastVotes'] = groupData.getLastVotes();
+        data['lastVotes'] = groupData.getLastVoteData();
       else 
-        data['lastVotes'] = freshData.getLastVotes();
+        data['lastVotes'] = freshData.getLastVoteData();
 
       /// Handle new votes
       if (freshData.getNewVotes() == null || transfer)
-        data['newVotes'] = groupData.getNewVotes();
+        data['newVotes'] = groupData.getNewVoteData();
       else 
-        data['newVotes'] = freshData.getNewVotes();
+        data['newVotes'] = freshData.getNewVoteData();
 
       /// Handle total votes
       if (freshData.getTotalVotes() == null || transfer)
