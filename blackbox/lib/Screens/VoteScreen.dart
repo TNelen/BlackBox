@@ -132,6 +132,7 @@ class _VoteScreenState extends State<VoteScreen> {
                         code,
                         currentQuestion,
                         currentQuestionString,
+                        clickedmember
 
                       ),
                     ));

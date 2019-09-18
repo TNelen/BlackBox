@@ -35,6 +35,8 @@ class FirebaseSetters {
 
       await transaction.update(groupRef, upd);
 
+
+
     });
 
     return true;

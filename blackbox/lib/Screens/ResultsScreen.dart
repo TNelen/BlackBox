@@ -17,20 +17,22 @@ class ResultScreen extends StatefulWidget {
   String code;
   String currentQuestion;
   String currentQuestionString;
+  String clickedmember;
 
 
   ResultScreen(Database db, GroupData groupData, String code,
-      String currentQuestion, String currentQuestionString) {
+      String currentQuestion, String currentQuestionString, String clickedmember) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
     this.currentQuestion = currentQuestion;
     this.currentQuestionString = currentQuestionString;
+    this.clickedmember = clickedmember;
   }
 
   @override
   ResultScreenState createState() => ResultScreenState(_database, groupData,
-      code, currentQuestion, currentQuestionString);
+      code, currentQuestion, currentQuestionString, clickedmember);
 }
 
 class ResultScreenState extends State<ResultScreen> {
@@ -44,15 +46,17 @@ class ResultScreenState extends State<ResultScreen> {
   bool _loadingInProgress;
   Timer timer;
   bool timeout;
+  String clickedmember;
 
   ResultScreenState(Database db, GroupData groupData, String code,
-      String currentQuestion, String currentQuestionString) {
+      String currentQuestion, String currentQuestionString, String clickedmember) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
     this.currentQuestion = currentQuestion;
     this.currentQuestionString = currentQuestionString;
     this.stream = new FirebaseStream(code);
+    this.clickedmember = clickedmember;
 
   }
 
@@ -139,6 +143,10 @@ class ResultScreenState extends State<ResultScreen> {
           }
           if (snapshot.hasData) {
             print(groupData.getNumVotes());
+            if (!groupData.getNewVotes().containsKey(Constants.getUserID())){
+              print('vote not submitted, try again');
+              _database.voteOnUser(groupData, clickedmember);
+            }
             if (currentQuestion == groupData.getQuestionID()) {
               if (groupData.getAdminID() == Constants.getUserID()) {
                 if (groupData.getNumVotes() == groupData.getNumPlaying()  || timeout == true) {
