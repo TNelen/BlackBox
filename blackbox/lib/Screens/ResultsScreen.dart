@@ -73,13 +73,17 @@ class ResultScreenState extends State<ResultScreen> {
 
 
   /// Perform an async fix when voting failed
-  void _performConcurrencyFix()
+  void _performConcurrencyFix() async
   {
-    if ( !groupData.getNewVotes().containsKey( Constants.getUserID()) && currentQuestion == groupData.getQuestionID())
+
+    GroupData newgroupdata = await _database.getGroupByCode(groupData.getGroupCode());
+
+    if ( !newgroupdata.getNewVotes().containsKey( Constants.getUserID()) && currentQuestion == newgroupdata.getQuestionID())
     {
       print('vote not submitted, try again');
       print(groupData.getQuestionID() + " - " + groupData.getQuestionID());
       _database.voteOnUser(groupData, clickedmember);
+
     }
   }
 
