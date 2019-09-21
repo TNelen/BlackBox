@@ -34,9 +34,13 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "be.dezijwegel.blackbox"
-        minSdkVersion 16
+        // Defines the minimum API level required to run the app.
+        minSdkVersion 15
+        // Specifies the API level used to test the app.
         targetSdkVersion 28
+        // Defines the version number of your app.
         versionCode flutterVersionCode.toInteger()
+        // Defines a user-friendly version name for your app.
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
