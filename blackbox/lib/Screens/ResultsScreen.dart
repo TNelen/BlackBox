@@ -77,14 +77,16 @@ class ResultScreenState extends State<ResultScreen> {
   {
 
     GroupData newgroupdata = await _database.getGroupByCode(groupData.getGroupCode());
+    
 
-    print("Question ok? " + currentQuestion == newgroupdata.getQuestionID());
-    print("Voted? " + newgroupdata.getNewVotes().containsKey( Constants.getUserID()).toString() );
-
-    if (currentQuestion == newgroupdata.getQuestionID() && !newgroupdata.getNewVotes().containsKey( Constants.getUserID()) )
+    if (newgroupdata.getNewVotes().containsKey( Constants.getUserID()))
     {
-      print('vote not submitted, try again');
-      print(groupData.getQuestionID() + " - " + groupData.getQuestionID());
+      return;
+    }
+
+
+    if (currentQuestion == newgroupdata.getQuestionID())
+    {
       _database.voteOnUser(groupData, clickedmember);
 
     }
