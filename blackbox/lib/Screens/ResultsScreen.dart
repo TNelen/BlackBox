@@ -73,13 +73,13 @@ class ResultScreenState extends State<ResultScreen> {
 
 
   /// Perform an async fix when voting failed
-  void _performConcurrencyFix( GroupData newGroupData ) async
+  void _performConcurrencyFix()
   {
-    if ( !newGroupData.getNewVotes().containsKey( Constants.getUserID()) && groupData.getQuestionID() == newGroupData.getQuestionID())
+    if ( !groupData.getNewVotes().containsKey( Constants.getUserID()) && currentQuestion == groupData.getQuestionID())
     {
       print('vote not submitted, try again');
-      print(groupData.getQuestionID() + " - " + newGroupData.getQuestionID());
-      await _database.voteOnUser(newGroupData, clickedmember);
+      print(groupData.getQuestionID() + " - " + groupData.getQuestionID());
+      _database.voteOnUser(groupData, clickedmember);
     }
   }
 
@@ -154,7 +154,7 @@ class ResultScreenState extends State<ResultScreen> {
           if (snapshot.hasData) {
             print(groupData.getNumVotes());
 
-            _performConcurrencyFix( groupData );
+            _performConcurrencyFix();
 
             if (currentQuestion == groupData.getQuestionID()) {
               if (groupData.getAdminID() == Constants.getUserID()) {
