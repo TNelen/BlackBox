@@ -8,3 +8,4 @@
 .idea/vcs.xml
 .idea/vcs.xml
 *.pdn
+blackbox/android/key.properties
