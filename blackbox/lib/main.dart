@@ -4,7 +4,11 @@ import 'Constants.dart';
 
 
 
-void main() => runApp(MyApp());
+void main() {
+  try {
+    runApp(MyApp());
+  } catch(exception) {}
+}
 
 class MyApp extends StatelessWidget {
 
