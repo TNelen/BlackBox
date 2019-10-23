@@ -49,22 +49,23 @@ class _HomeScreenState extends State<HomeScreen> {
         guh.handleSignIn().then((user) async {
           /// Log the retreived user in and update the data in the database
           UserData saved = await database.getUserByID( user.getUserID() );
+          
+          /// Update the in-app user data
+          Constants.setUserData( user );
+          
           /// Save user if the account is new
           if (saved == null)
           {
             database.updateUser( user );
-            Constants.setUserData( user );
-          } else {
-            /// Otherwise, set the loaded data
-            Constants.setUserData( saved );
           }
 
+          /// Refresh the homescreen
           setState(() {
 
           });
 
-          isAppUpToDate();
-          isWelcomeMSG();
+          isAppUpToDate();  /// Show an update reminder when needed
+          isWelcomeMSG();   /// Show a message if one is set in the database
 
           _test();
         });
