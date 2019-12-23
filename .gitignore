@@ -1,3 +1,5 @@
 .idea/
 *.pdn
 blackbox/android/key.properties
+blackbox/.flutter-plugins-dependencies
+blackbox/ios/Flutter/flutter_export_environment.sh
