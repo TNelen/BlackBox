@@ -120,16 +120,16 @@ class _HomeScreenState extends State<HomeScreen> {
           child: InkWell(
               splashColor: Constants.colors[Constants.colorindex],
               onTap: () {
-                 if (GoogleUserHandler.isLoggedIn()) {
+                // if (GoogleUserHandler.isLoggedIn()) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) =>
                           CreateGameScreen(database),
                     ));
-                 } else {
-                 Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
-                  }
+                // } else {
+                 //Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
+                  //}
               },
               child: Container(
                 padding: EdgeInsets.fromLTRB(15, 25, 25, 25),
@@ -162,16 +162,16 @@ class _HomeScreenState extends State<HomeScreen> {
           child: InkWell(
               splashColor: Constants.colors[Constants.colorindex],
               onTap: () {
-                 if (GoogleUserHandler.isLoggedIn()) {
+                // if (GoogleUserHandler.isLoggedIn()) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) =>
                           JoinGameScreen(database),
                     ));
-                 } else {
-                 Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
-                  }
+                 //} else {
+                 //Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
+                  //}
               },
               child: Container(
                 padding: EdgeInsets.fromLTRB(15, 25, 25, 25),
@@ -210,16 +210,16 @@ class _HomeScreenState extends State<HomeScreen> {
             child: InkWell(
                 splashColor: Constants.colors[Constants.colorindex],
                 onTap: () {
-                    if (GoogleUserHandler.isLoggedIn()) {
+                  //  if (GoogleUserHandler.isLoggedIn()) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) =>
                             ProfileScreen(database),
                       ));
-                   } else {
-                  Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
-                  }
+                  // } else {
+                  //Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
+                  //}
                 },
                 child: Container(
                     padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
@@ -426,7 +426,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding:
                       EdgeInsets.only(top: height / 10, left: 10, right: 10),
                   child: AutoSizeText(
-                    'Hi ' + Constants.getUsername() + '!',
+                    'Hi, ' + Constants.getUsername() + '!',
                     style: TextStyle(
                         fontSize: 50,
                         color: Constants.iWhite,

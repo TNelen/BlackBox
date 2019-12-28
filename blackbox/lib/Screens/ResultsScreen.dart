@@ -141,8 +141,15 @@ class ResultScreenState extends State<ResultScreen> {
 
   void getRandomNexQuestion() async {
     groupData.setNextQuestion(
-        await _database.getRandomQuestion(groupData, Question.getCategoryFromString(groupData.getDescription())),
+        await _database.getRandomQuestion(groupData,
+            Question.getCategoryFromString(groupData.getDescription())),
         Constants.getUserData());
+  }
+
+  void pageChanged(int index) {
+    setState(() {
+      //pageIndex = index;
+    });
   }
 
   @override
@@ -491,6 +498,9 @@ class ResultScreenState extends State<ResultScreen> {
                 ]),
               ),
               body: PageView(
+                onPageChanged: (index) {
+                  int index = controller.page.toInt();
+                },
                 controller: controller,
                 children: <Widget>[
                   winner,
