@@ -440,7 +440,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                     padding: EdgeInsets.only(left: 10, right: 10),
                     child: Text(
-                      ' BlackBox - The - Game ',
+                      ' Welcome to BlackBox! ',
                       style: TextStyle(
                           color: Constants.colors[Constants.colorindex],
                           fontSize: 25,

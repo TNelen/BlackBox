@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "1092212056414-3hutm3oc3tjndtu29msssf713ghalcp0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "be.dezijwegel.blackbox",
+            "certificate_hash": "4937bddc8b4793ec3ca79766faafb31f8556ed21"
+          }
+        },
+        {
+          "client_id": "1092212056414-2lauh5brmhjsq6ra76q032q7jhaks9bo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "be.dezijwegel.blackbox",
+            "certificate_hash": "db0cd3f4ce229c3434d4dac7223c05b701214b02"
+          }
+        },
+        {
           "client_id": "1092212056414-a0hn4k6ojintg17dr4gjgu5geha0i5f2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -28,14 +44,6 @@
           "android_info": {
             "package_name": "be.dezijwegel.blackbox",
             "certificate_hash": "896066500f3b93c383d691664d9c2d1a65969e19"
-          }
-        },
-        {
-          "client_id": "1092212056414-oem64ssq4un7s258k89pom3jureever8.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "be.dezijwegel.blackbox",
-            "certificate_hash": "db0cd3f4ce229c3434d4dac7223c05b701214b02"
           }
         },
         {

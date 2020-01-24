@@ -232,7 +232,7 @@ class _VoteScreenState extends State<VoteScreen> {
                                   child: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
-                                  data.getUsername(),
+                                  data.getUsername().split(' ')[0],
                                   style: new TextStyle(
                                       color: data.getUserID() == clickedmember
                                           ? Constants.iDarkGrey
