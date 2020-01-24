@@ -54,6 +54,8 @@ abstract class Database {
   /// The category is currently ignored
   Future< Question > getRandomQuestion( GroupData groupData, Category category );
 
+  /// Get the next question in the list
+  Future< Question > getNextQuestion( GroupData groupData, Category category );
 
   /// Check whether or not a group actually exists
   Future< bool > doesGroupExist( String groupID );

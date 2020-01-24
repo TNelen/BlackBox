@@ -111,6 +111,11 @@ class Firebase implements Database{
     return await FirebaseGetters.getRandomQuestion( groupData , category );
   }
 
+  @override
+  Future<Question> getNextQuestion(GroupData groupData, Category category) async {
+    return await FirebaseGetters.getNextQuestion( groupData , category );
+  }
+
 
   @override
   Future<UserData> getUserByID(String uniqueID) async {

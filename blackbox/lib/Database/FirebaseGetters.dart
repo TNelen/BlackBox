@@ -73,6 +73,13 @@ class FirebaseGetters {
     return groupData;
   }
 
+  static Future< Question > getNextQuestion( GroupData groupData, Category category ) async
+  {
+    //get next question from arraylist.
+  }
+
+
+
   static Future< Question > getRandomQuestion( GroupData groupData, Category category ) async
   {
     Question randomQuestion;
