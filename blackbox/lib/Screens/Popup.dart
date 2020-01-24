@@ -151,7 +151,7 @@ class Popup {
               borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: new Text(
             'Ask a question...',
-            style: TextStyle(color: Constants.iDarkGrey, fontSize: 25),
+            style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 25),
           ),
           content: Container(
               height: 230,

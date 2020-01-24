@@ -11,8 +11,7 @@ class VoteScreen extends StatefulWidget {
   GroupData groupData;
   String code;
 
-
-  VoteScreen(Database db, GroupData groupData, String code ) {
+  VoteScreen(Database db, GroupData groupData, String code) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
@@ -32,13 +31,10 @@ class _VoteScreenState extends State<VoteScreen> {
   String currentQuestion;
   String currentQuestionString;
 
-
-  _VoteScreenState(
-      Database db, GroupData groupData, String code ) {
+  _VoteScreenState(Database db, GroupData groupData, String code) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
-
   }
 
   @override
@@ -127,14 +123,12 @@ class _VoteScreenState extends State<VoteScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) => ResultScreen(
-                        _database,
-                        groupData,
-                        code,
-                        currentQuestion,
-                        currentQuestionString,
-                        clickedmember
-
-                      ),
+                          _database,
+                          groupData,
+                          code,
+                          currentQuestion,
+                          currentQuestionString,
+                          clickedmember),
                     ));
               } else {
                 _showDialog();
@@ -171,13 +165,15 @@ class _VoteScreenState extends State<VoteScreen> {
                     ),
                   ),
                   FlatButton(
+                    padding: EdgeInsets.all(10),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     child: Text(
                       "Question",
-                      style:
-                          TextStyle(fontSize: 20.0, color: Constants.colors[Constants.colorindex]),
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          color: Constants.colors[Constants.colorindex]),
                     ),
                   ),
                 ],
@@ -195,7 +191,9 @@ class _VoteScreenState extends State<VoteScreen> {
                 },
                 child: Text(
                   "Leave",
-                  style: TextStyle(fontSize: 20.0, color: Constants.colors[Constants.colorindex]),
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      color: Constants.colors[Constants.colorindex]),
                 ),
               )
             ],

@@ -191,6 +191,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                         ),
                       ),
                       FlatButton(
+                        padding: EdgeInsets.all(10),
                         onPressed: () {
                           Navigator.pop(context);
                         },
