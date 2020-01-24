@@ -6,6 +6,8 @@ import '../Interfaces/Database.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
 import '../Database/FirebaseStream.dart';
+import 'Popup.dart';
+
 
 class QuestionScreen extends StatefulWidget {
   Database _database;
@@ -30,6 +32,7 @@ class _QuestionScreenState extends State<QuestionScreen>
   String code;
   //List enableReports = [0, 0, 0];
   FirebaseStream stream;
+  TextEditingController questionController = new TextEditingController();
 
   _QuestionScreenState(Database db, GroupData groupData, String code) {
     this._database = db;
@@ -71,6 +74,40 @@ class _QuestionScreenState extends State<QuestionScreen>
 
   @override
   Widget build(BuildContext context) {
+
+    final SubmitButton = Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(16.0),
+      color: Constants.iDarkGrey,
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          String question = questionController.text;
+          //print('-' + question+ '-');
+          if (question.length == 0) {
+            Popup.makePopup(
+                context, 'Whoops!', 'You cannot submit an empty question');
+          } else if (question.length >= 20) {
+            if (question.endsWith('?')) {
+              print('----' + question + '---- Added to database');
+
+              ///ADD HERE: Add question to database
+              
+            } else
+              Popup.makePopup(context, 'Whoops',
+                  'Please end your question with a question mark');
+          } else
+            Popup.makePopup(
+                context, 'Whoops!', 'You cannot submit a question shorter than 20 characters');
+        },
+        child: Text("Submit",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20).copyWith(
+                color: Constants.iWhite, fontWeight: FontWeight.bold)),
+      ),
+    );
+
     return StreamBuilder(
         stream: stream.groupData,
         builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
@@ -79,8 +116,6 @@ class _QuestionScreenState extends State<QuestionScreen>
           if (!snapshot.hasData) {
             return new Center(child: new CircularProgressIndicator());
           }
-
-
 
           final width = MediaQuery.of(context).size.width;
           final height = MediaQuery.of(context).size.height;
@@ -118,7 +153,6 @@ class _QuestionScreenState extends State<QuestionScreen>
                   minWidth: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                   onPressed: () {
-
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -192,6 +226,44 @@ class _QuestionScreenState extends State<QuestionScreen>
               body: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  //submit own question button
+                  Hero(
+                    tag: 'own',
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Material(
+                        elevation: 5.0,
+                        borderRadius: BorderRadius.circular(16.0),
+                        color: Constants.iBlack,
+                        child: MaterialButton(
+                          minWidth: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
+                          onPressed: () {
+                             Popup.submitQuestionIngamePopup(context,_database);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                "Submit Question",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 17).copyWith(
+                                    color: Constants.iWhite,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Icon(
+                                Icons.library_add,
+                                color: Constants.iWhite,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   Flexible(
                     child: Container(
                       margin:
@@ -228,6 +300,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                                           color: Constants.iWhite,
                                           fontSize: 20.0,
                                           fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
                                     ),
                                     SizedBox(height: 80),
                                     groupData.getQuestion().getCategory() ==
@@ -251,6 +324,7 @@ class _QuestionScreenState extends State<QuestionScreen>
         });
   }
 }
+
 
 class ReportPopup extends StatefulWidget {
   Database _database;
