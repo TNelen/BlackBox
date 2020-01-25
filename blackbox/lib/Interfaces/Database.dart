@@ -57,6 +57,10 @@ abstract class Database {
   /// Get the next question in the list
   Future< Question > getNextQuestion( GroupData groupData, Category category );
 
+  ///Create question list
+  Future<List<String>> createQuestionList(String category);
+
+
   /// Check whether or not a group actually exists
   Future< bool > doesGroupExist( String groupID );
 

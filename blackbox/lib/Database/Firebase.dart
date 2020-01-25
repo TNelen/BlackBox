@@ -112,8 +112,14 @@ class Firebase implements Database{
   }
 
   @override
+  Future<List<String>> createQuestionList(String category) async {
+    return await FirebaseGetters.createQuestionList( category);
+  }
+  
+
+  @override
   Future<Question> getNextQuestion(GroupData groupData, Category category) async {
-    return await FirebaseGetters.getNextQuestion( groupData , category );
+    return await FirebaseGetters.getNextQuestion( groupData);
   }
 
 

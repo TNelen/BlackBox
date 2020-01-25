@@ -177,6 +177,8 @@ class FirebaseSetters {
         data['lastQuestionCategory'] = groupData.getLastQuestion().getCategory() ?? "Default";
         data['lastQuestionCreatorID'] = groupData.getLastQuestion().getCreatorID() ?? "";
         data['lastQuestionCreatorName'] = groupData.getLastQuestion().getCreatorName() ?? "";
+        data['questionlist'] = groupData.getQuestionList() ?? "";
+
       } else {  /// Otherwise: use current data
         data['name'] = freshData.getName();
         data['description'] = freshData.getDescription();
@@ -192,6 +194,7 @@ class FirebaseSetters {
         data['lastQuestionCategory'] = freshData.getLastQuestion().getCategory() ?? "Default";
         data['lastQuestionCreatorID'] = freshData.getLastQuestion().getCreatorID() ?? "";
         data['lastQuestionCreatorName'] = freshData.getLastQuestion().getCreatorName() ?? "";
+        data['questionlist'] = freshData.getQuestionList() ?? "";
       }
 
 

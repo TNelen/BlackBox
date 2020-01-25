@@ -73,7 +73,30 @@ class FirebaseGetters {
     return groupData;
   }
 
-  static Future< Question > getNextQuestion( GroupData groupData, Category category ) async
+
+  ///Get all the questions form the selected category and return it as a list
+  static Future<List<String>> createQuestionList(String category) async 
+  {
+
+     List<String> questionlist;
+     await Firestore.instance
+          .collection("questions")
+          .document("questionList")
+          .get()
+          .then (
+            (document) {
+              /// Convert List<dynamic> to List<String>
+              List<dynamic> existing = document.data[category];
+              questionlist = existing.cast<String>().toList();
+              questionlist.shuffle(Random.secure());
+              print(questionlist);
+            });
+            print(questionlist);
+      return questionlist;
+  }
+
+
+  static Future< Question > getNextQuestion( GroupData groupData) async
   {
     //get next question from arraylist.
   }

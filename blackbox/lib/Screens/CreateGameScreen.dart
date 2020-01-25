@@ -8,7 +8,6 @@ import 'package:share/share.dart';
 import '../DataContainers/Question.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-
 class CreateGameScreen extends StatefulWidget {
   Database _database;
 
@@ -118,26 +117,25 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
         crossAxisSpacing: 12.0,
         mainAxisSpacing: 12.0,
         childAspectRatio: (3 / 1),
-
         children: Question.getCategoriesAsStringList()
             .map((data) => Card(
-                  color: data == selectedCategory
-                      ? Constants.iLight
-                      : Constants.iDarkGrey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: InkWell(
-                    splashColor: Constants.colors[Constants.colorindex],
-                    onTap: () {
-                      setState(() {
-                        color = Constants.colors[Constants.colorindex];
-                        selectedCategory = data;
-                      });
-                    },
-                    child: Container(
-                      child: Center(
-                          child: Padding(
+                color: data == selectedCategory
+                    ? Constants.iLight
+                    : Constants.iDarkGrey,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                child: InkWell(
+                  splashColor: Constants.colors[Constants.colorindex],
+                  onTap: () {
+                    setState(() {
+                      color = Constants.colors[Constants.colorindex];
+                      selectedCategory = data;
+                    });
+                  },
+                  child: Container(
+                    child: Center(
+                      child: Padding(
                         padding: const EdgeInsets.only(left: 10.0, right: 10),
                         child: Text(
                           data,
@@ -174,9 +172,13 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             if (_groupName.length != 0 && _groupCategory != null) {
               // Generate a unique ID and save the group
               _database.generateUniqueGroupCode().then((code) {
-                _database.updateGroup(new GroupData(_groupName, _groupCategory,
-                    code, Constants.getUserID(), members));
-                _showDialog(code);
+                _database.createQuestionList(_groupCategory).then((questionlist) {
+                  print(questionlist);
+                GroupData groupdata = new GroupData(_groupName, _groupCategory,
+                    code, Constants.getUserID(), members, questionlist);
+                  _database.updateGroup(groupdata);
+                  _showDialog(code);
+                });
               });
             } else {
               Popup.makePopup(context, "Woops!", "Please fill in all fields!");
@@ -206,7 +208,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(right: 20),
-                    child:  Icon(
+                    child: Icon(
                       Icons.arrow_back,
                       color: Constants.colors[Constants.colorindex],
                     ),
@@ -240,12 +242,12 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                         fontWeight: FontWeight.w300),
                     maxLines: 1,
                   ),
-
                   SizedBox(height: 60.0),
                   Text(
                     'Enter game details',
-                    style:
-                        new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 25.0),
+                    style: new TextStyle(
+                        color: Constants.colors[Constants.colorindex],
+                        fontSize: 25.0),
                   ),
                   SizedBox(height: 45.0),
                   nameField,

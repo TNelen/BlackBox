@@ -17,8 +17,7 @@ class GroupData {
   String _groupID;           /// The unique ID of this group
   String _adminID;           /// The unique ID of the admin
   Map<String, String> _members = new Map<String, String>(); /// A list of unique IDs of all members in this group
-  List<String> _questions;                                  /// A list of available question id's
-
+  List<String> _questionlist;          /// A list of available question id's
 
   /// Status information about this group
   Question _nextQuestion = new Question.empty();  /// Data container for the current/next question
@@ -35,18 +34,17 @@ class GroupData {
 
 
   /// Create a group with the given data fields
-  GroupData(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members, this._questions) {
+  GroupData(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members, this._questionlist) {
     _nextQuestion = new Question.empty();
     _lastVotes = new Map<String, String>();
     _newVotes = new Map<String, String>();
     _totalVotes = new Map<String, int>();
     _playing = new List<String>();
-    _questions = new List<String>();
   }
 
   /// Create a group with the given data fields AND status fields
   GroupData.extended(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members, 
-                     this._nextQuestion, this._lastVotes, this._newVotes, this._totalVotes, this._playing, this._questions);
+                     this._nextQuestion, this._lastVotes, this._newVotes, this._totalVotes, this._playing, this._questionlist);
 
 
   /// ---------------- \\\
@@ -69,7 +67,7 @@ class GroupData {
     _newVotes = _convertFirebaseMapString( snap.data['newVotes'] ),
     _totalVotes = _convertFirebaseMapInt( snap.data['totalVotes'] ),
     _playing = _convertFirebaseList( snap.data['playing'] ),
-    _questions = _convertFirebaseList( snap.data['questions'] );
+    _questionlist = _convertFirebaseList( snap.data['questionlist'] );
 
 
   /// Convert a list from a DocumentSnapshot to a List<String>
@@ -128,14 +126,14 @@ class GroupData {
   ///Get all availbalbe question
   List<String> getQuestionList()
   {
-    return _questions;
+    return _questionlist;
   }
 
 
   ///Set available questions
   void setQuestionList(List<String> newQuestionsList)
   {
-    _questions = newQuestionsList;
+    _questionlist = newQuestionsList;
   }
 
   /// Gets the ID of the admin of this group
