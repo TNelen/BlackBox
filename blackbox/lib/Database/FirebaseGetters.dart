@@ -99,6 +99,31 @@ class FirebaseGetters {
   static Future< Question > getNextQuestion( GroupData groupData) async
   {
     //get next question from arraylist.
+    Question randomQuestion;
+    String questionId = groupData.getQuestionList().removeLast();
+      await Firestore.instance
+            .collection("questions")
+            .document( questionId ).get().then( (document) {
+              Category category = Category.Official;
+
+              for (Category cat in Category.values)
+              {
+                String comparableCategory = cat.toString().split('.').last;
+                if (document.data['category'] == null)
+                {
+                  cat = Category.Official;
+                }
+
+                if ( comparableCategory == document.data['category'] )
+                {
+                  category = cat;
+                }
+              }
+
+              randomQuestion = new Question(document.documentID, document.data['question'], category, document.data['creatorID'], document.data['creatorName']);
+            } );
+
+      return randomQuestion;
   }
 
 

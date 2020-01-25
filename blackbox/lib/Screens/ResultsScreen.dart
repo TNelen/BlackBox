@@ -135,8 +135,7 @@ class ResultScreenState extends State<ResultScreen> {
 
   void getRandomNexQuestion() async {
     groupData.setNextQuestion(
-        await _database.getRandomQuestion(groupData,
-            Question.getCategoryFromString(groupData.getDescription())),
+        await _database.getNextQuestion(groupData),
         Constants.getUserData());
   }
 

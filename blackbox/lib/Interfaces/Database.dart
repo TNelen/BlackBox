@@ -55,7 +55,7 @@ abstract class Database {
   Future< Question > getRandomQuestion( GroupData groupData, Category category );
 
   /// Get the next question in the list
-  Future< Question > getNextQuestion( GroupData groupData, Category category );
+  Future< Question > getNextQuestion( GroupData groupData);
 
   ///Create question list
   Future<List<String>> createQuestionList(String category);
