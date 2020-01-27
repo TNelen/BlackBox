@@ -126,10 +126,18 @@ class _SplashScreenState extends State<SplashScreen> {
                       padding: EdgeInsets.only(top: 10),
                     ),
                     Text(
-                      "Black Box",
+                      "BlackBox",
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 30,
+                          fontSize: 35,
+                          fontWeight: FontWeight.w300),
+                    ),
+                    SizedBox(height: 10,),
+                    Text(
+                      "A MAGNETAR Game",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
                           fontWeight: FontWeight.w300),
                     )
                   ],
