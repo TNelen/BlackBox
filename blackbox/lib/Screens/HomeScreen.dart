@@ -422,6 +422,7 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Column(children: <Widget>[
+                SizedBox(height: 30,),
                 Container(
                   padding:
                       EdgeInsets.only(top: height / 10, left: 35, right: 35),
