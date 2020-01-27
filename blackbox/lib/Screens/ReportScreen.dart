@@ -38,7 +38,7 @@ class _ReportScreenState extends State<ReportScreen> {
           fillColor: Constants.iWhite,
           filled: true,
           hintText: "Start typing here...",
-          hintStyle: TextStyle(fontSize: 18, color: Constants.iDarkGrey),
+          hintStyle: TextStyle(fontSize: 17, color: Constants.iDarkGrey),
           counterText: problemController.text.length.toString(),
           counterStyle: TextStyle(color: Constants.iGrey),
           border:
@@ -47,8 +47,8 @@ class _ReportScreenState extends State<ReportScreen> {
 
     final SubmitButton = Material(
       elevation: 5.0,
-      borderRadius: BorderRadius.circular(16.0),
-      color: Constants.iDarkGrey,
+      borderRadius: BorderRadius.circular(28.0),
+      color: Constants.colors[Constants.colorindex],
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -66,7 +66,7 @@ class _ReportScreenState extends State<ReportScreen> {
         child: Text("Submit",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20).copyWith(
-                color: Constants.iWhite, fontWeight: FontWeight.bold)),
+                color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -84,7 +84,7 @@ class _ReportScreenState extends State<ReportScreen> {
         ),
         child: DropdownButton<String>(
           value: categoryValue,
-          style: TextStyle(fontSize: 18, color: Constants.iDarkGrey),
+          style: TextStyle(fontSize: 17, color: Constants.iDarkGrey),
           onChanged: (String newValue) {
             setState(() {
               categoryValue = newValue;
@@ -123,7 +123,7 @@ class _ReportScreenState extends State<ReportScreen> {
         ),
         child: DropdownButton<String>(
           value: locationValue,
-          style: TextStyle(fontSize: 18, color: Constants.iDarkGrey),
+          style: TextStyle(fontSize: 17, color: Constants.iDarkGrey),
           onChanged: (String newValue) {
             setState(() {
               locationValue = newValue;
@@ -180,7 +180,9 @@ class _ReportScreenState extends State<ReportScreen> {
                 ),
               ]),
             ),
-            body: Center(
+            body: Padding(
+              padding: EdgeInsets.only(left: 22, right: 22),
+              child:Center(
               child: Container(
                 padding: EdgeInsets.all(10),
                 color: Constants.iBlack,
@@ -202,9 +204,10 @@ class _ReportScreenState extends State<ReportScreen> {
                       SizedBox(height: 40.0),
                       Text(
                         'Ran into an issue?',
+                        textAlign: TextAlign.center,
                         style: new TextStyle(
                             color: Constants.iWhite,
-                            fontSize: 40.0,
+                            fontSize: 25.0,
                             fontWeight: FontWeight.w300),
                       ),
                       SizedBox(height: 40.0),
@@ -213,7 +216,7 @@ class _ReportScreenState extends State<ReportScreen> {
                         textAlign: TextAlign.center,
                         style: new TextStyle(
                             color: Constants.colors[Constants.colorindex],
-                            fontSize: 25.0,
+                            fontSize: 17.0,
                             fontWeight: FontWeight.normal),
                       ),
                       SizedBox(height: 20.0),
@@ -222,8 +225,8 @@ class _ReportScreenState extends State<ReportScreen> {
                         textAlign: TextAlign.center,
                         style: new TextStyle(
                             color: Constants.iWhite,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.normal),
+                            fontSize: 17.0,
+                            fontWeight: FontWeight.w300),
                       ),
                       SizedBox(height: 30.0),
                       Text(
@@ -262,6 +265,6 @@ class _ReportScreenState extends State<ReportScreen> {
                       SubmitButton,
                     ]),
               ),
-            )));
+            ))));
   }
 }

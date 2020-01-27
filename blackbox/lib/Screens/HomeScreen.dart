@@ -132,14 +132,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   //}
               },
               child: Container(
-                padding: EdgeInsets.fromLTRB(15, 25, 25, 25),
+                padding: EdgeInsets.fromLTRB(15, 15, 25, 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(
                       Icons.create,
                       color: Constants.colors[Constants.colorindex],
-                      size: 50,
+                      size: 25,
                     ),
                     Text(
                       "Create Game",
@@ -174,14 +174,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   //}
               },
               child: Container(
-                padding: EdgeInsets.fromLTRB(15, 25, 25, 25),
+                padding: EdgeInsets.fromLTRB(15, 15, 25, 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(
                       Icons.search,
                       color: Constants.colors[Constants.colorindex],
-                      size: 50,
+                      size: 25,
                     ),
                     Text(
                       "Join Game",
@@ -424,11 +424,11 @@ class _HomeScreenState extends State<HomeScreen> {
               Column(children: <Widget>[
                 Container(
                   padding:
-                      EdgeInsets.only(top: height / 10, left: 10, right: 10),
+                      EdgeInsets.only(top: height / 10, left: 35, right: 35),
                   child: AutoSizeText(
                     'Hi, ' + Constants.getUsername() + '!',
                     style: TextStyle(
-                        fontSize: 50,
+                        fontSize: 35,
                         color: Constants.iWhite,
                         fontWeight: FontWeight.w300),
                     maxLines: 1,
@@ -443,7 +443,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ' Welcome to BlackBox! ',
                       style: TextStyle(
                           color: Constants.colors[Constants.colorindex],
-                          fontSize: 25,
+                          fontSize: 20,
                           fontWeight: FontWeight.w300),
                     )),
                 SizedBox(
@@ -465,6 +465,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
+                SizedBox(height: 15),
                 DotsIndicator(
                   dotsCount: 4,
                   position: pageIndex,
@@ -475,7 +476,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               ]),
               Container(
-                  padding: EdgeInsets.only(left: 10, right: 10),
+                  padding: EdgeInsets.only(left: 45, right: 45),
                   child: Column(
                     children: <Widget>[
                       Container(
@@ -483,9 +484,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Start playing',
+                            'Start playing...',
                             style: TextStyle(
-                                fontSize: 30,
+                                fontSize: 25,
                                 color: Constants.iWhite,
                                 fontWeight: FontWeight.w300),
                           ),
@@ -497,7 +498,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       JoinGameBox(),
                       SizedBox(
-                        height: 35,
+                        height: 120,
                       )
                     ],
                   )),

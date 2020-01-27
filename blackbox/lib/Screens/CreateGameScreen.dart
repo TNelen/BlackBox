@@ -101,7 +101,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     final nameField = TextField(
       obscureText: false,
       controller: nameController,
-      style: TextStyle(fontSize: 20, color: Colors.black),
+      style: TextStyle(fontSize: 17, color: Colors.black),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           fillColor: Constants.iWhite,
@@ -143,7 +143,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                               color: data == selectedCategory
                                   ? Constants.iDarkGrey
                                   : Constants.iWhite,
-                              fontSize: 20.0,
+                              fontSize: 17.0,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -156,13 +156,15 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
 
     final createButton = Hero(
       tag: 'tobutton',
-      child: Material(
+      child: Padding(
+        padding: EdgeInsets.only(left: 45, right: 45),
+        child: Material(
         elevation: 5.0,
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(28.0),
         color: Constants.colors[Constants.colorindex],
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
           onPressed: () {
             // Create map of members
             Map<String, String> members = new Map<String, String>();
@@ -190,7 +192,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
         ),
       ),
-    );
+    ));
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -225,7 +227,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             ),
           ]),
         ),
-        body: Center(
+        body: Padding(
+          padding: EdgeInsets.only(left: 22, right: 22, bottom: 40),
+          child: Center(
           child: Container(
             color: Constants.iBlack,
             child: Padding(
@@ -238,7 +242,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     "Create new Game",
                     style: new TextStyle(
                         color: Constants.iWhite,
-                        fontSize: 40.0,
+                        fontSize: 30.0,
                         fontWeight: FontWeight.w300),
                     maxLines: 1,
                   ),
@@ -247,7 +251,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     'Enter game details',
                     style: new TextStyle(
                         color: Constants.colors[Constants.colorindex],
-                        fontSize: 25.0),
+                        fontSize: 20.0),
                   ),
                   SizedBox(height: 45.0),
                   nameField,
@@ -266,7 +270,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               ),
             ),
           ),
-        ),
+        )),
       ),
     );
   }

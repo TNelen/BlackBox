@@ -246,6 +246,8 @@ class FirebaseSetters {
   }
 
 
+
+
   static Future< bool > updateQuestion( Question question ) async
   {
     /// Return false if the question is a duplicate (same ID doesn't count as duplicate)
@@ -270,7 +272,7 @@ class FirebaseSetters {
     else 
       uniqueID = "";
     
-    if (uniqueID == "")
+    if (uniqueID == "") 
     {
       uniqueID = await FirebaseUtility.generateUniqueQuestionCode();
     }

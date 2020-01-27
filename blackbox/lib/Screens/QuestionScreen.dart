@@ -144,14 +144,14 @@ class _QuestionScreenState extends State<QuestionScreen>
           final voteButton = Hero(
             tag: 'button',
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.only(bottom: 60, left: 35, right: 35),
               child: Material(
                 elevation: 5.0,
-                borderRadius: BorderRadius.circular(16.0),
+                borderRadius: BorderRadius.circular(28.0),
                 color: Constants.colors[Constants.colorindex],
                 child: MaterialButton(
                   minWidth: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                  padding: EdgeInsets.fromLTRB(3.0, 3.0, 3.0, 3.0),
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -224,7 +224,9 @@ class _QuestionScreenState extends State<QuestionScreen>
                   ],
                 ),
               ),
-              body: Column(
+              body: Padding(
+                padding: EdgeInsets.only(left: 30, right: 30),
+                child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //submit own question button
@@ -240,7 +242,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                           minWidth: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
                           onPressed: () {
-                             Popup.submitQuestionIngamePopup(context,_database);
+                             //Popup.submitQuestionIngamePopup(context,_database, groupData);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -320,7 +322,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                   voteButton
                 ],
               ),
-            ),
+            )),
           );
         });
   }

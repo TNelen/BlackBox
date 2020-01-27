@@ -43,12 +43,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 Text(
                   "Mighty Blue",
-                  style: TextStyle(fontSize: 20.0, color: Constants.iWhite),
+                  style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
                 ),
                 Icon(
                   Icons.lens,
                   color: Constants.iAccent1,
-                  size: 30,
+                  size: 20,
                 ),
               ],
             ),
@@ -75,12 +75,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 Text(
                   'Magnificent Yellow',
-                  style: TextStyle(fontSize: 20.0, color: Constants.iWhite),
+                  style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
                 ),
                 Icon(
                   Icons.lens,
                   color: Constants.iAccent2,
-                  size: 30,
+                  size: 20,
                 ),
               ],
             ),
@@ -107,12 +107,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 Text(
                   'Marvelous Red',
-                  style: TextStyle(fontSize: 20.0, color: Constants.iWhite),
+                  style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
                 ),
                 Icon(
                   Icons.lens,
                   color: Constants.iAccent3,
-                  size: 30,
+                  size: 20,
                 ),
               ],
             ),
@@ -139,12 +139,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 Text(
                   'Majestic Green',
-                  style: TextStyle(fontSize: 20.0, color: Constants.iWhite),
+                  style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
                 ),
                 Icon(
                   Icons.lens,
                   color: Constants.iAccent4,
-                  size: 30,
+                  size: 20,
                 ),
               ],
             ),
@@ -182,7 +182,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ]),
             ),
-            body: Center(
+            body: Padding(
+              padding: EdgeInsets.only(left:22, right: 22),
+              child: Center(
                 child: Container(
               alignment: Alignment.center,
               color: Constants.iBlack,
@@ -208,22 +210,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     'Settings',
                     style: new TextStyle(
                         color: Constants.colors[Constants.colorindex],
-                        fontSize: 40.0,
-                        fontWeight: FontWeight.w300),
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.w500),
                   ),
                   SizedBox(height: 40.0),
                   Text(
                     'Personalization',
                     style: new TextStyle(
                         color: Constants.colors[Constants.colorindex],
-                        fontSize: 30.0,
+                        fontSize: 22.0,
                         fontWeight: FontWeight.w300),
                   ),
                   SizedBox(height: 20.0),
                   Row(children: <Widget>[
                     Icon(
                       Icons.palette,
-                      size: 35,
+                      size: 20,
                       color: Constants.iWhite,
                     ),
                     SizedBox(
@@ -233,7 +235,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       'Choose your accent color...',
                       style: new TextStyle(
                           color: Constants.iWhite,
-                          fontSize: 20.0,
+                          fontSize: 17.0,
                           fontWeight: FontWeight.w300),
                     ),
                   ]),
@@ -249,6 +251,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   greenAccent,
                 ],
               ),
-            ))));
+            )))));
   }
 }

@@ -1,7 +1,9 @@
+import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
 import '../Interfaces/Database.dart';
 import '../DataContainers/UserData.dart';
+import '../DataContainers/Question.dart';
 
 class Popup {
   static void makePopup(BuildContext context, String title, String message) {
@@ -42,6 +44,7 @@ class Popup {
     );
   }
 
+  
   static void makeChangeUsernamePopup(BuildContext context, Database database) {
     TextEditingController usernameController = new TextEditingController();
 
@@ -119,8 +122,15 @@ class Popup {
     );
   }
 
+  static void _addQuestions(List<String> questions, Database database, GroupData groupData) async {
+    for (String q in questions) {
+      await database
+          .updateQuestion(new Question.addFromUser(q, Constants.userData));
+    }
+  }
+
   static void submitQuestionIngamePopup(
-      BuildContext context, Database database) {
+    BuildContext context, Database database, GroupData groupData) {
     TextEditingController questionController = new TextEditingController();
 
     final questionfield = TextField(
@@ -151,7 +161,8 @@ class Popup {
               borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: new Text(
             'Ask a question...',
-            style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 25),
+            style: TextStyle(
+                color: Constants.colors[Constants.colorindex], fontSize: 25),
           ),
           content: Container(
               height: 230,
@@ -179,7 +190,8 @@ class Popup {
                   if (question.endsWith('?')) {
                     print('----' + question + '---- Added to database');
                     List<String> questions = new List<String>();
-                    //ADD TO DB HERE
+                    questions.add(question);
+                    _addQuestions(questions, database, groupData);
                     Navigator.pop(context);
                   } else
                     Popup.makePopup(context, 'Whoops',

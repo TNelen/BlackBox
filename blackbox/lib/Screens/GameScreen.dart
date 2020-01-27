@@ -145,7 +145,7 @@ class _GameScreenState extends State<GameScreen> {
                               'Game Lobby',
                               style: TextStyle(
                                 fontSize: 20,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w600,
                                 color: Constants.iWhite,
                               ),
                             ),
@@ -167,7 +167,7 @@ class _GameScreenState extends State<GameScreen> {
                               'Rules',
                               style: TextStyle(
                                 fontSize: 20,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w600,
                                 color: Constants.iWhite,
                               ),
                             ),
@@ -179,10 +179,12 @@ class _GameScreenState extends State<GameScreen> {
                 ),
                 body: Stack(children: <Widget>[
                   TabBarView(
+                    
                     children: [
                       //tab 1
                       Center(
                         child: Container(
+                            padding: EdgeInsets.only(left: 22, right: 22),
                             alignment: Alignment.center,
                             child: Column(
                               children: <Widget>[
@@ -199,7 +201,7 @@ class _GameScreenState extends State<GameScreen> {
                                               style: new TextStyle(
                                                   color: Constants.colors[
                                                       Constants.colorindex],
-                                                  fontSize: 25.0,
+                                                  fontSize: 17.0,
                                                   fontWeight: FontWeight.w400),
                                               textAlign: TextAlign.center),
                                         ),
@@ -232,6 +234,7 @@ class _GameScreenState extends State<GameScreen> {
                                     ],
                                   ),
                                 ),
+                                SizedBox(height: 10),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(15, 1, 15, 1),
                                   child: Row(
@@ -241,6 +244,7 @@ class _GameScreenState extends State<GameScreen> {
                                         "   Invite players  ",
                                         style: TextStyle(
                                             fontSize: 20.0,
+                                            fontWeight: FontWeight.w700,
                                             color: Constants
                                                 .colors[Constants.colorindex]),
                                       ),
@@ -375,7 +379,7 @@ class _GameScreenState extends State<GameScreen> {
                                         .toList(),
                                   ),
                                 ),
-                                SizedBox(height: 100),
+                                SizedBox(height: 120),
                               ],
                             )),
                       ),
@@ -384,7 +388,8 @@ class _GameScreenState extends State<GameScreen> {
                       Center(
                           child: ListView(
                         shrinkWrap: true,
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(25.0),
+                        
                         children: [
                           SizedBox(height: 20),
                           Text(
@@ -603,10 +608,14 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Widget _buildBottomCard(BuildContext context) {
-    return Card(
+    return Padding(
+              padding: EdgeInsets.only(left: 50, right: 50, bottom: 25),
+
+      child: Card(
+      
       color: Constants.colors[Constants.colorindex],
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(28.0),
       ),
       child: InkWell(
           splashColor: Constants.colors[Constants.colorindex],
@@ -614,9 +623,9 @@ class _GameScreenState extends State<GameScreen> {
             //nothing yet
           },
           child: Container(
-              padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+              padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
               child: _buildBottomCardChildren(context))),
-    );
+    ));
   }
 
   void _errorPopup(String error) {
