@@ -100,6 +100,8 @@ class FirebaseGetters {
   {
     //get next question from arraylist.
     Question randomQuestion;
+    if(groupData.getQuestionList().length != 0){
+
     String questionId = groupData.getQuestionList().removeLast();
       await Firestore.instance
             .collection("questions")
@@ -124,6 +126,9 @@ class FirebaseGetters {
             } );
 
       return randomQuestion;
+    }
+    else
+      return new Question("END", "The game has ended, please start a new game, or submit your own questions!",Category.Official, "BlackBox", "BlackBox");
   }
 
 
