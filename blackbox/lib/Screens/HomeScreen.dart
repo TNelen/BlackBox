@@ -22,7 +22,6 @@ class HomeScreen extends StatefulWidget {
 
   HomeScreen(Database db) {
     database = db;
-    db.openConnection();
   }
 
   @override
@@ -42,37 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
     this.database = db;
 
     /// Log a user in and update variables accordingly
-    if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
-      ///check if user isn't loged in via google already when returning to homescreen
-      try {
-        GoogleUserHandler guh = new GoogleUserHandler();
-        guh.handleSignIn().then((user) async {
-          /// Log the retreived user in and update the data in the database
-          UserData saved = await database.getUserByID( user.getUserID() );
-          
-          /// Update the in-app user data
-          Constants.setUserData( user );
-          
-          /// Save user if the account is new
-          if (saved == null)
-          {
-            database.updateUser( user );
-          }
-
-          /// Refresh the homescreen
-          setState(() {
-
-          });
-
+    
           isAppUpToDate();  /// Show an update reminder when needed
           isWelcomeMSG();   /// Show a message if one is set in the database
-
-          _test();
-        });
-      } catch (e) {
-        print(e.toString());
-      }
-    }
 
     /*if (versionCodeDatabase != versionCodeYAML){
       Popup.makePopup(context, 'Whooohooo!', 'There is a new app version available!');
