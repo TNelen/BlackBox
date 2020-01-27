@@ -62,8 +62,7 @@ class _GameScreenState extends State<GameScreen> {
 
   void getRandomNexQuestion() async {
     groupdata.setNextQuestion(
-        await _database.getNextQuestion(groupdata),
-        Constants.getUserData());
+        await _database.getNextQuestion(groupdata), Constants.getUserData());
   }
 
   Widget _buildBody() {
@@ -179,7 +178,6 @@ class _GameScreenState extends State<GameScreen> {
                 ),
                 body: Stack(children: <Widget>[
                   TabBarView(
-                    
                     children: [
                       //tab 1
                       Center(
@@ -389,7 +387,6 @@ class _GameScreenState extends State<GameScreen> {
                           child: ListView(
                         shrinkWrap: true,
                         padding: const EdgeInsets.all(25.0),
-                        
                         children: [
                           SizedBox(height: 20),
                           Text(
@@ -609,23 +606,21 @@ class _GameScreenState extends State<GameScreen> {
 
   Widget _buildBottomCard(BuildContext context) {
     return Padding(
-              padding: EdgeInsets.only(left: 50, right: 50, bottom: 25),
-
-      child: Card(
-      
-      color: Constants.colors[Constants.colorindex],
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(28.0),
-      ),
-      child: InkWell(
-          splashColor: Constants.colors[Constants.colorindex],
-          onTap: () {
-            //nothing yet
-          },
-          child: Container(
-              padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
-              child: _buildBottomCardChildren(context))),
-    ));
+        padding: EdgeInsets.only(left: 100, right: 100, bottom: 25),
+        child: Card(
+          color: Constants.colors[Constants.colorindex],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(28.0),
+          ),
+          child: InkWell(
+              splashColor: Constants.colors[Constants.colorindex],
+              onTap: () {
+                //nothing yet
+              },
+              child: Container(
+                  padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
+                  child: _buildBottomCardChildren(context))),
+        ));
   }
 
   void _errorPopup(String error) {
