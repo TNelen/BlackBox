@@ -242,7 +242,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                           minWidth: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
                           onPressed: () {
-                             //Popup.submitQuestionIngamePopup(context,_database, groupData);
+                             Popup.submitQuestionIngamePopup(context,_database, groupData);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,

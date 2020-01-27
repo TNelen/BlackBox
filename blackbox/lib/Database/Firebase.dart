@@ -149,7 +149,7 @@ class Firebase implements Database{
   }
 
   @override
-  Future<bool> updateQuestion(Question question) async {
+  Future<String> updateQuestion(Question question) async {
     return await FirebaseSetters.updateQuestion( question );
   }
 

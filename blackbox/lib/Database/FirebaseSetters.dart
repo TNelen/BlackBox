@@ -248,12 +248,12 @@ class FirebaseSetters {
 
 
 
-  static Future< bool > updateQuestion( Question question ) async
+  static Future< String > updateQuestion( Question question ) async
   {
     /// Return false if the question is a duplicate (same ID doesn't count as duplicate)
     if ( await FirebaseUtility.hasIdenticalQuestion( question ))
     {
-      return false;
+      return null;
     }
 
 
@@ -319,7 +319,7 @@ class FirebaseSetters {
 
     await _saveQuestionToList( q, categories );
     
-    return true;
+    return uniqueID;
 
   }
 

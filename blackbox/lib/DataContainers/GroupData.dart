@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blackbox/Constants.dart';
 import '../DataContainers/UserData.dart';
 import '../DataContainers/Question.dart';
+import 'dart:math';
 
 class GroupData {
     
@@ -127,6 +128,14 @@ class GroupData {
   List<String> getQuestionList()
   {
     return _questionlist;
+  }
+
+  void addQuestionToList(String id){
+    Random random = new Random();
+    int min = _questionlist.length-3; 
+    int max = _questionlist.length;
+    int randomNumber = min + (Random(1).nextInt(max-min));
+    _questionlist.insert(randomNumber, id);
   }
 
 

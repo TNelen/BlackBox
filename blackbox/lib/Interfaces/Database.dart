@@ -111,9 +111,9 @@ abstract class Database {
 
   /// Updates the question with the same unique ID. If it doesn't exist, it will be added
   /// If an identical question (just question, not the ID) already exists, the action will fail silently
-  /// Returns true when completed
-  /// Returns false when the question already exists
-  Future< bool > updateQuestion( Question question );
+  /// Returns questionID when completed
+  /// Returns null when the question already exists
+  Future< String > updateQuestion( Question question );
 
 
   /// Add a report to the database for the given question

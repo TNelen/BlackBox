@@ -124,8 +124,10 @@ class Popup {
 
   static void _addQuestions(List<String> questions, Database database, GroupData groupData) async {
     for (String q in questions) {
-      await database
+      String id = await database
           .updateQuestion(new Question.addFromUser(q, Constants.userData));
+      groupData.addQuestionToList(id);
+      database.updateGroup(groupData);
     }
   }
 
