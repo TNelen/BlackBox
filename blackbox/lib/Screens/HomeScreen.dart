@@ -35,7 +35,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Database database;
   int pageIndex = 0;
-  String version = '1.0.0+1';
+  String version = '1.0.1+1';
 
   _HomeScreenState(Database db) {
     this.database = db;
@@ -389,11 +389,14 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Constants.iBlack,
         body: Container(
           margin: EdgeInsets.only(top: 16, left: 8, right: 8),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(children: <Widget>[
-                SizedBox(height: 30,),
+          child: ListView(
+                   // shrinkWrap: true,
+                   // padding: const EdgeInsets.all(20.0),
+                    children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                SizedBox(height: 25,),
                 Container(
                   padding:
                       EdgeInsets.only(top: height / 10, left: 35, right: 35),
@@ -447,6 +450,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 )
               ]),
+              SizedBox(height: 55,),
               Container(
                   padding: EdgeInsets.only(left: 45, right: 45),
                   child: Column(
