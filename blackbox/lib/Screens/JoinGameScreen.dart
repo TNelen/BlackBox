@@ -77,7 +77,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
-        theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
+        theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
           appBar: AppBar(
             backgroundColor: Constants.iBlack,
