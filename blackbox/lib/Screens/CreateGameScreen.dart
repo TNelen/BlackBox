@@ -123,10 +123,11 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     ? Constants.iLight
                     : Constants.iDarkGrey,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
+                  borderRadius: BorderRadius.circular(28.0),
                 ),
-                child: InkWell(
+                child: InkResponse(
                   splashColor: Constants.colors[Constants.colorindex],
+                  radius: 50, 
                   onTap: () {
                     setState(() {
                       color = Constants.colors[Constants.colorindex];
