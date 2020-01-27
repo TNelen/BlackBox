@@ -414,11 +414,12 @@ class GroupData {
     int winnervotes = 0;
     _getLastVoteCounts().forEach((userID, numVotes){
       if (numVotes > winnervotes){
-        winner = getUserName(userID);
+        winner = getUserName(userID).split(' ')[0];
         winnervotes = numVotes;
       }
       else if (numVotes == winnervotes){
-        winner = winner + " + " + getUserName(userID);
+        winner = winner + " + " + getUserName(userID).split(' ')[0];
+        
     }});
     return winner;
 
@@ -448,27 +449,27 @@ class GroupData {
         top[2]= top[1];
         top[1] = top[0];
 
-        top[0] = getUserName(userID);
+        top[0] = getUserName(userID).split(' ')[0];
         oneVotes = numVotes;
       }
       else if (numVotes >= twoVotes && numVotes <= oneVotes){
         top[2]=top[1];
-       top[1] = getUserName(userID);
+       top[1] = getUserName(userID).split(' ')[0];
        twoVotes = numVotes;
       }
       else if (numVotes >= threeVotes && numVotes <= twoVotes)
-        top[2] = getUserName(userID);
+        top[2] = getUserName(userID).split(' ')[0];
         threeVotes = numVotes;
     });
 
     list.forEach((userID,numVotes){
-      if (getUserName(userID) == top[0]){
+      if (getUserName(userID).split(' ')[0] == top[0]){
         oneVotesR = numVotes;
       }
-      else if(getUserName(userID) == top[1]){
+      else if(getUserName(userID).split(' ')[0] == top[1]){
         twoVotesR = numVotes;
       }
-      else if(getUserName(userID) == top[2]){
+      else if(getUserName(userID).split(' ')[0] == top[2]){
         threeVotesR = numVotes;
       }
     });

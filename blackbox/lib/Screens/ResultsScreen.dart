@@ -213,6 +213,14 @@ class ResultScreenState extends State<ResultScreen> {
                             SizedBox(
                               height: 25,
                             ),
+                            Text(
+                              (groupData.getQuestionList().length+1).toString() +
+                                  ' Question(s) remaining',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color:
+                                      Constants.iWhite),
+                            ),
                             SizedBox(
                               height: 25,
                             ),
