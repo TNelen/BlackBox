@@ -441,19 +441,26 @@ class ResultScreenState extends State<ResultScreen> {
                   minWidth: MediaQuery.of(context).size.width,
                   padding: const EdgeInsets.all(20),
                   onPressed: () {
+                    if (groupData.getNextQuestionString() != "The game has ended, please start a new game, or submit your own questions!"){
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
                               QuestionScreen(_database, groupData, code),
-                        ));
+                        ));}
                   },
                   //change isplaying field in database for this group to TRUE
-                  child: Text("Next Question",
+                  child: groupData.getNextQuestionString() != "The game has ended, please start a new game, or submit your own questions!" ?
+                  Text("Next Question",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 30).copyWith(
                           color: Constants.iBlack,
-                          fontWeight: FontWeight.bold)),
+                          fontWeight: FontWeight.bold)) :
+                  Text("The games has ended, you have played all questions.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 20).copyWith(
+                          color: Constants.iBlack,
+                          fontWeight: FontWeight.bold))
                 ),
               ),
             ),
