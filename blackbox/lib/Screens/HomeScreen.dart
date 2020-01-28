@@ -380,7 +380,11 @@ class _HomeScreenState extends State<HomeScreen> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    return MaterialApp(
+    return WillPopScope(
+  onWillPop: () async {
+    return false;
+  },
+  child: new MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
         scaffoldBackgroundColor: Constants.iBlack,
@@ -482,6 +486,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 }
