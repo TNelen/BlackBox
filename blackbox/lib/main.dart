@@ -84,7 +84,10 @@ class _SplashScreenState extends State<SplashScreen> {
     new Timer.periodic(Duration(seconds: 1), (Timer t) {
       setState(() {
         if(_progress<1.0){
-        _progress += 0.2;
+        _progress += 0.4;
+        if(_progress >1.0){
+          _progress = 1.0;
+        }
         }
         // we "finish" downloading here
         if (_progress.toStringAsFixed(1) == '1.0' && loggedIn) {
