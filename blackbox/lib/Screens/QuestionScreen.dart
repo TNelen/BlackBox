@@ -287,7 +287,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    SizedBox(height: 50),
+                                    SizedBox(height: 30),
                                     Text(
                                       'Question',
                                       style: new TextStyle(
@@ -305,7 +305,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                                           fontWeight: FontWeight.bold),
                                       textAlign: TextAlign.center,
                                     ),
-                                    SizedBox(height: 80),
+                                    SizedBox(height: 30),
                                     groupData.getQuestion().getCategory() ==
                                             'Community'
                                         ? reportButton
