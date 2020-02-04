@@ -56,17 +56,20 @@ class _SplashScreenState extends State<SplashScreen> {
       try {
         GoogleUserHandler guh = new GoogleUserHandler();
         guh.handleSignIn().then((user) async {
+          
           /// Log the retreived user in and update the data in the database
           UserData saved = await database.getUserByID( user.getUserID() );
-          
-          /// Update the in-app user data
-          Constants.setUserData( user );
           loggedIn = true;
           
           /// Save user if the account is new
           if (saved == null)
           {
+            /// Put user in the database and load the info into UserData @Constants
+            Constants.setUserData( user );
             database.updateUser( user );
+          } else {
+            /// Load database info into UserData @Constants
+            Constants.setUserData( saved );
           }
 
         });

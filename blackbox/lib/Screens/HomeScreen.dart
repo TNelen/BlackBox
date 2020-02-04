@@ -39,11 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _HomeScreenState(Database db) {
     this.database = db;
-
-    /// Log a user in and update variables accordingly
-    
-          isAppUpToDate();  /// Show an update reminder when needed
-          isWelcomeMSG();   /// Show a message if one is set in the database
+  
+    isAppUpToDate();  /// Show an update reminder when needed
+    isWelcomeMSG();   /// Show a message if one is set in the database
 
     /*if (versionCodeDatabase != versionCodeYAML){
       Popup.makePopup(context, 'Whooohooo!', 'There is a new app version available!');
