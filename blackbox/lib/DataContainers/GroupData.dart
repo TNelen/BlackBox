@@ -425,6 +425,45 @@ class GroupData {
 
   }
 
+
+  /// Get the IDs of the three winners of last round as keys
+  /// The number of votes each of them got will be their value
+  Map<String, int> getTopThreeIDs()
+  {
+    Map<String, int> topThree = new Map<String, int>();        /// List to store the user IDs
+
+    Map<String, int> voteCounts =  _getLastVoteCounts();  /// Get the vote counts of last round
+    voteCounts.forEach((userID, numVotes){
+      /// Always add the user if the top three isn't full yet
+      if (topThree.length < 3)
+      {
+        topThree[userID] = numVotes;
+      } else {
+
+        /// Find the lowest scoring user
+        int lowestVotes = numVotes;
+        String lowestID = userID;
+        topThree.forEach((topID, topVotes) {
+            if (topVotes < lowestVotes)
+            {
+              lowestVotes = topVotes;
+              lowestID = topID;
+            }
+        });
+
+        /// Update the top three accordingly
+        if (topThree.containsKey(lowestID))
+        {
+            topThree.remove(lowestID);
+            topThree[userID] = numVotes;
+        }
+
+      }
+    });
+
+    return topThree;
+  }
+
   List<String> getTopThree(String Type){
     Map<String, int> list = null;
     String type = Type;

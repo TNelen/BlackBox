@@ -1,3 +1,5 @@
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import '../main.dart';
 import '../DataContainers/GroupData.dart';
@@ -51,6 +53,8 @@ class ResultScreenState extends State<ResultScreen> {
   Timer timer;
   bool timeout;
   String clickedmember;
+
+  bool _firstTimeLoaded = true;
 
   ResultScreenState(
       Database db,
@@ -482,6 +486,13 @@ class ResultScreenState extends State<ResultScreen> {
             });
           }
 
+          /// Play audio indicating whether or not the player is in the previous top three
+          if (_firstTimeLoaded)
+          {
+              playAudio(groupData);
+              _firstTimeLoaded = false;
+          }
+
           return MaterialApp(
             theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
             home: Scaffold(
@@ -547,4 +558,31 @@ class ResultScreenState extends State<ResultScreen> {
           body: _buildBody(context),
         ));
   }
+
+
+  /// Plays audio indicating whether or not the player is in the previous top three
+  /// See https://pub.dev/packages/audioplayers for more information
+  void playAudio(GroupData groupData) async
+  {
+    if (groupData.getTopThreeIDs().containsKey(Constants.getUserID()))
+    {
+      playSound("winner.wav");
+
+    } else {
+      playSound("loser.wav");
+    }
+  }
+
+  
+  /// Plays and terminates a sound in the assets/sounds folder
+  /// eg. assets/sounds/music.mp3 would be played by passing music.mp3 as parameter
+  void playSound(String path) async
+  {
+    String full_path = 'sounds/' + path;
+
+    final AudioCache player = AudioCache(); /// Create an instance that is able to play sounds
+    await player.play(full_path);           /// Play the sound and wait for completion
+    player.clear(full_path);                /// Delete the loaded sound from temp memory
+  }
+  
 }

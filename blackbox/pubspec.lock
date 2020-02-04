@@ -22,6 +22,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  audioplayers:
+    dependency: "direct main"
+    description:
+      name: audioplayers
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.14.0"
   auto_size_text:
     dependency: "direct main"
     description:
@@ -137,6 +144,11 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_web_plugins:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   google_sign_in:
     dependency: "direct main"
     description:
@@ -192,7 +204,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.4"
+    version: "1.6.0"
   pedantic:
     dependency: transitive
     description:
@@ -296,6 +308,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.5"
+  uuid:
+    dependency: transitive
+    description:
+      name: uuid
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.4"
   vector_math:
     dependency: transitive
     description:
@@ -303,6 +322,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
+  vibration:
+    dependency: "direct main"
+    description:
+      name: vibration
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.2"
   xml:
     dependency: transitive
     description:
@@ -319,4 +345,4 @@ packages:
     version: "2.1.16"
 sdks:
   dart: ">=2.4.0 <2.8.0"
-  flutter: ">=1.5.0 <2.0.0"
+  flutter: ">=1.10.0 <2.0.0"
