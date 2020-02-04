@@ -21,10 +21,11 @@ class Constants{
   static const iAccent3 = Color(0xFFed2939);
   static const iAccent4 = Color(0xFFA2DAAF);
 
- static int colorindex = 1;
 
+  static int colorindex = 1;    /// The standard color in the app, before a user is loaded
+  static int defaultColor = 1;  /// The default color that a new user will get
 
- //accent color list
+  //accent color list
   static const colors = [Color(0xFF92dff3), Color(0xFFffbf00), Color(0xFFed2939), Color(0xFFA2DAAF)];
 
 

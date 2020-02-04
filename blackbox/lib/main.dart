@@ -65,6 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
           if (saved == null)
           {
             /// Put user in the database and load the info into UserData @Constants
+            user.setAccent( Constants.defaultColor );
             Constants.setUserData( user );
             database.updateUser( user );
           } else {
