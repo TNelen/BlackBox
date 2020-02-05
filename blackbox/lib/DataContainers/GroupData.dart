@@ -495,8 +495,6 @@ class GroupData {
     } );
     currentTop.sort((b, a) => a.compareTo(b));  /// Sort the top in reverse order (biggest first)
 
-    print(currentTop);
-
     /// Fill the list that will indicate the winners
     List<String> currentTopIDs = new List(3);
     for (int i = 0; i < 3; i++)

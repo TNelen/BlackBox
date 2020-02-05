@@ -1,5 +1,6 @@
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:blackbox/Util/VibrationHandler.dart';
 import 'package:flutter/material.dart';
 import '../main.dart';
 import '../DataContainers/GroupData.dart';
@@ -489,7 +490,7 @@ class ResultScreenState extends State<ResultScreen> {
           /// Play audio indicating whether or not the player is in the previous top three
           if (_firstTimeLoaded)
           {
-              playAudio(groupData);
+              handleWinnerFeedback(groupData);
               _firstTimeLoaded = false;
           }
 
@@ -560,16 +561,17 @@ class ResultScreenState extends State<ResultScreen> {
   }
 
 
-  /// Plays audio indicating whether or not the player is in the previous top three
+  /// Plays audio and vibrates the phone indicating whether or not the player is in the previous top three
   /// See https://pub.dev/packages/audioplayers for more information
-  void playAudio(GroupData groupData) async
+  void handleWinnerFeedback(GroupData groupData) async
   {
     if (groupData.getTopThreeIDs('previous').containsKey(Constants.getUserID()))
     {
       playSound("winner.wav");
-
+      VibrationHandler.vibrate(vibratePattern: [0, 250, 250, 250, 250, 250]);
     } else {
       playSound("loser.wav");
+      VibrationHandler.vibrate(vibratePattern: [0, 250, 200, 500]);
     }
   }
 
