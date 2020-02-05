@@ -568,10 +568,10 @@ class ResultScreenState extends State<ResultScreen> {
     if (groupData.getTopThreeIDs('previous').containsKey(Constants.getUserID()))
     {
       playSound("winner.wav");
-      VibrationHandler.vibrate(vibratePattern: [0, 250, 250, 250, 250, 250]);
+      VibrationHandler.vibrate(vibratePattern: [10, 50, 46, 48, 49, 70, 64, 66, 41, 70]);
     } else {
       playSound("loser.wav");
-      VibrationHandler.vibrate(vibratePattern: [0, 250, 200, 500]);
+      VibrationHandler.vibrate(vibratePattern: [50, 50, 50, 129]);
     }
   }
 
