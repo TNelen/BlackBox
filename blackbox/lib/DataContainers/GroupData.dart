@@ -426,13 +426,21 @@ class GroupData {
   }
 
 
-  /// Get the IDs of the three winners of last round as keys
+  /// The parameter should be 'previous' or 'alltime' to indicate the wanted top three
+  /// Get the IDs of the three winners alltime OR last round (UNORDERED as this is a map!)
   /// The number of votes each of them got will be their value
-  Map<String, int> getTopThreeIDs()
+  Map<String, int> getTopThreeIDs(String kind)
   {
-    Map<String, int> topThree = new Map<String, int>();        /// List to store the user IDs
+    Map<String, int> voteCounts;
 
-    Map<String, int> voteCounts =  _getLastVoteCounts();  /// Get the vote counts of last round
+    switch(kind) {
+      case 'previous': voteCounts =  _getLastVoteCounts(); break;  /// Get the vote counts of last round
+      case 'alltime' : voteCounts =   getTotalVotes();     break;  /// Get the all time vote counts
+      default        : voteCounts = new Map<String, int>();break;  /// Invalid parameter: empty map to prevent nullpointer exceptions
+    }
+
+    Map<String, int> topThree = new Map<String, int>();        /// List to store the user IDs
+    
     voteCounts.forEach((userID, numVotes){
       /// Always add the user if the top three isn't full yet
       if (topThree.length < 3)
@@ -464,58 +472,55 @@ class GroupData {
     return topThree;
   }
 
-  List<String> getTopThree(String Type){
-    Map<String, int> list = null;
-    String type = Type;
-    switch(type) {
-      case 'previous': list = _getLastVoteCounts(); break;
-      case 'alltime' : list = _totalVotes; break;
-    }
+
+  /// Get the top three of 'previous' or 'alltime' round
+  /// One of the Strings above should be passed as parameter
+  /// The winner will be in 0th position while the third place will occupy the second position in the list
+  /// The List contains 6 Strings: 3x winning player name [0-2], and then 3x their respective vote count[3-5]
+  List<String> getTopThree(String kind){
+
+    /// Gets the right top three IDs (alltime or previous) -> See method above this one
+    Map<String, int> topThree = getTopThreeIDs(kind);
 
     ///first three elements return the player name, last three return the number of votes
     List<String> top = new List(6); top[0] = '';top[1] = '';top[2] = ''; top[3] = '';top[4] = '';top[5] = '';
-    int oneVotes =0;
-    int twoVotes = 0;
-    int threeVotes = 0;
+    
+    /// Get the top three in # votes and sort them
+    List<int> currentTop = new List(3);         /// Initialize list
+    currentTop[0] = 0; currentTop[1] = 0; currentTop[2] = 0;
+    int numElements = 0;
+    topThree.forEach( (id, votes) {             /// Loop the top three
+      currentTop[numElements] = votes;          /// Add the votes of each user
+      numElements++;
+    } );
+    currentTop.sort((b, a) => a.compareTo(b));  /// Sort the top in reverse order (biggest first)
 
-    //integers user for votes calculation
-    int oneVotesR =0;
-    int twoVotesR = 0;
-    int threeVotesR = 0;
+    print(currentTop);
 
-    list.forEach((userID, numVotes){
-      if (numVotes > oneVotes){
-        top[2]= top[1];
-        top[1] = top[0];
+    /// Fill the list that will indicate the winners
+    List<String> currentTopIDs = new List(3);
+    for (int i = 0; i < 3; i++)
+    {
+      int topVotes = currentTop[i];
+      Map<String, int> topThreeCopy = new Map<String,int>.from(topThree);
+      for (String id in topThreeCopy.keys) {
+        if (topVotes == topThreeCopy[id])   /// Match
+        {
+          currentTopIDs[i] = id;    /// Set the winner's ID
+          topThree.remove(id);      /// Prevent duplicate IDs
+          break;
+        }
+      }
+    }
 
-        top[0] = getUserName(userID).split(' ')[0];
-        oneVotes = numVotes;
-      }
-      else if (numVotes >= twoVotes && numVotes <= oneVotes){
-        top[2]=top[1];
-       top[1] = getUserName(userID).split(' ')[0];
-       twoVotes = numVotes;
-      }
-      else if (numVotes >= threeVotes && numVotes <= twoVotes)
-        top[2] = getUserName(userID).split(' ')[0];
-        threeVotes = numVotes;
-    });
+    /// Update the top values
+    for (int i = 0; i < 3; i++)
+    {
+      top[i]   = currentTop[i] > 0 ? getUserName(currentTopIDs[i]).split(' ')[0] : ' '; /// Add each user's name
+      top[i+3] = currentTop[i] > 0 ? currentTop[i].toString()                    : ' '; /// Add each user's score
+    }
 
-    list.forEach((userID,numVotes){
-      if (getUserName(userID).split(' ')[0] == top[0]){
-        oneVotesR = numVotes;
-      }
-      else if(getUserName(userID).split(' ')[0] == top[1]){
-        twoVotesR = numVotes;
-      }
-      else if(getUserName(userID).split(' ')[0] == top[2]){
-        threeVotesR = numVotes;
-      }
-    });
-    top[3] = oneVotesR>0? oneVotesR.toString():' ';
-    top[4] =  twoVotesR>0? twoVotesR.toString():' ';
-    top[5] =  threeVotesR>0? threeVotesR.toString():' ';
-
+    /// Return the result
     return top;
 
   }

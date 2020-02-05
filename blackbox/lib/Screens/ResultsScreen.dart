@@ -564,7 +564,7 @@ class ResultScreenState extends State<ResultScreen> {
   /// See https://pub.dev/packages/audioplayers for more information
   void playAudio(GroupData groupData) async
   {
-    if (groupData.getTopThreeIDs().containsKey(Constants.getUserID()))
+    if (groupData.getTopThreeIDs('previous').containsKey(Constants.getUserID()))
     {
       playSound("winner.wav");
 
