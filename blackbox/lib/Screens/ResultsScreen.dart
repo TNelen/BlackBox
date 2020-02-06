@@ -102,10 +102,8 @@ class ResultScreenState extends State<ResultScreen> {
     super.initState();
     _loadingInProgress = true;
     FirebaseStream(code).groupData.listen((_onGroupDataUpdate) {}, onDone: () {
-      print("Task Done");
       _loadingInProgress = false;
     }, onError: (error) {
-      print("Some Error");
     });
 
     BackButtonInterceptor.add(myInterceptor);
@@ -118,7 +116,6 @@ class ResultScreenState extends State<ResultScreen> {
           if (_timeleft <= 0) {
             timer.cancel();
             timeout = true;
-            print('---TIMEOUT---');
           }
         },
       ),
@@ -134,7 +131,6 @@ class ResultScreenState extends State<ResultScreen> {
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent) {
-    print("BACK BUTTON!"); // Do some stuff.
     return true;
   }
 
@@ -164,7 +160,6 @@ class ResultScreenState extends State<ResultScreen> {
             return new Center(child: new CircularProgressIndicator());
           }
           if (snapshot.hasData) {
-            print(groupData.getNumVotes());
 
             _performConcurrencyFix();
 
@@ -174,11 +169,6 @@ class ResultScreenState extends State<ResultScreen> {
                     timeout == true) {
                   timeout = false;
                   getRandomNexQuestion();
-                  print('--Timer stopped--');
-                  print('admin set next question');
-                  print(groupData.getQuestionID());
-
-                  print('currentQuestion ID = ' + currentQuestion);
                 }
               }
               return new WillPopScope(

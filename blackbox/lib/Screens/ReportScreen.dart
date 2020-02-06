@@ -53,7 +53,6 @@ class _ReportScreenState extends State<ReportScreen> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          print('submitted error');
           Issue issue = new Issue();
           issue.category = categoryValue.toString();
           issue.location = locationValue.toString();

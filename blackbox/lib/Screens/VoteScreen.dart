@@ -52,7 +52,6 @@ class _VoteScreenState extends State<VoteScreen> {
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent) {
-    print("BACK BUTTON!"); // Do some stuff.
     return true;
   }
 
@@ -117,7 +116,6 @@ class _VoteScreenState extends State<VoteScreen> {
                 _database.voteOnUser(groupData, clickedmember);
                 currentQuestion = groupData.getQuestionID();
                 currentQuestionString = groupData.getNextQuestionString();
-                print(currentQuestionString);
 
                 Navigator.push(
                     context,

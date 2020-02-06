@@ -190,7 +190,6 @@ class Popup {
                       'You cannot submit an empty question');
                 } else if (question.length >= 20) {
                   if (question.endsWith('?')) {
-                    print('----' + question + '---- Added to database');
                     List<String> questions = new List<String>();
                     questions.add(question);
                     _addQuestions(questions, database, groupData);

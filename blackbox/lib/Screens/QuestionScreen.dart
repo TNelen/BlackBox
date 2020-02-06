@@ -57,7 +57,6 @@ class _QuestionScreenState extends State<QuestionScreen>
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent) {
-    print("BACK BUTTON!"); // Do some stuff.
     return true;
   }
 
@@ -65,10 +64,9 @@ class _QuestionScreenState extends State<QuestionScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    print(state);
 
     if (state == AppLifecycleState.paused) {
-      print('game paused');
+      
     }
   }
 

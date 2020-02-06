@@ -45,7 +45,6 @@ class _GameScreenState extends State<GameScreen> {
     super.initState();
     _loadingInProgress = true;
     FirebaseStream(code).groupData.listen((_onGroupDataUpdate) {}, onDone: () {
-      print("Task Done");
       _loadingInProgress = false;
     }, onError: (error) {
       _errorPopup(error);
@@ -78,7 +77,6 @@ class _GameScreenState extends State<GameScreen> {
             groupdata.addMember(Constants.getUserData());
             Constants.database.updateGroup(groupdata);
             joined = true;
-            print("joined Group");
 
             //_database.updateGroup(groupdata);
 
@@ -195,7 +193,7 @@ class _GameScreenState extends State<GameScreen> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                              'The admin can start the game if all players are ready!',
+                                              'Anyone can start the game if all players are ready!',
                                               style: new TextStyle(
                                                   color: Constants.colors[
                                                       Constants.colorindex],
@@ -530,12 +528,10 @@ class _GameScreenState extends State<GameScreen> {
     if (groupInfo == null) {
       // Laadscherm
       loaded = false;
-      print("NULL LOADED");
     } else {
       // Refresh content
       loaded = true;
-      print("DATA LOADED");
-      groupInfo.printData();
+      //groupInfo.printData();
     }
   }
 

@@ -176,7 +176,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               // Generate a unique ID and save the group
               _database.generateUniqueGroupCode().then((code) {
                 _database.createQuestionList(_groupCategory).then((questionlist) {
-                  print(questionlist);
                 GroupData groupdata = new GroupData(_groupName, _groupCategory,
                     code, Constants.getUserID(), members, questionlist);
                   _database.updateGroup(groupdata);

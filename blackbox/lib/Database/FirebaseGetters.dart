@@ -90,9 +90,7 @@ class FirebaseGetters {
               List<dynamic> existing = document.data[category];
               questionlist = existing.cast<String>().toList();
               questionlist.shuffle(Random.secure());
-              print(questionlist);
             });
-            print(questionlist);
       return questionlist;
   }
 

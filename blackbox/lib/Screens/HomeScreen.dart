@@ -351,7 +351,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (Constants.enableMSG[Constants.enableVersionMSG]) {
       appinfo = await database.getAppInfo();
       String versionCodeDatabase = appinfo.getVersion().toString();
-      print(versionCodeDatabase);
       if (versionCodeDatabase != version) {
         Constants.enableVersionMSG = 1;
         Popup.makePopup(context, 'Whooohooo!',
@@ -365,7 +364,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (Constants.enableMSG[Constants.enableWelcomeMSG]) {
       appinfo = await database.getAppInfo();
       String welcomeMessage = appinfo.getLoginMessage();
-      print(welcomeMessage);
       if (welcomeMessage.length != 0) {
         Constants.enableWelcomeMSG = 1;
         Popup.makePopup(context, 'Welcome!', welcomeMessage);
