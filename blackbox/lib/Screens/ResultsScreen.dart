@@ -171,6 +171,23 @@ class ResultScreenState extends State<ResultScreen> {
                   getRandomNexQuestion();
                 }
               }
+
+              int remainingVotes = groupData.getNumPlaying() - groupData.getNumVotes();
+              String remainingVotesText = ' person';
+              if (remainingVotes != 1)
+              {
+                remainingVotesText+= 's';
+              }
+              remainingVotesText += ' remaining';
+
+              int remainingQuestions = groupData.getQuestionList().length+1;
+              String remainingQuestionsText = ' question';
+              if (remainingQuestions != 1)
+              {
+                remainingQuestionsText += 's';
+              }
+              remainingQuestionsText += ' remaining';
+
               return new WillPopScope(
                   onWillPop: () async => false,
                   child: MaterialApp(
@@ -196,10 +213,8 @@ class ResultScreenState extends State<ResultScreen> {
                               height: 25,
                             ),
                             Text(
-                              (groupData.getNumPlaying() -
-                                          groupData.getNumVotes())
-                                      .toString() +
-                                  ' person(s) remaining',
+                              remainingVotes.toString() +
+                                  remainingVotesText,
                               style: TextStyle(
                                   fontSize: 25,
                                   color:
@@ -209,8 +224,8 @@ class ResultScreenState extends State<ResultScreen> {
                               height: 25,
                             ),
                             Text(
-                              (groupData.getQuestionList().length+1).toString() +
-                                  ' Question(s) remaining',
+                              remainingQuestions.toString() +
+                                  remainingQuestionsText,
                               style: TextStyle(
                                   fontSize: 20,
                                   color:
