@@ -15,22 +15,28 @@ class GoogleUserHandler {
   }
 
   Future< UserData > handleSignIn() async {
-    loggedIn = false;
-    
-    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    try {
+      loggedIn = false;
+      
+      GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+      GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-    AuthCredential cred = GoogleAuthProvider.getCredential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken
-    );
+      AuthCredential cred = GoogleAuthProvider.getCredential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken
+      );
 
-    FirebaseUser user = await _auth.signInWithCredential(cred);
+      FirebaseUser user = await _auth.signInWithCredential(cred);
 
-    loggedIn = true;
+      loggedIn = true;
 
-    UserData userData = new UserData(user.uid, user.displayName);
-    
-    return userData;
+      UserData userData = new UserData(user.uid, user.displayName);
+      
+      return userData;
+    } catch(exception) {
+      print("Something went wrong while logging in");
+      print(exception);
+      return null;
+    }
   }
 }

@@ -78,7 +78,7 @@ class FirebaseGetters {
   ///Get all the questions form the selected category and return it as a list
   static Future<List<String>> createQuestionList(String category) async 
   {
-
+    try {
      List<String> questionlist;
      await Firestore.instance
           .collection("questions")
@@ -92,42 +92,53 @@ class FirebaseGetters {
               questionlist.shuffle(Random.secure());
             });
       return questionlist;
+    } catch(exception) {
+      print("Something went wrong while creating a question list");
+      print(exception);
+      return null;
+    }
   }
 
 
   static Future< Question > getNextQuestion( GroupData groupData) async
   {
-    //get next question from arraylist.
-    Question randomQuestion;
-    if(groupData.getQuestionList().length != 0){
+    try {
+      //get next question from arraylist.
+      Question randomQuestion;
+      if(groupData.getQuestionList().length != 0){
 
-    String questionId = groupData.getQuestionList().removeLast();
-      await Firestore.instance
-            .collection("questions")
-            .document( questionId ).get().then( (document) {
-              Category category = Category.Official;
+      String questionId = groupData.getQuestionList().removeLast();
+        await Firestore.instance
+              .collection("questions")
+              .document( questionId ).get().then( (document) {
+                Category category = Category.Official;
 
-              for (Category cat in Category.values)
-              {
-                String comparableCategory = cat.toString().split('.').last;
-                if (document.data['category'] == null)
+                for (Category cat in Category.values)
                 {
-                  cat = Category.Official;
+                  String comparableCategory = cat.toString().split('.').last;
+                  if (document.data['category'] == null)
+                  {
+                    cat = Category.Official;
+                  }
+
+                  if ( comparableCategory == document.data['category'] )
+                  {
+                    category = cat;
+                  }
                 }
 
-                if ( comparableCategory == document.data['category'] )
-                {
-                  category = cat;
-                }
-              }
+                randomQuestion = new Question(document.documentID, document.data['question'], category, document.data['creatorID'], document.data['creatorName']);
+              } );
 
-              randomQuestion = new Question(document.documentID, document.data['question'], category, document.data['creatorID'], document.data['creatorName']);
-            } );
-
-      return randomQuestion;
+        return randomQuestion;
+      }
+      else
+        return new Question("END", "The game has ended, please start a new game, or submit your own questions!",Category.Official, "BlackBox", "BlackBox");
+    } catch(exception) {
+      print("Something went wrong while getting the next question");
+      print(exception);
+      return null;
     }
-    else
-      return new Question("END", "The game has ended, please start a new game, or submit your own questions!",Category.Official, "BlackBox", "BlackBox");
   }
 
 

@@ -7,81 +7,105 @@ class FirebaseUtility {
   
   static Future< bool > doesGroupExist( String groupID ) async
   {
-    bool exists = false;
+    try {
+      bool exists = false;
 
-    /// Get group with ID
-    await Firestore.instance
-        .collection("groups")
-        .document( groupID ).get().then( (document) {
+      /// Get group with ID
+      await Firestore.instance
+          .collection("groups")
+          .document( groupID ).get().then( (document) {
 
-          // Group exists!
-          if ( document.exists )
-            exists = true;
+            // Group exists!
+            if ( document.exists )
+              exists = true;
 
-        } );
+          } );
 
-    return exists;
+      return exists;
+    } catch(exception) {
+      print("Something went wrong while checking if a group exists");
+      print(exception);
+      return false;
+    }
   }
 
   static Future< bool > doesUserExist( String userID ) async
   {
-    bool exists = false;
+    try {
+      bool exists = false;
 
-    /// Get group with ID
-    await Firestore.instance
-        .collection("groups")
-        .document( userID ).get().then( (document) {
+      /// Get group with ID
+      await Firestore.instance
+          .collection("groups")
+          .document( userID ).get().then( (document) {
 
-          // Group exists!
-          if ( document.exists )
-            exists = true;
+            // Group exists!
+            if ( document.exists )
+              exists = true;
 
-        } );
+          } );
 
-    return exists;
+      return exists;
+    } catch(exception) {
+      print("Something went wrong while checking if a user exists");
+      print(exception);
+      return false;
+    }
   }
 
   static Future< bool > doesQuestionExist( String questionID ) async
   {
-    bool exists = false;
+    try {
+      bool exists = false;
 
-    /// Get group with ID
-    await Firestore.instance
-        .collection("questions")
-        .document( questionID ).get().then( (document) {
-          
-          // Group exists!
-          if ( document.exists )
-            exists = true;
+      /// Get group with ID
+      await Firestore.instance
+          .collection("questions")
+          .document( questionID ).get().then( (document) {
+            
+            // Group exists!
+            if ( document.exists )
+              exists = true;
 
-        } );
+          } );
 
-    return exists;
+      return exists;
+    } catch(exception) {
+      print("Something went wrong while checking if a question exists");
+      print(exception);
+      return false;
+    }
   }
 
   static Future< bool > doesQuestionIDExist( Question question ) async
   {
-    bool exists = false;
+    try {
+      bool exists = false;
 
-    if (question.getQuestionID() == null || question.getQuestionID() == "")
-    {
+      if (question.getQuestionID() == null || question.getQuestionID() == "")
+      {
+        return false;
+      }
+
+      /// Get group with ID
+      await Firestore.instance
+          .collection("questions")
+          .document( question.getQuestionID() )
+          .get()
+          .then( (document) {
+            
+            /// Group with the same ID exists!
+            if ( document != null && document.exists)
+              exists = true;      
+
+          } );
+
+      return exists;
+    } catch(exception) {
+      print("Something went wrong while checking whether a question ID exists");
+      print(exception);
       return false;
     }
-
-    /// Get group with ID
-    await Firestore.instance
-        .collection("questions")
-        .document( question.getQuestionID() )
-        .get()
-        .then( (document) {
-          
-          /// Group with the same ID exists!
-          if ( document != null && document.exists)
-            exists = true;      
-
-        } );
-
-    return exists;
   }
 
   /// Check if this same question already exists
@@ -89,77 +113,96 @@ class FirebaseUtility {
   /// Returns false if the existing question has the same ID or if the question does not exist
   static Future< bool > hasIdenticalQuestion( Question question ) async
   {
-    bool exists = false;
+    try {
+      bool exists = false;
 
-    /// Get group with ID
-    await Firestore.instance
-        .collection("questions")
-        .where( "question", isEqualTo: question.getQuestion()  )
-        .getDocuments()
-        .then( (documents) {
-          
-          documents.documents.forEach( (document){
-            /// Group exists!
-            if ( document.exists && document.documentID != question.getQuestionID())
-              exists = true;
-          } );        
+      /// Get group with ID
+      await Firestore.instance
+          .collection("questions")
+          .where( "question", isEqualTo: question.getQuestion()  )
+          .getDocuments()
+          .then( (documents) {
+            
+            documents.documents.forEach( (document){
+              /// Group exists!
+              if ( document.exists && document.documentID != question.getQuestionID())
+                exists = true;
+            } );        
 
-        } );
+          } );
 
-    return exists;
+      return exists;
+    } catch(exception) {
+      print("Something went wrong while checking whether a duplicate question already exists");
+      print(exception);
+      return false;
+    }
   }
 
   static Future< String > generateUniqueQuestionCode() async
   { 
-    bool isTaken = true;
-    String newRandom;
+    try {
+      bool isTaken = true;
+      String newRandom;
 
-    // While no unique ID has been found
-    while ( isTaken )
-    {
-        // Generate a random ID
-        newRandom = getRandomID(6);
+      // While no unique ID has been found
+      while ( isTaken )
+      {
+          // Generate a random ID
+          newRandom = getRandomID(6);
 
-        // Check whether or not the generated ID exists 
-        await Firestore.instance
-            .collection("questions")
-            .document( newRandom ).get().then( (document) {
+          // Check whether or not the generated ID exists 
+          await Firestore.instance
+              .collection("questions")
+              .document( newRandom ).get().then( (document) {
 
-              // ID does not exist, unique code found!
-              if ( ! document.exists )
-                isTaken = false;
+                // ID does not exist, unique code found!
+                if ( ! document.exists )
+                  isTaken = false;
 
-            } );
+              } );
+      }
+
+      return newRandom;
+    } catch(exception) {
+      print("Something went wrong while generating a unique question code");
+      print(exception);
+      return null;
     }
-
-    return newRandom;
 
   }
 
-    static Future< String > generateUniqueGroupCode() async
+
+  static Future< String > generateUniqueGroupCode() async
   { 
-    bool isTaken = true;
-    String newRandom;
+    try {
+      bool isTaken = true;
+      String newRandom;
 
-    // While no unique ID has been found
-    while ( isTaken )
-    {
-        // Generate a random ID
-        newRandom = FirebaseUtility.getRandomID( Constants.groupCodeLength );
+      // While no unique ID has been found
+      while ( isTaken )
+      {
+          // Generate a random ID
+          newRandom = FirebaseUtility.getRandomID( Constants.groupCodeLength );
 
-        // Check whether or not the generated ID exists 
-        await Firestore.instance
-            .collection("groups")
-            .document( newRandom ).get().then( (document) {
+          // Check whether or not the generated ID exists 
+          await Firestore.instance
+              .collection("groups")
+              .document( newRandom ).get().then( (document) {
 
-              // ID does not exist, unique code found!
-              if ( ! document.exists )
-                isTaken = false;
+                // ID does not exist, unique code found!
+                if ( ! document.exists )
+                  isTaken = false;
 
-            } );
+              } );
+      }
+
+      return newRandom;
+    } catch(exception) {
+      print("Something went wrong while generating a unique group code");
+      print(exception);
+      return null;
     }
-
-    return newRandom;
 
   }
 
@@ -167,6 +210,7 @@ class FirebaseUtility {
   /// Returns as a String
   static String getRandomID(int length)
   {
+    try {
       var random = new Random();
       String result = "";
 
@@ -187,6 +231,11 @@ class FirebaseUtility {
       }
 
       return result;
+    } catch(exception) {
+      print("Something went wrong while getting a random ID");
+      print(exception);
+      return null;
+    }
   }
   
   /// The int must be in the range [0, 24]
