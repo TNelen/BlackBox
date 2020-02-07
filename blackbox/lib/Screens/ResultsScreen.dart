@@ -1,14 +1,11 @@
 import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:blackbox/Util/VibrationHandler.dart';
 import 'package:flutter/material.dart';
-import '../main.dart';
 import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
 import 'QuestionScreen.dart';
 import '../Interfaces/Database.dart';
 import '../Database/FirebaseStream.dart';
-import '../DataContainers/Question.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
 import 'dart:async';

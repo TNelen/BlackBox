@@ -3,7 +3,6 @@ import 'package:blackbox/DataContainers/UserData.dart';
 import '../DataContainers/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'Firebase.dart';
 import 'FirebaseUtility.dart';
 
 class FirebaseDeleters {

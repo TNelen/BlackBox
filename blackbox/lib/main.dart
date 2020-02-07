@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:blackbox/Screens/HomeScreen.dart';
 import 'Constants.dart';
 import './Database/GoogleUserHandler.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import './DataContainers/UserData.dart';
 import './Interfaces/Database.dart';
-import 'Screens/ResultsScreen.dart';
 
 void main() {
   try {
@@ -82,7 +80,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _progress = 0;
     new Timer.periodic(Duration(seconds: 1), (Timer t) {

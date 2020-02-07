@@ -1,5 +1,4 @@
 import 'package:blackbox/DataContainers/UserData.dart';
-import 'DataContainers/GroupData.dart';
 import 'Database/Firebase.dart';
 import 'Interfaces/Database.dart';
 import 'package:flutter/material.dart';

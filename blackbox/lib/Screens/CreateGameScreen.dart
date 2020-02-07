@@ -30,8 +30,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
 
   String _groupName;
   String _groupCategory;
-  String _groupID;
-  String _groupAdmin = Constants.getUserID();
+  //String _groupID;
+  //String _groupAdmin = Constants.getUserID();
 
   String selectedCategory;
   Color color = Constants.iDarkGrey;

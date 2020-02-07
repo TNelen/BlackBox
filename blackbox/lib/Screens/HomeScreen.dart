@@ -1,8 +1,6 @@
-import 'package:blackbox/Database/GoogleUserHandler.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
-import '../Database/GoogleUserHandler.dart';
 import 'CreateGameScreen.dart';
 import 'JoinGameScreen.dart';
 import 'ReportScreen.dart';
@@ -14,7 +12,6 @@ import 'package:blackbox/DataContainers/Question.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../DataContainers/Appinfo.dart';
-import '../DataContainers/UserData.dart';
 import 'Popup.dart';
 
 class HomeScreen extends StatefulWidget {

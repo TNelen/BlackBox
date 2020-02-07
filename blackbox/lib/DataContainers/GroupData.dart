@@ -108,11 +108,11 @@ class GroupData {
   static Map<String, String> _convertFirebaseMapString( dynamic data )
   {
     /// Initialize lists
-    Map<dynamic, dynamic> DBData = data;
+    Map<dynamic, dynamic> dbData = data;
     Map<String, String> convertedData = new Map<String, String>();
 
     /// Loop the database Map and add values as Strings to the data Map
-    DBData.forEach( (key, value) {
+    dbData.forEach( (key, value) {
       convertedData[key.toString()] = value.toString();
     } );
 
@@ -131,10 +131,10 @@ class GroupData {
   }
 
   void addQuestionToList(String id){
-    Random random = new Random();
+    Random random = new Random(1);
     int min = _questionlist.length-3; 
     int max = _questionlist.length;
-    int randomNumber = min + (Random(1).nextInt(max-min));
+    int randomNumber = min + (random.nextInt(max-min));
     _questionlist.insert(randomNumber, id);
   }
 

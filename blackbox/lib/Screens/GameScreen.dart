@@ -5,14 +5,12 @@ import '../Database/FirebaseStream.dart';
 import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
 import 'QuestionScreen.dart';
-import '../DataContainers/Question.dart';
 import 'HomeScreen.dart';
 import 'package:share/share.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 class GameScreen extends StatefulWidget {
   Database _database;
-  GroupData groupInfo = null;
+  GroupData groupInfo;
   String code;
 
   GameScreen(Database db, String code) {
