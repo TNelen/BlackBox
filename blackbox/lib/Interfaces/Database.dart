@@ -159,7 +159,6 @@ abstract class Database {
   ///   (- Has no members) -> Not possible with Firebase. A workaround may be added
   ///   - Only has one member with ID: a developer's ID
   ///   - Group name is equal to 'debug'
-  ///   - Group name is equal to 'test'
   /// AND must comply with the following:
   ///   - Its name is not ORVFA or S1REQ
   Future<bool> cleanGroups();

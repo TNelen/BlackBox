@@ -114,16 +114,15 @@ class FirebaseDeleters {
     Query memberDieter = groupsRef.where(dieterPath, isEqualTo: 'Dieter');      /// Dieter is member
     Query memberTimo   = groupsRef.where(timoPath,   isEqualTo: 'Timo Nelen');  /// Timo is member
     Query nameDebug    = groupsRef.where('name',     isEqualTo: 'debug');       /// Groupname = debug
-    Query nameTest     = groupsRef.where('name',     isEqualTo: 'test');        /// Groupname = test
     //  Does not work on maps:  Query memberName   = groupsRef.where('members', arrayContains: 'name');                         /// Testing ID 'name' is member
     //  Does not work on maps:  Query memberTe     = groupsRef.where('members', arrayContains: 'te');                           /// Testing ID 'te' is member
 
     // Add all queries to the list
-    queries.add(membersEmpty);  queries.add(memberDieter);  queries.add(memberTimo); 
-    queries.add(nameDebug);     queries.add(nameTest);
+    queries.add(membersEmpty);  queries.add(memberDieter);
+    queries.add(memberTimo);    queries.add(nameDebug);
 
     // For logging purposes
-    List<String> queryTypes = ['membersEmpty', 'memberDieter', 'memberTimo', 'memberName', 'memberTe', 'nameDebug', 'nameTest'];  /// A list of the query names: for debugging purposes
+    List<String> queryTypes = ['membersEmpty', 'memberDieter', 'memberTimo', 'memberName', 'memberTe', 'nameDebug'];  /// A list of the query names: for debugging purposes
 
     int i = 0;    /// To keep track of which query type to log
     /// Loop through all queries and delete groups that sattisfy all requirements
