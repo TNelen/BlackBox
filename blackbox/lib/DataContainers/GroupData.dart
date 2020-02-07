@@ -63,12 +63,12 @@ class GroupData {
     /// Get status data
     _nextQuestion = new Question( snap.data['nextQuestionID'], snap.data['nextQuestion'], Question.getCategoryFromString(snap.data['nextQuestionCategory']), snap.data['nextQuestionCreatorID'], snap.data['nextQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
     _lastQuestion = new Question( snap.data['lastQuestionID'], snap.data['lastQuestion'], Question.getCategoryFromString(snap.data['lastQuestionCategory']), snap.data['lastQuestionCreatorID'], snap.data['lastQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
-    _members = _convertFirebaseMapString( snap.data['members'] ),
-    _lastVotes = _convertFirebaseMapString( snap.data['lastVotes'] ),
-    _newVotes = _convertFirebaseMapString( snap.data['newVotes'] ),
-    _totalVotes = _convertFirebaseMapInt( snap.data['totalVotes'] ),
-    _playing = _convertFirebaseList( snap.data['playing'] ),
-    _questionlist = _convertFirebaseList( snap.data['questionlist'] );
+    _members      = _convertFirebaseMapString( snap.data['members']     ),
+    _lastVotes    = _convertFirebaseMapString( snap.data['lastVotes']   ),
+    _newVotes     = _convertFirebaseMapString( snap.data['newVotes']    ),
+    _totalVotes   = _convertFirebaseMapInt(    snap.data['totalVotes']  ),
+    _playing      = _convertFirebaseList(      snap.data['playing']     ),
+    _questionlist = _convertFirebaseList(      snap.data['questionlist']);
 
 
   /// Convert a list from a DocumentSnapshot to a List<String>

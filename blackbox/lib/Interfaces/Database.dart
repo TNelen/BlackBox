@@ -153,4 +153,14 @@ abstract class Database {
   /// Returns true when complete
   /// Returns false when the question wasn't found
   Future< bool > deleteQuestion( Question question );
+
+  /// Delete unused and/or testing groups from the database
+  /// This action is PERMANENT. A group is deleted if it complies with ONE of the following criteria:
+  ///   (- Has no members) -> Not possible with Firebase. A workaround may be added
+  ///   - Only has one member with ID: a developer's ID
+  ///   - Group name is equal to 'debug'
+  ///   - Group name is equal to 'test'
+  /// AND must comply with the following:
+  ///   - Its name is not ORVFA or S1REQ
+  Future<bool> cleanGroups();
 }

@@ -61,6 +61,11 @@ class Firebase implements Database{
   }
 
 
+  @override
+  Future<bool> cleanGroups() async {
+    return await FirebaseDeleters.cleanGroups();
+  }
+
   /// -------
   /// Utility
   /// -------
