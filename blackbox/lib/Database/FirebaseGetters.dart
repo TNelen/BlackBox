@@ -21,11 +21,23 @@ class FirebaseGetters {
               if (doc.exists) {
                 if (doc.data['name'] != null)
                 {
+                  bool vibration = true;
+                  if (doc.data['vibration'] != null)
+                  {
+                    vibration = doc.data['vibration'];
+                  }
+
+                  bool sounds = true;
+                  if (doc.data['sounds'] != null)
+                  {
+                    sounds = doc.data['sounds'];
+                  }
+
                   if (doc.data['accent'] != null)
                   {
-                    user = new UserData.full(doc.documentID, doc.data['name'], doc.data['accent']);
+                    user = new UserData.full(doc.documentID, doc.data['name'], doc.data['accent'], vibration, sounds);
                   } else {
-                    user = new UserData.full(doc.documentID, doc.data['name'], Constants.defaultColor);
+                    user = new UserData.full(doc.documentID, doc.data['name'], Constants.defaultColor, vibration, sounds);
                   }
                 }
               }

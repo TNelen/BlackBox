@@ -108,10 +108,8 @@ class Popup {
                       context, 'Oops!', 'Please enter more then 3 characters');
                 } else {
                   Constants.setUsername(usernameController.text.toString());
-                  database.updateUser(new UserData.full(
-                      Constants.getUserID(),
-                      usernameController.text.toString(),
-                      Constants.colorindex));
+                  Constants.setAccentColor(Constants.colorindex);
+                  database.updateUser(Constants.getUserData());
                   Navigator.pop(context);
                 }
               },

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
 import '../Constants.dart';
@@ -215,6 +216,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   SizedBox(height: 40.0),
                   Text(
+                    'Sounds and vibration',
+                    style: new TextStyle(
+                        color: Constants.colors[Constants.colorindex],
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.w300),
+                  ),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildMediaSetting(Icons.audiotrack, 'sounds', Constants.getSoundEnabled(), _soundAction),
+                        _buildMediaSetting(Icons.vibration, 'vibration', Constants.getVibrationEnabled(), _vibrationAction),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 40.0),
+                  Text(
                     'Personalization',
                     style: new TextStyle(
                         color: Constants.colors[Constants.colorindex],
@@ -252,5 +270,76 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               ),
             )))));
+  }
+
+  void plusOne() => 1;
+
+  void _vibrationAction() => Constants.setVibrationEnabled( ! Constants.getVibrationEnabled() );
+
+  void _soundAction() => Constants.setSoundEnabled( ! Constants.getSoundEnabled() );
+
+  Container _buildMediaSetting(IconData icon, String label, bool isEnabled, Function() action) {
+    
+    String prefix = '';
+    Color foregroundColor;
+    Color textColor;
+    Color backgroundColor;
+    if (isEnabled)
+    {
+      prefix = 'Disable';
+      foregroundColor = Constants.colors[Constants.colorindex];
+      textColor = Constants.iWhite;
+      backgroundColor = Constants.iDarkGrey;
+    } else {
+      prefix = 'Enable';
+      foregroundColor = Constants.iGrey;
+      textColor = Constants.iGrey;
+      backgroundColor = Constants.iDarkGrey;
+    }
+
+    return Container(
+        constraints: BoxConstraints(minWidth: 100, maxWidth: 120),
+        child: Card(
+            color: backgroundColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: InkWell(
+                splashColor: foregroundColor,
+                onTap: () {
+                  action();
+                  _database.updateUser( Constants.getUserData() );
+                  setState(() {
+
+                  }); 
+                },
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                    child: Column(
+                      children: <Widget>[
+                        Hero(
+                            tag: 'topicon' + label,
+                            child: Icon(
+                              icon,
+                              color: foregroundColor,
+                              size: 25,
+                            )),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        AutoSizeText(
+                          prefix,
+                          style:
+                              TextStyle(fontSize: 15, color: textColor),
+                          maxLines: 1,
+                        ),
+                        AutoSizeText(
+                          label,
+                          style:
+                              TextStyle(fontSize: 15, color: textColor),
+                          maxLines: 1,
+                        ),
+                      ],
+                    )))));
   }
 }

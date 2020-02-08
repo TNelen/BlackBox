@@ -90,5 +90,31 @@ class Constants{
   }
 
 
+  /// Get whether or not vibration has been enabled for this user
+  static bool getVibrationEnabled()
+  {
+    return userData.getVibrationEnabled();
+  }
+
+
+  /// Enable or disable vibration
+  static void setVibrationEnabled(bool isVibrationEnabled)
+  {
+    userData.setVibrationEnabled(isVibrationEnabled);
+  }
+
+
+  /// Get whether or not sound has been enabled for this user
+  static bool getSoundEnabled()
+  {
+    return userData.getSoundEnabled();
+  }
+
+
+  /// Enable or disable sound
+  static void setSoundEnabled(bool isSoundEnabled)
+  {
+    userData.setSoundEnabled(isSoundEnabled);
+  }
 }
 
