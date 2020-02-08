@@ -156,7 +156,7 @@ class Firebase implements Database{
         return value;
     }).catchError((error) {
         print(error);
-        return null;
+        return new GroupData("Default", "Default group", "00000", "None", new Map<String, String>(), new List<String>());
     });
   }
 

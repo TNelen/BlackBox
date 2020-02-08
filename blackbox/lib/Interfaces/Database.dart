@@ -34,7 +34,9 @@ abstract class Database {
 
 
   /// Get the unique ID of a group by providing the code
-  /// Will return null if the group does not exist or an error occurred
+  /// Will return null if the group does not exist 
+  /// Will return a default group (see below) when an error occurred
+  /// new GroupData("Default", "Default group", "00000", "None", new Map<String, String>(), new List<String>());
   Future< GroupData > getGroupByCode(String code);
 
 
@@ -55,9 +57,11 @@ abstract class Database {
   /// Returns null if an error occurred
   Future< Question > getRandomQuestion( GroupData groupData, Category category );
 
+
   /// Get the next question in the list
   /// Returns null if an error occurred
   Future< Question > getNextQuestion( GroupData groupData);
+
 
   ///Create question list
   /// Returns null if an error occurred
@@ -168,6 +172,7 @@ abstract class Database {
   /// Returns true upon completion
   /// Returns false after an error
   Future< bool > deleteQuestion( Question question );
+
 
   /// Delete unused and/or testing groups from the database
   /// This action is PERMANENT. A group is deleted if it complies with ONE of the following criteria:
