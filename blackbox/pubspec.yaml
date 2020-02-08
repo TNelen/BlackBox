@@ -70,6 +70,7 @@ flutter:
   assets:
     - images/icon.png
     - images/icon2.png
+    - images/icon_transparent.png
     - assets/sounds/loser.wav
     - assets/sounds/winner.wav
 
