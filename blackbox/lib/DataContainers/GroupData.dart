@@ -23,10 +23,11 @@ class GroupData {
   /// Status information about this group
   Question _nextQuestion = new Question.empty();  /// Data container for the current/next question
   Question _lastQuestion = new Question.empty();  /// Data container for the previous question
-  Map<String, String> _lastVotes;   /// Mapping the voter to the votee (previous round)
-  Map<String, String> _newVotes;    /// Mapping the voter to the votee (current round)
-  Map<String, int> _totalVotes;     /// Mapping unique IDs to the total amount of votes for that user
-  List<String> _playing;            /// A list of all IDs of members that are currently playing 
+  Map<String, String> _lastVotes;                 /// Mapping the voter to the votee (previous round)
+  Map<String, String> _newVotes;                  /// Mapping the voter to the votee (current round)
+  Map<String, int> _totalVotes;                   /// Mapping unique IDs to the total amount of votes for that user
+  List<String> _playing;                          /// A list of all IDs of members that are currently playing 
+  Map<String, Map<String, int>> _history;         /// A map that combines each question (not ID) with another Map that links each username to amount of votes 
   
 
   /// ---------------------- \\\
@@ -41,11 +42,12 @@ class GroupData {
     _newVotes = new Map<String, String>();
     _totalVotes = new Map<String, int>();
     _playing = new List<String>();
+    _history = new Map<String, Map<String, int>>();
   }
 
   /// Create a group with the given data fields AND status fields
-  GroupData.extended(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members, 
-                     this._nextQuestion, this._lastVotes, this._newVotes, this._totalVotes, this._playing, this._questionlist);
+  GroupData.extended(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members, this._nextQuestion, 
+                     this._lastVotes, this._newVotes, this._totalVotes, this._playing, this._questionlist, this._history);
 
 
   /// ---------------- \\\
@@ -68,7 +70,9 @@ class GroupData {
     _newVotes     = _convertFirebaseMapString( snap.data['newVotes']    ),
     _totalVotes   = _convertFirebaseMapInt(    snap.data['totalVotes']  ),
     _playing      = _convertFirebaseList(      snap.data['playing']     ),
-    _questionlist = _convertFirebaseList(      snap.data['questionlist']);
+    _questionlist = _convertFirebaseList(      snap.data['questionlist']),
+    _history      = _convertFirebaseHistory(   snap.data['history']     );
+    
 
 
   /// Convert a list from a DocumentSnapshot to a List<String>
@@ -119,6 +123,40 @@ class GroupData {
     return convertedData;
   }
 
+
+  /// Convert the history field from a DocumentSnapshot to a Map<String, Map<String, int>>
+  /// NO checks are done! Provided parameter MUST be correct
+  static Map<String, Map<String, int>> _convertFirebaseHistory( dynamic data )
+  {
+    print(data);
+
+    /// Initialize lists
+    Map<dynamic, dynamic> dbData = data;
+    Map<String, Map<String, int>> convertedData = new Map<String, Map<String, int>>();
+
+    // Loop all earlier questions
+    if (dbData != null)
+    {
+      dbData.forEach( (key, value) {
+        Map<String, int> votes = new Map<String, int>();
+        Map<dynamic, dynamic> dbVotes = value;
+
+        // Loop each user with their votes for this question and save them under the question
+        dbVotes.forEach( (username, numVotes){
+          votes[username.toString()] = numVotes;
+        });
+
+        convertedData[key.toString()] = votes;
+      } );
+    }
+
+    if (convertedData.length > 0)
+    {
+      return convertedData;
+    } else {
+      return null;
+    }
+  }
 
   /// --------------------- \\\
   /// GroupData Information \\\
@@ -253,6 +291,20 @@ class GroupData {
       Constants.database.deleteGroup( this );
     }
 
+  }
+
+
+  /// Returns the history of all questions
+  /// The first String contains the question itself (not its ID)
+  /// The inner Map links each user to the amount of votes they each got
+  Map<String, Map<String, int>> getHistory()
+  {
+    if (_history != null)
+    {
+      return _history;
+    } else {
+      return new Map<String, Map<String, int>>();
+    }
   }
 
 
@@ -591,14 +643,34 @@ class GroupData {
   {
     /// Admin authentication
     if ( admin.getUserID() == _adminID ) {
+        
+      /// Add the votes to the history list
+      String currentQuestion;
+      if (_lastQuestion != null)
+      {
+        currentQuestion = _lastQuestion.getQuestion();
+      }
+      Map<String, int> currentVotes = new Map<String, int>();
 
       /// Add votes to total count
       _getNewVoteCounts().forEach( (userID, numVotes) {
+
+          currentVotes[getUserName(userID)] = numVotes;
+
           if (_totalVotes.containsKey(userID))
             _totalVotes[userID] += numVotes;
           else
             _totalVotes[userID] = numVotes;
       });
+
+      if (currentQuestion != null && currentQuestion != "")
+      {
+        if (_history == null)
+        {
+          _history = new Map<String, Map<String, int>>();
+        }
+        _history[currentQuestion] = currentVotes;
+      }
 
       /// Copy new votes to the old list 
       _lastVotes = _newVotes;

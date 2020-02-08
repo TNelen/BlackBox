@@ -158,7 +158,13 @@ class FirebaseSetters {
       /// Unless it is a new group, the data does not exist or a question transfer is in progress!
       /// 
       
-
+      Map<String, Map<String, int>> history;
+      if (groupData.getHistory() == null || groupData.getHistory().length == 0)
+      {
+        history = null;
+      } else {
+        history = groupData.getHistory();
+      }
 
       /// If user is admin -> Overwrite permissions!
       if ( freshData.getAdminID() == Constants.getUserID() || freshData.getQuestion() == null)
@@ -178,6 +184,8 @@ class FirebaseSetters {
         data['lastQuestionCreatorID'] = groupData.getLastQuestion().getCreatorID() ?? "";
         data['lastQuestionCreatorName'] = groupData.getLastQuestion().getCreatorName() ?? "";
         data['questionlist'] = groupData.getQuestionList() ?? "";
+        
+        data['history'] = history;
 
       } else {  /// Otherwise: use current data
         data['name'] = freshData.getName();
@@ -195,6 +203,8 @@ class FirebaseSetters {
         data['lastQuestionCreatorID'] = freshData.getLastQuestion().getCreatorID() ?? "";
         data['lastQuestionCreatorName'] = freshData.getLastQuestion().getCreatorName() ?? "";
         data['questionlist'] = freshData.getQuestionList() ?? "";
+
+        data['history'] = freshData.getHistory();
       }
 
 
