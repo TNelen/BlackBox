@@ -10,7 +10,7 @@ import 'package:share/share.dart';
 
 class GameScreen extends StatefulWidget {
   Database _database;
-  GroupData groupInfo;
+  GroupData groupInfo = null;
   String code;
 
   GameScreen(Database db, String code) {

@@ -15,7 +15,6 @@ class GoogleUserHandler {
   }
 
   Future< UserData > handleSignIn() async {
-    try {
       loggedIn = false;
       
       GoogleSignInAccount googleUser = await _googleSignIn.signIn();
@@ -33,10 +32,5 @@ class GoogleUserHandler {
       UserData userData = new UserData(user.uid, user.displayName);
       
       return userData;
-    } catch(exception) {
-      print("Something went wrong while logging in");
-      print(exception);
-      return null;
-    }
   }
 }
