@@ -45,25 +45,45 @@ class Firebase implements Database{
 
   @override
   Future<bool> deleteGroup(GroupData group) async {
-    return await FirebaseDeleters.deleteGroup( group );
+    return await FirebaseDeleters.deleteGroup( group ).then((value) {
+        return true;
+    }).catchError((error) {
+        print(error);
+        return false;
+    });
   }
 
 
   @override
   Future<bool> deleteQuestion(Question question) async {
-    return await FirebaseDeleters.deleteQuestion( question );
+    return await FirebaseDeleters.deleteQuestion( question ).then((value) {
+        return true;
+    }).catchError((error) {
+        print(error);
+        return false;
+    });;
   }
 
 
   @override
   Future<bool> deleteUser(UserData user) async {
-    return await FirebaseDeleters.deleteUser( user );
+    return await FirebaseDeleters.deleteUser( user ).then((value) {
+        return true;
+    }).catchError((error) {
+        print(error);
+        return false;
+    });
   }
 
 
   @override
   Future<bool> cleanGroups() async {
-    return await FirebaseDeleters.cleanGroups();
+    return await FirebaseDeleters.cleanGroups().then((value) {
+        return true;
+    }).catchError((error) {
+        print(error);
+        return false;
+    });
   }
 
   /// -------
@@ -73,24 +93,44 @@ class Firebase implements Database{
 
   @override
   Future<bool> doesGroupExist(String groupID) async {
-    return await FirebaseUtility.doesGroupExist( groupID );
+    return await FirebaseUtility.doesGroupExist( groupID ).then((value) {
+        return true;
+    }).catchError((error) {
+        print(error);
+        return false;
+    });
   }
 
 
   @override
   Future<bool> doesQuestionExist(String questionID) async {
-    return await FirebaseUtility.doesQuestionExist( questionID );
+    return await FirebaseUtility.doesQuestionExist( questionID ).then((value) {
+        return true;
+    }).catchError((error) {
+        print(error);
+        return false;
+    });
   }
 
   @override
   Future<bool> doesUserExist(String userID) async {
-    return await FirebaseUtility.doesUserExist( userID );
+    return await FirebaseUtility.doesUserExist( userID ).then((value) {
+        return value;
+    }).catchError((error) {
+        print(error);
+        return false;
+    });
   }
 
 
   @override
   Future<String> generateUniqueGroupCode() async {
-    return await FirebaseUtility.generateUniqueGroupCode();
+    return await FirebaseUtility.generateUniqueGroupCode().then((value) {
+        return value;
+    }).catchError((error) {
+        print(error);
+        return null;
+    });
   }
 
 
@@ -101,36 +141,66 @@ class Firebase implements Database{
 
   @override
   Future<Appinfo> getAppInfo() async {
-    return await FirebaseGetters.getAppInfo();
+    return await FirebaseGetters.getAppInfo().then((value) {
+        return value;
+    }).catchError((error) {
+        print(error);
+        return null;
+    });
   }
 
 
   @override
   Future<GroupData> getGroupByCode(String code) async {
-    return await FirebaseGetters.getGroupByCode( code );
+    return await FirebaseGetters.getGroupByCode( code ).then((value) {
+        return value;
+    }).catchError((error) {
+        print(error);
+        return null;
+    });
   }
 
 
   @override
   Future<Question> getRandomQuestion(GroupData groupData, Category category) async {
-    return await FirebaseGetters.getRandomQuestion( groupData , category );
+    return await FirebaseGetters.getRandomQuestion( groupData , category ).then((value) {
+        return value;
+    }).catchError((error) {
+        print(error);
+        return null;
+    });
   }
 
   @override
   Future<List<String>> createQuestionList(String category) async {
-    return await FirebaseGetters.createQuestionList( category);
+    return await FirebaseGetters.createQuestionList( category).then((value) {
+        return value;
+    }).catchError((error) {
+        print(error);
+        return null;
+    });
   }
   
 
   @override
   Future<Question> getNextQuestion(GroupData groupData) async {
-    return await FirebaseGetters.getNextQuestion( groupData);
+    return await FirebaseGetters.getNextQuestion( groupData).then((value) {
+        return value;
+    }).catchError((error) {
+        print(error);
+        return null;
+    });
   }
 
 
   @override
   Future<UserData> getUserByID(String uniqueID) async {
-    return await FirebaseGetters.getUserByID( uniqueID );
+    return await FirebaseGetters.getUserByID( uniqueID ).then((value) {
+        return value;
+    }).catchError((error) {
+        print(error);
+        return null;
+    });
   }
 
   /// -------
@@ -139,40 +209,75 @@ class Firebase implements Database{
 
   @override
   Future<bool> reportQuestion(Question q, ReportType reportType) async {
-    return await FirebaseSetters.reportQuestion( q , reportType );
+    return await FirebaseSetters.reportQuestion( q , reportType ).then((value) {
+        return value;
+    }).catchError((error) {
+        print(error);
+        return false;
+    });
   }
 
   @override
   Future<bool> submitIssue(Issue issue) async {
-    return await FirebaseSetters.submitIssue( issue );
+    return await FirebaseSetters.submitIssue( issue ).then((value) {
+        return value;
+    }).catchError((error) {
+        print(error);
+        return false;
+    });
   }
 
 
   @override
   Future<bool> updateGroup(GroupData groupData) async {
-    return await FirebaseSetters.updateGroup( groupData );
+    return await FirebaseSetters.updateGroup( groupData ).then((value) {
+        return value;
+    }).catchError((error) {
+        print(error);
+        return false;
+    });
   }
 
   @override
   Future<String> updateQuestion(Question question) async {
-    return await FirebaseSetters.updateQuestion( question );
+    return await FirebaseSetters.updateQuestion( question ).then((value) {
+        return value;
+    }).catchError((error) {
+        print(error);
+        return null;
+    });
   }
 
 
   @override
   Future<bool> updateUser(UserData userData) async {
-    return await FirebaseSetters.updateUser( userData );
+    return await FirebaseSetters.updateUser( userData ).then((value) {
+        return value;
+    }).catchError((error) {
+        print(error);
+        return false;
+    });
   }
 
 
   @override
   Future<bool> voteOnQuestion(Question q) async {
-    return await FirebaseSetters.voteOnQuestion( q );
+    return await FirebaseSetters.voteOnQuestion( q ).then((value) {
+        return true;
+    }).catchError((error) {
+        print(error);
+        return false;
+    });
   }
 
 
   @override
   Future<bool> voteOnUser(GroupData groupData, String voteeID) async {
-    return await FirebaseSetters.voteOnUser( groupData , voteeID );
+    return await FirebaseSetters.voteOnUser( groupData , voteeID ).then((value) {
+        return true;
+    }).catchError((error) {
+        print(error);
+        return false;
+    });
   }
 }
