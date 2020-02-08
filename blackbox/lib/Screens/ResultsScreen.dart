@@ -569,19 +569,15 @@ class ResultScreenState extends State<ResultScreen> {
   {
     if (groupData.getTopThreeIDs('previous').containsKey(Constants.getUserID()))
     {
-      if (Constants.getSoundEnabled()) {
+      if (Constants.getSoundEnabled())
         playSound("winner.wav");
-      }
-      if (Constants.getVibrationEnabled()) {
+      if (Constants.getVibrationEnabled())
         VibrationHandler.vibrate(vibratePattern: [10, 50, 46, 48, 49, 70, 64, 66, 41, 70]);
-      }
     } else {
-      if (Constants.getSoundEnabled()) {
+      if (Constants.getSoundEnabled())
         playSound("loser.wav");
-      }
-      if (Constants.getVibrationEnabled()) {
+      if (Constants.getVibrationEnabled())
         VibrationHandler.vibrate(vibratePattern: [50, 50, 50, 129]);
-      }
     }
   }
 
