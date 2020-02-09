@@ -131,8 +131,6 @@ class GroupData {
   /// NO checks are done! Provided parameter MUST be correct
   static Map<String, Map<String, int>> _convertFirebaseHistory( dynamic data )
   {
-    print(data);
-
     /// Initialize lists
     Map<dynamic, dynamic> dbData = data;
     Map<String, Map<String, int>> convertedData = new Map<String, Map<String, int>>();
@@ -166,6 +164,7 @@ class GroupData {
   /// --------------------- \\\
 
   /// Set whether or not this group is still active
+  /// This action will silently fail for non-admins
   void setIsPlaying(bool playing)
   {
     if (_adminID == Constants.getUserID())
