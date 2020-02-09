@@ -47,11 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
   bool loggedIn =false;
   bool wifiPopup=false;
 
-
-  _SplashScreenState(Database db){
-
-    this.database = db;
-
+  Future<void> login() async{
     if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
       ///check if user isn't loged in via google already when returning to homescreen
       try {
@@ -81,6 +77,15 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+
+  _SplashScreenState(Database db){
+
+    this.database = db;
+
+    login();
+  }
+
+
   Future<bool> checkWifi() async{
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -103,11 +108,14 @@ class _SplashScreenState extends State<SplashScreen> {
                 wifiPopup = true;
               }
               else{
-                Popup.makePopup(context, "Woops!", "Please turn on your internet connectivity!");
+                Popup.makePopup(context, "Woops!", "Please turn on your internet connectivity and restart the app!");
                 wifiPopup = true;
               }
             });
 
+        }
+        if(wifiPopup){
+          login();
         }
         if(_progress<1.0){
         _progress += 0.5;
