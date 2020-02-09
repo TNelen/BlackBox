@@ -108,7 +108,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 wifiPopup = true;
               }
               else{
-                Popup.makePopup(context, "Woops!", "Please turn on your internet connectivity and restart the app!");
+                Popup.makePopup(context, "Woops!", "Please turn on your internet connectivity!");
                 wifiPopup = true;
               }
             });
