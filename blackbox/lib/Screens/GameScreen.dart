@@ -191,7 +191,7 @@ class _GameScreenState extends State<GameScreen> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                              'Anyone can start the game if all players are ready!',
+                                              'You can start the game if all players are ready!',
                                               style: new TextStyle(
                                                   color: Constants.colors[
                                                       Constants.colorindex],
