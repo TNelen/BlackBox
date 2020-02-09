@@ -4,6 +4,7 @@ import '../Constants.dart';
 import '../Interfaces/Database.dart';
 import '../DataContainers/UserData.dart';
 import '../DataContainers/Question.dart';
+import 'HomeScreen.dart';
 
 class Popup {
   static void makePopup(BuildContext context, String title, String message) {
@@ -110,7 +111,12 @@ class Popup {
                   Constants.setUsername(usernameController.text.toString());
                   Constants.setAccentColor(Constants.colorindex+1);
                   database.updateUser(Constants.getUserData());
-                  Navigator.pop(context);
+                  Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    HomeScreen(Constants.database),
+              ));
                 }
               },
             ),
