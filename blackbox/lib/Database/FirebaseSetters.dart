@@ -171,6 +171,7 @@ class FirebaseSetters {
       {
         data['name'] = groupData.getName();
         data['description'] = groupData.getDescription();
+        data['isPlaying'] = groupData.getIsPlaying();
 
         data['nextQuestion'] = groupData.getQuestion().getQuestion();
         data['nextQuestionID'] = groupData.getQuestion().getQuestionID();
@@ -190,6 +191,7 @@ class FirebaseSetters {
       } else {  /// Otherwise: use current data
         data['name'] = freshData.getName();
         data['description'] = freshData.getDescription();
+        data['isPlaying'] = freshData.getIsPlaying();
 
         data['nextQuestion'] = freshData.getQuestion().getQuestion();
         data['nextQuestionID'] = freshData.getQuestion().getQuestionID();
