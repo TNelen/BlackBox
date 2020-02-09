@@ -99,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             textAlign: TextAlign.center,
                             style: new TextStyle(
                                 color: Constants.iWhite,
-                                fontSize: 30.0,
+                                fontSize: 22.0,
                                 fontWeight: FontWeight.w300),
                           ),
                           InkWell(

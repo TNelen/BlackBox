@@ -14,6 +14,7 @@ class QuestionScreen extends StatefulWidget {
   GroupData groupData;
   String code;
 
+
   @override
   QuestionScreen(Database db, GroupData gd, String code) {
     this._database = db;
@@ -30,7 +31,7 @@ class _QuestionScreenState extends State<QuestionScreen>
   Database _database;
   GroupData groupData;
   String code;
-  //List enableReports = [0, 0, 0];
+  
   FirebaseStream stream;
   TextEditingController questionController = new TextEditingController();
 
@@ -46,6 +47,12 @@ class _QuestionScreenState extends State<QuestionScreen>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     BackButtonInterceptor.add(myInterceptor);
+
+    //report question reset values
+    Constants.enableGrammar = 0;
+    Constants.enableDisturbing = 0;
+    Constants.enableLove = 0;
+
   }
 
   @override
