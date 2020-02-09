@@ -459,6 +459,9 @@ class FirebaseSetters {
             case ReportType.DISTURBING:
               data['disturbingReports'] = data['disturbingReports'] + 1;
               break;
+            case ReportType.LOVE:
+              data['loves'] = data['loves'] + 1;
+              break;
           }     
 
           updateComplete = true;
@@ -476,6 +479,11 @@ class FirebaseSetters {
 
   static Future<bool> multiReportQuestion(Question question, Map<ReportType, bool> reports) async {
   
+    if (reports.isEmpty)
+    {
+      return true;
+    }
+
     bool updateComplete = false;
 
       /// Get basic question information
@@ -539,6 +547,9 @@ class FirebaseSetters {
                       break;
                     case ReportType.DISTURBING:
                       data['disturbingReports'] = data['disturbingReports'] + 1;
+                      break;
+                    case ReportType.LOVE:
+                      data['loves'] = data['loves'] + 1;
                       break;
                   }   
                 }

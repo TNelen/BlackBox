@@ -9,7 +9,8 @@ import '../DataContainers/Issue.dart';
 enum ReportType {
     CATEGORY,
     GRAMMAR,
-    DISTURBING
+    DISTURBING,
+    LOVE
 }
 
 abstract class Database {

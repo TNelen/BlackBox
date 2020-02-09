@@ -8,10 +8,7 @@ import 'GameScreen.dart';
 import '../Database/FirebaseStream.dart';
 import 'Popup.dart';
   
-List reports = [0, 0, 0];
-int disturbing = 0;
-int grammar = 1;
-int love = 2;
+Map<ReportType, bool> reportMap = new Map<ReportType, bool>(); 
 
 class QuestionScreen extends StatefulWidget {
   Database _database;
@@ -26,6 +23,10 @@ class QuestionScreen extends StatefulWidget {
     this._database = db;
     this.groupData = gd;
     this.code = code;
+
+    reportMap[ReportType.DISTURBING] = false;
+    reportMap[ReportType.GRAMMAR] = false;
+    reportMap[ReportType.CATEGORY] = false;
   }
 
   _QuestionScreenState createState() =>
@@ -54,10 +55,10 @@ class _QuestionScreenState extends State<QuestionScreen>
     WidgetsBinding.instance.addObserver(this);
     BackButtonInterceptor.add(myInterceptor);
     //reset reports
-    reports = [0,0,0];
-
-    
-
+    reportMap = new Map<ReportType, bool>(); 
+    reportMap[ReportType.DISTURBING] = false;
+    reportMap[ReportType.GRAMMAR] = false;
+    reportMap[ReportType.CATEGORY] = false;
   }
 
   @override
@@ -165,23 +166,13 @@ class _QuestionScreenState extends State<QuestionScreen>
                   onPressed: () {
                     //submit reports to database
                     //disturbing
-                    print(reports);
-                    print(reports[disturbing]);
-                    print(reports[love]);
-                    print(reports[grammar]);
+                    print(reportMap);
+                    print(reportMap[ReportType.DISTURBING]);
+                    print(reportMap[ReportType.CATEGORY]);
+                    print(reportMap[ReportType.GRAMMAR]);
 
                     //put in database
-                    reports[disturbing] ==1
-                        ? _database.reportQuestion(groupData.getQuestion(), ReportType.DISTURBING)
-                        : print("nothing to be done1");
-                    //love
-                    reports[love] ==1
-                        ? _database.voteOnQuestion(groupData.getQuestion())
-                        : print("nothing to be done2");
-                    //grammar
-                    reports[grammar] ==1
-                        ? _database.reportQuestion(groupData.getQuestion(), ReportType.GRAMMAR)
-                        : print("nothing to be done3");
+                    _database.multiReportQuestion(groupData.getQuestion(), reportMap);
 
                     Navigator.push(
                         context,
@@ -390,11 +381,8 @@ class _ReportPopupState extends State<ReportPopup> {
   @override
   void initState() {}
 
-  void toggle(int type){
-    if (reports[type]  == 0){
-      reports[type] = 1;
-    }
-    else reports[type] = 0;
+  void toggle(ReportType type){
+    reportMap[type] = ! reportMap[type];
   }
 
   @override
@@ -403,12 +391,12 @@ class _ReportPopupState extends State<ReportPopup> {
         onPressed: () {
           
 
-          toggle(disturbing);
+          toggle(ReportType.DISTURBING);
 
           setState(() {});
         },
         child: Row(
-          children: Constants.enable[reports[disturbing]]
+          children: reportMap[ReportType.DISTURBING]
               ? <Widget>[
                   Icon(Icons.sentiment_dissatisfied,
                       color: Constants.iBlack, size: 20),
@@ -437,12 +425,12 @@ class _ReportPopupState extends State<ReportPopup> {
         onPressed: () {
           
 
-          toggle(grammar);
+          toggle(ReportType.GRAMMAR);
 
           setState(() {});
         },
         child: Row(
-          children: Constants.enable[reports[grammar]]
+          children: reportMap[ReportType.GRAMMAR]
               ? <Widget>[
                   Icon(Icons.spellcheck, color: Constants.iBlack, size: 20),
                   SizedBox(
@@ -472,11 +460,11 @@ class _ReportPopupState extends State<ReportPopup> {
         onPressed: () {
          
 
-          toggle(love);
+          toggle(ReportType.LOVE);
           setState(() {});
         },
         child: Row(
-          children: Constants.enable[reports[love]]
+          children: reportMap[ReportType.LOVE]
               ? <Widget>[
                   Icon(Icons.favorite, color: Constants.iBlack, size: 20),
                   SizedBox(
