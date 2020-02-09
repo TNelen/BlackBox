@@ -240,7 +240,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                     child: Padding(
                       padding: const EdgeInsets.all(20),
                       child: Material(
-                        elevation: 5.0,
+                        elevation: 0,
                         borderRadius: BorderRadius.circular(16.0),
                         color: Constants.iBlack,
                         child: MaterialButton(
