@@ -6,6 +6,8 @@ import 'Constants.dart';
 import './Database/GoogleUserHandler.dart';
 import './DataContainers/UserData.dart';
 import './Interfaces/Database.dart';
+import 'dart:io';
+import './Screens/Popup.dart';
 
 void main() {
   try {
@@ -43,6 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Database database;
   double _progress;
   bool loggedIn =false;
+  bool wifiPopup=false;
 
 
   _SplashScreenState(Database db){
@@ -78,20 +81,42 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  Future<bool> checkWifi() async{
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        return true;
+      }
+        } on SocketException catch (_) {
+            return false;
+          }
+  }
   @override
   void initState() {
     super.initState();
     _progress = 0;
     new Timer.periodic(Duration(seconds: 1), (Timer t) {
       setState(() {
+        if(!wifiPopup){
+            checkWifi().then((connected){
+              if (connected) {
+                wifiPopup = true;
+              }
+              else{
+                Popup.makePopup(context, "Woops!", "Please turn on your internet connectivity!");
+                wifiPopup = true;
+              }
+            });
+
+        }
         if(_progress<1.0){
-        _progress += 0.4;
-        if(_progress >1.0){
-          _progress = 1.0;
+        _progress += 0.5;
+        if(_progress >=1.0){
+          _progress = 0.99;
         }
         }
         // we "finish" downloading here
-        if (_progress.toStringAsFixed(1) == '1.0' && loggedIn) {
+        if (_progress.toStringAsFixed(2) == '0.99' && loggedIn) {
           t.cancel();
           Navigator.push(
               context,
