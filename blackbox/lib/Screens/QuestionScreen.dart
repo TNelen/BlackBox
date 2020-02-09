@@ -7,12 +7,18 @@ import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
 import '../Database/FirebaseStream.dart';
 import 'Popup.dart';
-
+  
+List reports = [0, 0, 0];
+int disturbing = 0;
+int grammar = 1;
+int love = 2;
 
 class QuestionScreen extends StatefulWidget {
   Database _database;
   GroupData groupData;
   String code;
+
+  
 
 
   @override
@@ -47,11 +53,10 @@ class _QuestionScreenState extends State<QuestionScreen>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     BackButtonInterceptor.add(myInterceptor);
+    //reset reports
+    reports = [0,0,0];
 
-    //report question reset values
-    Constants.enableGrammar = 0;
-    Constants.enableDisturbing = 0;
-    Constants.enableLove = 0;
+    
 
   }
 
@@ -158,6 +163,26 @@ class _QuestionScreenState extends State<QuestionScreen>
                   minWidth: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.fromLTRB(3.0, 3.0, 3.0, 3.0),
                   onPressed: () {
+                    //submit reports to database
+                    //disturbing
+                    print(reports);
+                    print(reports[disturbing]);
+                    print(reports[love]);
+                    print(reports[grammar]);
+
+                    //put in database
+                    reports[disturbing] ==1
+                        ? _database.reportQuestion(groupData.getQuestion(), ReportType.DISTURBING)
+                        : print("nothing to be done1");
+                    //love
+                    reports[love] ==1
+                        ? _database.voteOnQuestion(groupData.getQuestion())
+                        : print("nothing to be done2");
+                    //grammar
+                    reports[grammar] ==1
+                        ? _database.reportQuestion(groupData.getQuestion(), ReportType.GRAMMAR)
+                        : print("nothing to be done3");
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -354,7 +379,7 @@ class _ReportPopupState extends State<ReportPopup> {
   Database database;
   GroupData groupdata;
   String code;
-  List enableReports = [0, 0, 0];
+
 
   _ReportPopupState(Database db, GroupData groupData, String code) {
     this.database = db;
@@ -365,21 +390,25 @@ class _ReportPopupState extends State<ReportPopup> {
   @override
   void initState() {}
 
+  void toggle(int type){
+    if (reports[type]  == 0){
+      reports[type] = 1;
+    }
+    else reports[type] = 0;
+  }
+
   @override
   Widget build(BuildContext context2) {
     Widget disturbingButton = FlatButton(
         onPressed: () {
-          Constants.enable[Constants.enableDisturbing]
-              ? database.reportQuestion(
-                  groupdata.getQuestion(), ReportType.DISTURBING)
-              : null;
+          
 
-          Constants.enableDisturbing = 1;
+          toggle(disturbing);
 
           setState(() {});
         },
         child: Row(
-          children: Constants.enable[Constants.enableDisturbing]
+          children: Constants.enable[reports[disturbing]]
               ? <Widget>[
                   Icon(Icons.sentiment_dissatisfied,
                       color: Constants.iBlack, size: 20),
@@ -406,17 +435,14 @@ class _ReportPopupState extends State<ReportPopup> {
 
     Widget grammarButton = FlatButton(
         onPressed: () {
-          Constants.enable[Constants.enableGrammar]
-              ? database.reportQuestion(
-                  groupdata.getQuestion(), ReportType.GRAMMAR)
-              : null;
+          
 
-          Constants.enableGrammar = 1;
+          toggle(grammar);
 
           setState(() {});
         },
         child: Row(
-          children: Constants.enable[Constants.enableGrammar]
+          children: Constants.enable[reports[grammar]]
               ? <Widget>[
                   Icon(Icons.spellcheck, color: Constants.iBlack, size: 20),
                   SizedBox(
@@ -444,15 +470,13 @@ class _ReportPopupState extends State<ReportPopup> {
 
     Widget loveButton = FlatButton(
         onPressed: () {
-          Constants.enable[Constants.enableLove]
-              ? database.voteOnQuestion(groupdata.getQuestion())
-              : null;
+         
 
-          Constants.enableLove = 1;
+          toggle(love);
           setState(() {});
         },
         child: Row(
-          children: Constants.enable[Constants.enableLove]
+          children: Constants.enable[reports[love]]
               ? <Widget>[
                   Icon(Icons.favorite, color: Constants.iBlack, size: 20),
                   SizedBox(
