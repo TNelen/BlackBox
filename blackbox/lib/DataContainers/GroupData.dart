@@ -17,6 +17,7 @@ class GroupData {
   String _groupDescription;  /// Description of the group
   String _groupID;           /// The unique ID of this group
   String _adminID;           /// The unique ID of the admin
+  bool _isPlaying;           /// A bool indicating the game state
   Map<String, String> _members = new Map<String, String>(); /// A list of unique IDs of all members in this group
   List<String> _questionlist;          /// A list of available question id's
 
@@ -37,6 +38,7 @@ class GroupData {
 
   /// Create a group with the given data fields
   GroupData(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members, this._questionlist) {
+    _isPlaying = true;
     _nextQuestion = new Question.empty();
     _lastVotes = new Map<String, String>();
     _newVotes = new Map<String, String>();
@@ -46,7 +48,7 @@ class GroupData {
   }
 
   /// Create a group with the given data fields AND status fields
-  GroupData.extended(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members, this._nextQuestion, 
+  GroupData.extended(this._groupName, this._groupDescription, this._groupID, this._adminID, this._isPlaying, this._members, this._nextQuestion, 
                      this._lastVotes, this._newVotes, this._totalVotes, this._playing, this._questionlist, this._history);
 
 
@@ -62,6 +64,7 @@ class GroupData {
     _groupDescription = snap.data['description'] ?? "No description",
     _groupID = snap.documentID.toString(),
     _adminID = snap.data['admin'],
+    _isPlaying = snap.data['isPlaying'],
     /// Get status data
     _nextQuestion = new Question( snap.data['nextQuestionID'], snap.data['nextQuestion'], Question.getCategoryFromString(snap.data['nextQuestionCategory']), snap.data['nextQuestionCreatorID'], snap.data['nextQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
     _lastQuestion = new Question( snap.data['lastQuestionID'], snap.data['lastQuestion'], Question.getCategoryFromString(snap.data['lastQuestionCategory']), snap.data['lastQuestionCreatorID'], snap.data['lastQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
@@ -161,6 +164,23 @@ class GroupData {
   /// --------------------- \\\
   /// GroupData Information \\\
   /// --------------------- \\\
+
+  /// Set whether or not this group is still active
+  void setIsPlaying(bool playing)
+  {
+    if (_adminID == Constants.getUserID())
+    {
+      _isPlaying = playing;
+    }
+  }
+
+  /// Returns whether the group is still in progress
+  /// True when still playing
+  /// False when the game is over
+  bool getIsPlaying()
+  {
+    return _isPlaying;
+  }
 
   ///Get all availbalbe question
   List<String> getQuestionList()
