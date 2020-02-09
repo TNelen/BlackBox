@@ -140,7 +140,19 @@ abstract class Database {
   /// DISTURBING  ->  When the content of the question violates the BlackBox rules
   /// Will return true once completed
   /// Returns false if this question does not exist in the database or an error occurred
+  @Deprecated("Please use Database#multiReportQuestion instead for more optimised writing")
   Future< bool > reportQuestion( Question q, ReportType reportType );
+
+
+  /// Perform zero or more reports at once
+  /// Only the report fields will be updated
+  /// ReportType includes:
+  /// CATEGORY    ->  When the category of this question is not correct  
+  /// GRAMMAR     ->  When the question contains a spelling or grammar mistake
+  /// DISTURBING  ->  When the content of the question violates the BlackBox rules
+  /// Will return true once completed
+  /// Returns false if this question does not exist in the database or an error occurred
+  Future< bool > multiReportQuestion(Question q, Map<ReportType, bool> reports);
 
 
   /// Send a new issue to the database
