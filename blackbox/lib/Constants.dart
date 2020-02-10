@@ -58,6 +58,16 @@ class Constants{
    database.updateUser( userData );
   }
 
+  //getAccentcolor
+  //returns true is colorindex == color
+  static bool getAccentColor(int color){
+    if (colorindex == color){
+      return true;
+    }
+    else
+      return false;
+  }
+
 
   /// Set the UserData of this user
   static void setUserData(UserData newData)

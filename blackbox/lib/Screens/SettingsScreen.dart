@@ -20,137 +20,183 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   _SettingsScreenState(Database db) {
     this._database = db;
+    
   }
 
   @override
   Widget build(BuildContext context) {
-    final blueAccent = Card(
-      color: Constants.iDarkGrey,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      child: InkWell(
-          splashColor: Constants.iAccent1,
-          onTap: () {
-            Constants.setAccentColor(1);
-            setState(() {
 
-            });
-          },
-          child: Container(
-            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Mighty Blue",
-                  style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
-                ),
-                Icon(
-                  Icons.lens,
-                  color: Constants.iAccent1,
-                  size: 20,
-                ),
-              ],
+    bool blueAccentColor = Constants.getAccentColor(0);
+    bool yellowAccentColor = Constants.getAccentColor(1);
+    bool redAccentColor = Constants.getAccentColor(2);
+    bool greenAccentColor = Constants.getAccentColor(3);
+
+
+
+    Container blueAccent() {
+      return Container(child:  Card(
+        color: Constants.iDarkGrey,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Container(
+              padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(children: <Widget>[
+                    Icon(
+                      Icons.lens,
+                      size: 17,
+                      color: Constants.iAccent1,
+
+                    ),
+                    SizedBox(width: 10,),
+                    Text(
+                      'Blue',
+                      style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
+                    ),]),
+                  Switch(
+                          value: blueAccentColor,
+                          onChanged: (value) {
+                          Constants.setAccentColor(1);
+                          setState(() {
+
+                          });
+                          },
+                          activeTrackColor: Constants.iAccent1,
+                          activeColor: Constants.iWhite,
+                          ),
+                  
+                ],
+              ),
             ),
-          )),
-    );
+      ));
+    }
 
-    final yellowAccent = Card(
-      color: Constants.iDarkGrey,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      child: InkWell(
-          splashColor: Constants.iAccent2,
-          onTap: () {
-            Constants.setAccentColor(2);
-            setState(() {
+    Container yellowAccent() {
+      return Container(child:  Card(
+        color: Constants.iDarkGrey,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Container(
+              padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(children: <Widget>[
+                    Icon(
+                      Icons.lens,
+                      size: 17,
+                      color: Constants.iAccent2,
 
-            });
-          },
-          child: Container(
-            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Magnificent Yellow',
-                  style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
-                ),
-                Icon(
-                  Icons.lens,
-                  color: Constants.iAccent2,
-                  size: 20,
-                ),
-              ],
+                    ),
+                    SizedBox(width: 10,),
+                    Text(
+                      'Yellow',
+                      style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
+                    ),]),
+                  Switch(
+                          value: yellowAccentColor,
+                          onChanged: (value) {
+                          Constants.setAccentColor(2);
+                          setState(() {
+
+                          });
+                          },
+                          activeTrackColor: Constants.iAccent2,
+                          activeColor: Constants.iWhite,
+                          ),
+                  
+                ],
+              ),
             ),
-          )),
-    );
+      ));
+    }
 
-    final redAccent = Card(
-      color: Constants.iDarkGrey,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      child: InkWell(
-          splashColor: Constants.iAccent3,
-          onTap: () {
-            Constants.setAccentColor(3);
-            setState(() {
+    Container redAccent() {
+      return Container(child:  Card(
+        color: Constants.iDarkGrey,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Container(
+              padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(children: <Widget>[
+                    Icon(
+                      Icons.lens,
+                      size: 17,
+                      color: Constants.iAccent3,
 
-            });
-          },
-          child: Container(
-            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Marvelous Red',
-                  style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
-                ),
-                Icon(
-                  Icons.lens,
-                  color: Constants.iAccent3,
-                  size: 20,
-                ),
-              ],
+                    ),
+                    SizedBox(width: 10,),
+                    Text(
+                      'Red',
+                      style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
+                    ),]),
+                  Switch(
+                          value: redAccentColor,
+                          onChanged: (value) {
+                          Constants.setAccentColor(3);
+                          setState(() {
+
+                          });
+                          },
+                          activeTrackColor: Constants.iAccent3,
+                          activeColor: Constants.iWhite,
+                          ),
+                  
+                ],
+              ),
             ),
-          )),
-    );
+      ));
+    }
 
-    final greenAccent = Card(
-      color: Constants.iDarkGrey,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      child: InkWell(
-          splashColor: Constants.iAccent4,
-          onTap: () {
-            Constants.setAccentColor(4);
-            setState(() {
+    Container greenAccent() {
+      return Container(child:  Card(
+        color: Constants.iDarkGrey,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Container(
+              padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(children: <Widget>[
+                    Icon(
+                      Icons.lens,
+                      size: 17,
+                      color: Constants.iAccent4,
 
-            });
-          },
-          child: Container(
-            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Majestic Green',
-                  style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
-                ),
-                Icon(
-                  Icons.lens,
-                  color: Constants.iAccent4,
-                  size: 20,
-                ),
-              ],
+                    ),
+                    SizedBox(width: 10,),
+                    Text(
+                      'Green',
+                      style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
+                    ),]),
+                  Switch(
+                          value: greenAccentColor,
+                          onChanged: (value) {
+                          Constants.setAccentColor(4);
+                          setState(() {
+
+                          });
+                          },
+                          activeTrackColor: Constants.iAccent4,
+                          activeColor: Constants.iWhite,
+                          ),
+                  
+                ],
+              ),
             ),
-          )),
-    );
+      ));
+    }
+      
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -256,13 +302,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   SizedBox(
                     height: 15,
                   ),
-                  blueAccent,
+                  blueAccent(),
                   SizedBox(height: 5),
-                  yellowAccent,
+                  yellowAccent(),
                   SizedBox(height: 5),
-                  redAccent,
+                  redAccent(),
                   SizedBox(height: 5),
-                  greenAccent,
+                  greenAccent(),
                 ],
               ),
             )))));
@@ -324,11 +370,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         action();
                         _database.updateUser( Constants.getUserData() );
                         setState(() {
-                      });
-                       },
+                        });
+                        },
                         activeTrackColor: foregroundColor,
                         activeColor: Constants.iWhite,
-          ),
+                        ),
                         
                       ],
                     ))));
