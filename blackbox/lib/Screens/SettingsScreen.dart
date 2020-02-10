@@ -222,15 +222,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         fontSize: 22.0,
                         fontWeight: FontWeight.w300),
                   ),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _buildMediaSetting(Icons.audiotrack, 'sounds', Constants.getSoundEnabled(), _soundAction),
-                        _buildMediaSetting(Icons.vibration, 'vibration', Constants.getVibrationEnabled(), _vibrationAction),
-                      ],
-                    ),
-                  ),
+                  SizedBox(height: 5),
+                  _buildMediaSetting(Icons.audiotrack, 'Sounds', Constants.getSoundEnabled(), _soundAction),
+                  SizedBox(height: 5),
+                  _buildMediaSetting(Icons.vibration, 'Vibration', Constants.getVibrationEnabled(), _vibrationAction),
+                     
                   SizedBox(height: 40.0),
                   Text(
                     'Personalization',
@@ -280,18 +276,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Container _buildMediaSetting(IconData icon, String label, bool isEnabled, Function() action) {
     
-    String prefix = '';
     Color foregroundColor;
     Color textColor;
     Color backgroundColor;
     if (isEnabled)
     {
-      prefix = 'Disable';
       foregroundColor = Constants.colors[Constants.colorindex];
       textColor = Constants.iWhite;
       backgroundColor = Constants.iDarkGrey;
     } else {
-      prefix = 'Enable';
       foregroundColor = Constants.iGrey;
       textColor = Constants.iGrey;
       backgroundColor = Constants.iDarkGrey;
@@ -304,42 +297,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
             ),
-            child: InkWell(
-                splashColor: foregroundColor,
-                onTap: () {
-                  action();
-                  _database.updateUser( Constants.getUserData() );
-                  setState(() {
-
-                  }); 
-                },
                 child: Container(
-                    padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                    child: Column(
+                    padding: EdgeInsets.fromLTRB(15, 6, 15, 6),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Hero(
+                        Row(children: [Hero(
                             tag: 'topicon' + label,
                             child: Icon(
                               icon,
                               color: foregroundColor,
-                              size: 25,
+                              size: 17,
                             )),
                         SizedBox(
-                          height: 10,
-                        ),
-                        AutoSizeText(
-                          prefix,
-                          style:
-                              TextStyle(fontSize: 15, color: textColor),
-                          maxLines: 1,
+                          width: 10,
                         ),
                         AutoSizeText(
                           label,
                           style:
-                              TextStyle(fontSize: 15, color: textColor),
+                              TextStyle(fontSize: 17, color: textColor),
                           maxLines: 1,
-                        ),
+                        ),]),
+                        Switch(
+                        value: isEnabled,
+                        onChanged: (value) {
+                        action();
+                        _database.updateUser( Constants.getUserData() );
+                        setState(() {
+                      });
+                       },
+                        activeTrackColor: foregroundColor,
+                        activeColor: Constants.iWhite,
+          ),
+                        
                       ],
-                    )))));
+                    ))));
   }
 }
