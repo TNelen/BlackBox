@@ -27,6 +27,7 @@ class QuestionScreen extends StatefulWidget {
     reportMap[ReportType.DISTURBING] = false;
     reportMap[ReportType.GRAMMAR] = false;
     reportMap[ReportType.CATEGORY] = false;
+    reportMap[ReportType.LOVE] = false;
   }
 
   _QuestionScreenState createState() =>
@@ -59,6 +60,7 @@ class _QuestionScreenState extends State<QuestionScreen>
     reportMap[ReportType.DISTURBING] = false;
     reportMap[ReportType.GRAMMAR] = false;
     reportMap[ReportType.CATEGORY] = false;
+    reportMap[ReportType.LOVE] = false;
   }
 
   @override
@@ -165,13 +167,6 @@ class _QuestionScreenState extends State<QuestionScreen>
                   padding: EdgeInsets.fromLTRB(3.0, 3.0, 3.0, 3.0),
                   onPressed: () {
                     //submit reports to database
-                    //disturbing
-                    print(reportMap);
-                    print(reportMap[ReportType.DISTURBING]);
-                    print(reportMap[ReportType.CATEGORY]);
-                    print(reportMap[ReportType.GRAMMAR]);
-
-                    //put in database
                     _database.multiReportQuestion(groupData.getQuestion(), reportMap);
 
                     Navigator.push(
@@ -396,7 +391,7 @@ class _ReportPopupState extends State<ReportPopup> {
           setState(() {});
         },
         child: Row(
-          children: reportMap[ReportType.DISTURBING]
+          children: ! reportMap[ReportType.DISTURBING]
               ? <Widget>[
                   Icon(Icons.sentiment_dissatisfied,
                       color: Constants.iBlack, size: 20),
@@ -430,7 +425,7 @@ class _ReportPopupState extends State<ReportPopup> {
           setState(() {});
         },
         child: Row(
-          children: reportMap[ReportType.GRAMMAR]
+          children: ! reportMap[ReportType.GRAMMAR]
               ? <Widget>[
                   Icon(Icons.spellcheck, color: Constants.iBlack, size: 20),
                   SizedBox(
@@ -464,7 +459,7 @@ class _ReportPopupState extends State<ReportPopup> {
           setState(() {});
         },
         child: Row(
-          children: reportMap[ReportType.LOVE]
+          children: ! reportMap[ReportType.LOVE]
               ? <Widget>[
                   Icon(Icons.favorite, color: Constants.iBlack, size: 20),
                   SizedBox(

@@ -478,8 +478,16 @@ class FirebaseSetters {
   }
 
   static Future<bool> multiReportQuestion(Question question, Map<ReportType, bool> reports) async {
-  
-    if (reports.isEmpty)
+    
+    bool isOnlyFalse = true;
+    reports.forEach( (key, val) {
+      if (val)
+      {
+        isOnlyFalse = false;
+      }
+    });
+
+    if (reports.isEmpty || isOnlyFalse)
     {
       return true;
     }
@@ -504,58 +512,79 @@ class FirebaseSetters {
         /// Get the amount of current reports for each type
         DocumentSnapshot live = await transaction.get( docRef );
         
-        
         if (live.exists)
         {
           data['categoryReports'] = 0;
           data['grammarReports'] = 0;
           data['disturbingReports'] = 0;
+          data['loves'] = 0;
+
           if (live.exists) {
             /// Get basic info from database, if existant
-            if (live.data['question'] != null)
+            if (live.data['question'] != null) {
               data['question'] = live.data['question'];
+            }
 
             if (live.data['category'] != null)
+            {
               data['category'] = live.data['category'];
+            }
 
-            if (live.data['creatorID'] != null)
+            if (live.data['creatorID'] != null) {
               data['creatorID'] = live.data['creatorID'];
+            }
 
-            if (live.data['creatorName'] != null)
+            if (live.data['creatorName'] != null) {
               data['creatorName'] = live.data['creatorName'];
+            }
 
 
 
-            if (live.data['categoryReports'] != null)
+            if (live.data['categoryReports'] != null) {
               data['categoryReports'] = live.data['categoryReports'];
+            }
             
-            if (live.data['grammarReports'] != null)
+            if (live.data['grammarReports'] != null) {
               data['grammarReports'] = live.data['grammarReports'];
+            }
 
-            if (live.data['disturbingReports'] != null)
+            if (live.data['disturbingReports'] != null){
               data['disturbingReports'] = live.data['disturbingReports'];
+            }
+
+            if (live.data['loves'] != null)
+            {
+              data['loves'] = live.data['loves'];
+            }
           
             reports.forEach( (type, value) {
+                print(type.toString() + " " + value.toString());
                 if (value)
                 {
                   switch (type) {
-                    case ReportType.CATEGORY:
-                      data['categoryReports'] = data['categoryReports'] + 1;
+                    case ReportType.CATEGORY: {
+                      data['categoryReports'] += 1;
                       break;
-                    case ReportType.GRAMMAR:
-                      data['grammarReports'] = data['grammarReports'] + 1;
+                    }
+                    case ReportType.GRAMMAR: {
+                      data['grammarReports'] += 1;
                       break;
-                    case ReportType.DISTURBING:
-                      data['disturbingReports'] = data['disturbingReports'] + 1;
+                    }
+                    case ReportType.DISTURBING: {
+                      data['disturbingReports'] += 1;
                       break;
-                    case ReportType.LOVE:
-                      data['loves'] = data['loves'] + 1;
+                    }
+                    case ReportType.LOVE: {
+                      data['loves'] += 1;
                       break;
+                    }
+                    default: {
+                      break;
+                    }
                   }   
                 }
               });
 
-              
             await transaction.set(docRef, data);
             updateComplete = true;
 
