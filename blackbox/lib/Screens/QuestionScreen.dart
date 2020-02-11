@@ -278,38 +278,7 @@ class _QuestionScreenState extends State<QuestionScreen>
       ),
     );
 
-    final SubmitButton = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(16.0),
-      color: Constants.iDarkGrey,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          String question = questionController.text;
-          //print('-' + question+ '-');
-          if (question.length == 0) {
-            Popup.makePopup(
-                context, 'Whoops!', 'You cannot submit an empty question');
-          } else if (question.length >= 20) {
-            if (question.endsWith('?')) {
-              print('----' + question + '---- Added to database');
-
-              ///ADD HERE: Add question to database
-              
-            } else
-              Popup.makePopup(context, 'Whoops',
-                  'Please end your question with a question mark');
-          } else
-            Popup.makePopup(
-                context, 'Whoops!', 'You cannot submit a question shorter than 20 characters');
-        },
-        child: Text("Submit",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20).copyWith(
-                color: Constants.iWhite, fontWeight: FontWeight.bold)),
-      ),
-    );
+    
 
     return StreamBuilder(
         stream: stream.groupData,
@@ -320,8 +289,7 @@ class _QuestionScreenState extends State<QuestionScreen>
             return new Center(child: new CircularProgressIndicator());
           }
 
-          
-
+        
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
