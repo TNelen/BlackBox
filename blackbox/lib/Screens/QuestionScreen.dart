@@ -405,6 +405,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                                           fontWeight: FontWeight.w700),
                                     ),
                   SizedBox(height: 20,),
+
                   membersList,
 
                   //reportbutton if question is community question
@@ -414,7 +415,9 @@ class _QuestionScreenState extends State<QuestionScreen>
                                         : SizedBox(height: 20),
 
                   submitquestionbutton,
+
                   SizedBox(height: 20,),
+                  
                   voteButton
                 ],
               ),
