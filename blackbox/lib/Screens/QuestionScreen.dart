@@ -194,7 +194,7 @@ class _QuestionScreenState extends State<QuestionScreen>
               child: GridView.count(
                 crossAxisCount: 2,
                 childAspectRatio: (3 / 1),
-                padding: EdgeInsets.all(2.0),
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
                 children: groupData
                     .getPlayingUserdata()
                     .map((data) => Card(
