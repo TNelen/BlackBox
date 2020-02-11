@@ -18,6 +18,7 @@ class GroupData {
   String _groupID;           /// The unique ID of this group
   String _adminID;           /// The unique ID of the admin
   bool _isPlaying;           /// A bool indicating the game state
+  int _adminVoteTimestamp;       /// An int indicating when the admin has last voted (milliseconds). Will be null if the admin has not voted yet this round
   Map<String, String> _members = new Map<String, String>(); /// A list of unique IDs of all members in this group
   List<String> _questionlist;          /// A list of available question id's
 
@@ -45,11 +46,12 @@ class GroupData {
     _totalVotes = new Map<String, int>();
     _playing = new List<String>();
     _history = new Map<String, Map<String, int>>();
+    _adminVoteTimestamp = new DateTime.now().millisecondsSinceEpoch;
   }
 
   /// Create a group with the given data fields AND status fields
   GroupData.extended(this._groupName, this._groupDescription, this._groupID, this._adminID, this._isPlaying, this._members, this._nextQuestion, 
-                     this._lastVotes, this._newVotes, this._totalVotes, this._playing, this._questionlist, this._history);
+                     this._lastVotes, this._newVotes, this._totalVotes, this._playing, this._questionlist, this._adminVoteTimestamp, this._history);
 
 
   /// ---------------- \\\
@@ -62,9 +64,10 @@ class GroupData {
     /// Get basic data
     _groupName = snap.data['name'] ?? "Nameless group",
     _groupDescription = snap.data['description'] ?? "No description",
-    _groupID = snap.documentID.toString(),
-    _adminID = snap.data['admin'],
-    _isPlaying = snap.data['isPlaying'],
+    _groupID          = snap.documentID.toString(),
+    _adminID          = snap.data['admin'],
+    _isPlaying        = snap.data['isPlaying'],
+    _adminVoteTimestamp   = snap.data['adminVoteTimestamp'],
     /// Get status data
     _nextQuestion = new Question( snap.data['nextQuestionID'], snap.data['nextQuestion'], Question.getCategoryFromString(snap.data['nextQuestionCategory']), snap.data['nextQuestionCreatorID'], snap.data['nextQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
     _lastQuestion = new Question( snap.data['lastQuestionID'], snap.data['lastQuestion'], Question.getCategoryFromString(snap.data['lastQuestionCategory']), snap.data['lastQuestionCreatorID'], snap.data['lastQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
@@ -350,6 +353,7 @@ class GroupData {
   /// Last question will be replaced by the current question automatically
   /// Admin account must be provided for authentication
   /// Non-admins will cause this function to fail silently
+  /// The admin's vote timestamp will be reset to null
   /// The database is updated automatically with this change
   void setNextQuestion(Question newQuestion, UserData admin)
   {
@@ -365,6 +369,9 @@ class GroupData {
 
       /// Move the votes
       _transferVotes( admin );
+
+      _adminVoteTimestamp = null;
+
       Constants.database.updateGroup(this);
     }
   }
@@ -470,6 +477,14 @@ class GroupData {
     return _playing.length;
   }
 
+  /// Get the time when the admin has voted in milliseconds
+  /// Will be null if the admin has not voted yet this round
+  int getAdminVoteTimestamp()
+  {
+    return _adminVoteTimestamp;
+  }
+
+  /// Get the amount of members in this group
   int getNumMembers()
   {
     return _members.length;
@@ -597,8 +612,15 @@ class GroupData {
 
   /// Add a vote to this member's record
   /// Will be added to the newVotes list
+  /// If the admin is voting, a timestamp will be set
   void addVote(String voteeID)
   {
+    /// Update the timestamp if the admin is voting
+    if (_adminID == Constants.getUserID())
+    {
+      _adminVoteTimestamp = new DateTime.now().millisecondsSinceEpoch;
+    }
+
     /// Make change in database
     Constants.database.voteOnUser(this, voteeID);
 

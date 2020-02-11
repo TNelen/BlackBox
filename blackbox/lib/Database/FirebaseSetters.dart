@@ -186,6 +186,7 @@ class FirebaseSetters {
         data['lastQuestionCreatorName'] = groupData.getLastQuestion().getCreatorName() ?? "";
         data['questionlist'] = groupData.getQuestionList() ?? "";
         
+        data['adminVoteTimestamp'] = groupData.getAdminVoteTimestamp() ?? null;
         data['history'] = history;
 
       } else {  /// Otherwise: use current data
@@ -206,6 +207,7 @@ class FirebaseSetters {
         data['lastQuestionCreatorName'] = freshData.getLastQuestion().getCreatorName() ?? "";
         data['questionlist'] = freshData.getQuestionList() ?? "";
 
+        data['adminVoteTimestamp'] = freshData.getAdminVoteTimestamp() ?? null;
         data['history'] = freshData.getHistory();
       }
 
