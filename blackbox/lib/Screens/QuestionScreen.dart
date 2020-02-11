@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
-import 'VoteScreen.dart';
 import '../Interfaces/Database.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
