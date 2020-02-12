@@ -322,7 +322,8 @@ class ResultScreenState extends State<ResultScreen> {
                                   fontWeight: FontWeight.normal),
                             ),
                             SizedBox(height: 10),
-                            Row(children: <Widget>[
+                            Row(
+                              children: <Widget>[
                               Text('Show more', 
                                 style: new TextStyle(
                                     color: Constants.iWhite,
