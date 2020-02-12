@@ -265,79 +265,28 @@ class ResultScreenState extends State<ResultScreen> {
             }
           }
 
-          final winner = Hero(
-            tag: 'submit',
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
-              padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                color: Constants.iDarkGrey,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            currentQuestionString,
-                            textAlign: TextAlign.center,
-                            style: new TextStyle(
-                                color: Constants.colors[Constants.colorindex],
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 30),
-                          Text(
-                            'WINNER',
-                            style: new TextStyle(
-                                color: Constants.iWhite,
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 25),
-                          Text(
-                            groupData.getWinner(),
-                            style: new TextStyle(
-                                color: Constants.iWhite,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
-
+          
           final top3 = Container(
-            margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
-            padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
+            margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
               ),
               color: Constants.iDarkGrey,
-              child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'TOP 3',
-                          style: new TextStyle(
-                              color: Constants.colors[Constants.colorindex],
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 40),
+                  child: Column(children: <Widget>[
+                      Text(
+                        'Top 3',
+                        style: new TextStyle(
+                            color: Constants.colors[Constants.colorindex],
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 30),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
                         Text(
                           '1. ' +
                               groupData.getTopThree('previous')[0] +
@@ -345,63 +294,71 @@ class ResultScreenState extends State<ResultScreen> {
                               groupData.getTopThree('previous')[3],
                           style: new TextStyle(
                               color: Constants.iWhite,
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.bold),
+                              fontSize: 22.0,
+                              fontWeight: FontWeight.bold
+                              ),
                         ),
-                        SizedBox(height: 5),
-                        Text(
-                          '2. ' +
-                              groupData.getTopThree('previous')[1] +
-                              '   ' +
-                              groupData.getTopThree('previous')[4],
-                          style: new TextStyle(
-                              color: Constants.iWhite,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          '3. ' +
-                              groupData.getTopThree('previous')[2] +
-                              '   ' +
-                              groupData.getTopThree('previous')[5],
-                          style: new TextStyle(
-                              color: Constants.iWhite,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        SizedBox(height: 20),
-                      ],
-                    ),
-                  ),
+                            SizedBox(height: 5),
+                            Text(
+                              '2. ' +
+                                  groupData.getTopThree('previous')[1] +
+                                  '   ' +
+                                  groupData.getTopThree('previous')[4],
+                              style: new TextStyle(
+                                  color: Constants.iWhite,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.normal
+                                  ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              '3. ' +
+                                  groupData.getTopThree('previous')[2] +
+                                  '   ' +
+                                  groupData.getTopThree('previous')[5],
+                              style: new TextStyle(
+                                  color: Constants.iWhite,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            SizedBox(height: 10),
+                            Row(children: <Widget>[
+                              Text('Show more', 
+                                style: new TextStyle(
+                                    color: Constants.iWhite,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 17
+                              ),),
+                              Icon(Icons.arrow_drop_down, size: 17,color: Constants.iWhite,)
+                            ]),
+                            SizedBox(height: 20),
+                          ],
+                        ),])
                 ),
               ),
-            ),
-          );
+            );
 
           final alltime = Container(
-            margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
-            padding: EdgeInsets.only(top: height / 10, bottom: height / 10),
+            margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
               ),
               color: Constants.iDarkGrey,
-              child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'Alltime TOP 3',
-                          style: new TextStyle(
-                              color: Constants.colors[Constants.colorindex],
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 40),
+                  child: Column(children: <Widget>[
+                      Text(
+                        'Alltime top 3',
+                        style: new TextStyle(
+                            color: Constants.colors[Constants.colorindex],
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 30),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
                         Text(
                           '1. ' +
                               groupData.getTopThree('alltime')[0] +
@@ -409,45 +366,44 @@ class ResultScreenState extends State<ResultScreen> {
                               groupData.getTopThree('alltime')[3],
                           style: new TextStyle(
                               color: Constants.iWhite,
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.bold),
+                              fontSize: 22.0,
+                              fontWeight: FontWeight.bold
+                              ),
                         ),
-                        SizedBox(height: 5),
-                        Text(
-                          '2. ' +
-                              groupData.getTopThree('alltime')[1] +
-                              '   ' +
-                              groupData.getTopThree('alltime')[4],
-                          style: new TextStyle(
-                              color: Constants.iWhite,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          '3. ' +
-                              groupData.getTopThree('alltime')[2] +
-                              '   ' +
-                              groupData.getTopThree('alltime')[5],
-                          style: new TextStyle(
-                              color: Constants.iWhite,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        SizedBox(height: 20),
-                      ],
-                    ),
-                  ),
+                            SizedBox(height: 5),
+                            Text(
+                              '2. ' +
+                                  groupData.getTopThree('alltime')[1] +
+                                  '   ' +
+                                  groupData.getTopThree('alltime')[4],
+                              style: new TextStyle(
+                                  color: Constants.iWhite,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.normal
+                                  ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              '3. ' +
+                                  groupData.getTopThree('alltime')[2] +
+                                  '   ' +
+                                  groupData.getTopThree('alltime')[5],
+                              style: new TextStyle(
+                                  color: Constants.iWhite,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            SizedBox(height: 20),
+                          ],
+                        ),])
                 ),
               ),
-            ),
-          );
+            );
 
           final nextButton = Hero(
             tag: 'button',
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
-              padding: EdgeInsets.only(top: height / 9.6, bottom: height / 9.6),
+              margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
               child: Material(
                 elevation: 0.0,
                 borderRadius: BorderRadius.circular(16.0),
@@ -522,30 +478,62 @@ class ResultScreenState extends State<ResultScreen> {
                   )
                 ]),
               ),
-              body: Column(children: [
-                Container(
-                    height: 550,
-                    child: PageView(
-                      onPageChanged: (index) {
-                        pageChanged(index);
-                      },
-                      controller: controller,
-                      children: <Widget>[
-                        winner,
-                        top3,
-                        alltime,
-                        nextButton,
-                      ],
-                    )),
-                DotsIndicator(
-                  dotsCount: 4,
-                  position: pageIndex,
-                  decorator: DotsDecorator(
-                    color: Constants.iWhite,
-                    activeColor: Constants.colors[Constants.colorindex],
-                  ),
-                )
-              ]),
+              body: 
+                 Center(
+                  child: ListView(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        children: <Widget>[
+                          //Title
+                          Center(child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text('Leaderboard', style: TextStyle(fontSize: 30, color: Constants.colors[Constants.colorindex], fontWeight: FontWeight.w600),),
+                              SizedBox(width: 5,),
+                              Icon(Icons.timeline, size: 30 ,color: Constants.colors[Constants.colorindex],),
+                          ])),
+
+                          //question
+                          SizedBox(height: 30),
+                          Padding(
+                            padding: EdgeInsets.only(left: 35, right:35),
+                            child:
+                              Text(
+                                currentQuestionString,
+                                textAlign: TextAlign.center,
+                                style: new TextStyle(
+                                  color: Constants.iWhite,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold),
+                              ),
+                          ),
+                          
+                          SizedBox(height: 30),
+
+                          
+                          //top3
+                          Padding(
+                            padding: EdgeInsets.only(left: 35, right:35),
+                            child:
+                          top3),
+
+                          //AllTime
+                          Padding(
+                            padding: EdgeInsets.only(left: 35, right:35),
+                            child:
+                          alltime),
+
+                         //Nextbutton
+                         Padding(
+                            padding: EdgeInsets.only(left: 35, right:35),
+                            child:
+                          nextButton), 
+
+
+
+                        ],
+                )),
+
             ),
           );
         });
