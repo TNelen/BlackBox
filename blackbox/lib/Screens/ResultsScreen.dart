@@ -451,6 +451,8 @@ class ResultScreenState extends State<ResultScreen> {
           {
               handleWinnerFeedback(groupData);
               _firstTimeLoaded = false;
+              debugfunction(groupData);
+
           }
 
           return MaterialApp(
@@ -531,7 +533,6 @@ class ResultScreenState extends State<ResultScreen> {
                           nextButton), 
 
 
-
                         ],
                 )),
 
@@ -554,6 +555,14 @@ class ResultScreenState extends State<ResultScreen> {
 
   /// Plays audio and vibrates the phone indicating whether or not the player is in the previous top three
   /// See https://pub.dev/packages/audioplayers for more information
+  /// 
+  
+  void debugfunction(GroupData groupData){
+     groupData.getTopThreeMap('previous');
+     groupData.getTopThreeMap('alltime');
+
+  }
+
   void handleWinnerFeedback(GroupData groupData) async
   {
     if (groupData.getTopThreeIDs('previous').containsKey(Constants.getUserID()))

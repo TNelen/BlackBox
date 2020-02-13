@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blackbox/Constants.dart';
 import '../DataContainers/UserData.dart';
@@ -558,6 +560,41 @@ class GroupData {
     return topThree;
   }
 
+  void getTopThreeMap(String kind)
+  {
+    Map<String, int> voteCounts;
+
+    switch(kind) {
+      case 'previous': voteCounts =  _getLastVoteCounts(); break;  /// Get the vote counts of last round
+      case 'alltime' : voteCounts =   getTotalVotes();     break;  /// Get the all time vote counts
+      default        : voteCounts = new Map<String, int>();break;  /// Invalid parameter: empty map to prevent nullpointer exceptions
+    }
+
+    Map<String, int> topThree = new Map<String, int>();        /// List to store the user IDs
+    
+    voteCounts.forEach((userID, numVotes){
+        topThree[userID] = numVotes;
+    });
+
+    print("With ID's");
+    print(topThree);
+
+    topThree.forEach( (id, votes) {             /// Loop the top three
+      topThree.putIfAbsent(getUserName(id).split(' ')[0], ()=>votes);
+    } );
+
+    var sortedKeys = topThree.keys.toList()..sort((k1,k2) => topThree[k1].compareTo(topThree[k2]));
+    LinkedHashMap sortedMap = new LinkedHashMap.fromIterable(sortedKeys, key: (k) => k, value: (k) => topThree[k]);
+    
+    print("Non sorted with ID's");
+    print(topThree);
+
+    print("Sorted with name");
+    print(sortedMap);
+
+    //return sortedMap;
+  }
+
 
   /// Get the top three of 'previous' or 'alltime' round
   /// One of the Strings above should be passed as parameter
@@ -608,6 +645,8 @@ class GroupData {
     return top;
 
   }
+
+
 
 
   /// Add a vote to this member's record
