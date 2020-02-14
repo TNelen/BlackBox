@@ -148,6 +148,22 @@ class ResultScreenState extends State<ResultScreen> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
+    final endGameButton = FlatButton(
+                  color: Constants.colors[Constants.colorindex],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28.0),
+                  ),
+                  onPressed: () {
+                    //nothing yet
+                  },
+                  splashColor: Constants.colors[Constants.colorindex],
+                  child: Text(
+                    "End Game",
+                    style: TextStyle(color: Constants.iBlack, fontSize: 22),
+                  ),
+                );
+
+                
     return StreamBuilder(
         stream: stream.groupData,
         builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
@@ -259,6 +275,15 @@ class ResultScreenState extends State<ResultScreen> {
                                 : SizedBox(
                                     height: 0.1,
                                   ),
+                            SizedBox(height: 80,),
+                            groupData.getAdminID() == Constants.getUserID() ?
+                                endGameButton:
+                                SizedBox(
+                                    height: 0.1,
+                                  ),
+
+                            
+                              
                           ])),
                     ),
                   ));
