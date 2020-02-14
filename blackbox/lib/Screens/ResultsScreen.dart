@@ -162,7 +162,7 @@ class ResultScreenState extends State<ResultScreen> {
                     children:[
                       Text(
                         "End Game",
-                        style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 22, fontWeight: FontWeight.w400),
+                        style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 20, fontWeight: FontWeight.w400),
                       ),
                       SizedBox(width: 5,),
                       Icon(Icons.exit_to_app, size: 20, color: Constants.colors[Constants.colorindex])
