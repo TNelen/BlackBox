@@ -149,7 +149,7 @@ class ResultScreenState extends State<ResultScreen> {
     final height = MediaQuery.of(context).size.height;
 
     final endGameButton = FlatButton(
-                  color: Constants.colors[Constants.colorindex],
+                  color: Constants.iBlack,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(28.0),
                   ),
@@ -157,11 +157,17 @@ class ResultScreenState extends State<ResultScreen> {
                     //nothing yet
                   },
                   splashColor: Constants.colors[Constants.colorindex],
-                  child: Text(
-                    "End Game",
-                    style: TextStyle(color: Constants.iBlack, fontSize: 22),
-                  ),
-                );
+                  child: Container(child:
+                  Row(
+                    children:[
+                      Text(
+                        "End Game",
+                        style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 22, fontWeight: FontWeight.w400),
+                      ),
+                      SizedBox(width: 5,),
+                      Icon(Icons.exit_to_app, size: 20, color: Constants.colors[Constants.colorindex])
+                  ])
+                ));
 
                 
     return StreamBuilder(
@@ -208,6 +214,18 @@ class ResultScreenState extends State<ResultScreen> {
                     theme: new ThemeData(
                         scaffoldBackgroundColor: Constants.iBlack),
                     home: Scaffold(
+                      appBar: AppBar(
+                backgroundColor: Constants.iBlack,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                      groupData.getAdminID() == Constants.getUserID() ?
+                                endGameButton:
+                                SizedBox(
+                                    height: 0.1,
+                                  ),                  ])
+                    
+              ),
                       body: Center(
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -274,15 +292,8 @@ class ResultScreenState extends State<ResultScreen> {
                                   )
                                 : SizedBox(
                                     height: 0.1,
-                                  ),
-                            SizedBox(height: 80,),
-                            groupData.getAdminID() == Constants.getUserID() ?
-                                endGameButton:
-                                SizedBox(
-                                    height: 0.1,
-                                  ),
-
-                            
+                                  ),                          
+  
                               
                           ])),
                     ),
