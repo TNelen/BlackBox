@@ -72,6 +72,8 @@ class ResultScreenState extends State<ResultScreen> {
 
   int _timeleft = 119;
   int pageIndex = 0;
+  bool showMoreCurrent;
+  bool showMoreAll;
 
   final controller = PageController(
     initialPage: 0,
@@ -96,6 +98,11 @@ class ResultScreenState extends State<ResultScreen> {
   @override
   void initState() {
     groupData = null;
+
+    //bools used at showmore at results display
+    showMoreCurrent = false;
+    showMoreAll = false;
+
     super.initState();
     _loadingInProgress = true;
     FirebaseStream(code).groupData.listen((_onGroupDataUpdate) {}, onDone: () {
@@ -117,6 +124,9 @@ class ResultScreenState extends State<ResultScreen> {
         },
       ),
     );
+
+
+    
   }
 
   @override
@@ -300,141 +310,161 @@ class ResultScreenState extends State<ResultScreen> {
                   ));
             }
           }
+          List currentWinners = groupData.getUserRankingList('previous');
+          List alltimeWinners = groupData.getUserRankingList('alltime');
 
+          void toggleAlltime(){
+            showMoreAll = ! showMoreAll;
+          }
+
+          void toggleCurrent(){
+            showMoreCurrent = ! showMoreCurrent;
+          }
           
-          final top3 = Container(
-            margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              color: Constants.iDarkGrey,
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(children: <Widget>[
-                      Text(
-                        'Top 3',
-                        style: new TextStyle(
-                            color: Constants.colors[Constants.colorindex],
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 30),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                        Text(
-                          '1. ' +
-                              groupData.getTopThree('previous')[0] +
-                              '   ' +
-                              groupData.getTopThree('previous')[3],
-                          style: new TextStyle(
-                              color: Constants.iWhite,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold
-                              ),
-                        ),
-                            SizedBox(height: 5),
-                            Text(
-                              '2. ' +
-                                  groupData.getTopThree('previous')[1] +
-                                  '   ' +
-                                  groupData.getTopThree('previous')[4],
-                              style: new TextStyle(
-                                  color: Constants.iWhite,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.normal
-                                  ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              '3. ' +
-                                  groupData.getTopThree('previous')[2] +
-                                  '   ' +
-                                  groupData.getTopThree('previous')[5],
-                              style: new TextStyle(
-                                  color: Constants.iWhite,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              children: <Widget>[
-                              Text('Show more', 
-                                style: new TextStyle(
-                                    color: Constants.iWhite,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 17
-                              ),),
-                              Icon(Icons.arrow_drop_down, size: 17,color: Constants.iWhite,)
-                            ]),
-                            SizedBox(height: 20),
-                          ],
-                        ),])
-                ),
-              ),
-            );
-
           final alltime = Container(
             margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              color: Constants.iDarkGrey,
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(children: <Widget>[
-                      Text(
-                        'Alltime top 3',
-                        style: new TextStyle(
-                            color: Constants.colors[Constants.colorindex],
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 30),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                        Text(
-                          '1. ' +
-                              groupData.getTopThree('alltime')[0] +
-                              '   ' +
-                              groupData.getTopThree('alltime')[3],
-                          style: new TextStyle(
-                              color: Constants.iWhite,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold
-                              ),
-                        ),
-                            SizedBox(height: 5),
-                            Text(
-                              '2. ' +
-                                  groupData.getTopThree('alltime')[1] +
-                                  '   ' +
-                                  groupData.getTopThree('alltime')[4],
-                              style: new TextStyle(
-                                  color: Constants.iWhite,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.normal
-                                  ),
+            child: Column(children: <Widget>[
+              Text(
+                            'alltime Leaderboard',
+                            style: new TextStyle(
+                                color: Constants.iWhite,
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+              ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: !showMoreAll ? (alltimeWinners.length>=3? 3 : alltimeWinners.length) : alltimeWinners.length ,
+                    itemBuilder: (context, index) {
+                      return Card(
+                            shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(10.0),
                             ),
-                            SizedBox(height: 5),
-                            Text(
-                              '3. ' +
-                                  groupData.getTopThree('alltime')[2] +
-                                  '   ' +
-                                  groupData.getTopThree('alltime')[5],
-                              style: new TextStyle(
-                                  color: Constants.iWhite,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                            SizedBox(height: 20),
-                          ],
-                        ),])
-                ),
+                            color: Constants.iDarkGrey,
+                            child: Center(
+                              child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(
+                                          top: 1.0,
+                                          bottom: 1,
+                                          left: 7,
+                                          right: 7),
+                                  child: 
+                                              Text(
+                                                (index+1).toString() + ': ' + alltimeWinners[index].getUserName() + '  ' + alltimeWinners[index].getNumVotes().toString(),
+                                                style: new TextStyle(
+                                                    color: Constants
+                                                        .iWhite,
+                                                    fontSize:
+                                                        20.0,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                              
+                                            
+                                          ),
+                                        )
+                                      
+                        );                     
+                    },
+                      
+                        
               ),
+              FlatButton(
+                  color: Constants.iBlack,
+                  onPressed: () {
+                    toggleAlltime();
+                    setState(() {
+                      
+                    });
+                  },
+                  splashColor: Constants.colors[Constants.colorindex],
+                  child: showMoreAll? 
+                   Text(
+                    "Show less",
+                    style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 17),
+                  )
+                  :Text(
+                    "Show More",
+                    style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 17),
+                  ),
+                )
+            ])
+
+                
+            );
+
+          final top3 = Container(
+            margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+            child: Column(children: <Widget>[
+              Text(
+                            'Results',
+                            style: new TextStyle(
+                                color: Constants.iWhite,
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+              ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: !showMoreCurrent ? (currentWinners.length>=3? 3 : currentWinners.length) : currentWinners.length ,
+                    itemBuilder: (context, index) {
+                      return Card(
+                            shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(10.0),
+                            ),
+                            color: Constants.iDarkGrey,
+                            child: Center(
+                              child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(
+                                          top: 1.0,
+                                          bottom: 1,
+                                          left: 7,
+                                          right: 7),
+                                  child: 
+                                              Text(
+                                                (index+1).toString() + ': ' + currentWinners[index].getUserName() + '  ' + currentWinners[index].getNumVotes().toString(),
+                                                style: new TextStyle(
+                                                    color: Constants
+                                                        .iWhite,
+                                                    fontSize:
+                                                        20.0,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                              
+                                            
+                                          ),
+                                        )
+                                      
+                        );                     
+                    },
+                      
+                        
+              ),
+              FlatButton(
+                  color: Constants.iBlack,
+                  onPressed: () {
+                    toggleCurrent();
+                    setState(() {
+                      
+                    });
+                  },
+                  splashColor: Constants.colors[Constants.colorindex],
+                  child: showMoreCurrent? 
+                   Text(
+                    "Show less",
+                    style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 17),
+                  )
+                  :Text(
+                    "Show More",
+                    style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 17),
+                  ),
+                )
+            ])
+
+                
             );
 
           final nextButton = Hero(
