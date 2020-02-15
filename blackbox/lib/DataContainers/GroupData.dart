@@ -6,6 +6,8 @@ import '../DataContainers/UserData.dart';
 import '../DataContainers/Question.dart';
 import 'dart:math';
 
+import 'UserRankData.dart';
+
 class GroupData {
     
 
@@ -560,39 +562,31 @@ class GroupData {
     return topThree;
   }
 
-  void getTopThreeMap(String kind)
-  {
-    Map<String, int> voteCounts;
 
+  /// Returns a list of UserRankData
+  ///   - previous : The votees and their # votes of last round
+  ///   - alltime  : The votees and their # votes of all rounds combined 
+  ///   - Any other input: previous votes will be used
+  List<UserRankData> getUserRankingList(String kind)
+  {
+    /// Get the right vote list
+    Map<String, int> voteCounts;
     switch(kind) {
-      case 'previous': voteCounts =  _getLastVoteCounts(); break;  /// Get the vote counts of last round
-      case 'alltime' : voteCounts =   getTotalVotes();     break;  /// Get the all time vote counts
-      default        : voteCounts = new Map<String, int>();break;  /// Invalid parameter: empty map to prevent nullpointer exceptions
+      case 'previous': voteCounts =   _getLastVoteCounts(); break;  /// Get the vote counts of last round
+      case 'alltime' : voteCounts =    getTotalVotes();     break;  /// Get the all time vote counts
+      default        : voteCounts =   _getLastVoteCounts(); break;  /// Invalid parameter: just use the last round votes
     }
 
-    Map<String, int> topThree = new Map<String, int>();        /// List to store the user IDs
-    
-    voteCounts.forEach((userID, numVotes){
-        topThree[userID] = numVotes;
+    /// Convert the vote map to a list
+    List<UserRankData> userRanking = new List<UserRankData>();
+    voteCounts.forEach( (id, numVotes) {
+      userRanking.add( new UserRankData( getUserName(id), numVotes) );
     });
 
-    print("With ID's");
-    print(topThree);
+    /// Sort the list in descending order (highest # votes first)
+    userRanking.sort((a, b) => b.getNumVotes().compareTo(a.getNumVotes()));
 
-    topThree.forEach( (id, votes) {             /// Loop the top three
-      topThree.putIfAbsent(getUserName(id).split(' ')[0], ()=>votes);
-    } );
-
-    var sortedKeys = topThree.keys.toList()..sort((k1,k2) => topThree[k1].compareTo(topThree[k2]));
-    LinkedHashMap sortedMap = new LinkedHashMap.fromIterable(sortedKeys, key: (k) => k, value: (k) => topThree[k]);
-    
-    print("Non sorted with ID's");
-    print(topThree);
-
-    print("Sorted with name");
-    print(sortedMap);
-
-    //return sortedMap;
+    return userRanking;
   }
 
 
