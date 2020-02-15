@@ -404,7 +404,10 @@ class ResultScreenState extends State<ResultScreen> {
                                 fontSize: 30.0,
                                 fontWeight: FontWeight.bold),
                           ),
-              ListView.builder(
+              ListView.separated(
+                separatorBuilder: (context, index) => Divider(
+        color: Colors.white,
+      ),
                     shrinkWrap: true,
                     itemCount: !showMoreCurrent ? (currentWinners.length>=3? 3 : currentWinners.length) : currentWinners.length ,
                     itemBuilder: (context, index) {
@@ -422,17 +425,52 @@ class ResultScreenState extends State<ResultScreen> {
                                           bottom: 1,
                                           left: 7,
                                           right: 7),
-                                  child: 
-                                              Text(
-                                                (index+1).toString() + ': ' + currentWinners[index].getUserName() + '  ' + currentWinners[index].getNumVotes().toString(),
-                                                style: new TextStyle(
-                                                    color: Constants
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                    Row(children: <Widget>[
+                                    SizedBox(width: 15,),
+                                    Text(
+                                                (index+1).toString()
+                                                +  (index==0? 'st' : index==1? 'nd' : index==2? 'rd' : 'th'),
+                                                 style: new TextStyle(
+                                                    color: index == 0 ? Constants.colors[Constants.colorindex]:Constants
                                                         .iWhite,
                                                     fontSize:
                                                         20.0,
                                                     fontWeight:
                                                         FontWeight.w400),
+                                                          textAlign: TextAlign.start,
                                               ),
+                                              SizedBox(width: 8,),
+                                    Text(
+                                                currentWinners[index].getUserName(),
+                                                 style: new TextStyle(
+                                                    color: index == 0 ? Constants.colors[Constants.colorindex]:Constants
+                                                        .iWhite,
+                                                    fontSize:
+                                                        20.0,
+                                                    fontWeight:
+                                                        FontWeight.w300),
+                                                          textAlign: TextAlign.start,
+                                              ),]),
+                                    Text(
+                                               currentWinners[index].getNumVotes().toString(),
+                                                style: new TextStyle(
+                                                    color: index == 0 ? Constants.colors[Constants.colorindex]:Constants
+                                                        .iWhite,
+                                                    fontSize:
+                                                        25.0,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                                          textAlign: TextAlign.start,
+                                              ),
+
+
+                                  ],)
+                                              
+                                              
+                                              
                                               
                                             
                                           ),
