@@ -490,7 +490,7 @@ class ResultScreenState extends State<ResultScreen> {
                                     ),
                                     
                                     Text(
-                                      currentWinners[1].getNumVotes().toString() + ' votes',
+                                      currentWinners[1].getNumVotes().toString() + (currentWinners[1].getNumVotes().toString()=='1'? ' vote': ' votes'),
                                       style: new TextStyle(
                                           color: Constants.iWhite,
                                           fontSize:
@@ -515,8 +515,8 @@ class ResultScreenState extends State<ResultScreen> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 10),
                     child: SizedBox(
-                    width: MediaQuery.of(context).size.width/4.5,
-                    height: MediaQuery.of(context).size.width/4.5,
+                    width: MediaQuery.of(context).size.width/3.8,
+                    height: MediaQuery.of(context).size.width/3.8,
                   child:Container(
                   padding: EdgeInsets.all(5),
                   decoration: BoxDecoration(
@@ -544,7 +544,7 @@ class ResultScreenState extends State<ResultScreen> {
                                                 maxLines: 1,
                                     ),
                                     Text(
-                                      currentWinners[0].getNumVotes().toString() + ' votes',
+                                      currentWinners[0].getNumVotes().toString() + (currentWinners[0].getNumVotes().toString()=='1'? ' vote': ' votes'),
                                       style: new TextStyle(
                                           color: Constants.iWhite,
                                           fontSize:
@@ -598,7 +598,7 @@ class ResultScreenState extends State<ResultScreen> {
                                                 maxLines: 1,
                                     ),
                                     Text(
-                                      currentWinners[2].getNumVotes().toString() + ' votes',
+                                      currentWinners[2].getNumVotes().toString() + (currentWinners[2].getNumVotes().toString() == '1'? ' vote': ' votes'),
                                       style: new TextStyle(
                                           color: Constants.iWhite,
                                           fontSize:
