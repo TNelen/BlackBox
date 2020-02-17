@@ -652,7 +652,7 @@ class ResultScreenState extends State<ResultScreen> {
                                     SizedBox(width: 15,),
                                     Text(
                                       (index+4).toString()
-                                      +  (index==0? 'st' : index==1? 'nd' : index==2? 'rd' : 'th'),
+                                      + 'th',
                                         style: new TextStyle(
                                           color: Constants
                                               .iWhite,
