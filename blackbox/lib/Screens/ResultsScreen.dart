@@ -10,6 +10,8 @@ import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
 import 'dart:async';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+
 
 class ResultScreen extends StatefulWidget {
   Database _database;
@@ -325,13 +327,18 @@ class ResultScreenState extends State<ResultScreen> {
             margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
             child: Column(children: <Widget>[
               Text(
-                            'alltime Leaderboard',
+                            'Alltime leaderboard',
                             style: new TextStyle(
                                 color: Constants.iWhite,
                                 fontSize: 30.0,
                                 fontWeight: FontWeight.bold),
                           ),
-              ListView.builder(
+              SizedBox(height: 5,),
+              ListView.separated(
+                physics: new NeverScrollableScrollPhysics(),
+                separatorBuilder: (context, index) => Divider(
+        color: Colors.white,
+      ),
                     shrinkWrap: true,
                     itemCount: !showMoreAll ? (alltimeWinners.length>=3? 3 : alltimeWinners.length) : alltimeWinners.length ,
                     itemBuilder: (context, index) {
@@ -340,26 +347,64 @@ class ResultScreenState extends State<ResultScreen> {
                             borderRadius:
                                 BorderRadius.circular(10.0),
                             ),
-                            color: Constants.iDarkGrey,
+                            color: Constants.iBlack,
                             child: Center(
                               child: Padding(
                                   padding:
                                       const EdgeInsets.only(
                                           top: 1.0,
                                           bottom: 1,
-                                          left: 7,
-                                          right: 7),
-                                  child: 
-                                              Text(
-                                                (index+1).toString() + ': ' + alltimeWinners[index].getUserName() + '  ' + alltimeWinners[index].getNumVotes().toString(),
-                                                style: new TextStyle(
-                                                    color: Constants
-                                                        .iWhite,
-                                                    fontSize:
-                                                        20.0,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                              ),
+                                          left: 15,
+                                          right: 30),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: <Widget>[
+                                    
+                                    SizedBox(width: 15,),
+                                    Text(
+                                      (index+1).toString()
+                                      +  (index==0? 'st' : index==1? 'nd' : index==2? 'rd' : 'th'),
+                                        style: new TextStyle(
+                                          color: index == 0 ? Constants.colors[Constants.colorindex]:Constants
+                                              .iWhite,
+                                          fontSize:
+                                              20.0,
+                                          fontWeight:
+                                              FontWeight.w400),
+                                                textAlign: TextAlign.start,
+                                    ),
+                                    SizedBox(width: 12,),
+                                    Text(
+                                      alltimeWinners[index].getUserName().split(' ')[0],
+                                        style: new TextStyle(
+                                          color: index == 0 ? Constants.colors[Constants.colorindex]:Constants
+                                              .iWhite,
+                                          fontSize:
+                                              20.0,
+                                          fontWeight:
+                                              FontWeight.w300),
+                                                textAlign: TextAlign.start,
+                                    ),]),
+                                    Text(
+                                      alltimeWinners[index].getNumVotes().toString(),
+                                      style: new TextStyle(
+                                          color: index == 0 ? Constants.colors[Constants.colorindex]:Constants
+                                              .iWhite,
+                                          fontSize:
+                                              25.0,
+                                          fontWeight:
+                                              FontWeight.w600),
+                                                textAlign: TextAlign.start,
+                                    ),
+
+
+                                  ],)
+                                              
+                                              
+                                              
                                               
                                             
                                           ),
@@ -394,7 +439,8 @@ class ResultScreenState extends State<ResultScreen> {
                 
             );
 
-          final top3 = Container(
+          final results = Container(
+            
             margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
             child: Column(children: <Widget>[
               Text(
@@ -404,67 +450,241 @@ class ResultScreenState extends State<ResultScreen> {
                                 fontSize: 30.0,
                                 fontWeight: FontWeight.bold),
                           ),
+              SizedBox(height: 5,),
+              Row(
+                   mainAxisAlignment: MainAxisAlignment.center,              
+                children: <Widget>[
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: SizedBox(
+                    width: MediaQuery.of(context).size.width/4.5,
+                    height: MediaQuery.of(context).size.width/4.5,
+                  child: Container(
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(
+                    color: Constants.iWhite,
+                    width: 1,
+                ),),
+                  child: Card(
+                      shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(10.0),
+                            ),
+                            color: Constants.iBlack,
+                            child:Column(children: <Widget>[
+                                    AutoSizeText(
+                                      currentWinners[1].getUserName().split(' ')[0],
+                                        style: new TextStyle(
+                                          color: Constants.colors[Constants.colorindex],
+                                          fontSize:
+                                              20.0,
+                                          fontWeight:
+                                              FontWeight.w600),
+                                                textAlign: TextAlign.center,
+                                                maxLines: 1,
+                                    ),
+                                    
+                                    Text(
+                                      currentWinners[1].getNumVotes().toString() + ' votes',
+                                      style: new TextStyle(
+                                          color: Constants.iWhite,
+                                          fontSize:
+                                              17.0,
+                                          fontWeight:
+                                              FontWeight.w400),
+                                                textAlign: TextAlign.center,
+                                    ),
+                                  SizedBox(height: 12,)
+                            ],)
+                  )))),
+                  Card(
+                    color: Constants.iWhite,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+                      child:Text('2', style: TextStyle(fontSize: 17, color: Constants.iBlack),)))
+                  ]),
+                  SizedBox(width: 5,),
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: SizedBox(
+                    width: MediaQuery.of(context).size.width/4.5,
+                    height: MediaQuery.of(context).size.width/4.5,
+                  child:Container(
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(
+                    color: Constants.iWhite,
+                    width: 1,
+                ),),
+                  child: Card(
+                      shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(10.0),
+                            ),
+                            color: Constants.iBlack,
+                            child:Column(children: <Widget>[
+                                    AutoSizeText(
+                                      currentWinners[0].getUserName().split(' ')[0],
+                                        style: new TextStyle(
+                                          color: Constants.colors[Constants.colorindex],
+                                          fontSize:
+                                              20.0,
+                                          fontWeight:
+                                              FontWeight.w600),
+                                                textAlign: TextAlign.center,
+                                                maxLines: 1,
+                                    ),
+                                    Text(
+                                      currentWinners[0].getNumVotes().toString() + ' votes',
+                                      style: new TextStyle(
+                                          color: Constants.iWhite,
+                                          fontSize:
+                                              17.0,
+                                          fontWeight:
+                                              FontWeight.w400),
+                                                textAlign: TextAlign.center,
+                                    ),
+                                  SizedBox(height: 14,)
+                            ],)
+                  )))),
+                  Card(
+                    color: Constants.colors[Constants.colorindex],
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                      child:Text('1', style: TextStyle(fontSize: 17, color: Constants.iBlack),)))
+                  ]),
+                  SizedBox(width: 5,),
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: SizedBox(
+                    height: MediaQuery.of(context).size.width/4.5,
+                    width: MediaQuery.of(context).size.width/4.5,
+                  child: Container(
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(
+                    color: Constants.iWhite,
+                    width: 1,
+                ),),
+                  child: Card(
+                      shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(10.0),
+                            ),
+                            color: Constants.iBlack,
+                            child:Column(children: <Widget>[
+                                    AutoSizeText(
+                                      currentWinners[2].getUserName().split(' ')[0],
+                                        style: new TextStyle(
+                                          color: Constants.colors[Constants.colorindex],
+                                          fontSize:
+                                              20.0,
+                                          fontWeight:
+                                              FontWeight.w600),
+                                                textAlign: TextAlign.center,
+                                                maxLines: 1,
+                                    ),
+                                    Text(
+                                      currentWinners[2].getNumVotes().toString() + ' votes',
+                                      style: new TextStyle(
+                                          color: Constants.iWhite,
+                                          fontSize:
+                                              17.0,
+                                          fontWeight:
+                                              FontWeight.w400),
+                                                textAlign: TextAlign.center,
+                                    ),
+                                  SizedBox(height: 12,)
+                            ],)
+                  )))),
+                  Card(
+                    color: Constants.iWhite,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+                      child:Text('3', style: TextStyle(fontSize: 17, color: Constants.iBlack),)))
+                  ]),
+                ],
+
+              ),
+
               ListView.separated(
+                physics: new NeverScrollableScrollPhysics(),
                 separatorBuilder: (context, index) => Divider(
         color: Colors.white,
       ),
                     shrinkWrap: true,
-                    itemCount: !showMoreCurrent ? (currentWinners.length>=3? 3 : currentWinners.length) : currentWinners.length ,
+                    itemCount: !showMoreCurrent ? (currentWinners.length>=3? 0 : currentWinners.length-3) : currentWinners.length-3 ,
                     itemBuilder: (context, index) {
                       return Card(
                             shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(10.0),
                             ),
-                            color: Constants.iDarkGrey,
+                            color: Constants.iBlack,
                             child: Center(
                               child: Padding(
                                   padding:
                                       const EdgeInsets.only(
                                           top: 1.0,
                                           bottom: 1,
-                                          left: 7,
-                                          right: 7),
+                                          left: 15,
+                                          right: 30),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                    Row(children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: <Widget>[
+                                    
                                     SizedBox(width: 15,),
                                     Text(
-                                                (index+1).toString()
-                                                +  (index==0? 'st' : index==1? 'nd' : index==2? 'rd' : 'th'),
-                                                 style: new TextStyle(
-                                                    color: index == 0 ? Constants.colors[Constants.colorindex]:Constants
-                                                        .iWhite,
-                                                    fontSize:
-                                                        20.0,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                                          textAlign: TextAlign.start,
-                                              ),
-                                              SizedBox(width: 8,),
+                                      (index+4).toString()
+                                      +  (index==0? 'st' : index==1? 'nd' : index==2? 'rd' : 'th'),
+                                        style: new TextStyle(
+                                          color: Constants
+                                              .iWhite,
+                                          fontSize:
+                                              20.0,
+                                          fontWeight:
+                                              FontWeight.w400),
+                                                textAlign: TextAlign.start,
+                                    ),
+                                    SizedBox(width: 12,),
                                     Text(
-                                                currentWinners[index].getUserName(),
-                                                 style: new TextStyle(
-                                                    color: index == 0 ? Constants.colors[Constants.colorindex]:Constants
-                                                        .iWhite,
-                                                    fontSize:
-                                                        20.0,
-                                                    fontWeight:
-                                                        FontWeight.w300),
-                                                          textAlign: TextAlign.start,
-                                              ),]),
+                                      currentWinners[index+3].getUserName().split(' ')[0],
+                                        style: new TextStyle(
+                                          color: Constants
+                                              .iWhite,
+                                          fontSize:
+                                              20.0,
+                                          fontWeight:
+                                              FontWeight.w300),
+                                                textAlign: TextAlign.start,
+                                    ),]),
                                     Text(
-                                               currentWinners[index].getNumVotes().toString(),
-                                                style: new TextStyle(
-                                                    color: index == 0 ? Constants.colors[Constants.colorindex]:Constants
-                                                        .iWhite,
-                                                    fontSize:
-                                                        25.0,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                                          textAlign: TextAlign.start,
-                                              ),
+                                      currentWinners[index+3].getNumVotes().toString(),
+                                      style: new TextStyle(
+                                          color:Constants
+                                              .iWhite,
+                                          fontSize:
+                                              25.0,
+                                          fontWeight:
+                                              FontWeight.w600),
+                                                textAlign: TextAlign.start,
+                                    ),
 
 
                                   ],)
@@ -616,11 +836,11 @@ class ResultScreenState extends State<ResultScreen> {
                           SizedBox(height: 30),
 
                           
-                          //top3
+                          //results 
                           Padding(
                             padding: EdgeInsets.only(left: 35, right:35),
                             child:
-                          top3),
+                          results),
 
                           //AllTime
                           Padding(
