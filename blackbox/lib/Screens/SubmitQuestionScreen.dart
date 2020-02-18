@@ -70,13 +70,14 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
 
               ///Add question to database
               List<String> questions = new List<String>();
-              questions.add(question);
+              String questionCapital = question.substring(0,1).toUpperCase()+question.substring(1);
+              questions.add(questionCapital);
               _addQuestions(questions);
               Navigator.pop(context);
             } else
               Popup.makePopup(context, 'Whoops',
                   'Please end your question with a question mark');
-          } else
+          } else    
             Popup.makePopup(
                 context, 'Whoops!', 'You cannot submit a question shorter than 20 characters');
         },
