@@ -71,31 +71,39 @@ class _OverviewScreenState extends State<OverviewScreen> {
                     ],
                   ),
                 ),
+                
               ]),
             ),
-            body: Padding(
-              padding: EdgeInsets.only(left: 22, right: 22),
-              child: Center(
-              child: Container(
-                color: Constants.iBlack,
-                child: Column(children: <Widget>[
-                  Text('title'),
+            body: 
                   ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 22),
                     scrollDirection: Axis.vertical ,
                     shrinkWrap: true,
                     itemCount: groupData.getHistory().length,
                     itemBuilder: (context, index) {
                       String key = groupData.getHistory().keys.elementAt(index);
                       List<UserRankData> results = groupData.getUserRankingList('overview', groupData.getHistory()[key]);
-                      print("debug");
-                      print(results);
                       return Card(
+                        shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(10.0),
+                                ),
+                        color: Constants.iBlack,
                         child: Column(children: <Widget>[
-                            Text(key),
-                            ListView.separated(
+                          SizedBox(height: 15,),
+                          Text(key,
+                          textAlign: TextAlign.center,
+                            style: new TextStyle(
+                                color: Constants.iWhite,
+                                fontSize: 23.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 5,),
+                          ListView.separated(
                               physics: new NeverScrollableScrollPhysics(),
                               separatorBuilder: (context, index2) => Divider(
                               color: Colors.white,
+                              height: 0.5,
                               ),
                               shrinkWrap: true,
                               itemCount: results.length,
@@ -149,7 +157,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                         Text(
                                           results[index2].getNumVotes().toString(),
                                           style: new TextStyle(
-                                              color: index == 0 ? Constants.colors[Constants.colorindex]:Constants
+                                              color: index2 == 0 ? Constants.colors[Constants.colorindex]:Constants
                                                   .iWhite,
                                               fontSize:
                                                   25.0,
@@ -177,12 +185,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
                         ],
 
 
-                      ));})
+                      ));}),
 
-                ],)
-                
-                ),
-              ),
-            )));
+               ),
+            );
   }
 }
