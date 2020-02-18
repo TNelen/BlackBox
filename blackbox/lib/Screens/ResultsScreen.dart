@@ -508,7 +508,7 @@ class ResultScreenState extends State<ResultScreen> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
                       child:Text('2', style: TextStyle(fontSize: 17, color: Constants.iBlack),)))
-                  ]): SizedBox(width:0.1),
+                  ]): SizedBox(width:MediaQuery.of(context).size.width/4.5,),
                   SizedBox(width: 5,),
                   Stack(
                     alignment: Alignment.bottomCenter,
@@ -617,7 +617,7 @@ class ResultScreenState extends State<ResultScreen> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
                       child:Text('3', style: TextStyle(fontSize: 17, color: Constants.iBlack),)))
-                  ]): SizedBox(width: 0.1),
+                  ]): SizedBox(width: MediaQuery.of(context).size.width/4.5,),
                 ],
 
               ),
