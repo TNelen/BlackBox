@@ -11,6 +11,7 @@ import 'GameScreen.dart';
 import 'dart:async';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'Popup.dart';
 
 
 class ResultScreen extends StatefulWidget {
@@ -160,6 +161,34 @@ class ResultScreenState extends State<ResultScreen> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
+    final submitquestionbutton = FlatButton(
+                          onPressed: () {
+                             Popup.submitQuestionIngamePopup(context,_database, groupData);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.library_add,
+                                color: Constants.iWhite,
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              
+                              Text(
+                                "Submit Question",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 15).copyWith(
+                                    color: Constants.iWhite,)
+                                                              ),
+                              
+                            ],
+                          ),
+                        );
+
+
     final endGameButton = FlatButton(
                   color: Constants.iBlack,
                   shape: RoundedRectangleBorder(
@@ -304,8 +333,9 @@ class ResultScreenState extends State<ResultScreen> {
                                   )
                                 : SizedBox(
                                     height: 0.1,
-                                  ),                          
-  
+                                  ),  
+                                                    
+                          submitquestionbutton,
                               
                           ])),
                     ),
