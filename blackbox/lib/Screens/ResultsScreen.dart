@@ -189,9 +189,7 @@ class ResultScreenState extends State<ResultScreen> {
                           ),
                         );
 
-    void togglePlaying(){
-      groupData.setIsPlaying(!groupData.getIsPlaying());
-    }
+    
 
     final endGameButton = FlatButton(
                   color: Constants.iBlack,
@@ -199,8 +197,7 @@ class ResultScreenState extends State<ResultScreen> {
                     borderRadius: BorderRadius.circular(28.0),
                   ),
                   onPressed: () {
-                    togglePlaying();
-                    _database.updateGroup(groupData);
+                   Popup.confirmEndGame(context, _database, groupData);
                   },
                   splashColor: Constants.colors[Constants.colorindex],
                   child: Container(child:

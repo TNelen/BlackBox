@@ -44,6 +44,7 @@ class Popup {
       },
     );
   }
+  
 
   
   static void makeChangeUsernamePopup(BuildContext context, Database database) {
@@ -204,6 +205,52 @@ class Popup {
                 } else
                   Popup.makePopup(context, 'Whoops!',
                       'You cannot submit a question shorter than 20 characters');
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  static void togglePlaying(groupData){
+      groupData.setIsPlaying(!groupData.getIsPlaying());
+    }
+
+  static void confirmEndGame(
+    BuildContext context, Database database, GroupData groupData) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          backgroundColor: Constants.iDarkGrey,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16.0))),
+          title: new Text(
+            'End game?',
+            style: TextStyle(
+                color: Constants.colors[Constants.colorindex], fontSize: 22),
+          ),
+          content: Text(
+            'Are you sure to end the game? \nThe game will end for all users.',
+            style: TextStyle(
+                color: Constants.iWhite, fontSize: 17),
+          ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text(
+                "Yes I'm sure",
+                style: TextStyle(
+                    color: Constants.colors[Constants.colorindex],
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                togglePlaying(groupData);
+                database.updateGroup(groupData);
+                Navigator.pop(context);
               },
             ),
           ],
