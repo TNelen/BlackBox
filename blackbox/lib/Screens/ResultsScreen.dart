@@ -592,7 +592,7 @@ class ResultScreenState extends State<ResultScreen> {
                   Card(
                     color: Constants.colors[Constants.colorindex],
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 11),
                       child:Text('1', style: TextStyle(fontSize: 17, color: Constants.iBlack),)))
                   ]),
                   SizedBox(width: 5,),
