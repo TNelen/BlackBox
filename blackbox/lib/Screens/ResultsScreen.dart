@@ -12,6 +12,7 @@ import 'dart:async';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'Popup.dart';
+import 'OverviewScreen.dart';
 
 
 class ResultScreen extends StatefulWidget {
@@ -188,6 +189,9 @@ class ResultScreenState extends State<ResultScreen> {
                           ),
                         );
 
+    void togglePlaying(){
+      groupData.setIsPlaying(!groupData.getIsPlaying());
+    }
 
     final endGameButton = FlatButton(
                   color: Constants.iBlack,
@@ -195,7 +199,8 @@ class ResultScreenState extends State<ResultScreen> {
                     borderRadius: BorderRadius.circular(28.0),
                   ),
                   onPressed: () {
-                    //nothing yet
+                    togglePlaying();
+                    _database.updateGroup(groupData);
                   },
                   splashColor: Constants.colors[Constants.colorindex],
                   child: Container(child:
@@ -342,8 +347,8 @@ class ResultScreenState extends State<ResultScreen> {
                   ));
             }
           }
-          List currentWinners = groupData.getUserRankingList('previous');
-          List alltimeWinners = groupData.getUserRankingList('alltime');
+          List currentWinners = groupData.getUserRankingList('previous', null);
+          List alltimeWinners = groupData.getUserRankingList('alltime', null);
 
           void toggleAlltime(){
             showMoreAll = ! showMoreAll;
@@ -769,22 +774,31 @@ class ResultScreenState extends State<ResultScreen> {
                   minWidth: MediaQuery.of(context).size.width,
                   padding: const EdgeInsets.all(20),
                   onPressed: () {
-                    if (groupData.getNextQuestionString() != "The game has ended, please start a new game, or submit your own questions!"){
+                    if (groupData.getIsPlaying()){
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
                               QuestionScreen(_database, groupData, code),
                         ));}
+                    else{
+                      //go to overview
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              OverviewScreen(_database, groupData),
+                        ));
+                    }
                   },
                   //change isplaying field in database for this group to TRUE
-                  child: groupData.getNextQuestionString() != "The game has ended, please start a new game, or submit your own questions!" ?
+                  child: groupData.getIsPlaying() ?
                   Text("Next Question",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 30).copyWith(
                           color: Constants.iBlack,
                           fontWeight: FontWeight.bold)) :
-                  Text("The games has ended, you have played all questions.",
+                  Text("The games has ended. \n Show overview",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 20).copyWith(
                           color: Constants.iBlack,

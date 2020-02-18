@@ -567,13 +567,14 @@ class GroupData {
   ///   - previous : The votees and their # votes of last round
   ///   - alltime  : The votees and their # votes of all rounds combined 
   ///   - Any other input: previous votes will be used
-  List<UserRankData> getUserRankingList(String kind)
+  List<UserRankData> getUserRankingList(String kind, Map<String,int> input)
   {
     /// Get the right vote list
     Map<String, int> voteCounts;
     switch(kind) {
       case 'previous': voteCounts =   _getLastVoteCounts(); break;  /// Get the vote counts of last round
       case 'alltime' : voteCounts =    getTotalVotes();     break;  /// Get the all time vote counts
+      case 'overview': voteCounts =    input;               break;                
       default        : voteCounts =   _getLastVoteCounts(); break;  /// Invalid parameter: just use the last round votes
     }
 
