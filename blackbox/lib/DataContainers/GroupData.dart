@@ -585,8 +585,9 @@ class GroupData {
 
     /// Sort the list in descending order (highest # votes first)
     userRanking.sort((a, b) => b.getNumVotes().compareTo(a.getNumVotes()));
-
+    
     return userRanking;
+
   }
 
 

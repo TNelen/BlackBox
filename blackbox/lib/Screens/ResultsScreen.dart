@@ -415,7 +415,7 @@ class ResultScreenState extends State<ResultScreen> {
                       
                         
               ),
-              FlatButton(
+              alltimeWinners.length>3? FlatButton(
                   color: Constants.iBlack,
                   onPressed: () {
                     toggleAlltime();
@@ -433,7 +433,7 @@ class ResultScreenState extends State<ResultScreen> {
                     "Show More",
                     style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 17),
                   ),
-                )
+                ): SizedBox(height: 25,)
             ])
 
                 
@@ -454,6 +454,7 @@ class ResultScreenState extends State<ResultScreen> {
               Row(
                    mainAxisAlignment: MainAxisAlignment.center,              
                 children: <Widget>[
+                  currentWinners.length >=2 ? 
                   Stack(
                     alignment: Alignment.bottomCenter,
                     children: <Widget>[
@@ -507,7 +508,7 @@ class ResultScreenState extends State<ResultScreen> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
                       child:Text('2', style: TextStyle(fontSize: 17, color: Constants.iBlack),)))
-                  ]),
+                  ]): SizedBox(width:0.1),
                   SizedBox(width: 5,),
                   Stack(
                     alignment: Alignment.bottomCenter,
@@ -563,6 +564,7 @@ class ResultScreenState extends State<ResultScreen> {
                       child:Text('1', style: TextStyle(fontSize: 17, color: Constants.iBlack),)))
                   ]),
                   SizedBox(width: 5,),
+                  currentWinners.length>=3?
                   Stack(
                     alignment: Alignment.bottomCenter,
                     children: <Widget>[
@@ -615,12 +617,12 @@ class ResultScreenState extends State<ResultScreen> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
                       child:Text('3', style: TextStyle(fontSize: 17, color: Constants.iBlack),)))
-                  ]),
+                  ]): SizedBox(width: 0.1),
                 ],
 
               ),
 
-              ListView.separated(
+              currentWinners.length>3? ListView.separated(
                 physics: new NeverScrollableScrollPhysics(),
                 separatorBuilder: (context, index) => Divider(
         color: Colors.white,
@@ -700,8 +702,8 @@ class ResultScreenState extends State<ResultScreen> {
                     },
                       
                         
-              ),
-              FlatButton(
+              ):SizedBox(height: 25,),
+              currentWinners.length>=3? FlatButton(
                   color: Constants.iBlack,
                   onPressed: () {
                     toggleCurrent();
@@ -719,7 +721,7 @@ class ResultScreenState extends State<ResultScreen> {
                     "Show More",
                     style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 17),
                   ),
-                )
+                ):SizedBox(height: 50,)
             ])
 
                 
