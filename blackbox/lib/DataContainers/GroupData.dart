@@ -1,4 +1,4 @@
-import 'dart:collection';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blackbox/Constants.dart';
@@ -657,10 +657,40 @@ class GroupData {
     }
 
     /// Make change in database
-    Constants.database.voteOnUser(this, voteeID);
+    _performAsyncVote(voteeID);
 
     /// Make change locally
     _offlineVote(voteeID);
+  }
+
+
+  /// Perform a vote in the database
+  /// Automatically retries after a random amount of time
+  void _performAsyncVote(String voteeID) async {
+    int retryLimit = 10, i = 0;                                           // Limit the retries
+    bool isSuccess = await Constants.database.voteOnUser(this, voteeID);  // Perform the database update
+    
+    while (!(isSuccess) && i < retryLimit)                                // While the transaction fails and the retry limit has NOT been reached
+    {
+
+      Random rand = new Random();
+      int ms = 1 + rand.nextInt(26);
+      Duration delay = new Duration( milliseconds: ms);                   // Create a random delay
+
+      try 
+      {
+        sleep(delay);                                                     // Try to sleep for the random delay
+      } 
+      catch(e)
+      {
+        print("Something went wrong while awaiting the next vote retry!");
+        print(e);
+      }
+
+      isSuccess = await Constants.database.voteOnUser(this, voteeID);     // Retry the database update and wait
+
+      i++;
+    }
   }
 
 

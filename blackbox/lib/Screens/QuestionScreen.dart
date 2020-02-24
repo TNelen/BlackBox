@@ -250,7 +250,8 @@ class _QuestionScreenState extends State<QuestionScreen>
             onPressed: () {
               if (clickedmember != null) {
                 _database.multiReportQuestion(groupData.getQuestion(), reportMap);
-                _database.voteOnUser(groupData, clickedmember);
+                //_database.voteOnUser(groupData, clickedmember);
+                groupData.addVote(clickedmember);           // GroupData#addVote automatically updates the database. This is preferred because random retries are built in
                 currentQuestion = groupData.getQuestionID();
                 currentQuestionString = groupData.getNextQuestionString();
 
