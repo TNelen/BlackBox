@@ -110,18 +110,19 @@ class FirebaseDeleters {
 
     // Set up queries
     Query membersEmpty = groupsRef.where('members',  isNull: true);             /// Groups that have no members 
-    Query memberDieter = groupsRef.where(dieterPath, isEqualTo: 'Dieter');      /// Dieter is member
-    Query memberTimo   = groupsRef.where(timoPath,   isEqualTo: 'Timo Nelen');  /// Timo is member
+    //Query memberDieter = groupsRef.where(dieterPath, isEqualTo: 'Dieter');      /// Dieter is member
+    //Query memberTimo   = groupsRef.where(timoPath,   isEqualTo: 'Timo Nelen');  /// Timo is member
     Query nameDebug    = groupsRef.where('name',     isEqualTo: 'debug');       /// Groupname = debug
     //  Does not work on maps:  Query memberName   = groupsRef.where('members', arrayContains: 'name');                         /// Testing ID 'name' is member
     //  Does not work on maps:  Query memberTe     = groupsRef.where('members', arrayContains: 'te');                           /// Testing ID 'te' is member
 
     // Add all queries to the list
-    queries.add(membersEmpty);  queries.add(memberDieter);
-    queries.add(memberTimo);    queries.add(nameDebug);
+    queries.add(membersEmpty);  //queries.add(memberDieter);
+    //queries.add(memberTimo);    
+    queries.add(nameDebug);
 
     // For logging purposes
-    List<String> queryTypes = ['membersEmpty', 'memberDieter', 'memberTimo', 'memberName', 'memberTe', 'nameDebug'];  /// A list of the query names: for debugging purposes
+    List<String> queryTypes = ['membersEmpty', 'memberDieter', 'memberTimo', 'groupNameDebug', 'memberTe', 'nameDebug'];  /// A list of the query names: for debugging purposes
 
     int i = 0;    /// To keep track of which query type to log
     /// Loop through all queries and delete groups that sattisfy all requirements
@@ -134,17 +135,17 @@ class FirebaseDeleters {
         {
           try {
             GroupData groupData = GroupData.fromDocumentSnapshot(group);
-            if (groupData.getNumMembers() < 2)
-            {
+            //if (groupData.getNumMembers() < 2)
+            //{
               if (groupData.getName() != "S1REQ" && groupData.getName() != "ORVFA")
               {
                 await deleteGroup(groupData);
               } else {
                 numDeleted--;
               }
-            } else {
-              numDeleted--;
-            }
+            //} else {
+            //  numDeleted--;
+            //}
           } catch (exception)
           {
             String groupID = group.documentID.toString();
@@ -160,14 +161,17 @@ class FirebaseDeleters {
 
         for (String id in failedGroups)
         {
-          try {
-            GroupData groupData = new GroupData("", "", id, "", new Map<String, String>(), new List<String>()); /// Create empty group with the right ID
-            await deleteGroup(groupData);                                 // Delete the group
-            print("The group with ID " + id + " has now been deleted!");  // Print info
-            numDeleted++;
-          } catch(exc)
+          if (id != "S1REQ" && id != "ORVFA")
           {
-            print("The group with ID " + id + " could NOT be deleted! Cancelling...");
+            try {
+              GroupData groupData = new GroupData("", "", id, "", new Map<String, String>(), new List<String>()); /// Create empty group with the right ID
+              await deleteGroup(groupData);                                 // Delete the group
+              print("The group with ID " + id + " has now been deleted!");  // Print info
+              numDeleted++;
+            } catch(exc)
+            {
+              print("The group with ID " + id + " could NOT be deleted! Cancelling...");
+            }
           }
         }
 
