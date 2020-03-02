@@ -57,7 +57,7 @@ class _ReportScreenState extends State<ReportScreen> {
           issue.category = categoryValue.toString();
           issue.location = locationValue.toString();
           issue.description = problemController.text.toString();
-          issue.version = '1.0.0';
+          issue.version = '1.0.5';
           _database.submitIssue(issue);
           Navigator.pop(context);
           Popup.makePopup(context, 'Thank You!', 'Your issue is submitted successfully! We will look into it as soon as possible.');
