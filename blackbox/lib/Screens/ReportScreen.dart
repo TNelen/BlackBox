@@ -35,12 +35,12 @@ class _ReportScreenState extends State<ReportScreen> {
       style: TextStyle(fontSize: 20, color: Constants.iBlack),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
-          fillColor: Constants.iWhite,
+          fillColor: Constants.iWhite.withOpacity(0.5),
           filled: true,
           hintText: "Start typing here...",
           hintStyle: TextStyle(fontSize: 17, color: Constants.iDarkGrey),
           counterText: problemController.text.length.toString(),
-          counterStyle: TextStyle(color: Constants.iGrey),
+          counterStyle: TextStyle(color: Constants.iWhite),
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
@@ -48,8 +48,9 @@ class _ReportScreenState extends State<ReportScreen> {
     final SubmitButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(28.0),
-      color: Constants.colors[Constants.colorindex],
+      color: Constants.iWhite.withOpacity(0.5),
       child: MaterialButton(
+        elevation: 0,
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
@@ -65,7 +66,7 @@ class _ReportScreenState extends State<ReportScreen> {
         child: Text("Submit",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20).copyWith(
-                color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
+                color: Constants.iWhite, fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -74,10 +75,10 @@ class _ReportScreenState extends State<ReportScreen> {
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color: Constants.iWhite,
+          color:Constants.iWhite.withOpacity(0.5),
           borderRadius: BorderRadius.circular(16.0),
           border: Border.all(
-              color: Constants.iDarkGrey,
+              color: Constants.iWhite,
               style: BorderStyle.solid,
               width: 0.01),
         ),
@@ -113,10 +114,10 @@ class _ReportScreenState extends State<ReportScreen> {
         height: 50,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color: Constants.iWhite,
+          color: Constants.iWhite.withOpacity(0.5),
           borderRadius: BorderRadius.circular(16.0),
           border: Border.all(
-              color: Constants.iDarkGrey,
+              color: Constants.iWhite,
               style: BorderStyle.solid,
               width: 0.01),
         ),
@@ -151,11 +152,25 @@ class _ReportScreenState extends State<ReportScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
-        theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Constants.iBlack,
-              title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+             body: Container(
+              decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.blueGrey[800],Colors.cyan[800]]),
+        ),
+            child:Padding(
+              padding: EdgeInsets.only(left: 22, right: 22),
+              child:Center(
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: ListView(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(20.0),
+                    children: [
+                      SizedBox(height: 15),
+                      Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 InkWell(
                   onTap: () => Navigator.pop(context),
                   child: Row(
@@ -164,31 +179,21 @@ class _ReportScreenState extends State<ReportScreen> {
                         padding: EdgeInsets.only(right: 20),
                         child: Icon(
                           Icons.arrow_back,
-                          color: Constants.colors[Constants.colorindex],
+                          color: Constants.iWhite,
                         ),
                       ),
                       Text(
                         'Back',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Constants.colors[Constants.colorindex],
+                          color: Constants.iWhite,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
                   ),
                 ),
               ]),
-            ),
-            body: Padding(
-              padding: EdgeInsets.only(left: 22, right: 22),
-              child:Center(
-              child: Container(
-                padding: EdgeInsets.all(10),
-                color: Constants.iBlack,
-                child: ListView(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(20.0),
-                    children: [
                       SizedBox(height: 20.0),
                       Hero(
                           tag: 'topicon3',
@@ -264,6 +269,6 @@ class _ReportScreenState extends State<ReportScreen> {
                       SubmitButton,
                     ]),
               ),
-            ))));
+            )))));
   }
 }

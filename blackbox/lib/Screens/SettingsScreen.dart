@@ -35,7 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     Container blueAccent() {
       return Container(child:  Card(
-        color: Constants.iDarkGrey,
+        color: Constants.iWhite.withOpacity(0.5),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
@@ -76,7 +76,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     Container yellowAccent() {
       return Container(child:  Card(
-        color: Constants.iDarkGrey,
+        color: Constants.iWhite.withOpacity(0.5),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
@@ -117,7 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     Container redAccent() {
       return Container(child:  Card(
-        color: Constants.iDarkGrey,
+        color: Constants.iWhite.withOpacity(0.5),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
@@ -158,7 +158,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     Container greenAccent() {
       return Container(child:  Card(
-        color: Constants.iDarkGrey,
+        color: Constants.iWhite.withOpacity(0.5),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
@@ -203,9 +203,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: 'BlackBox',
         theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Constants.iBlack,
-              title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            body: Container(
+              decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.blueGrey[800],Colors.cyan[800]]),
+        ),
+              child:Padding(
+              padding: EdgeInsets.only(left:22, right: 22),
+              child: Center(
+                child: Container(
+              alignment: Alignment.center,
+              child: ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(20.0),
+                children: [
+                  SizedBox(height: 15,),
+                  Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 InkWell(
                   onTap: () => Navigator.pop(context),
                   child: Row(
@@ -214,31 +229,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         padding: EdgeInsets.only(right: 20),
                         child:  Icon(
                           Icons.arrow_back,
-                          color: Constants.colors[Constants.colorindex],
+                          color: Constants.iWhite,
                         ),
                       ),
                       Text(
                         'Back',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Constants.colors[Constants.colorindex],
+                          color: Constants.iWhite,
+                          fontWeight: FontWeight.w600
                         ),
                       ),
                     ],
                   ),
                 ),
               ]),
-            ),
-            body: Padding(
-              padding: EdgeInsets.only(left:22, right: 22),
-              child: Center(
-                child: Container(
-              alignment: Alignment.center,
-              color: Constants.iBlack,
-              child: ListView(
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(20.0),
-                children: [
                   SizedBox(height: 20.0),
                   Hero(
                       tag: 'topicon2',
@@ -256,7 +261,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Text(
                     'Settings',
                     style: new TextStyle(
-                        color: Constants.colors[Constants.colorindex],
+                        color: Constants.iWhite,
                         fontSize: 30.0,
                         fontWeight: FontWeight.w500),
                   ),
@@ -264,7 +269,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Text(
                     'Sounds and vibration',
                     style: new TextStyle(
-                        color: Constants.colors[Constants.colorindex],
+                        color: Constants.iWhite,
                         fontSize: 22.0,
                         fontWeight: FontWeight.w300),
                   ),
@@ -277,7 +282,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Text(
                     'Personalization',
                     style: new TextStyle(
-                        color: Constants.colors[Constants.colorindex],
+                        color: Constants.iWhite,
                         fontSize: 22.0,
                         fontWeight: FontWeight.w300),
                   ),
@@ -311,7 +316,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   greenAccent(),
                 ],
               ),
-            )))));
+            ))))));
   }
 
   void plusOne() => 1;
@@ -329,13 +334,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     {
       foregroundColor = Constants.colors[Constants.colorindex];
       textColor = Constants.iWhite;
-      backgroundColor = Constants.iDarkGrey;
+      backgroundColor = Constants.iWhite.withOpacity(0.5);
     } else {
       foregroundColor = Constants.iGrey;
       textColor = Constants.iGrey;
-      backgroundColor = Constants.iDarkGrey;
+      backgroundColor = Constants.iWhite.withOpacity(0.5);
     }
-
     return Container(
         constraints: BoxConstraints(minWidth: 100, maxWidth: 120),
         child: Card(

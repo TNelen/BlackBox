@@ -30,7 +30,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
       child: Material(
         elevation: 5.0,
         borderRadius: BorderRadius.circular(28.0),
-        color: Constants.colors[Constants.colorindex],
+        color: Constants.iWhite.withOpacity(0.5),
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -55,7 +55,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
           child: Text("Join",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20)
-                  .copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
+                  .copyWith(color: Constants.iWhite, fontWeight: FontWeight.bold)),
         ),
       ),
     );
@@ -79,9 +79,25 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
         title: 'BlackBox',
         theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Constants.iBlack,
-            title: Row(
+          body: Container(
+              decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.blueGrey[800],Colors.cyan[800]]),
+        ),
+        child:Padding(
+            padding: EdgeInsets.only(left: 30, right: 30),
+            child: Center(
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(36.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: 15,),
+                    Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   InkWell(
@@ -103,18 +119,8 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                     ],
                     ),
                   ),
-                ]),),
-          body: Padding(
-            padding: EdgeInsets.only(left: 30, right: 30),
-            child: Center(
-            child: Container(
-              color: Constants.iBlack,
-              child: Padding(
-                padding: const EdgeInsets.all(36.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
+                ]),
+                SizedBox(height: 25,),
                     Text(
                       'Join Group',
                       style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w300),
@@ -132,6 +138,6 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
               ),
             ),
           ),
-        )));
+        ))));
   }
 }

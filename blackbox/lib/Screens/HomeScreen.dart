@@ -32,7 +32,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Database database;
   int pageIndex = 0;
-  String version = '1.0.5+5';
+  String version = '1.0.6+6';
 
   _HomeScreenState(Database db) {
     this.database = db;
@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Hero(
         tag: 'toberutton',
         child: Card(
-          color: Constants.iDarkGrey,
+          color: Constants.iWhite.withOpacity(0.5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.0),
           ),
@@ -121,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Hero(
         tag: 'frfr',
         child: Card(
-          color: Constants.iDarkGrey,
+          color: Constants.iWhite.withOpacity(0.5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.0),
           ),
@@ -169,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 6),
         child: Card(
-            color: Constants.iDarkGrey,
+            color: Constants.iWhite.withOpacity(0.5),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
             ),
@@ -215,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 6),
         child: Card(
-            color: Constants.iDarkGrey,
+            color: Constants.iWhite.withOpacity(0.5),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
             ),
@@ -257,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 6),
         child: Card(
-            color: Constants.iDarkGrey,
+            color: Constants.iWhite.withOpacity(0.5),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
             ),
@@ -301,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 6),
             child: Card(
-                color: Constants.iDarkGrey,
+                color: Constants.iWhite.withOpacity(0.5),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16.0),
                 ),
@@ -379,13 +379,16 @@ class _HomeScreenState extends State<HomeScreen> {
   },
   child: new MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: new ThemeData(
-        scaffoldBackgroundColor: Constants.iBlack,
-      ),
       home: Scaffold(
         backgroundColor: Constants.iBlack,
         body: Container(
           margin: EdgeInsets.only(top: 16, left: 8, right: 8),
+          decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.blueGrey[800],Colors.cyan[800]]),
+        ),
           child: ListView(
                    // shrinkWrap: true,
                    // padding: const EdgeInsets.all(20.0),
@@ -398,11 +401,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding:
                       EdgeInsets.only(top: height / 10, left: 35, right: 35),
                   child: AutoSizeText(
-                    'Hi, ' + Constants.getUsername() + '!',
+                    'Hi, ' + Constants.getUsername().split(' ')[0] + '!',
                     style: TextStyle(
-                        fontSize: 35,
+                        fontSize: 50,
                         color: Constants.iWhite,
-                        fontWeight: FontWeight.w300),
+                        fontWeight: FontWeight.w200),
                     maxLines: 1,
                   ),
                 ),
@@ -414,7 +417,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text(
                       ' Welcome to BlackBox! ',
                       style: TextStyle(
-                          color: Constants.colors[Constants.colorindex],
+                          color: Constants.iWhite,
                           fontSize: 20,
                           fontWeight: FontWeight.w300),
                     )),

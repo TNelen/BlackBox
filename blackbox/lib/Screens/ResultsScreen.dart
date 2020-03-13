@@ -823,9 +823,20 @@ class ResultScreenState extends State<ResultScreen> {
           return MaterialApp(
             theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
             home: Scaffold(
-              appBar: AppBar(
-                backgroundColor: Constants.iBlack,
-                title: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              body: Container(
+                decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.blueGrey[800],Colors.cyan[800]]),
+        ),
+                child: Center(
+                  child: ListView(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        children: <Widget>[
+                          SizedBox(height: 15,),
+                          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                   FlatButton(
                     onPressed: () {
                       groupData.removePlayingUser(Constants.getUserData());
@@ -845,13 +856,6 @@ class ResultScreenState extends State<ResultScreen> {
                     ),
                   )
                 ]),
-              ),
-              body: 
-                 Center(
-                  child: ListView(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        children: <Widget>[
                           //Title
                           Center(child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -901,7 +905,7 @@ class ResultScreenState extends State<ResultScreen> {
                         ],
                 )),
 
-            ),
+            )),
           );
         });
   }

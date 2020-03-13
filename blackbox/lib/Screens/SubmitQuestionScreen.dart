@@ -55,7 +55,7 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
     final SubmitButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(28.0),
-      color: Constants.colors[Constants.colorindex],
+      color: Constants.iWhite.withOpacity(0.5),
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -84,7 +84,7 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
         child: Text("Submit",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20).copyWith(
-                color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
+                color: Constants.iWhite, fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -93,9 +93,24 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
         title: 'BlackBox',
         theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Constants.iBlack,
-              title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            body: Container(
+              decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.blueGrey[800],Colors.cyan[800]]),
+        ),
+        child: Padding(
+              padding: EdgeInsets.only(left: 22, right: 22),
+              child:Center(
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: ListView(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(20.0),
+                    children: [
+                      SizedBox(height: 15,),
+                      Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 InkWell(
                   onTap: () => Navigator.pop(context),
                   child: Row(
@@ -104,31 +119,21 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
                         padding: EdgeInsets.only(right: 20),
                         child: Icon(
                           Icons.arrow_back,
-                          color: Constants.colors[Constants.colorindex],
+                          color: Constants.iWhite,
                         ),
                       ),
                       Text(
                         'Back',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Constants.colors[Constants.colorindex],
+                          color: Constants.iWhite,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
                   ),
                 ),
               ]),
-            ),
-            body: Padding(
-              padding: EdgeInsets.only(left: 22, right: 22),
-              child:Center(
-              child: Container(
-                padding: EdgeInsets.all(10),
-                color: Constants.iBlack,
-                child: ListView(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(20.0),
-                    children: [
                       SizedBox(height: 40.0),
                       Text(
                         'Submit Question',
@@ -161,8 +166,9 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
                       QuestionFieled,
                       SizedBox(height: 20.0),
                       SubmitButton,
+                      SizedBox(height: 200,)
                     ]),
               ),
-            ))));
+            )))));
   }
 }

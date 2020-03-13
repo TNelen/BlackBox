@@ -29,11 +29,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
-        theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Constants.iBlack,
-              title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            body: Container(
+              decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.blueGrey[800],Colors.cyan[800]]),
+        ),
+              child:Padding(
+              padding: EdgeInsets.only(left: 22, right: 22),
+              child: Center(
+              child: Container(
+                child: ListView(
+                  padding: const EdgeInsets.all(20.0),
+                  children: [
+                   SizedBox(height: 15,),
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 InkWell(
                   onTap: () => Navigator.pop(context),
                   child: Row(
@@ -42,29 +54,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: EdgeInsets.only(right: 20),
                         child: Icon(
                           Icons.arrow_back,
-                          color: Constants.colors[Constants.colorindex],
+                          color: Constants.iWhite,
                         ),
                       ),
                       Text(
                         'Back',
                         style: TextStyle(
                           fontSize: 20,
-                          color: Constants.colors[Constants.colorindex],
+                          color: Constants.iWhite,
+                          fontWeight: FontWeight.w600
                         ),
                       ),
                     ],
                   ),
                 ),
               ]),
-            ),
-            body: Padding(
-              padding: EdgeInsets.only(left: 22, right: 22),
-              child: Center(
-              child: Container(
-                color: Constants.iBlack,
-                child: ListView(
-                  padding: const EdgeInsets.all(20.0),
-                  children: [
                     SizedBox(height: 40.0),
                     Text(
                       'Your Profile',
@@ -117,6 +121,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-            ))));
+            )))));
   }
 }
