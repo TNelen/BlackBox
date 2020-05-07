@@ -29,8 +29,8 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
       tag: 'tobutton',
       child: Material(
         elevation: 5.0,
-        borderRadius: BorderRadius.circular(16.0),
-        color: Constants.iDarkGrey,
+        borderRadius: BorderRadius.circular(28.0),
+        color: Constants.colors[Constants.colorindex],
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -55,7 +55,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
           child: Text("Join",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20)
-                  .copyWith(color: Constants.iWhite, fontWeight: FontWeight.bold)),
+                  .copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
         ),
       ),
     );
@@ -77,7 +77,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
-        theme: new ThemeData(scaffoldBackgroundColor: Colors.black),
+        theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
           appBar: AppBar(
             backgroundColor: Constants.iBlack,
@@ -104,7 +104,9 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                     ),
                   ),
                 ]),),
-          body: Center(
+          body: Padding(
+            padding: EdgeInsets.only(left: 30, right: 30),
+            child: Center(
             child: Container(
               color: Constants.iBlack,
               child: Padding(
@@ -120,7 +122,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                     SizedBox(height: 80.0),
                     Text(
                       'Enter group code below',
-                      style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 25.0, ),
+                      style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 20.0, ),
                     ),
                     SizedBox(height: 25.0),
                     codeField,
@@ -130,6 +132,6 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
               ),
             ),
           ),
-        ));
+        )));
   }
 }

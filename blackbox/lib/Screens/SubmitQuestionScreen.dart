@@ -40,7 +40,7 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
       maxLength: 100,
       maxLines: 2,
       controller: questionController,
-      style: TextStyle(fontSize: 20, color: Colors.black),
+      style: TextStyle(fontSize: 17, color: Colors.black),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
           fillColor: Constants.iWhite,
@@ -54,8 +54,8 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
 
     final SubmitButton = Material(
       elevation: 5.0,
-      borderRadius: BorderRadius.circular(16.0),
-      color: Constants.iDarkGrey,
+      borderRadius: BorderRadius.circular(28.0),
+      color: Constants.colors[Constants.colorindex],
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -67,24 +67,24 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
                 context, 'Whoops!', 'You cannot submit an empty question');
           } else if (question.length >= 20) {
             if (question.endsWith('?')) {
-              print('----' + question + '---- Added to database');
 
               ///Add question to database
               List<String> questions = new List<String>();
-              questions.add(question);
+              String questionCapital = question.substring(0,1).toUpperCase()+question.substring(1);
+              questions.add(questionCapital);
               _addQuestions(questions);
               Navigator.pop(context);
             } else
               Popup.makePopup(context, 'Whoops',
                   'Please end your question with a question mark');
-          } else
+          } else    
             Popup.makePopup(
                 context, 'Whoops!', 'You cannot submit a question shorter than 20 characters');
         },
         child: Text("Submit",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20).copyWith(
-                color: Constants.iWhite, fontWeight: FontWeight.bold)),
+                color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -119,7 +119,9 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
                 ),
               ]),
             ),
-            body: Center(
+            body: Padding(
+              padding: EdgeInsets.only(left: 22, right: 22),
+              child:Center(
               child: Container(
                 padding: EdgeInsets.all(10),
                 color: Constants.iBlack,
@@ -133,7 +135,8 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
                         textAlign: TextAlign.center,
                         style: new TextStyle(
                             color: Constants.iWhite,
-                            fontSize: 40.0,
+                            
+                            fontSize: 30.0,
                             fontWeight: FontWeight.w300),
                       ),
                       SizedBox(height: 80.0),
@@ -142,7 +145,7 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
                         textAlign: TextAlign.center,
                         style: new TextStyle(
                             color: Constants.colors[Constants.colorindex],
-                            fontSize: 25.0,
+                            fontSize: 17.0,
                             fontWeight: FontWeight.normal),
                       ),
                       SizedBox(height: 20.0),
@@ -151,7 +154,7 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
                         textAlign: TextAlign.center,
                         style: new TextStyle(
                             color: Constants.iWhite,
-                            fontSize: 20.0,
+                            fontSize: 17.0,
                             fontWeight: FontWeight.normal),
                       ),
                       SizedBox(height: 20.0),
@@ -160,6 +163,6 @@ class _SubmitQuestionScreenState extends State<SubmitQuestionScreen> {
                       SubmitButton,
                     ]),
               ),
-            )));
+            ))));
   }
 }

@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
 import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
-import 'VoteScreen.dart';
 import '../Interfaces/Database.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
 import '../Database/FirebaseStream.dart';
+import 'Popup.dart';
+import 'ResultsScreen.dart';
+  
+Map<ReportType, bool> reportMap = new Map<ReportType, bool>(); 
 
 class QuestionScreen extends StatefulWidget {
   Database _database;
   GroupData groupData;
   String code;
 
+  
+
+
   @override
   QuestionScreen(Database db, GroupData gd, String code) {
     this._database = db;
     this.groupData = gd;
     this.code = code;
+
+    reportMap[ReportType.DISTURBING] = false;
+    reportMap[ReportType.GRAMMAR] = false;
+    reportMap[ReportType.CATEGORY] = false;
+    reportMap[ReportType.LOVE] = false;
   }
 
   _QuestionScreenState createState() =>
@@ -28,8 +39,15 @@ class _QuestionScreenState extends State<QuestionScreen>
   Database _database;
   GroupData groupData;
   String code;
-  //List enableReports = [0, 0, 0];
+
+  Color color;
+  String clickedmember;
+
+  String currentQuestion;
+  String currentQuestionString;
+  
   FirebaseStream stream;
+  TextEditingController questionController = new TextEditingController();
 
   _QuestionScreenState(Database db, GroupData groupData, String code) {
     this._database = db;
@@ -43,6 +61,16 @@ class _QuestionScreenState extends State<QuestionScreen>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     BackButtonInterceptor.add(myInterceptor);
+    //reset reports
+    reportMap = new Map<ReportType, bool>(); 
+    reportMap[ReportType.DISTURBING] = false;
+    reportMap[ReportType.GRAMMAR] = false;
+    reportMap[ReportType.CATEGORY] = false;
+    reportMap[ReportType.LOVE] = false;
+   
+    
+
+
   }
 
   @override
@@ -54,7 +82,6 @@ class _QuestionScreenState extends State<QuestionScreen>
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent) {
-    print("BACK BUTTON!"); // Do some stuff.
     return true;
   }
 
@@ -62,27 +89,54 @@ class _QuestionScreenState extends State<QuestionScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    print(state);
 
     if (state == AppLifecycleState.paused) {
-      print('game paused');
+      
     }
+  }
+
+
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16.0))),
+          title: new Text(
+            "No members selected",
+            style: TextStyle(color: Constants.iBlack, fontSize: 25),
+          ),
+          content: new Text(
+            "Please make a valid choice",
+            style: TextStyle(color: Constants.iBlack, fontSize: 20),
+          ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text(
+                "Close",
+                style: TextStyle(
+                    color: Constants.colors[Constants.colorindex],
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: stream.groupData,
-        builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
-          groupData = snapshot.data;
-          if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-          if (!snapshot.hasData) {
-            return new Center(child: new CircularProgressIndicator());
-          }
 
-
-
-          final width = MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
           final height = MediaQuery.of(context).size.height;
 
           final reportButton = FlatButton(
@@ -97,7 +151,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                 children: <Widget>[
                   Icon(Icons.report, color: Constants.iWhite, size: 20),
                   SizedBox(
-                    width: 20,
+                    width: 10,
                   ),
                   Text(
                     'Give Feedback on this question',
@@ -106,36 +160,137 @@ class _QuestionScreenState extends State<QuestionScreen>
                 ],
               ));
 
-          final voteButton = Hero(
-            tag: 'button',
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Material(
-                elevation: 5.0,
-                borderRadius: BorderRadius.circular(16.0),
-                color: Constants.colors[Constants.colorindex],
-                child: MaterialButton(
-                  minWidth: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                  onPressed: () {
+          final submitquestionbutton = FlatButton(
+                          onPressed: () {
+                             Popup.submitQuestionIngamePopup(context,_database, groupData);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.library_add,
+                                color: Constants.iWhite,
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              
+                              Text(
+                                "Submit Question",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 15).copyWith(
+                                    color: Constants.iWhite,)
+                                                              ),
+                              
+                            ],
+                          ),
+                        );
 
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              VoteScreen(_database, groupData, code),
-                        ));
-                  },
-                  child: Text("Vote",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20).copyWith(
-                          color: Constants.iBlack,
-                          fontWeight: FontWeight.bold)),
-                ),
+         
+
+          final membersList = Flexible(
+              child: GridView.count(
+                crossAxisCount: 2,
+                childAspectRatio: (3 / 1),
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                children: groupData
+                    .getPlayingUserdata()
+                    .map((data) => Card(
+                          color: data.getUserID() == clickedmember
+                              ? Constants.iLight
+                              : Constants.iDarkGrey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          child: InkWell(
+                            splashColor: Constants.colors[Constants.colorindex],
+                            onTap: () {
+                              setState(() {
+                                color = Constants.colors[Constants.colorindex];
+                                clickedmember = data.getUserID();
+                              });
+                            },
+                            child: Container(
+                              child: Center(
+                                  child: Padding(
+                                                  padding:
+                                                          const EdgeInsets.only(
+                                                              top: 1.0,
+                                                              bottom: 1,
+                                                              left: 7,
+                                                              right: 7),                                child: Text(
+                                  data.getUsername().split(' ')[0],
+                                  style: new TextStyle(
+                                      color: data.getUserID() == clickedmember
+                                          ? Constants.iDarkGrey
+                                          : Constants.iWhite,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )),
+                            ),
+                          ),
+                        ))
+                    .toList(),
               ),
-            ),
-          );
+            );
 
+    final voteButton = Hero(
+      tag: 'submit',
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 60, left: 35, right: 35),
+        child: Material(
+          elevation: 5.0,
+          borderRadius: BorderRadius.circular(28.0),
+          color: Constants.colors[Constants.colorindex],
+          child: MaterialButton(
+            minWidth: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.fromLTRB(3.0, 3.0, 3.0, 3.0),
+            onPressed: () {
+              if (clickedmember != null) {
+                _database.multiReportQuestion(groupData.getQuestion(), reportMap);
+                //_database.voteOnUser(groupData, clickedmember);
+                groupData.addVote(clickedmember);           // GroupData#addVote automatically updates the database. This is preferred because random retries are built in
+                currentQuestion = groupData.getQuestionID();
+                currentQuestionString = groupData.getNextQuestionString();
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => ResultScreen(
+                          _database,
+                          groupData,
+                          code,
+                          currentQuestion,
+                          currentQuestionString,
+                          clickedmember),
+                    ));
+              } else {
+                _showDialog();
+              }
+            },
+            child: Text("Confirm choice",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20).copyWith(
+                    color: Constants.iBlack, fontWeight: FontWeight.bold)),
+          ),
+        ),
+      ),
+    );
+
+    
+
+    return StreamBuilder(
+        stream: stream.groupData,
+        builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
+          groupData = snapshot.data;
+          if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+          if (!snapshot.hasData) {
+            return new Center(child: new CircularProgressIndicator());
+          }
+
+        
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
@@ -157,6 +312,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                         ),
                       ),
                       FlatButton(
+                        padding: EdgeInsets.all(10),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -189,51 +345,50 @@ class _QuestionScreenState extends State<QuestionScreen>
                   ],
                 ),
               ),
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              body: Padding(
+                padding: EdgeInsets.only(left: 30, right: 30),
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Flexible(
-                    child: Container(
+                  //submit own question button
+                  
+                  Container(
                       margin:
-                          EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
-                      padding: EdgeInsets.only(
-                          top: height / 10, bottom: height / 10),
+                          EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                     
                       child: Hero(
                         tag: 'questionToVote',
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.0),
                           ),
-                          color: Constants.iDarkGrey,
+                          color: Constants.iBlack,
                           child: Center(
                             child: Padding(
                               padding: const EdgeInsets.all(5),
                               child: Center(
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
-                                    SizedBox(height: 50),
+                                    SizedBox(height: 10),
                                     Text(
                                       'Question',
                                       style: new TextStyle(
-                                          color: Constants
-                                              .colors[Constants.colorindex],
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold),
+                                          color: Constants.iWhite,
+                                          fontSize: 22.0,
+                                          fontWeight: FontWeight.w700),
                                     ),
                                     SizedBox(height: 30),
                                     Text(
                                       groupData.getNextQuestionString(),
                                       style: new TextStyle(
-                                          color: Constants.iWhite,
+                                          color: Constants
+                                              .colors[Constants.colorindex],
                                           fontSize: 20.0,
                                           fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
                                     ),
-                                    SizedBox(height: 80),
-                                    groupData.getQuestion().getCategory() ==
-                                            'Community'
-                                        ? reportButton
-                                        : SizedBox(height: 0.0001),
+                                    SizedBox(height: 30),
                                   ],
                                 ),
                               ),
@@ -242,15 +397,37 @@ class _QuestionScreenState extends State<QuestionScreen>
                         ),
                       ),
                     ),
-                  ),
+
+                  Text(
+                                      'Select a friend',
+                                      style: new TextStyle(
+                                          color: Constants.iWhite,
+                                          fontSize: 22.0,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                  SizedBox(height: 20,),
+
+                  membersList,
+
+                  //reportbutton if question is community question
+                  groupData.getQuestion().getCategory() ==
+                                            'Community'
+                                        ? reportButton
+                                        : SizedBox(height: 20),
+
+                  submitquestionbutton,
+
+                  SizedBox(height: 20,),
+                  
                   voteButton
                 ],
               ),
-            ),
+            )),
           );
         });
   }
 }
+
 
 class ReportPopup extends StatefulWidget {
   Database _database;
@@ -272,7 +449,7 @@ class _ReportPopupState extends State<ReportPopup> {
   Database database;
   GroupData groupdata;
   String code;
-  List enableReports = [0, 0, 0];
+
 
   _ReportPopupState(Database db, GroupData groupData, String code) {
     this.database = db;
@@ -283,21 +460,22 @@ class _ReportPopupState extends State<ReportPopup> {
   @override
   void initState() {}
 
+  void toggle(ReportType type){
+    reportMap[type] = ! reportMap[type];
+  }
+
   @override
   Widget build(BuildContext context2) {
     Widget disturbingButton = FlatButton(
         onPressed: () {
-          Constants.enable[Constants.enableDisturbing]
-              ? database.reportQuestion(
-                  groupdata.getQuestion(), ReportType.DISTURBING)
-              : null;
+          
 
-          Constants.enableDisturbing = 1;
+          toggle(ReportType.DISTURBING);
 
           setState(() {});
         },
         child: Row(
-          children: Constants.enable[Constants.enableDisturbing]
+          children: ! reportMap[ReportType.DISTURBING]
               ? <Widget>[
                   Icon(Icons.sentiment_dissatisfied,
                       color: Constants.iBlack, size: 20),
@@ -324,17 +502,14 @@ class _ReportPopupState extends State<ReportPopup> {
 
     Widget grammarButton = FlatButton(
         onPressed: () {
-          Constants.enable[Constants.enableGrammar]
-              ? database.reportQuestion(
-                  groupdata.getQuestion(), ReportType.GRAMMAR)
-              : null;
+          
 
-          Constants.enableGrammar = 1;
+          toggle(ReportType.GRAMMAR);
 
           setState(() {});
         },
         child: Row(
-          children: Constants.enable[Constants.enableGrammar]
+          children: ! reportMap[ReportType.GRAMMAR]
               ? <Widget>[
                   Icon(Icons.spellcheck, color: Constants.iBlack, size: 20),
                   SizedBox(
@@ -362,15 +537,13 @@ class _ReportPopupState extends State<ReportPopup> {
 
     Widget loveButton = FlatButton(
         onPressed: () {
-          Constants.enable[Constants.enableLove]
-              ? database.voteOnQuestion(groupdata.getQuestion())
-              : null;
+         
 
-          Constants.enableLove = 1;
+          toggle(ReportType.LOVE);
           setState(() {});
         },
         child: Row(
-          children: Constants.enable[Constants.enableLove]
+          children: ! reportMap[ReportType.LOVE]
               ? <Widget>[
                   Icon(Icons.favorite, color: Constants.iBlack, size: 20),
                   SizedBox(

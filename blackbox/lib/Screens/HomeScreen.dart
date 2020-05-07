@@ -1,8 +1,6 @@
-import 'package:blackbox/Database/GoogleUserHandler.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
-import '../Database/GoogleUserHandler.dart';
 import 'CreateGameScreen.dart';
 import 'JoinGameScreen.dart';
 import 'ReportScreen.dart';
@@ -14,7 +12,6 @@ import 'package:blackbox/DataContainers/Question.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../DataContainers/Appinfo.dart';
-import '../DataContainers/UserData.dart';
 import 'Popup.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,7 +19,6 @@ class HomeScreen extends StatefulWidget {
 
   HomeScreen(Database db) {
     database = db;
-    db.openConnection();
   }
 
   @override
@@ -36,42 +32,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Database database;
   int pageIndex = 0;
-  String version = '1.0.0+1';
+  String version = '1.0.5+5';
 
   _HomeScreenState(Database db) {
     this.database = db;
-
-    /// Log a user in and update variables accordingly
-    if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
-      ///check if user isn't loged in via google already when returning to homescreen
-      try {
-        GoogleUserHandler guh = new GoogleUserHandler();
-        guh.handleSignIn().then((user) async {
-          /// Log the retreived user in and update the data in the database
-          UserData saved = await database.getUserByID( user.getUserID() );
-          /// Save user if the account is new
-          if (saved == null)
-          {
-            database.updateUser( user );
-            Constants.setUserData( user );
-          } else {
-            /// Otherwise, set the loaded data
-            Constants.setUserData( saved );
-          }
-
-          setState(() {
-
-          });
-
-          isAppUpToDate();
-          isWelcomeMSG();
-
-          _test();
-        });
-      } catch (e) {
-        print(e.toString());
-      }
-    }
+  
+    isAppUpToDate();  /// Show an update reminder when needed
+    isWelcomeMSG();   /// Show a message if one is set in the database
 
     /*if (versionCodeDatabase != versionCodeYAML){
       Popup.makePopup(context, 'Whooohooo!', 'There is a new app version available!');
@@ -129,18 +96,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           CreateGameScreen(database),
                     ));
                 // } else {
-                // Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
-                //  }
+                 //Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
+                  //}
               },
               child: Container(
-                padding: EdgeInsets.fromLTRB(15, 25, 25, 25),
+                padding: EdgeInsets.fromLTRB(15, 15, 25, 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(
                       Icons.create,
                       color: Constants.colors[Constants.colorindex],
-                      size: 50,
+                      size: 25,
                     ),
                     Text(
                       "Create Game",
@@ -170,19 +137,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       builder: (BuildContext context) =>
                           JoinGameScreen(database),
                     ));
-                // } else {
-                // Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
-                //  }
+                 //} else {
+                 //Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
+                  //}
               },
               child: Container(
-                padding: EdgeInsets.fromLTRB(15, 25, 25, 25),
+                padding: EdgeInsets.fromLTRB(15, 15, 25, 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(
                       Icons.search,
                       color: Constants.colors[Constants.colorindex],
-                      size: 50,
+                      size: 25,
                     ),
                     Text(
                       "Join Game",
@@ -383,7 +350,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (Constants.enableMSG[Constants.enableVersionMSG]) {
       appinfo = await database.getAppInfo();
       String versionCodeDatabase = appinfo.getVersion().toString();
-      print(versionCodeDatabase);
       if (versionCodeDatabase != version) {
         Constants.enableVersionMSG = 1;
         Popup.makePopup(context, 'Whooohooo!',
@@ -397,7 +363,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (Constants.enableMSG[Constants.enableWelcomeMSG]) {
       appinfo = await database.getAppInfo();
       String welcomeMessage = appinfo.getLoginMessage();
-      print(welcomeMessage);
       if (welcomeMessage.length != 0) {
         Constants.enableWelcomeMSG = 1;
         Popup.makePopup(context, 'Welcome!', welcomeMessage);
@@ -410,7 +375,11 @@ class _HomeScreenState extends State<HomeScreen> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    return MaterialApp(
+    return WillPopScope(
+  onWillPop: () async {
+    return false;
+  },
+  child: new MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
         scaffoldBackgroundColor: Constants.iBlack,
@@ -419,17 +388,21 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Constants.iBlack,
         body: Container(
           margin: EdgeInsets.only(top: 16, left: 8, right: 8),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(children: <Widget>[
+          child: ListView(
+                   // shrinkWrap: true,
+                   // padding: const EdgeInsets.all(20.0),
+                    children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                SizedBox(height: 25,),
                 Container(
                   padding:
-                      EdgeInsets.only(top: height / 10, left: 10, right: 10),
+                      EdgeInsets.only(top: height / 10, left: 35, right: 35),
                   child: AutoSizeText(
-                    'Hi ' + Constants.getUsername() + '!',
+                    'Hi, ' + Constants.getUsername() + '!',
                     style: TextStyle(
-                        fontSize: 50,
+                        fontSize: 35,
                         color: Constants.iWhite,
                         fontWeight: FontWeight.w300),
                     maxLines: 1,
@@ -441,10 +414,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                     padding: EdgeInsets.only(left: 10, right: 10),
                     child: Text(
-                      ' BlackBox - The - Game ',
+                      ' Welcome to BlackBox! ',
                       style: TextStyle(
                           color: Constants.colors[Constants.colorindex],
-                          fontSize: 25,
+                          fontSize: 20,
                           fontWeight: FontWeight.w300),
                     )),
                 SizedBox(
@@ -466,6 +439,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
+                SizedBox(height: 15),
                 DotsIndicator(
                   dotsCount: 4,
                   position: pageIndex,
@@ -475,8 +449,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 )
               ]),
+              SizedBox(height: 55,),
               Container(
-                  padding: EdgeInsets.only(left: 10, right: 10),
+                  padding: EdgeInsets.only(left: 45, right: 45),
                   child: Column(
                     children: <Widget>[
                       Container(
@@ -484,9 +459,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Start playing',
+                            'Start playing...',
                             style: TextStyle(
-                                fontSize: 30,
+                                fontSize: 25,
                                 color: Constants.iWhite,
                                 fontWeight: FontWeight.w300),
                           ),
@@ -498,7 +473,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       JoinGameBox(),
                       SizedBox(
-                        height: 35,
+                        height: 120,
                       )
                     ],
                   )),
@@ -506,6 +481,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:blackbox/Database/FirebaseGetters.dart';
+
 import '../DataContainers/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Constants.dart';
@@ -250,5 +254,43 @@ class FirebaseUtility {
           default:      // Out of bounds!!
             return "";
       }
+  }
+
+
+  /// Backup the database
+  /// Creates a copy of all questions
+  static void backupDatabase() async
+  {
+    /// Get all questions
+    Map<String, Map<String, dynamic>> questions = new Map<String, Map<String, dynamic>>();  // Mapping document ID to its contents
+
+    await Firestore.instance.collection("questions").getDocuments().then( (docs) {          // Get ALL questions and add them to the Map
+      for (DocumentSnapshot document in docs.documents)
+      {
+        questions[document.documentID] = document.data;
+      }
+    });
+
+
+    try {
+      /// Make a backup of each question
+      var collection = Firestore.instance.collection("questionsBackup");
+      questions.forEach( (id, data) {
+
+        DocumentReference reference = collection.document(id);      // Reference to the document
+
+        
+        Firestore.instance.runTransaction((Transaction transaction) async {   // Perform the transaction
+          await transaction.set(reference, data);                             // Update the document
+        });
+
+        Duration delay = new Duration(milliseconds: 10);
+        sleep(delay);
+
+      });
+    } catch(e)
+    {
+      print (e);
+    }
   }
 }

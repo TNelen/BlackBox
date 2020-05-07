@@ -5,6 +5,7 @@ import 'package:blackbox/Exceptions/GroupNotFoundException.dart';
 import '../DataContainers/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
+import 'package:blackbox/Constants.dart';
 
 class FirebaseGetters {
   
@@ -20,11 +21,23 @@ class FirebaseGetters {
               if (doc.exists) {
                 if (doc.data['name'] != null)
                 {
+                  bool vibration = true;
+                  if (doc.data['vibration'] != null)
+                  {
+                    vibration = doc.data['vibration'];
+                  }
+
+                  bool sounds = true;
+                  if (doc.data['sounds'] != null)
+                  {
+                    sounds = doc.data['sounds'];
+                  }
+
                   if (doc.data['accent'] != null)
                   {
-                    user = new UserData.full(doc.documentID, doc.data['name'], doc.data['accent']);
+                    user = new UserData.full(doc.documentID, doc.data['name'], doc.data['accent'], vibration, sounds);
                   } else {
-                    user = new UserData.full(doc.documentID, doc.data['name'], 0);
+                    user = new UserData.full(doc.documentID, doc.data['name'], Constants.defaultColor, vibration, sounds);
                   }
                 }
               }
@@ -72,6 +85,64 @@ class FirebaseGetters {
 
     return groupData;
   }
+
+
+  ///Get all the questions form the selected category and return it as a list
+  static Future<List<String>> createQuestionList(String category) async 
+  {
+
+     List<String> questionlist;
+     await Firestore.instance
+          .collection("questions")
+          .document("questionList")
+          .get()
+          .then (
+            (document) {
+              /// Convert List<dynamic> to List<String>
+              List<dynamic> existing = document.data[category];
+              questionlist = existing.cast<String>().toList();
+              questionlist.shuffle(Random.secure());
+            });
+      return questionlist;
+  }
+
+
+  static Future< Question > getNextQuestion( GroupData groupData) async
+  {
+    //get next question from arraylist.
+    Question randomQuestion;
+    if(groupData.getQuestionList().length != 0){
+
+    String questionId = groupData.getQuestionList().removeLast();
+      await Firestore.instance
+            .collection("questions")
+            .document( questionId ).get().then( (document) {
+              Category category = Category.Official;
+
+              for (Category cat in Category.values)
+              {
+                String comparableCategory = cat.toString().split('.').last;
+                if (document.data['category'] == null)
+                {
+                  cat = Category.Official;
+                }
+
+                if ( comparableCategory == document.data['category'] )
+                {
+                  category = cat;
+                }
+              }
+
+              randomQuestion = new Question(document.documentID, document.data['question'], category, document.data['creatorID'], document.data['creatorName']);
+            } );
+
+      return randomQuestion;
+    }
+    else
+      return new Question("END", "The game has ended, please start a new game, or submit your own questions!",Category.Official, "BlackBox", "BlackBox");
+  }
+
+
 
   static Future< Question > getRandomQuestion( GroupData groupData, Category category ) async
   {

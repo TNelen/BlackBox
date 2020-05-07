@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blackbox/Constants.dart';
 import '../DataContainers/UserData.dart';
 import '../DataContainers/Question.dart';
+import 'dart:math';
+
+import 'UserRankData.dart';
 
 class GroupData {
     
@@ -16,15 +21,19 @@ class GroupData {
   String _groupDescription;  /// Description of the group
   String _groupID;           /// The unique ID of this group
   String _adminID;           /// The unique ID of the admin
+  bool _isPlaying;           /// A bool indicating the game state
+  int _adminVoteTimestamp;       /// An int indicating when the admin has last voted (milliseconds). Will be null if the admin has not voted yet this round
   Map<String, String> _members = new Map<String, String>(); /// A list of unique IDs of all members in this group
+  List<String> _questionlist;          /// A list of available question id's
 
   /// Status information about this group
   Question _nextQuestion = new Question.empty();  /// Data container for the current/next question
   Question _lastQuestion = new Question.empty();  /// Data container for the previous question
-  Map<String, String> _lastVotes;   /// Mapping the voter to the votee (previous round)
-  Map<String, String> _newVotes;    /// Mapping the voter to the votee (current round)
-  Map<String, int> _totalVotes;     /// Mapping unique IDs to the total amount of votes for that user
-  List<String> _playing;            /// A list of all IDs of members that are currently playing 
+  Map<String, String> _lastVotes;                 /// Mapping the voter to the votee (previous round)
+  Map<String, String> _newVotes;                  /// Mapping the voter to the votee (current round)
+  Map<String, int> _totalVotes;                   /// Mapping unique IDs to the total amount of votes for that user
+  List<String> _playing;                          /// A list of all IDs of members that are currently playing 
+  Map<String, Map<String, int>> _history;         /// A map that combines each question (not ID) with another Map that links each username to amount of votes 
   
 
   /// ---------------------- \\\
@@ -33,17 +42,20 @@ class GroupData {
 
 
   /// Create a group with the given data fields
-  GroupData(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members) {
+  GroupData(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members, this._questionlist) {
+    _isPlaying = true;
     _nextQuestion = new Question.empty();
     _lastVotes = new Map<String, String>();
     _newVotes = new Map<String, String>();
     _totalVotes = new Map<String, int>();
     _playing = new List<String>();
+    _history = new Map<String, Map<String, int>>();
+    _adminVoteTimestamp = new DateTime.now().millisecondsSinceEpoch;
   }
 
   /// Create a group with the given data fields AND status fields
-  GroupData.extended(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members, 
-                     this._nextQuestion, this._lastVotes, this._newVotes, this._totalVotes, this._playing);
+  GroupData.extended(this._groupName, this._groupDescription, this._groupID, this._adminID, this._isPlaying, this._members, this._nextQuestion, 
+                     this._lastVotes, this._newVotes, this._totalVotes, this._playing, this._questionlist, this._adminVoteTimestamp, this._history);
 
 
   /// ---------------- \\\
@@ -56,16 +68,21 @@ class GroupData {
     /// Get basic data
     _groupName = snap.data['name'] ?? "Nameless group",
     _groupDescription = snap.data['description'] ?? "No description",
-    _groupID = snap.documentID.toString(),
-    _adminID = snap.data['admin'],
+    _groupID          = snap.documentID.toString(),
+    _adminID          = snap.data['admin'],
+    _isPlaying        = snap.data['isPlaying'],
+    _adminVoteTimestamp   = snap.data['adminVoteTimestamp'],
     /// Get status data
     _nextQuestion = new Question( snap.data['nextQuestionID'], snap.data['nextQuestion'], Question.getCategoryFromString(snap.data['nextQuestionCategory']), snap.data['nextQuestionCreatorID'], snap.data['nextQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
     _lastQuestion = new Question( snap.data['lastQuestionID'], snap.data['lastQuestion'], Question.getCategoryFromString(snap.data['lastQuestionCategory']), snap.data['lastQuestionCreatorID'], snap.data['lastQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
-    _members = _convertFirebaseMapString( snap.data['members'] ),
-    _lastVotes = _convertFirebaseMapString( snap.data['lastVotes'] ),
-    _newVotes = _convertFirebaseMapString( snap.data['newVotes'] ),
-    _totalVotes = _convertFirebaseMapInt( snap.data['totalVotes'] ),
-    _playing = _convertFirebaseList( snap.data['playing'] );
+    _members      = _convertFirebaseMapString( snap.data['members']     ),
+    _lastVotes    = _convertFirebaseMapString( snap.data['lastVotes']   ),
+    _newVotes     = _convertFirebaseMapString( snap.data['newVotes']    ),
+    _totalVotes   = _convertFirebaseMapInt(    snap.data['totalVotes']  ),
+    _playing      = _convertFirebaseList(      snap.data['playing']     ),
+    _questionlist = _convertFirebaseList(      snap.data['questionlist']),
+    _history      = _convertFirebaseHistory(   snap.data['history']     );
+    
 
 
   /// Convert a list from a DocumentSnapshot to a List<String>
@@ -105,11 +122,11 @@ class GroupData {
   static Map<String, String> _convertFirebaseMapString( dynamic data )
   {
     /// Initialize lists
-    Map<dynamic, dynamic> DBData = data;
+    Map<dynamic, dynamic> dbData = data;
     Map<String, String> convertedData = new Map<String, String>();
 
     /// Loop the database Map and add values as Strings to the data Map
-    DBData.forEach( (key, value) {
+    dbData.forEach( (key, value) {
       convertedData[key.toString()] = value.toString();
     } );
 
@@ -117,10 +134,80 @@ class GroupData {
   }
 
 
+  /// Convert the history field from a DocumentSnapshot to a Map<String, Map<String, int>>
+  /// NO checks are done! Provided parameter MUST be correct
+  static Map<String, Map<String, int>> _convertFirebaseHistory( dynamic data )
+  {
+    /// Initialize lists
+    Map<dynamic, dynamic> dbData = data;
+    Map<String, Map<String, int>> convertedData = new Map<String, Map<String, int>>();
+
+    // Loop all earlier questions
+    if (dbData != null)
+    {
+      dbData.forEach( (key, value) {
+        Map<String, int> votes = new Map<String, int>();
+        Map<dynamic, dynamic> dbVotes = value;
+
+        // Loop each user with their votes for this question and save them under the question
+        dbVotes.forEach( (username, numVotes){
+          votes[username.toString()] = numVotes;
+        });
+
+        convertedData[key.toString()] = votes;
+      } );
+    }
+
+    if (convertedData.length > 0)
+    {
+      return convertedData;
+    } else {
+      return null;
+    }
+  }
+
   /// --------------------- \\\
   /// GroupData Information \\\
   /// --------------------- \\\
 
+  /// Set whether or not this group is still active
+  /// This action will silently fail for non-admins
+  void setIsPlaying(bool playing)
+  {
+    if (_adminID == Constants.getUserID())
+    {
+      _isPlaying = playing;
+    }
+  }
+
+  /// Returns whether the group is still in progress
+  /// True when still playing
+  /// False when the game is over
+  bool getIsPlaying()
+  {
+    return _isPlaying;
+  }
+
+  ///Get all availbalbe question
+  List<String> getQuestionList()
+  {
+    return _questionlist;
+  }
+
+  void addQuestionToList(String id){
+    Random random = new Random(1);
+    int min = _questionlist.length-3; 
+    int max = _questionlist.length;
+    int randomNumber = min + (random.nextInt(max-min));
+    _questionlist.insert(randomNumber, id);
+  }
+
+
+  ///Set available questions
+  void setQuestionList(List<String> newQuestionsList)
+  {
+    _questionlist = newQuestionsList;
+  }
 
   /// Gets the ID of the admin of this group
   String getAdminID()
@@ -233,6 +320,20 @@ class GroupData {
   }
 
 
+  /// Returns the history of all questions
+  /// The first String contains the question itself (not its ID)
+  /// The inner Map links each user to the amount of votes they each got
+  Map<String, Map<String, int>> getHistory()
+  {
+    if (_history != null)
+    {
+      return _history;
+    } else {
+      return new Map<String, Map<String, int>>();
+    }
+  }
+
+
   /// Get the name of this group
   String getName()
   {
@@ -256,6 +357,7 @@ class GroupData {
   /// Last question will be replaced by the current question automatically
   /// Admin account must be provided for authentication
   /// Non-admins will cause this function to fail silently
+  /// The admin's vote timestamp will be reset to null
   /// The database is updated automatically with this change
   void setNextQuestion(Question newQuestion, UserData admin)
   {
@@ -271,6 +373,9 @@ class GroupData {
 
       /// Move the votes
       _transferVotes( admin );
+
+      _adminVoteTimestamp = null;
+
       Constants.database.updateGroup(this);
     }
   }
@@ -376,6 +481,14 @@ class GroupData {
     return _playing.length;
   }
 
+  /// Get the time when the admin has voted in milliseconds
+  /// Will be null if the admin has not voted yet this round
+  int getAdminVoteTimestamp()
+  {
+    return _adminVoteTimestamp;
+  }
+
+  /// Get the amount of members in this group
   int getNumMembers()
   {
     return _members.length;
@@ -391,82 +504,193 @@ class GroupData {
     int winnervotes = 0;
     _getLastVoteCounts().forEach((userID, numVotes){
       if (numVotes > winnervotes){
-        winner = getUserName(userID);
+        winner = getUserName(userID).split(' ')[0];
         winnervotes = numVotes;
       }
       else if (numVotes == winnervotes){
-        winner = winner + " + " + getUserName(userID);
+        winner = winner + " + " + getUserName(userID).split(' ')[0];
+        
     }});
     return winner;
 
   }
 
-  List<String> getTopThree(String Type){
-    Map<String, int> list = null;
-    String type = Type;
-    switch(type) {
-      case 'previous': list = _getLastVoteCounts(); break;
-      case 'alltime' : list = _totalVotes; break;
+
+  /// The parameter should be 'previous' or 'alltime' to indicate the wanted top three
+  /// Get the IDs of the three winners alltime OR last round (UNORDERED as this is a map!)
+  /// The number of votes each of them got will be their value
+  Map<String, int> getTopThreeIDs(String kind)
+  {
+    Map<String, int> voteCounts;
+
+    switch(kind) {
+      case 'previous': voteCounts =  _getLastVoteCounts(); break;  /// Get the vote counts of last round
+      case 'alltime' : voteCounts =   getTotalVotes();     break;  /// Get the all time vote counts
+      default        : voteCounts = new Map<String, int>();break;  /// Invalid parameter: empty map to prevent nullpointer exceptions
     }
+
+    Map<String, int> topThree = new Map<String, int>();        /// List to store the user IDs
+    
+    voteCounts.forEach((userID, numVotes){
+      /// Always add the user if the top three isn't full yet
+      if (topThree.length < 3)
+      {
+        topThree[userID] = numVotes;
+      } else {
+
+        /// Find the lowest scoring user
+        int lowestVotes = numVotes;
+        String lowestID = userID;
+        topThree.forEach((topID, topVotes) {
+            if (topVotes < lowestVotes)
+            {
+              lowestVotes = topVotes;
+              lowestID = topID;
+            }
+        });
+
+        /// Update the top three accordingly
+        if (topThree.containsKey(lowestID))
+        {
+            topThree.remove(lowestID);
+            topThree[userID] = numVotes;
+        }
+
+      }
+    });
+
+    return topThree;
+  }
+
+
+  /// Returns a list of UserRankData
+  ///   - previous : The votees and their # votes of last round
+  ///   - alltime  : The votees and their # votes of all rounds combined 
+  ///   - Any other input: previous votes will be used
+  List<UserRankData> getUserRankingList(String kind, Map<String,int> input)
+  {
+    /// Get the right vote list
+    Map<String, int> voteCounts;
+    switch(kind) {
+      case 'previous': voteCounts =   _getLastVoteCounts(); break;  /// Get the vote counts of last round
+      case 'alltime' : voteCounts =    getTotalVotes();     break;  /// Get the all time vote counts
+      case 'overview': voteCounts =    input;               break;                
+      default        : voteCounts =   _getLastVoteCounts(); break;  /// Invalid parameter: just use the last round votes
+    }
+
+    /// Convert the vote map to a list
+    List<UserRankData> userRanking = new List<UserRankData>();
+    voteCounts.forEach( (id, numVotes) {
+      userRanking.add( new UserRankData( getUserName(id), numVotes) );
+    });
+
+    /// Sort the list in descending order (highest # votes first)
+    userRanking.sort((a, b) => b.getNumVotes().compareTo(a.getNumVotes()));
+    
+    return userRanking;
+
+  }
+
+
+  /// Get the top three of 'previous' or 'alltime' round
+  /// One of the Strings above should be passed as parameter
+  /// The winner will be in 0th position while the third place will occupy the second position in the list
+  /// The List contains 6 Strings: 3x winning player name [0-2], and then 3x their respective vote count[3-5]
+  List<String> getTopThree(String kind){
+
+    /// Gets the right top three IDs (alltime or previous) -> See method above this one
+    Map<String, int> topThree = getTopThreeIDs(kind);
 
     ///first three elements return the player name, last three return the number of votes
     List<String> top = new List(6); top[0] = '';top[1] = '';top[2] = ''; top[3] = '';top[4] = '';top[5] = '';
-    int oneVotes =0;
-    int twoVotes = 0;
-    int threeVotes = 0;
+    
+    /// Get the top three in # votes and sort them
+    List<int> currentTop = new List(3);         /// Initialize list
+    currentTop[0] = 0; currentTop[1] = 0; currentTop[2] = 0;
+    int numElements = 0;
+    topThree.forEach( (id, votes) {             /// Loop the top three
+      currentTop[numElements] = votes;          /// Add the votes of each user
+      numElements++;
+    } );
+    currentTop.sort((b, a) => a.compareTo(b));  /// Sort the top in reverse order (biggest first)
 
-    //integers user for votes calculation
-    int oneVotesR =0;
-    int twoVotesR = 0;
-    int threeVotesR = 0;
+    /// Fill the list that will indicate the winners
+    List<String> currentTopIDs = new List(3);
+    for (int i = 0; i < 3; i++)
+    {
+      int topVotes = currentTop[i];
+      Map<String, int> topThreeCopy = new Map<String,int>.from(topThree);
+      for (String id in topThreeCopy.keys) {
+        if (topVotes == topThreeCopy[id])   /// Match
+        {
+          currentTopIDs[i] = id;    /// Set the winner's ID
+          topThree.remove(id);      /// Prevent duplicate IDs
+          break;
+        }
+      }
+    }
 
-    list.forEach((userID, numVotes){
-      if (numVotes > oneVotes){
-        top[2]= top[1];
-        top[1] = top[0];
+    /// Update the top values
+    for (int i = 0; i < 3; i++)
+    {
+      top[i]   = currentTop[i] > 0 ? getUserName(currentTopIDs[i]).split(' ')[0] : ' '; /// Add each user's name
+      top[i+3] = currentTop[i] > 0 ? currentTop[i].toString()                    : ' '; /// Add each user's score
+    }
 
-        top[0] = getUserName(userID);
-        oneVotes = numVotes;
-      }
-      else if (numVotes >= twoVotes && numVotes <= oneVotes){
-        top[2]=top[1];
-       top[1] = getUserName(userID);
-       twoVotes = numVotes;
-      }
-      else if (numVotes >= threeVotes && numVotes <= twoVotes)
-        top[2] = getUserName(userID);
-        threeVotes = numVotes;
-    });
-
-    list.forEach((userID,numVotes){
-      if (getUserName(userID) == top[0]){
-        oneVotesR = numVotes;
-      }
-      else if(getUserName(userID) == top[1]){
-        twoVotesR = numVotes;
-      }
-      else if(getUserName(userID) == top[2]){
-        threeVotesR = numVotes;
-      }
-    });
-    top[3] = oneVotesR>0? oneVotesR.toString():' ';
-    top[4] =  twoVotesR>0? twoVotesR.toString():' ';
-    top[5] =  threeVotesR>0? threeVotesR.toString():' ';
-
+    /// Return the result
     return top;
 
   }
 
 
+
+
   /// Add a vote to this member's record
   /// Will be added to the newVotes list
+  /// If the admin is voting, a timestamp will be set
   void addVote(String voteeID)
   {
+    /// Update the timestamp if the admin is voting
+    if (_adminID == Constants.getUserID())
+    {
+      _adminVoteTimestamp = new DateTime.now().millisecondsSinceEpoch;
+    }
+
     /// Make change in database
-    Constants.database.voteOnUser(this, voteeID);
+    _performAsyncVote(voteeID);
 
     /// Make change locally
     _offlineVote(voteeID);
+  }
+
+
+  /// Perform a vote in the database
+  /// Automatically retries after a random amount of time
+  void _performAsyncVote(String voteeID) async {
+    int retryLimit = 10, i = 0;                                           // Limit the retries
+    bool isSuccess = await Constants.database.voteOnUser(this, voteeID);  // Perform the database update
+    
+    while (!(isSuccess) && i < retryLimit)                                // While the transaction fails and the retry limit has NOT been reached
+    {
+
+      Random rand = new Random();
+      int ms = 1 + rand.nextInt(26);
+      Duration delay = new Duration( milliseconds: ms);                   // Create a random delay
+
+      try 
+      {
+        sleep(delay);                                                     // Try to sleep for the random delay
+      } 
+      catch(e)
+      {
+        print("Something went wrong while awaiting the next vote retry!");
+        print(e);
+      }
+
+      isSuccess = await Constants.database.voteOnUser(this, voteeID);     // Retry the database update and wait
+
+      i++;
+    }
   }
 
 
@@ -525,14 +749,34 @@ class GroupData {
   {
     /// Admin authentication
     if ( admin.getUserID() == _adminID ) {
+        
+      /// Add the votes to the history list
+      String currentQuestion;
+      if (_lastQuestion != null)
+      {
+        currentQuestion = _lastQuestion.getQuestion();
+      }
+      Map<String, int> currentVotes = new Map<String, int>();
 
       /// Add votes to total count
       _getNewVoteCounts().forEach( (userID, numVotes) {
+
+          currentVotes[getUserName(userID)] = numVotes;
+
           if (_totalVotes.containsKey(userID))
             _totalVotes[userID] += numVotes;
           else
             _totalVotes[userID] = numVotes;
       });
+
+      if (currentQuestion != null && currentQuestion != "")
+      {
+        if (_history == null)
+        {
+          _history = new Map<String, Map<String, int>>();
+        }
+        _history[currentQuestion] = currentVotes;
+      }
 
       /// Copy new votes to the old list 
       _lastVotes = _newVotes;

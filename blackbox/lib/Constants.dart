@@ -1,5 +1,4 @@
 import 'package:blackbox/DataContainers/UserData.dart';
-import 'DataContainers/GroupData.dart';
 import 'Database/Firebase.dart';
 import 'Interfaces/Database.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +20,11 @@ class Constants{
   static const iAccent3 = Color(0xFFed2939);
   static const iAccent4 = Color(0xFFA2DAAF);
 
- static int colorindex = 1;
 
+  static int colorindex = 1;    /// The standard color in the app, before a user is loaded
+  static int defaultColor = 1;  /// The default color that a new user will get
 
- //accent color list
+  //accent color list
   static const colors = [Color(0xFF92dff3), Color(0xFFffbf00), Color(0xFFed2939), Color(0xFFA2DAAF)];
 
 
@@ -48,7 +48,7 @@ class Constants{
 
   static const enable = [true, false];
 
-  static UserData userData = new UserData("Some ID", "Elon");
+  static UserData userData = new UserData("Some ID", "Player");
   static final Database database = new Firebase();
 
   //setaccentColor
@@ -56,6 +56,16 @@ class Constants{
    colorindex = color-1;
    userData.setAccent( colorindex );
    database.updateUser( userData );
+  }
+
+  //getAccentcolor
+  //returns true is colorindex == color
+  static bool getAccentColor(int color){
+    if (colorindex == color){
+      return true;
+    }
+    else
+      return false;
   }
 
 
@@ -90,5 +100,31 @@ class Constants{
   }
 
 
+  /// Get whether or not vibration has been enabled for this user
+  static bool getVibrationEnabled()
+  {
+    return userData.getVibrationEnabled();
+  }
+
+
+  /// Enable or disable vibration
+  static void setVibrationEnabled(bool isVibrationEnabled)
+  {
+    userData.setVibrationEnabled(isVibrationEnabled);
+  }
+
+
+  /// Get whether or not sound has been enabled for this user
+  static bool getSoundEnabled()
+  {
+    return userData.getSoundEnabled();
+  }
+
+
+  /// Enable or disable sound
+  static void setSoundEnabled(bool isSoundEnabled)
+  {
+    userData.setSoundEnabled(isSoundEnabled);
+  }
 }
 

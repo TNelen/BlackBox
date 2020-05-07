@@ -4,9 +4,14 @@ class UserData {
   String _username;
   int _accent = 0;
 
+  bool _isVibrationEnabled = true;
+  bool _isSoundEnabled = true;
+
   UserData(this._userID, this._username);
 
-  UserData.full(this._userID, this._username, this._accent);
+  UserData.essential(this._userID, this._username, this._accent);
+
+  UserData.full(this._userID, this._username, this._accent, this._isVibrationEnabled, this._isSoundEnabled);
 
   /// Get this user's display name
   String getUsername()
@@ -36,5 +41,32 @@ class UserData {
   int getAccent()
   {
     return _accent;
+  }
+
+  /// Get whether or not vibration has been enabled for this user
+  bool getVibrationEnabled()
+  {
+    return _isVibrationEnabled;
+  }
+
+
+  /// Enable or disable vibration
+  void setVibrationEnabled(bool isVibrationEnabled)
+  {
+    _isVibrationEnabled = isVibrationEnabled;
+  }
+
+
+  /// Get whether or not sound has been enabled for this user
+  bool getSoundEnabled()
+  {
+    return _isSoundEnabled;
+  }
+
+
+  /// Enable or disable sound
+  void setSoundEnabled(bool isSoundEnabled)
+  {
+    _isSoundEnabled = isSoundEnabled;
   }
 }

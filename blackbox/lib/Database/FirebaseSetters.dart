@@ -35,6 +35,8 @@ class FirebaseSetters {
 
       await transaction.update(groupRef, upd);
 
+
+
     });
 
     return true;
@@ -156,13 +158,20 @@ class FirebaseSetters {
       /// Unless it is a new group, the data does not exist or a question transfer is in progress!
       /// 
       
-
+      Map<String, Map<String, int>> history;
+      if (groupData.getHistory() == null || groupData.getHistory().length == 0)
+      {
+        history = null;
+      } else {
+        history = groupData.getHistory();
+      }
 
       /// If user is admin -> Overwrite permissions!
       if ( freshData.getAdminID() == Constants.getUserID() || freshData.getQuestion() == null)
       {
         data['name'] = groupData.getName();
         data['description'] = groupData.getDescription();
+        data['isPlaying'] = groupData.getIsPlaying();
 
         data['nextQuestion'] = groupData.getQuestion().getQuestion();
         data['nextQuestionID'] = groupData.getQuestion().getQuestionID();
@@ -175,9 +184,15 @@ class FirebaseSetters {
         data['lastQuestionCategory'] = groupData.getLastQuestion().getCategory() ?? "Default";
         data['lastQuestionCreatorID'] = groupData.getLastQuestion().getCreatorID() ?? "";
         data['lastQuestionCreatorName'] = groupData.getLastQuestion().getCreatorName() ?? "";
+        data['questionlist'] = groupData.getQuestionList() ?? "";
+        
+        data['adminVoteTimestamp'] = groupData.getAdminVoteTimestamp() ?? null;
+        data['history'] = history;
+
       } else {  /// Otherwise: use current data
         data['name'] = freshData.getName();
         data['description'] = freshData.getDescription();
+        data['isPlaying'] = freshData.getIsPlaying();
 
         data['nextQuestion'] = freshData.getQuestion().getQuestion();
         data['nextQuestionID'] = freshData.getQuestion().getQuestionID();
@@ -190,6 +205,10 @@ class FirebaseSetters {
         data['lastQuestionCategory'] = freshData.getLastQuestion().getCategory() ?? "Default";
         data['lastQuestionCreatorID'] = freshData.getLastQuestion().getCreatorID() ?? "";
         data['lastQuestionCreatorName'] = freshData.getLastQuestion().getCreatorName() ?? "";
+        data['questionlist'] = freshData.getQuestionList() ?? "";
+
+        data['adminVoteTimestamp'] = freshData.getAdminVoteTimestamp() ?? null;
+        data['history'] = freshData.getHistory();
       }
 
 
@@ -241,12 +260,14 @@ class FirebaseSetters {
   }
 
 
-  static Future< bool > updateQuestion( Question question ) async
+
+
+  static Future< String > updateQuestion( Question question ) async
   {
     /// Return false if the question is a duplicate (same ID doesn't count as duplicate)
     if ( await FirebaseUtility.hasIdenticalQuestion( question ))
     {
-      return false;
+      return null;
     }
 
 
@@ -265,7 +286,7 @@ class FirebaseSetters {
     else 
       uniqueID = "";
     
-    if (uniqueID == "")
+    if (uniqueID == "") 
     {
       uniqueID = await FirebaseUtility.generateUniqueQuestionCode();
     }
@@ -312,7 +333,7 @@ class FirebaseSetters {
 
     await _saveQuestionToList( q, categories );
     
-    return true;
+    return uniqueID;
 
   }
 
@@ -440,11 +461,138 @@ class FirebaseSetters {
             case ReportType.DISTURBING:
               data['disturbingReports'] = data['disturbingReports'] + 1;
               break;
+            case ReportType.LOVE:
+              data['loves'] = data['loves'] + 1;
+              break;
           }     
 
           updateComplete = true;
           await transaction.set(docRef, data);
 
+        } else {
+          updateComplete = false;
+        }
+
+      });
+
+    return updateComplete;
+
+  }
+
+  static Future<bool> multiReportQuestion(Question question, Map<ReportType, bool> reports) async {
+    
+    bool isOnlyFalse = true;
+    reports.forEach( (key, val) {
+      if (val)
+      {
+        isOnlyFalse = false;
+      }
+    });
+
+    if (reports.isEmpty || isOnlyFalse)
+    {
+      return true;
+    }
+
+    bool updateComplete = false;
+
+      /// Get basic question information
+      var data = new Map<String, dynamic>();
+      data['question'] = question.getQuestion();
+      data['category'] = question.getCategory();
+      data['creatorID'] = question.getCreatorID();
+      data['creatorName'] = question.getCreatorName();
+
+      /// start of transaction
+      await Firestore.instance.runTransaction((Transaction transaction) async {
+
+        DocumentReference docRef = Firestore.instance
+                                    .collection("questions")
+                                    .document( question.getQuestionID() );
+        
+
+        /// Get the amount of current reports for each type
+        DocumentSnapshot live = await transaction.get( docRef );
+        
+        if (live.exists)
+        {
+          data['categoryReports'] = 0;
+          data['grammarReports'] = 0;
+          data['disturbingReports'] = 0;
+          data['loves'] = 0;
+
+          if (live.exists) {
+            /// Get basic info from database, if existant
+            if (live.data['question'] != null) {
+              data['question'] = live.data['question'];
+            }
+
+            if (live.data['category'] != null)
+            {
+              data['category'] = live.data['category'];
+            }
+
+            if (live.data['creatorID'] != null) {
+              data['creatorID'] = live.data['creatorID'];
+            }
+
+            if (live.data['creatorName'] != null) {
+              data['creatorName'] = live.data['creatorName'];
+            }
+
+
+
+            if (live.data['categoryReports'] != null) {
+              data['categoryReports'] = live.data['categoryReports'];
+            }
+            
+            if (live.data['grammarReports'] != null) {
+              data['grammarReports'] = live.data['grammarReports'];
+            }
+
+            if (live.data['disturbingReports'] != null){
+              data['disturbingReports'] = live.data['disturbingReports'];
+            }
+
+            if (live.data['loves'] != null)
+            {
+              data['loves'] = live.data['loves'];
+            }
+          
+            reports.forEach( (type, value) {
+                print(type.toString() + " " + value.toString());
+                if (value)
+                {
+                  switch (type) {
+                    case ReportType.CATEGORY: {
+                      data['categoryReports'] += 1;
+                      break;
+                    }
+                    case ReportType.GRAMMAR: {
+                      data['grammarReports'] += 1;
+                      break;
+                    }
+                    case ReportType.DISTURBING: {
+                      data['disturbingReports'] += 1;
+                      break;
+                    }
+                    case ReportType.LOVE: {
+                      data['loves'] += 1;
+                      break;
+                    }
+                    default: {
+                      break;
+                    }
+                  }   
+                }
+              });
+
+            await transaction.set(docRef, data);
+            updateComplete = true;
+
+          } else {
+            updateComplete = false;
+          }
         } else {
           updateComplete = false;
         }

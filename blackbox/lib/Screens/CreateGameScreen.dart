@@ -8,7 +8,6 @@ import 'package:share/share.dart';
 import '../DataContainers/Question.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-
 class CreateGameScreen extends StatefulWidget {
   Database _database;
 
@@ -31,8 +30,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
 
   String _groupName;
   String _groupCategory;
-  String _groupID;
-  String _groupAdmin = Constants.getUserID();
+  //String _groupID;
+  //String _groupAdmin = Constants.getUserID();
 
   String selectedCategory;
   Color color = Constants.iDarkGrey;
@@ -102,7 +101,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     final nameField = TextField(
       obscureText: false,
       controller: nameController,
-      style: TextStyle(fontSize: 20, color: Colors.black),
+      style: TextStyle(fontSize: 17, color: Colors.black),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           fillColor: Constants.iWhite,
@@ -118,26 +117,26 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
         crossAxisSpacing: 12.0,
         mainAxisSpacing: 12.0,
         childAspectRatio: (3 / 1),
-
         children: Question.getCategoriesAsStringList()
             .map((data) => Card(
-                  color: data == selectedCategory
-                      ? Constants.iLight
-                      : Constants.iDarkGrey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: InkWell(
-                    splashColor: Constants.colors[Constants.colorindex],
-                    onTap: () {
-                      setState(() {
-                        color = Constants.colors[Constants.colorindex];
-                        selectedCategory = data;
-                      });
-                    },
-                    child: Container(
-                      child: Center(
-                          child: Padding(
+                color: data == selectedCategory
+                    ? Constants.iLight
+                    : Constants.iDarkGrey,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(28.0),
+                ),
+                child: InkResponse(
+                  splashColor: Constants.colors[Constants.colorindex],
+                  radius: 50, 
+                  onTap: () {
+                    setState(() {
+                      color = Constants.colors[Constants.colorindex];
+                      selectedCategory = data;
+                    });
+                  },
+                  child: Container(
+                    child: Center(
+                      child: Padding(
                         padding: const EdgeInsets.only(left: 10.0, right: 10),
                         child: Text(
                           data,
@@ -145,7 +144,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                               color: data == selectedCategory
                                   ? Constants.iDarkGrey
                                   : Constants.iWhite,
-                              fontSize: 20.0,
+                              fontSize: 17.0,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -158,13 +157,15 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
 
     final createButton = Hero(
       tag: 'tobutton',
-      child: Material(
+      child: Padding(
+        padding: EdgeInsets.only(left: 45, right: 45),
+        child: Material(
         elevation: 5.0,
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(28.0),
         color: Constants.colors[Constants.colorindex],
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
           onPressed: () {
             // Create map of members
             Map<String, String> members = new Map<String, String>();
@@ -174,9 +175,12 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             if (_groupName.length != 0 && _groupCategory != null) {
               // Generate a unique ID and save the group
               _database.generateUniqueGroupCode().then((code) {
-                _database.updateGroup(new GroupData(_groupName, _groupCategory,
-                    code, Constants.getUserID(), members));
-                _showDialog(code);
+                _database.createQuestionList(_groupCategory).then((questionlist) {
+                GroupData groupdata = new GroupData(_groupName, _groupCategory,
+                    code, Constants.getUserID(), members, questionlist);
+                  _database.updateGroup(groupdata);
+                  _showDialog(code);
+                });
               });
             } else {
               Popup.makePopup(context, "Woops!", "Please fill in all fields!");
@@ -188,7 +192,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
         ),
       ),
-    );
+    ));
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -206,7 +210,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(right: 20),
-                    child:  Icon(
+                    child: Icon(
                       Icons.arrow_back,
                       color: Constants.colors[Constants.colorindex],
                     ),
@@ -223,7 +227,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             ),
           ]),
         ),
-        body: Center(
+        body: Padding(
+          padding: EdgeInsets.only(left: 22, right: 22, bottom: 40),
+          child: Center(
           child: Container(
             color: Constants.iBlack,
             child: Padding(
@@ -236,16 +242,16 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     "Create new Game",
                     style: new TextStyle(
                         color: Constants.iWhite,
-                        fontSize: 40.0,
+                        fontSize: 30.0,
                         fontWeight: FontWeight.w300),
                     maxLines: 1,
                   ),
-
                   SizedBox(height: 60.0),
                   Text(
                     'Enter game details',
-                    style:
-                        new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 25.0),
+                    style: new TextStyle(
+                        color: Constants.colors[Constants.colorindex],
+                        fontSize: 20.0),
                   ),
                   SizedBox(height: 45.0),
                   nameField,
@@ -264,7 +270,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               ),
             ),
           ),
-        ),
+        )),
       ),
     );
   }

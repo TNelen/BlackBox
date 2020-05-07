@@ -1,10 +1,5 @@
-
-.idea/BlackBox.iml
-.idea/encodings.xml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/vcs.xml
-.idea/workspace.xml
-.idea/vcs.xml
-.idea/vcs.xml
+.idea/
 *.pdn
+blackbox/android/key.properties
+blackbox/.flutter-plugins-dependencies
+blackbox/ios/Flutter/flutter_export_environment.sh

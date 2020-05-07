@@ -71,8 +71,6 @@ class FirebaseStream {
   void _groupDataUpdated ( DocumentSnapshot ds )
   {
 
-    print("GroupData update detected!");
-
     if ( _groupController == null || _groupController.isClosed)
     {
       FirebaseStream._internal();
