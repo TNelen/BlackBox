@@ -120,8 +120,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
         children: Question.getCategoriesAsStringList()
             .map((data) => Card(
                 color: data == selectedCategory
-                    ? Constants.iLight.withOpacity(0.5)
-                    : Constants.iDarkGrey.withOpacity(0.5),
+                    ? Constants.iLight
+                    : Constants.iDarkGrey,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(28.0),
                 ),
@@ -142,7 +142,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                           data,
                           style: new TextStyle(
                               color: data == selectedCategory
-                                  ? Constants.iWhite
+                                  ? Constants.iDarkGrey
                                   : Constants.iWhite,
                               fontSize: 17.0,
                               fontWeight: FontWeight.bold),
@@ -162,7 +162,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
         child: Material(
         elevation: 5.0,
         borderRadius: BorderRadius.circular(28.0),
-        color: Constants.iWhite.withOpacity(0.5),
+        color: Constants.colors[Constants.colorindex],
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
@@ -189,7 +189,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           child: Text("Create",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20).copyWith(
-                  color: Constants.iWhite, fontWeight: FontWeight.bold)),
+                  color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
         ),
       ),
     ));
@@ -201,25 +201,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       ),
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
-        body: Container(
-              decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [Colors.blueGrey[800],Colors.cyan[800]]),
-        ),
-        child: Padding(
-          padding: EdgeInsets.only(left: 22, right: 22, bottom: 40),
-          child: Center(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 15,),
-                  Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        appBar: AppBar(
+          backgroundColor: Constants.iBlack,
+          title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
             InkWell(
               onTap: () => Navigator.pop(context),
               child: Row(
@@ -228,22 +212,32 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     padding: EdgeInsets.only(right: 20),
                     child: Icon(
                       Icons.arrow_back,
-                      color: Constants.iWhite,
+                      color: Constants.colors[Constants.colorindex],
                     ),
                   ),
                   Text(
                     'Back',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Constants.iWhite,
-                      fontWeight: FontWeight.w600
+                      color: Constants.colors[Constants.colorindex],
                     ),
                   ),
                 ],
               ),
             ),
           ]),
-          SizedBox(height: 25,),
+        ),
+        body: Padding(
+          padding: EdgeInsets.only(left: 22, right: 22, bottom: 40),
+          child: Center(
+          child: Container(
+            color: Constants.iBlack,
+            child: Padding(
+              padding: const EdgeInsets.all(36.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
                   AutoSizeText(
                     "Create new Game",
                     style: new TextStyle(
@@ -277,7 +271,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             ),
           ),
         )),
-      )),
+      ),
     );
   }
 }

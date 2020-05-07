@@ -81,15 +81,13 @@ class _GameScreenState extends State<GameScreen> {
           }
 
           return new Scaffold(
-            body:  Container(
-              decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [Colors.blueGrey[800],Colors.cyan[800]]),
-        ),
-        child:Column(children: [
-            InkWell(
+            body: DefaultTabController(
+              length: 2,
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Container(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: InkWell(
                       onTap: () {
                         Navigator.push(
                             context,
@@ -102,10 +100,10 @@ class _GameScreenState extends State<GameScreen> {
 
                         dispose();
                       },
-                      child:Row(
+                      child: Row(
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(right: 20, left: 20),
+                            padding: EdgeInsets.only(right: 20),
                             child: Icon(
                               Icons.arrow_back,
                               color: Constants.colors[Constants.colorindex],
@@ -121,12 +119,70 @@ class _GameScreenState extends State<GameScreen> {
                         ],
                       ),
                     ),
-                    Container(
+                  ),
+                  backgroundColor: Constants.iBlack,
+                  bottom: TabBar(
+                    indicatorColor: Constants.colors[Constants.colorindex],
+                    indicatorSize: TabBarIndicatorSize.label,
+                    tabs: [
+                      new Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          new Icon(
+                            Icons.people,
+                            color: Constants.iWhite,
+                            //size: 25,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              'Game Lobby',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Constants.iWhite,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      new Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          new Icon(
+                            Icons.help_outline,
+                            color: Constants.iWhite,
+                            //size: 25,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              'Rules',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Constants.iWhite,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                body: Stack(children: <Widget>[
+                  TabBarView(
+                    children: [
+                      //tab 1
+                      Center(
+                        child: Container(
                             padding: EdgeInsets.only(left: 22, right: 22),
                             alignment: Alignment.center,
                             child: Column(
                               children: <Widget>[
-                                SizedBox(height: 50),
+                                SizedBox(height: 40),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
                                   child: Row(
@@ -320,16 +376,133 @@ class _GameScreenState extends State<GameScreen> {
                                 SizedBox(height: 120),
                               ],
                             )),
-                      
+                      ),
 
-                    
-                  
+                      //tab2
+                      Center(
+                          child: ListView(
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(25.0),
+                        children: [
+                          SizedBox(height: 20),
+                          Text(
+                            'Start Game',
+                            style: new TextStyle(
+                              color: Constants.colors[Constants.colorindex],
+                              fontSize: 25.0,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Press the ready button to ready up.' +
+                                '\n' +
+                                'When all players are ready, the button on the bottom becomes the start button, press start to begin the game.',
+                            style: new TextStyle(
+                              color: Constants.iWhite,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'Voting',
+                            style: new TextStyle(
+                              color: Constants.colors[Constants.colorindex],
+                              fontSize: 25.0,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Vote on a group member.' +
+                                '\n' +
+                                'Once a vote is submitted, it can not be changed.' +
+                                '\n' +
+                                'You have 2 minutes to vote for a question.' +
+                                '\n' +
+                                '\n' +
+                                'Due to database issues, 2 members voting at exact the same time can cause a vote to be lost.',
+                            style: new TextStyle(
+                              color: Constants.iWhite,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'Collecting results',
+                            style: new TextStyle(
+                              color: Constants.colors[Constants.colorindex],
+                              fontSize: 25.0,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'After you have voted you will enter a collecting results waiting screen.' +
+                                '\n' +
+                                'It shows the number of people that still have to vote.' +
+                                '\n' +
+                                'The admin wil see a countdown timer. It shows the time there is left for the members to vote.' +
+                                '\n' +
+                                'When this time is elapsed the players go to the results screen, no matter how many people still have to vote.' +
+                                '\n' +
+                                '',
+                            style: new TextStyle(
+                              color: Constants.iWhite,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'Questions',
+                            style: new TextStyle(
+                              color: Constants.colors[Constants.colorindex],
+                              fontSize: 25.0,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Questions are generated in a random order.' +
+                                '\n' +
+                                'The category of the questions is chosen on group creation.',
+                            style: new TextStyle(
+                              color: Constants.iWhite,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'Leave',
+                            style: new TextStyle(
+                              color: Constants.colors[Constants.colorindex],
+                              fontSize: 25.0,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Leave a running game by clicking on the leave in the top right corner.' +
+                                '\n' +
+                                'Please do not close the app before leaving an active game.',
+                            style: new TextStyle(
+                              color: Constants.iWhite,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          Text(
+                            'If there are no more players in a group, the group is deleted',
+                            style: new TextStyle(
+                              color: Constants.iWhite,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          SizedBox(height: 80),
+                        ],
+                      ))
+                    ],
+                  ),
                   Align(
                       alignment: Alignment.bottomCenter,
                       child: _buildBottomCard(context))
                 ]),
               ),
-            
+            ),
           );
         });
   }
