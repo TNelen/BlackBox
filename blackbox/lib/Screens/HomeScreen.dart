@@ -32,7 +32,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Database database;
   int pageIndex = 0;
-  String version = '1.0.5+5';
+  String version = '1.0.6+6';
 
   _HomeScreenState(Database db) {
     this.database = db;
@@ -100,21 +100,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   //}
               },
               child: Container(
-                padding: EdgeInsets.fromLTRB(15, 15, 25, 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      Icons.create,
-                      color: Constants.colors[Constants.colorindex],
-                      size: 25,
+                padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                child:
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                       Icon(
+                        Icons.edit,
+                        color: Constants.colors[Constants.colorindex],
+                        size: 35,
+                      ),
+                      SizedBox(width: 15,), 
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                         Text(
+                            "Create Game",
+                            style: TextStyle(fontSize: 20.0, color: Constants.iWhite, fontWeight: FontWeight.w400),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            "Invite friends to a new game",
+                            style: TextStyle(fontSize: 15.0, color: Constants.iLight, fontWeight:FontWeight.w300),
+                          ),
+                        ],
                     ),
-                    Text(
-                      "Create Game",
-                      style: TextStyle(fontSize: 20.0, color: Constants.iWhite),
-                    ),
-                  ],
-                ),
+                  
+
+                ],)
               )),
         ));
   }
@@ -130,42 +144,47 @@ class _HomeScreenState extends State<HomeScreen> {
           child: InkWell(
               splashColor: Constants.colors[Constants.colorindex],
               onTap: () {
-                // if (GoogleUserHandler.isLoggedIn()) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) =>
                           JoinGameScreen(database),
                     ));
-                 //} else {
-                 //Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
-                  //}
               },
               child: Container(
-                padding: EdgeInsets.fromLTRB(15, 15, 25, 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      Icons.search,
-                      color: Constants.colors[Constants.colorindex],
-                      size: 25,
+                padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                child:
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                       Icon(
+                        Icons.search,
+                        color: Constants.colors[Constants.colorindex],
+                        size: 35,
+                      ),
+                      SizedBox(width: 15,), 
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                         Text(
+                            "Join Game",
+                            style: TextStyle(fontSize: 20.0, color: Constants.iWhite, fontWeight: FontWeight.w400),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            "Join a game with the group code",
+                            style: TextStyle(fontSize: 15.0, color: Constants.iLight, fontWeight:FontWeight.w300),
+                          ),
+                        ],
                     ),
-                    Text(
-                      "Join Game",
-                      style: TextStyle(fontSize: 20.0, color: Constants.iWhite),
-                    ),
-                  ],
-                ),
+                  
+
+                ],)
               )),
         ));
   }
 
-  final controller = PageController(
-    initialPage: 0,
-    keepPage: false,
-    viewportFraction: 0.5,
-  );
 
    Widget settingsProfileTop(BuildContext context){
      return Container(
@@ -236,16 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
       
               
                         ]));
-
-     }
-
-     
-
-  void pageChanged(int index) {
-    setState(() {
-      pageIndex = index;
-    });
-  }
+   }
 
   void isAppUpToDate() async {
     Appinfo appinfo;
@@ -289,11 +299,10 @@ class _HomeScreenState extends State<HomeScreen> {
       home: Scaffold(
         backgroundColor: Constants.iBlack,
         body: Container(
-          margin: EdgeInsets.only(top: 16, left: 8, right: 8),
-          child: ListView(
-                   // shrinkWrap: true,
-                   // padding: const EdgeInsets.all(20.0),
-                    children: [
+          margin: EdgeInsets.only(top: 16, left: 5, right: 5),
+          child: Column(
+            children: [
+              SizedBox(height: height/30,),
               settingsProfileTop(context),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -301,7 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: 25,),
                 Container(
                   padding:
-                      EdgeInsets.only(top: height / 10, left: 35, right: 35),
+                      EdgeInsets.only(top: height / 10, left: 10, right: 10),
                   child: AutoSizeText(
                     'Hi, ' + Constants.getUsername() + '!',
                     style: TextStyle(
@@ -326,30 +335,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 25,
                 ),
-                Container(
-                  height: 120,
-                  child: PageView(
-                    onPageChanged: (index) {
-                      pageChanged(index);
-                    },
-                    scrollDirection: Axis.horizontal,
-                    controller: controller,
-                    children: <Widget>[
-                      
-                      reportIssueCard(context),
-                      //submitQuestionCard(context),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 15),
-                DotsIndicator(
-                  dotsCount: 1,
-                  position: pageIndex,
-                  decorator: DotsDecorator(
-                    color: Constants.iWhite,
-                    activeColor: Constants.colors[Constants.colorindex],
-                  ),
-                )
+              
               ]),
               SizedBox(height: 55,),
               Container(
@@ -379,6 +365,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                     ],
                   )),
+                  /*Text(
+                            'About BlackBox',
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Constants.colors[Constants.colorindex],
+                                fontWeight: FontWeight.w300),
+                          ),*/
             ],
           ),
         ),
