@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 
 class Constants{
-
+  
   static const groupCodeLength = 5;
-  static const iBlack = Color(0xFF0E0F11);
-  static const iDarkGrey = Color(0xFF30354A);
+  static const iBlack = Color(0xFF121212);
+  static const iDarkGrey = Color(0xFF272727);
   static const iGrey = Color(0xFF577D90);
   static const iLight = Color(0xFFB5C3D7);
   static const iWhite = Color(0xFFE6E7EB);

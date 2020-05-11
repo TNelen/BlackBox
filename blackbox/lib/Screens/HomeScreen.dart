@@ -167,145 +167,52 @@ class _HomeScreenState extends State<HomeScreen> {
     viewportFraction: 0.5,
   );
 
-  Widget profileCard(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.symmetric(horizontal: 6),
-        child: Card(
-            color: Constants.iDarkGrey,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: InkWell(
-                splashColor: Constants.colors[Constants.colorindex],
-                onTap: () {
-                  //  if (GoogleUserHandler.isLoggedIn()) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            ProfileScreen(database),
-                      ));
-                  // } else {
-                  //Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
-                  //}
-                },
-                child: Container(
-                    padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-                    child: Column(
-                      children: <Widget>[
-                        Hero(
-                            tag: 'topicon1',
-                            child: Icon(
-                              Icons.perm_identity,
-                              color: Constants.colors[Constants.colorindex],
-                              size: 30,
-                            )),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        AutoSizeText(
-                          "Profile",
-                          style:
-                              TextStyle(fontSize: 15, color: Constants.iWhite),
-                          maxLines: 1,
-                        ),
-                      ],
-                    )))));
-  }
-
-  Widget settingsCard(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.symmetric(horizontal: 6),
-        child: Card(
-            color: Constants.iDarkGrey,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: InkWell(
-                splashColor: Constants.colors[Constants.colorindex],
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            SettingsScreen(database),
-                      ));
-                },
-                child: Container(
-                    padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-                    child: Column(
-                      children: <Widget>[
-                        Hero(
-                            tag: 'topicon2',
-                            child: Icon(
-                              Icons.settings,
-                              color: Constants.colors[Constants.colorindex],
-                              size: 30,
-                            )),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        AutoSizeText(
-                          "Settings",
-                          style:
-                              TextStyle(fontSize: 15, color: Constants.iWhite),
-                          maxLines: 1,
-                        ),
-                      ],
-                    )))));
-  }
-
-  Widget reportIssueCard(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.symmetric(horizontal: 6),
-        child: Card(
-            color: Constants.iDarkGrey,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: InkWell(
-                splashColor: Constants.colors[Constants.colorindex],
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            ReportScreen(database),
-                      ));
-                },
-                child: Container(
-                    padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-                    child: Column(
-                      children: <Widget>[
-                        Hero(
-                            tag: 'topicon3',
-                            child: Icon(
-                              Icons.report_problem,
-                              color: Constants.colors[Constants.colorindex],
-                              size: 30,
-                            )),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        AutoSizeText(
-                          "Report Problem",
-                          style:
-                              TextStyle(fontSize: 15, color: Constants.iWhite),
-                          maxLines: 1,
-                        ),
-                      ],
-                    )))));
-  }
-
-  Widget submitQuestionCard(BuildContext context) {
-    return Hero(
-        tag: 'topicon4',
-        child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 6),
-            child: Card(
+   Widget settingsProfileTop(BuildContext context){
+     return Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Card(
                 color: Constants.iDarkGrey,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+                child: InkWell(
+                    splashColor: Constants.colors[Constants.colorindex],
+                    onTap: () {
+                  //  if (GoogleUserHandler.isLoggedIn()) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                ProfileScreen(database),
+                          ));
+                    },
+                    child: Container(
+                        padding: EdgeInsets.fromLTRB( 10, 10, 10, 10),
+                        child:Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                          "Profile",
+                          style: TextStyle(
+                            color: Constants.colors[Constants.colorindex],
+                            fontSize: 20,
+                            fontWeight: FontWeight.w300),
+                          ),
+                          SizedBox(width: 5),
+                          Icon(
+                              Icons.account_circle,
+                              color: Constants.colors[Constants.colorindex],
+                              size: 30,
+                            )]) 
+                        
+                        ))),
+              
+                Card(
+                color: Constants.iDarkGrey,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0),
                 ),
                 child: InkWell(
                     splashColor: Constants.colors[Constants.colorindex],
@@ -314,30 +221,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                SubmitQuestionScreen(database),
+                                SettingsScreen(database),
                           ));
                     },
                     child: Container(
-                        padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-                        child: Column(
-                          children: <Widget>[
-                            Icon(
-                              Icons.library_add,
+                        padding: EdgeInsets.fromLTRB( 10, 10, 10, 10),
+                        child:
+                          Icon(
+                              Icons.settings,
                               color: Constants.colors[Constants.colorindex],
                               size: 30,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            AutoSizeText(
-                              "Submit Question",
-                              style: TextStyle(
-                                  fontSize: 15, color: Constants.iWhite),
-                              maxLines: 1,
-                            ),
-                          ],
-                        ))))));
-  }
+                            ) 
+                        ))), 
+      
+              
+                        ]));
+
+     }
+
+     
 
   void pageChanged(int index) {
     setState(() {
@@ -392,6 +294,7 @@ class _HomeScreenState extends State<HomeScreen> {
                    // shrinkWrap: true,
                    // padding: const EdgeInsets.all(20.0),
                     children: [
+              settingsProfileTop(context),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -432,16 +335,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     scrollDirection: Axis.horizontal,
                     controller: controller,
                     children: <Widget>[
-                      profileCard(context),
-                      settingsCard(context),
+                      
                       reportIssueCard(context),
-                      submitQuestionCard(context),
+                      //submitQuestionCard(context),
                     ],
                   ),
                 ),
                 SizedBox(height: 15),
                 DotsIndicator(
-                  dotsCount: 4,
+                  dotsCount: 1,
                   position: pageIndex,
                   decorator: DotsDecorator(
                     color: Constants.iWhite,
