@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _rateMyApp.init().then((_){
-    //  if(_rateMyApp.shouldOpenDialog){
+    if(_rateMyApp.shouldOpenDialog){
       _rateMyApp.showStarRateDialog(
         context,
         title: 'Enjoy Blackbox?',
@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         starRatingOptions: StarRatingOptions(),
       );
-     // }
+    }
     });
     
   }
