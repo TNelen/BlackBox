@@ -66,6 +66,12 @@ class _HomeScreenState extends State<HomeScreen> {
         onRatingChanged: (stars) {
             return [
               FlatButton(
+                child: Text('Maybe later!'),
+                onPressed: (){
+                  _rateMyApp.save().then((v) => Navigator.pop(context));
+                },
+              ),
+              FlatButton(
                 child: Text('Ok'),
                 onPressed: (){
                   if(stars!=null){
