@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 import '../Constants.dart';
 import 'CreateGameScreen.dart';
 import 'JoinGameScreen.dart';
-import 'ReportScreen.dart';
-import 'SubmitQuestionScreen.dart';
 import '../Interfaces/Database.dart';
 import 'ProfileScreen.dart';
 import 'SettingsScreen.dart';
@@ -13,6 +12,8 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../DataContainers/Appinfo.dart';
 import 'Popup.dart';
+import 'package:open_appstore/open_appstore.dart';
+
 
 class HomeScreen extends StatefulWidget {
   Database database;
@@ -34,17 +35,72 @@ class _HomeScreenState extends State<HomeScreen> {
   int pageIndex = 0;
   String version = '1.0.7+7';
 
+
+
   _HomeScreenState(Database db) {
     this.database = db;
   
     isAppUpToDate();  /// Show an update reminder when needed
     isWelcomeMSG();   /// Show a message if one is set in the database
 
-    /*if (versionCodeDatabase != versionCodeYAML){
-      Popup.makePopup(context, 'Whooohooo!', 'There is a new app version available!');
-    }*/
+  }
+
+  RateMyApp _rateMyApp = RateMyApp(
+      preferencesPrefix: 'rateMyApp_',
+      minDays: 3,
+      minLaunches: 3, 
+      remindDays: 2,
+      remindLaunches: 3,
+      googlePlayIdentifier: "be.dezijwegel.blackbox"
+    );
+
+  @override
+  void initState() {
+    super.initState();
+    _rateMyApp.init().then((_){
+    //  if(_rateMyApp.shouldOpenDialog){
+      _rateMyApp.showStarRateDialog(
+        context,
+        title: 'Enjoy Blackbox?',
+        message: 'Please consider leaving a rating!',
+        onRatingChanged: (stars) {
+            return [
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: (){
+                  if(stars!=null){
+                  _rateMyApp.doNotOpenAgain = true;
+                  _rateMyApp.save().then((v) => Navigator.pop(context));
+
+                  if(stars<=3){
+                    print("navigate to contact form...");
+                  }
+                  if(stars>=4){
+                    print("review in app store");
+                    OpenAppstore.launch(androidAppId: "be.dezijwegel.blackbox");
+
+                  }
 
 
+
+                  }else{
+                    Navigator.pop(context);
+                  }
+                },
+              )
+            ];
+
+        },
+        dialogStyle: DialogStyle(
+          titleAlign: TextAlign.center,
+          messageAlign: TextAlign.center,
+          messagePadding: EdgeInsets.only(bottom:20)
+        ),
+        starRatingOptions: StarRatingOptions(),
+      );
+     // }
+    });
+    
   }
 
   @Deprecated('For async testing only. Must be deleted before release!')
