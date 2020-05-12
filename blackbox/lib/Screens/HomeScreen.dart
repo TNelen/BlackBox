@@ -58,10 +58,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _rateMyApp.init().then((_){
-    if(_rateMyApp.shouldOpenDialog){
+   if(_rateMyApp.shouldOpenDialog){
       _rateMyApp.showStarRateDialog(
         context,
-        title: 'Enjoy Blackbox?',
+        title: 'Are you enjoying BlackBox?',
         message: 'Please consider leaving a rating!',
         onRatingChanged: (stars) {
             return [
