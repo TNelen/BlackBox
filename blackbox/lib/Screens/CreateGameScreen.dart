@@ -43,13 +43,15 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
+          
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: new Text(
             "Group Code",
             style: TextStyle(
+                fontFamily: "atarian",
                 color: Constants.iBlack,
-                fontSize: 25,
+                fontSize: 40,
                 fontWeight: FontWeight.bold),
           ),
           content: new Row(
@@ -57,7 +59,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             children: <Widget>[
               Text(
                 code,
-                style: TextStyle(color: Constants.iBlack, fontSize: 25),
+                style: TextStyle(
+                  fontFamily: "atarian",
+                  color: Constants.iBlack, fontSize: 25),
               ),
               IconButton(
                   icon: Icon(
@@ -78,8 +82,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               child: new Text(
                 "Start",
                 style: TextStyle(
+                    fontFamily: "atarian",
                     color: Constants.colors[Constants.colorindex],
-                    fontSize: 20,
+                    fontSize: 30,
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
@@ -101,7 +106,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     final nameField = TextField(
       obscureText: false,
       controller: nameController,
-      style: TextStyle(fontSize: 17, color: Colors.black),
+      style: TextStyle(fontSize: 20, color: Colors.black),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           fillColor: Constants.iWhite,
@@ -144,7 +149,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                               color: data == selectedCategory
                                   ? Constants.iDarkGrey
                                   : Constants.iWhite,
-                              fontSize: 17.0,
+                              fontSize: 20.0,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -188,7 +193,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           },
           child: Text("Create",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20).copyWith(
+              style: TextStyle(fontSize: 30).copyWith(
                   color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
         ),
       ),
@@ -197,6 +202,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
+        fontFamily: "atarian",
         scaffoldBackgroundColor: Constants.iBlack,
       ),
       home: Scaffold(
@@ -218,7 +224,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   Text(
                     'Back',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 30,
                       color: Constants.colors[Constants.colorindex],
                     ),
                   ),
@@ -242,7 +248,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     "Create new Game",
                     style: new TextStyle(
                         color: Constants.iWhite,
-                        fontSize: 30.0,
+                        fontSize: 50.0,
                         fontWeight: FontWeight.w300),
                     maxLines: 1,
                   ),
@@ -251,7 +257,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     'Enter game details',
                     style: new TextStyle(
                         color: Constants.colors[Constants.colorindex],
-                        fontSize: 20.0),
+                        fontSize: 30.0),
                   ),
                   SizedBox(height: 45.0),
                   nameField,
@@ -259,7 +265,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   Text(
                     'Select a category',
                     style:
-                        new TextStyle(color: Constants.iWhite, fontSize: 20.0),
+                        new TextStyle(color: Constants.iWhite, fontSize: 30.0),
                   ),
                   SizedBox(height: 15.0),
                   categoryField,

@@ -54,7 +54,9 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
           },
           child: Text("Join",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20)
+              style: TextStyle(
+                fontFamily: "atarian",
+                fontSize: 30)
                   .copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
         ),
       ),
@@ -64,7 +66,9 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
       maxLength: 5,
       obscureText: false,
       controller: codeController,
-      style: TextStyle(fontSize: 20, color: Colors.black),
+      style: TextStyle(
+          fontFamily: "atarian",
+          fontSize: 20, color: Colors.black),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           fillColor: Constants.iWhite,
@@ -96,7 +100,8 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                       Text(
                         'Back',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontFamily: "atarian",
+                          fontSize: 30,
                           color: Constants.colors[Constants.colorindex],
                         ),
                       ),
@@ -117,12 +122,12 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                   children: <Widget>[
                     Text(
                       'Join Group',
-                      style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w300),
+                      style: new TextStyle(color: Constants.iWhite, fontSize: 50.0, fontWeight: FontWeight.w300, fontFamily: "atarian",),
                     ),
                     SizedBox(height: 80.0),
                     Text(
                       'Enter group code below',
-                      style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 20.0, ),
+                      style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 30.0,fontFamily: "atarian", ),
                     ),
                     SizedBox(height: 25.0),
                     codeField,

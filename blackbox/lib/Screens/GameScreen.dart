@@ -112,7 +112,7 @@ class _GameScreenState extends State<GameScreen> {
                           Text(
                             'Back',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 30,
                               color: Constants.colors[Constants.colorindex],
                             ),
                           ),
@@ -139,7 +139,7 @@ class _GameScreenState extends State<GameScreen> {
                             child: Text(
                               'Game Lobby',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 30,
                                 fontWeight: FontWeight.w600,
                                 color: Constants.iWhite,
                               ),
@@ -161,7 +161,7 @@ class _GameScreenState extends State<GameScreen> {
                             child: Text(
                               'Rules',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 30,
                                 fontWeight: FontWeight.w600,
                                 color: Constants.iWhite,
                               ),
@@ -195,7 +195,7 @@ class _GameScreenState extends State<GameScreen> {
                                               style: new TextStyle(
                                                   color: Constants.colors[
                                                       Constants.colorindex],
-                                                  fontSize: 17.0,
+                                                  fontSize: 25.0,
                                                   fontWeight: FontWeight.w400),
                                               textAlign: TextAlign.center),
                                         ),
@@ -210,7 +210,7 @@ class _GameScreenState extends State<GameScreen> {
                                       Text(
                                         "Players ready:  ",
                                         style: TextStyle(
-                                            fontSize: 20.0,
+                                            fontSize: 30.0,
                                             color: Constants.iWhite),
                                       ),
                                       Text(
@@ -222,7 +222,7 @@ class _GameScreenState extends State<GameScreen> {
                                                 .getNumMembers()
                                                 .toString(),
                                         style: TextStyle(
-                                            fontSize: 20.0,
+                                            fontSize: 30.0,
                                             color: Constants.iWhite),
                                       ),
                                     ],
@@ -237,7 +237,7 @@ class _GameScreenState extends State<GameScreen> {
                                       Text(
                                         "   Invite players  ",
                                         style: TextStyle(
-                                            fontSize: 20.0,
+                                            fontSize: 30.0,
                                             fontWeight: FontWeight.w700,
                                             color: Constants
                                                 .colors[Constants.colorindex]),
@@ -273,7 +273,7 @@ class _GameScreenState extends State<GameScreen> {
                                         Text(
                                           "Players",
                                           style: TextStyle(
-                                              fontSize: 25.0,
+                                              fontSize: 30.0,
                                               color: Constants.iWhite,
                                               fontWeight: FontWeight.w500),
                                         ),
@@ -323,7 +323,7 @@ class _GameScreenState extends State<GameScreen> {
                                                                         color: Constants
                                                                             .iWhite,
                                                                         fontSize:
-                                                                            20.0,
+                                                                            25.0,
                                                                         fontWeight:
                                                                             FontWeight.w400),
                                                                   ),
@@ -355,7 +355,7 @@ class _GameScreenState extends State<GameScreen> {
                                                                         color: Constants
                                                                             .iWhite,
                                                                         fontSize:
-                                                                            20.0,
+                                                                            25.0,
                                                                         fontWeight:
                                                                             FontWeight.w400),
                                                                   ),
@@ -389,7 +389,7 @@ class _GameScreenState extends State<GameScreen> {
                             'Start Game',
                             style: new TextStyle(
                               color: Constants.colors[Constants.colorindex],
-                              fontSize: 25.0,
+                              fontSize: 30.0,
                             ),
                           ),
                           SizedBox(height: 10),
@@ -399,7 +399,7 @@ class _GameScreenState extends State<GameScreen> {
                                 'When all players are ready, the button on the bottom becomes the start button, press start to begin the game.',
                             style: new TextStyle(
                               color: Constants.iWhite,
-                              fontSize: 18.0,
+                              fontSize: 25.0,
                             ),
                           ),
                           SizedBox(height: 20),
@@ -407,7 +407,7 @@ class _GameScreenState extends State<GameScreen> {
                             'Voting',
                             style: new TextStyle(
                               color: Constants.colors[Constants.colorindex],
-                              fontSize: 25.0,
+                              fontSize: 30.0,
                             ),
                           ),
                           SizedBox(height: 10),
@@ -422,7 +422,7 @@ class _GameScreenState extends State<GameScreen> {
                                 'Due to database issues, 2 members voting at exact the same time can cause a vote to be lost.',
                             style: new TextStyle(
                               color: Constants.iWhite,
-                              fontSize: 18.0,
+                              fontSize: 25.0,
                             ),
                           ),
                           SizedBox(height: 20),
@@ -430,7 +430,7 @@ class _GameScreenState extends State<GameScreen> {
                             'Collecting results',
                             style: new TextStyle(
                               color: Constants.colors[Constants.colorindex],
-                              fontSize: 25.0,
+                              fontSize: 30.0,
                             ),
                           ),
                           SizedBox(height: 10),
@@ -446,7 +446,7 @@ class _GameScreenState extends State<GameScreen> {
                                 '',
                             style: new TextStyle(
                               color: Constants.iWhite,
-                              fontSize: 18.0,
+                              fontSize: 25.0,
                             ),
                           ),
                           SizedBox(height: 20),
@@ -454,7 +454,7 @@ class _GameScreenState extends State<GameScreen> {
                             'Questions',
                             style: new TextStyle(
                               color: Constants.colors[Constants.colorindex],
-                              fontSize: 25.0,
+                              fontSize: 30.0,
                             ),
                           ),
                           SizedBox(height: 10),
@@ -464,7 +464,7 @@ class _GameScreenState extends State<GameScreen> {
                                 'The category of the questions is chosen on group creation.',
                             style: new TextStyle(
                               color: Constants.iWhite,
-                              fontSize: 18.0,
+                              fontSize: 25.0,
                             ),
                           ),
                           SizedBox(height: 20),
@@ -472,7 +472,7 @@ class _GameScreenState extends State<GameScreen> {
                             'Leave',
                             style: new TextStyle(
                               color: Constants.colors[Constants.colorindex],
-                              fontSize: 25.0,
+                              fontSize: 30.0,
                             ),
                           ),
                           SizedBox(height: 10),
@@ -482,14 +482,14 @@ class _GameScreenState extends State<GameScreen> {
                                 'Please do not close the app before leaving an active game.',
                             style: new TextStyle(
                               color: Constants.iWhite,
-                              fontSize: 18.0,
+                              fontSize: 25.0,
                             ),
                           ),
                           Text(
                             'If there are no more players in a group, the group is deleted',
                             style: new TextStyle(
                               color: Constants.iWhite,
-                              fontSize: 18.0,
+                              fontSize: 25.0,
                             ),
                           ),
                           SizedBox(height: 80),
@@ -512,6 +512,7 @@ class _GameScreenState extends State<GameScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: new ThemeData(
+          fontFamily: "atarian",
           scaffoldBackgroundColor: Constants.iBlack,
         ),
         home: Scaffold(

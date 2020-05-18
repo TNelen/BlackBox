@@ -179,12 +179,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: <Widget>[
                          Text(
                             "Create Game",
-                            style: TextStyle(fontSize: 20.0, color: Constants.iWhite, fontWeight: FontWeight.w400),
+                            style: TextStyle(fontSize: 30.0, color: Constants.iWhite, fontWeight: FontWeight.w400),
                           ),
                           SizedBox(height: 5),
                           Text(
                             "Invite friends to a new game",
-                            style: TextStyle(fontSize: 15.0, color: Constants.iLight, fontWeight:FontWeight.w300),
+                            style: TextStyle(fontSize: 20.0, color: Constants.iLight, fontWeight:FontWeight.w300),
                           ),
                         ],
                     ),
@@ -231,12 +231,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: <Widget>[
                          Text(
                             "Join Game",
-                            style: TextStyle(fontSize: 20.0, color: Constants.iWhite, fontWeight: FontWeight.w400),
+                            style: TextStyle(fontSize: 30.0, color: Constants.iWhite, fontWeight: FontWeight.w400),
                           ),
                           SizedBox(height: 5),
                           Text(
                             "Join a game with the group code",
-                            style: TextStyle(fontSize: 15.0, color: Constants.iLight, fontWeight:FontWeight.w300),
+                            style: TextStyle(fontSize: 20.0, color: Constants.iLight, fontWeight:FontWeight.w300),
                           ),
                         ],
                     ),
@@ -278,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           "Profile",
                           style: TextStyle(
                             color: Constants.colors[Constants.colorindex],
-                            fontSize: 20,
+                            fontSize: 25,
                             fontWeight: FontWeight.w300),
                           ),
                           SizedBox(width: 5),
@@ -356,6 +356,7 @@ class _HomeScreenState extends State<HomeScreen> {
   child: new MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
+        fontFamily: "atarian",
         scaffoldBackgroundColor: Constants.iBlack,
       ),
       home: Scaffold(
@@ -369,14 +370,14 @@ class _HomeScreenState extends State<HomeScreen> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                SizedBox(height: 25,),
+                SizedBox(height: 10,),
                 Container(
                   padding:
                       EdgeInsets.only(top: height / 10, left: 10, right: 10),
                   child: AutoSizeText(
-                    'Hi, ' + Constants.getUsername() + '!',
+                    'Hi, ' + Constants.getUsername().split(" ")[0] + '!',
                     style: TextStyle(
-                        fontSize: 35,
+                        fontSize: 60,
                         color: Constants.iWhite,
                         fontWeight: FontWeight.w300),
                     maxLines: 1,
@@ -391,7 +392,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ' Welcome to BlackBox! ',
                       style: TextStyle(
                           color: Constants.colors[Constants.colorindex],
-                          fontSize: 20,
+                          fontSize: 30,
                           fontWeight: FontWeight.w300),
                     )),
                 SizedBox(
@@ -411,7 +412,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text(
                             'Start playing...',
                             style: TextStyle(
-                                fontSize: 25,
+                                fontSize: 40,
                                 color: Constants.iWhite,
                                 fontWeight: FontWeight.w300),
                           ),
@@ -423,7 +424,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       JoinGameBox(),
                       SizedBox(
-                        height: 120,
+                        height: 100,
                       )
                     ],
                   )),
