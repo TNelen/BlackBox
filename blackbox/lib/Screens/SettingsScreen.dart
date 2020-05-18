@@ -54,7 +54,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     SizedBox(width: 10,),
                     Text(
                       'Blue',
-                      style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
+                      style: TextStyle(fontSize: 25.0, color: Constants.iWhite),
                     ),]),
                   Switch(
                           value: blueAccentColor,
@@ -95,7 +95,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     SizedBox(width: 10,),
                     Text(
                       'Yellow',
-                      style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
+                      style: TextStyle(fontSize: 25.0, color: Constants.iWhite),
                     ),]),
                   Switch(
                           value: yellowAccentColor,
@@ -136,7 +136,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     SizedBox(width: 10,),
                     Text(
                       'Red',
-                      style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
+                      style: TextStyle(fontSize: 25.0, color: Constants.iWhite),
                     ),]),
                   Switch(
                           value: redAccentColor,
@@ -177,7 +177,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     SizedBox(width: 10,),
                     Text(
                       'Green',
-                      style: TextStyle(fontSize: 17.0, color: Constants.iWhite),
+                      style: TextStyle(fontSize: 25.0, color: Constants.iWhite),
                     ),]),
                   Switch(
                           value: greenAccentColor,
@@ -201,7 +201,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
-        theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
+        theme: new ThemeData(
+          fontFamily: "atarian",
+          scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
             appBar: AppBar(
               backgroundColor: Constants.iBlack,
@@ -220,7 +222,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Text(
                         'Back',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 30,
                           color: Constants.colors[Constants.colorindex],
                         ),
                       ),
@@ -257,7 +259,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     'Settings',
                     style: new TextStyle(
                         color: Constants.colors[Constants.colorindex],
-                        fontSize: 30.0,
+                        fontSize: 40.0,
                         fontWeight: FontWeight.w500),
                   ),
                   SizedBox(height: 40.0),
@@ -265,7 +267,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     'Sounds and vibration',
                     style: new TextStyle(
                         color: Constants.colors[Constants.colorindex],
-                        fontSize: 22.0,
+                        fontSize: 30.0,
                         fontWeight: FontWeight.w300),
                   ),
                   SizedBox(height: 5),
@@ -278,7 +280,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     'Personalization',
                     style: new TextStyle(
                         color: Constants.colors[Constants.colorindex],
-                        fontSize: 22.0,
+                        fontSize: 30.0,
                         fontWeight: FontWeight.w300),
                   ),
                   SizedBox(height: 20.0),
@@ -295,7 +297,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       'Choose your accent color...',
                       style: new TextStyle(
                           color: Constants.iWhite,
-                          fontSize: 17.0,
+                          fontSize: 25.0,
                           fontWeight: FontWeight.w300),
                     ),
                   ]),
@@ -361,7 +363,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         AutoSizeText(
                           label,
                           style:
-                              TextStyle(fontSize: 17, color: textColor),
+                              TextStyle(fontSize: 25, color: textColor),
                           maxLines: 1,
                         ),]),
                         Switch(

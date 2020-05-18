@@ -29,7 +29,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
-        theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
+        theme: new ThemeData(
+          fontFamily: "atarian",
+          scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
             appBar: AppBar(
               backgroundColor: Constants.iBlack,
@@ -48,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Text(
                         'Back',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 30,
                           color: Constants.colors[Constants.colorindex],
                         ),
                       ),
@@ -99,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             textAlign: TextAlign.center,
                             style: new TextStyle(
                                 color: Constants.iWhite,
-                                fontSize: 22.0,
+                                fontSize: 30.0,
                                 fontWeight: FontWeight.w300),
                           ),
                           InkWell(
