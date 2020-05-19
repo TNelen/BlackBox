@@ -25,7 +25,7 @@ class GoogleUserHandler {
         idToken: googleAuth.idToken
     );
 
-    FirebaseUser user = await _auth.signInWithCredential(cred);
+    FirebaseUser user = (await _auth.signInWithCredential(cred)).user;
 
     loggedIn = true;
 

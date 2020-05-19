@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:rate_my_app/rate_my_app.dart';
+//import 'package:rate_my_app/rate_my_app.dart';
 import '../Constants.dart';
 import 'CreateGameScreen.dart';
 import 'JoinGameScreen.dart';
@@ -12,7 +12,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../DataContainers/Appinfo.dart';
 import 'Popup.dart';
-import 'package:open_appstore/open_appstore.dart';
+//import 'package:open_appstore/open_appstore.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   }
 
-  RateMyApp _rateMyApp = RateMyApp(
+  /*RateMyApp _rateMyApp = RateMyApp(
       preferencesPrefix: 'rateMyApp_',
       minDays: 3,
       minLaunches: 3, 
@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     });
     
-  }
+  }*/
 
   @Deprecated('For async testing only. Must be deleted before release!')
   void _test() async {

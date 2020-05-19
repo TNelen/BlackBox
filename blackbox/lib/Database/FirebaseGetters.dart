@@ -238,8 +238,7 @@ class FirebaseGetters {
           appinfo = new Appinfo(snap.data['current_version'], msg);
 
         }
-        //timo test :p FAILED -> Permission error
-        //transaction.update(docRef, {});
+
 
       }
 
