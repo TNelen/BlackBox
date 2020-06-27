@@ -44,8 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
     isWelcomeMSG();   /// Show a message if one is set in the database
 
   }
-  /*
-  RateMyApp _rateMyApp = RateMyApp(
+
+  
+  
+  /*RateMyApp _rateMyApp = RateMyApp(
       preferencesPrefix: 'rateMyApp_',
       /*minDays: 3,
       minLaunches: 3, 
@@ -95,8 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     });
     
-  }
-  $*/
+  }*/
+  
 
   @Deprecated('For async testing only. Must be deleted before release!')
   void _test() async {
@@ -431,3 +433,4 @@ class _HomeScreenState extends State<HomeScreen> {
     ));
   }
 }
+

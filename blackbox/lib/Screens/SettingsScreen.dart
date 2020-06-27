@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:blackbox/Screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
 import '../Constants.dart';
@@ -209,8 +210,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               backgroundColor: Constants.iBlack,
               title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 InkWell(
-                  onTap: () => Navigator.pop(context),
-                  child: Row(
+                    onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  HomeScreen(_database),
+                            ));
+                      },
+                    child: Row(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(right: 20),
