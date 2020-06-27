@@ -220,10 +220,7 @@ class FirebaseGetters {
   static Future< Appinfo > getAppInfo() async
   {
     Appinfo appinfo;
-    await Firestore.instance.runTransaction((Transaction transaction) async {
-      /// Get the app info document
-      DocumentReference docRef = Firestore.instance.collection("appinfo").document("appinfo");
-      DocumentSnapshot snap = await transaction.get(docRef);
+    await Firestore.instance.collection("appinfo").document("appinfo").get().then((DocumentSnapshot snap){
 
       if (snap.exists)
       {
@@ -240,6 +237,9 @@ class FirebaseGetters {
         }
 
 
+      }
+      else{
+        print("snap does not exists");
       }
 
     });

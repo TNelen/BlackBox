@@ -235,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: 5),
                           Text(
-                            "Join a game with the group code",
+                            "Join with the group code",
                             style: TextStyle(fontSize: 20.0, color: Constants.iLight, fontWeight:FontWeight.w300),
                           ),
                         ],
