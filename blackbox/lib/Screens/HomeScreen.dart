@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-//import 'package:rate_my_app/rate_my_app.dart';
 import '../Constants.dart';
 import 'CreateGameScreen.dart';
 import 'JoinGameScreen.dart';
@@ -13,6 +12,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import '../DataContainers/Appinfo.dart';
 import 'Popup.dart';
 //import 'package:open_appstore/open_appstore.dart';
+//import 'package:rate_my_app/rate_my_app.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -44,13 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
     isWelcomeMSG();   /// Show a message if one is set in the database
 
   }
-
-  /*RateMyApp _rateMyApp = RateMyApp(
+  /*
+  RateMyApp _rateMyApp = RateMyApp(
       preferencesPrefix: 'rateMyApp_',
-      minDays: 3,
+      /*minDays: 3,
       minLaunches: 3, 
       remindDays: 2,
-      remindLaunches: 3,
+      remindLaunches: 3,*/
       googlePlayIdentifier: "be.dezijwegel.blackbox"
     );
 
@@ -59,55 +59,44 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _rateMyApp.init().then((_){
    if(_rateMyApp.shouldOpenDialog){
-      _rateMyApp.showStarRateDialog(
+      _rateMyApp.showRateDialog(
         context,
         title: 'Are you enjoying BlackBox?',
         message: 'Please consider leaving a rating!',
-        onRatingChanged: (stars) {
-            return [
-              FlatButton(
-                child: Text('Maybe later!'),
-                onPressed: (){
-                  _rateMyApp.save().then((v) => Navigator.pop(context));
-                },
-              ),
-              FlatButton(
-                child: Text('Ok'),
-                onPressed: (){
-                  if(stars!=null){
-                  _rateMyApp.doNotOpenAgain = true;
-                  _rateMyApp.save().then((v) => Navigator.pop(context));
-
-                  if(stars<=3){
-                    print("navigate to contact form...");
-                  }
-                  if(stars>=4){
-                    print("review in app store");
-                    OpenAppstore.launch(androidAppId: "be.dezijwegel.blackbox");
-
-                  }
-
-
-
-                  }else{
-                    Navigator.pop(context);
-                  }
-                },
-              )
-            ];
-
-        },
+        rateButton: 'RATE', // The dialog "rate" button text.
+        noButton: 'NO THANKS', // The dialog "no" button text.
+        laterButton: 'MAYBE LATER', // The dialog "later" button text.
+        listener: (button) { // The button click listener (useful if you want to cancel the click event).
+        switch(button) {
+          case RateMyAppDialogButton.rate:
+            print("review in app store");
+            OpenAppstore.launch(androidAppId: "be.dezijwegel.blackbox");
+            _rateMyApp.save().then((v) => Navigator.pop(context));
+            break;
+          case RateMyAppDialogButton.later:
+            print('Clicked on "Later".');
+             widget.rateMyApp.callEvent(RateMyAppEventType.laterButtonPressed);
+             _rateMyApp.save().then((v) => Navigator.pop(context));
+            break;
+          case RateMyAppDialogButton.no:
+            print('Clicked on "No".');
+            _rateMyApp.save().then((v) => Navigator.pop(context));
+            break;
+        }
+        
+        return true; // Return false if you want to cancel the click event.
+      },
         dialogStyle: DialogStyle(
           titleAlign: TextAlign.center,
           messageAlign: TextAlign.center,
           messagePadding: EdgeInsets.only(bottom:20)
         ),
-        starRatingOptions: StarRatingOptions(),
       );
     }
     });
     
-  }*/
+  }
+  $*/
 
   @Deprecated('For async testing only. Must be deleted before release!')
   void _test() async {

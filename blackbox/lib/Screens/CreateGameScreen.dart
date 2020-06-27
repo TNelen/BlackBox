@@ -29,11 +29,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   }
 
   String _groupName;
-  String _groupCategory;
-  //String _groupID;
-  //String _groupAdmin = Constants.getUserID();
-
-  String selectedCategory;
+  String _groupCategory = "Official";
   Color color = Constants.iDarkGrey;
 
   void _showDialog(String code) {
@@ -116,49 +112,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
 
-    final categoryField = Flexible(
-      child: GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12.0,
-        mainAxisSpacing: 12.0,
-        childAspectRatio: (3 / 1),
-        children: Question.getCategoriesAsStringList()
-            .map((data) => Card(
-                color: data == selectedCategory
-                    ? Constants.iLight
-                    : Constants.iDarkGrey,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(28.0),
-                ),
-                child: InkResponse(
-                  splashColor: Constants.colors[Constants.colorindex],
-                  radius: 50, 
-                  onTap: () {
-                    setState(() {
-                      color = Constants.colors[Constants.colorindex];
-                      selectedCategory = data;
-                    });
-                  },
-                  child: Container(
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10.0, right: 10),
-                        child: Text(
-                          data,
-                          style: new TextStyle(
-                              color: data == selectedCategory
-                                  ? Constants.iDarkGrey
-                                  : Constants.iWhite,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ),
-                )))
-            .toList(),
-      ),
-    );
+
 
     final createButton = Hero(
       tag: 'tobutton',
@@ -176,7 +130,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             Map<String, String> members = new Map<String, String>();
             members[Constants.getUserID()] = Constants.getUsername();
             _groupName = nameController.text;
-            _groupCategory = selectedCategory;
             if (_groupName.length != 0 && _groupCategory != null) {
               // Generate a unique ID and save the group
               _database.generateUniqueGroupCode().then((code) {
@@ -261,15 +214,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   ),
                   SizedBox(height: 45.0),
                   nameField,
-                  SizedBox(height: 25.0),
-                  Text(
-                    'Select a category',
-                    style:
-                        new TextStyle(color: Constants.iWhite, fontSize: 30.0),
-                  ),
-                  SizedBox(height: 15.0),
-                  categoryField,
-                  SizedBox(height: 35.0),
+                  SizedBox(height: 100.0),
                   createButton,
                   SizedBox(height: 15.0),
                 ],
