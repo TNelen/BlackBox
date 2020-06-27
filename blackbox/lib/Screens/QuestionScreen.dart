@@ -408,13 +408,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                   SizedBox(height: 20,),
 
                   membersList,
-
-                  //reportbutton if question is community question
-                  groupData.getQuestion().getCategory() ==
-                                            'Community'
-                                        ? reportButton
-                                        : SizedBox(height: 20),
-
+                  reportButton,
                   submitquestionbutton,
 
                   SizedBox(height: 20,),
