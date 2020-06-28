@@ -229,7 +229,7 @@ class _RuleScreenState extends State<RuleScreen> {
                                           '\n' +
                                           'You can submit own question ideas ingame. These will be iserted in the queue of questions.' +
                                           '\n' +
-                                          'All players have the ability to rate teh questions, giving us feedback about the questions helps us inproving the game.',
+                                          'All players have the ability to rate the questions, giving us feedback about the questions helps us inproving the game.',
                                       style: new TextStyle(
                                         color: Constants.iWhite,
                                         fontSize: 25.0,

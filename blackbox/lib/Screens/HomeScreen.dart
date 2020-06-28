@@ -31,7 +31,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Database database;
   int pageIndex = 0;
-  String version = '1.0.7+7';
+  String version = '1.0.8+8';
 
   _HomeScreenState(Database db) {
     this.database = db;
