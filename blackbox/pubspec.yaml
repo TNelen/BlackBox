@@ -33,7 +33,6 @@ dependencies:
   audioplayers: ^0.14.0       # Used to play sounds
   vibration: 1.2.2            # Can make the mobile device vibrate
   store_redirect: ^1.0.2
-  open_appstore: ^1.0.2       #open app store
 
 
 

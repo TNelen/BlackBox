@@ -11,7 +11,6 @@ import 'package:blackbox/DataContainers/Question.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../DataContainers/Appinfo.dart';
 import 'Popup.dart';
-import 'package:open_appstore/open_appstore.dart';
 import 'package:store_redirect/store_redirect.dart';
 
 class HomeScreen extends StatefulWidget {
