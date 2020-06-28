@@ -32,9 +32,8 @@ dependencies:
   shared_preferences: 0.5.7+2 # Used for config file handling
   audioplayers: ^0.14.0       # Used to play sounds
   vibration: 1.2.2            # Can make the mobile device vibrate
-  #rate_my_app: ^0.6.0+3       # rate app in play store popup
-  #store_redirect: ^1.0.1      #redirect to play store
-  #open_appstore: ^1.0.2       #open app store
+  store_redirect: ^1.0.2
+  open_appstore: ^1.0.2       #open app store
 
 
 

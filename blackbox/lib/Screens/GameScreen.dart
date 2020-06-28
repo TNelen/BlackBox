@@ -416,10 +416,7 @@ class _GameScreenState extends State<GameScreen> {
                                 '\n' +
                                 'Once a vote is submitted, it can not be changed.' +
                                 '\n' +
-                                'You have 2 minutes to vote for a question.' +
-                                '\n' +
-                                '\n' +
-                                'Due to database issues, 2 members voting at exact the same time can cause a vote to be lost.',
+                                'You have 2 minutes to vote for a question.',
                             style: new TextStyle(
                               color: Constants.iWhite,
                               fontSize: 25.0,

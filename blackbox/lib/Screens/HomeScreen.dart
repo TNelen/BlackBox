@@ -11,8 +11,8 @@ import 'package:blackbox/DataContainers/Question.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../DataContainers/Appinfo.dart';
 import 'Popup.dart';
-//import 'package:open_appstore/open_appstore.dart';
-//import 'package:rate_my_app/rate_my_app.dart';
+import 'package:open_appstore/open_appstore.dart';
+import 'package:store_redirect/store_redirect.dart';
 
 class HomeScreen extends StatefulWidget {
   Database database;
@@ -44,58 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     /// Show a message if one is set in the database
   }
-
-  /*RateMyApp _rateMyApp = RateMyApp(
-      preferencesPrefix: 'rateMyApp_',
-      /*minDays: 3,
-      minLaunches: 3, 
-      remindDays: 2,
-      remindLaunches: 3,*/
-      googlePlayIdentifier: "be.dezijwegel.blackbox"
-    );
-
-  @override
-  void initState() {
-    super.initState();
-    _rateMyApp.init().then((_){
-   if(_rateMyApp.shouldOpenDialog){
-      _rateMyApp.showRateDialog(
-        context,
-        title: 'Are you enjoying BlackBox?',
-        message: 'Please consider leaving a rating!',
-        rateButton: 'RATE', // The dialog "rate" button text.
-        noButton: 'NO THANKS', // The dialog "no" button text.
-        laterButton: 'MAYBE LATER', // The dialog "later" button text.
-        listener: (button) { // The button click listener (useful if you want to cancel the click event).
-        switch(button) {
-          case RateMyAppDialogButton.rate:
-            print("review in app store");
-            OpenAppstore.launch(androidAppId: "be.dezijwegel.blackbox");
-            _rateMyApp.save().then((v) => Navigator.pop(context));
-            break;
-          case RateMyAppDialogButton.later:
-            print('Clicked on "Later".');
-             widget.rateMyApp.callEvent(RateMyAppEventType.laterButtonPressed);
-             _rateMyApp.save().then((v) => Navigator.pop(context));
-            break;
-          case RateMyAppDialogButton.no:
-            print('Clicked on "No".');
-            _rateMyApp.save().then((v) => Navigator.pop(context));
-            break;
-        }
-        
-        return true; // Return false if you want to cancel the click event.
-      },
-        dialogStyle: DialogStyle(
-          titleAlign: TextAlign.center,
-          messageAlign: TextAlign.center,
-          messagePadding: EdgeInsets.only(bottom:20)
-        ),
-      );
-    }
-    });
-    
-  }*/
 
   @Deprecated('For async testing only. Must be deleted before release!')
   void _test() async {
@@ -130,6 +78,33 @@ class _HomeScreenState extends State<HomeScreen> {
         .collection("questions")
         .document("questionList")
         .updateData(newData);
+  }
+
+  Widget rateAppButton() {
+    return FlatButton(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "rate this app",
+              style: TextStyle(
+                  color: Constants.colors[Constants.colorindex],
+                  fontSize: 15,
+                  fontWeight: FontWeight.w300),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Icon(
+              Icons.star,
+              color: Constants.colors[Constants.colorindex],
+              size: 15,
+            ),
+          ],
+        ),
+        onPressed: () {
+          StoreRedirect.redirect();
+        });
   }
 
   Widget CreateGameBox() {
@@ -451,17 +426,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           JoinGameBox(),
                           SizedBox(
-                            height: 100,
-                          )
+                            height: 20,
+                          ),
+                          rateAppButton()
                         ],
                       )),
-                  /*Text(
-                            'About BlackBox',
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Constants.colors[Constants.colorindex],
-                                fontWeight: FontWeight.w300),
-                          ),*/
                 ],
               ),
             ),
