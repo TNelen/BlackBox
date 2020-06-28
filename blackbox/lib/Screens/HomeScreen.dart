@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../Constants.dart';
 import 'CreateGameScreen.dart';
 import 'JoinGameScreen.dart';
-import 'HelpScreen.dart';
+import 'RulesScreen.dart';
 import '../Interfaces/Database.dart';
 import 'ProfileScreen.dart';
 import 'SettingsScreen.dart';
@@ -302,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              HelpScreen(database),
+                              RuleScreen(database),
                         ));
                   },
                   child: Container(

@@ -3,21 +3,21 @@ import '../Interfaces/Database.dart';
 import 'Popup.dart';
 import '../Constants.dart';
 
-class HelpScreen extends StatefulWidget {
+class RuleScreen extends StatefulWidget {
   Database _database;
 
-  HelpScreen(Database db) {
+  RuleScreen(Database db) {
     this._database = db;
   }
 
   @override
-  _HelpScreenState createState() => new _HelpScreenState(_database);
+  _RuleScreenState createState() => new _RuleScreenState(_database);
 }
 
-class _HelpScreenState extends State<HelpScreen> {
+class _RuleScreenState extends State<RuleScreen> {
   Database _database;
 
-  _HelpScreenState(Database db) {
+  _RuleScreenState(Database db) {
     this._database = db;
   }
 
@@ -67,7 +67,6 @@ class _HelpScreenState extends State<HelpScreen> {
                       shrinkWrap: true,
                       padding: const EdgeInsets.all(20.0),
                       children: [
-                        SizedBox(height: 40.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -80,7 +79,7 @@ class _HelpScreenState extends State<HelpScreen> {
                                 )),
                             SizedBox(width: 20.0),
                             Text(
-                              'Help',
+                              'Game rules',
                               textAlign: TextAlign.center,
                               style: new TextStyle(
                                   color: Constants.iWhite,
