@@ -43,41 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
     /// Show a message if one is set in the database
   }
 
-  @Deprecated('For async testing only. Must be deleted before release!')
-  void _test() async {
-    print("Async start");
-
-    /// Your async testing code here
-    print("Async completed");
-  }
-
-  @Deprecated('Must be deleted before release!')
-  void _addQuestions(List<String> questions) async {
-    for (String q in questions) {
-      await database.updateQuestion(new Question.addDefault(q));
-    }
-  }
-
-  /// Renames question category in questionList
-  @Deprecated('Must be deleted before release!')
-  void _renameQuestionCategory(String from, String to) async {
-    DocumentSnapshot snap = await Firestore.instance
-        .collection("questions")
-        .document("questionList")
-        .get();
-
-    List<dynamic> existing = snap.data[from];
-    List<String> newer = existing.cast<String>().toList();
-
-    var newData = new Map<String, dynamic>();
-
-    newData[to] = newer;
-    await Firestore.instance
-        .collection("questions")
-        .document("questionList")
-        .updateData(newData);
-  }
-
   void isAppUpToDate() async {
     Appinfo appinfo;
     if (Constants.enableMSG[Constants.enableVersionMSG]) {
