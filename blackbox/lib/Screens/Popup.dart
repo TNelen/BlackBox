@@ -4,7 +4,7 @@ import '../Constants.dart';
 import '../Interfaces/Database.dart';
 import '../DataContainers/UserData.dart';
 import '../DataContainers/Question.dart';
-import 'HomeScreen.dart';
+import 'Home/HomeScreen.dart';
 
 class Popup {
   static void makePopup(BuildContext context, String title, String message) {
@@ -44,9 +44,7 @@ class Popup {
       },
     );
   }
-  
 
-  
   static void makeChangeUsernamePopup(BuildContext context, Database database) {
     TextEditingController usernameController = new TextEditingController();
 
@@ -110,14 +108,14 @@ class Popup {
                       context, 'Oops!', 'Please enter more then 3 characters');
                 } else {
                   Constants.setUsername(usernameController.text.toString());
-                  Constants.setAccentColor(Constants.colorindex+1);
+                  Constants.setAccentColor(Constants.colorindex + 1);
                   database.updateUser(Constants.getUserData());
                   Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    HomeScreen(Constants.database),
-              ));
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            HomeScreen(Constants.database),
+                      ));
                 }
               },
             ),
@@ -127,7 +125,8 @@ class Popup {
     );
   }
 
-  static void _addQuestions(List<String> questions, Database database, GroupData groupData) async {
+  static void _addQuestions(
+      List<String> questions, Database database, GroupData groupData) async {
     for (String q in questions) {
       String id = await database
           .updateQuestion(new Question.addFromUser(q, Constants.userData));
@@ -137,7 +136,7 @@ class Popup {
   }
 
   static void submitQuestionIngamePopup(
-    BuildContext context, Database database, GroupData groupData) {
+      BuildContext context, Database database, GroupData groupData) {
     TextEditingController questionController = new TextEditingController();
 
     final questionfield = TextField(
@@ -213,12 +212,12 @@ class Popup {
     );
   }
 
-  static void togglePlaying(groupData){
-      groupData.setIsPlaying(!groupData.getIsPlaying());
-    }
+  static void togglePlaying(groupData) {
+    groupData.setIsPlaying(!groupData.getIsPlaying());
+  }
 
   static void confirmEndGame(
-    BuildContext context, Database database, GroupData groupData) {
+      BuildContext context, Database database, GroupData groupData) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -234,8 +233,7 @@ class Popup {
           ),
           content: Text(
             'Are you sure to end the game? \nThe game will end for all users.',
-            style: TextStyle(
-                color: Constants.iWhite, fontSize: 17),
+            style: TextStyle(color: Constants.iWhite, fontSize: 17),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog

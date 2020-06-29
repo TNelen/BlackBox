@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:blackbox/Screens/HomeScreen.dart';
+import 'package:blackbox/Screens/Home/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
 import '../Constants.dart';
