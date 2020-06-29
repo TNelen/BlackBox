@@ -6,7 +6,7 @@ import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
 import '../Database/FirebaseStream.dart';
 import 'Popup.dart';
-import 'Results/ResultsScreen.dart';
+import 'ResultsScreen.dart';
 
 Map<ReportType, bool> reportMap = new Map<ReportType, bool>();
 
