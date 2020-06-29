@@ -49,14 +49,6 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
-  /* @override
-  void dispose() {
-    super.dispose();
-    FirebaseStream.closeController();
-
-    ///Something to close the stream goes here
-  }*/
-
   void getRandomNexQuestion() async {
     groupdata.setNextQuestion(
         await _database.getNextQuestion(groupdata), Constants.getUserData());
