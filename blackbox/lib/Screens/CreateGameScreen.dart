@@ -5,7 +5,6 @@ import '../Interfaces/Database.dart';
 import 'GameScreen.dart';
 import 'Popup.dart';
 import 'package:share/share.dart';
-import '../DataContainers/Question.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class CreateGameScreen extends StatefulWidget {
@@ -39,7 +38,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: new Text(
@@ -56,8 +54,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               Text(
                 code,
                 style: TextStyle(
-                  fontFamily: "atarian",
-                  color: Constants.iBlack, fontSize: 25),
+                    fontFamily: "atarian",
+                    color: Constants.iBlack,
+                    fontSize: 25),
               ),
               IconButton(
                   icon: Icon(
@@ -112,45 +111,51 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
 
-
-
     final createButton = Hero(
-      tag: 'tobutton',
-      child: Padding(
-        padding: EdgeInsets.only(left: 45, right: 45),
-        child: Material(
-        elevation: 5.0,
-        borderRadius: BorderRadius.circular(28.0),
-        color: Constants.colors[Constants.colorindex],
-        child: MaterialButton(
-          minWidth: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
-          onPressed: () {
-            // Create map of members
-            Map<String, String> members = new Map<String, String>();
-            members[Constants.getUserID()] = Constants.getUsername();
-            _groupName = nameController.text;
-            if (_groupName.length != 0 && _groupCategory != null) {
-              // Generate a unique ID and save the group
-              _database.generateUniqueGroupCode().then((code) {
-                _database.createQuestionList(_groupCategory).then((questionlist) {
-                GroupData groupdata = new GroupData(_groupName, _groupCategory,
-                    code, Constants.getUserID(), members, questionlist);
-                  _database.updateGroup(groupdata);
-                  _showDialog(code);
-                });
-              });
-            } else {
-              Popup.makePopup(context, "Woops!", "Please fill in all fields!");
-            }
-          },
-          child: Text("Create",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 30).copyWith(
-                  color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
-        ),
-      ),
-    ));
+        tag: 'tobutton',
+        child: Padding(
+          padding: EdgeInsets.only(left: 45, right: 45),
+          child: Material(
+            elevation: 5.0,
+            borderRadius: BorderRadius.circular(28.0),
+            color: Constants.colors[Constants.colorindex],
+            child: MaterialButton(
+              minWidth: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
+              onPressed: () {
+                // Create map of members
+                Map<String, String> members = new Map<String, String>();
+                members[Constants.getUserID()] = Constants.getUsername();
+                _groupName = nameController.text;
+                if (_groupName.length != 0 && _groupCategory != null) {
+                  // Generate a unique ID and save the group
+                  _database.generateUniqueGroupCode().then((code) {
+                    _database
+                        .createQuestionList(_groupCategory)
+                        .then((questionlist) {
+                      GroupData groupdata = new GroupData(
+                          _groupName,
+                          _groupCategory,
+                          code,
+                          Constants.getUserID(),
+                          members,
+                          questionlist);
+                      _database.updateGroup(groupdata);
+                      _showDialog(code);
+                    });
+                  });
+                } else {
+                  Popup.makePopup(
+                      context, "Woops!", "Please fill in all fields!");
+                }
+              },
+              child: Text("Create",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 30).copyWith(
+                      color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
+            ),
+          ),
+        ));
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -187,41 +192,41 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           ]),
         ),
         body: Padding(
-          padding: EdgeInsets.only(left: 22, right: 22, bottom: 40),
-          child: Center(
-          child: Container(
-            color: Constants.iBlack,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  AutoSizeText(
-                    "Create new Game",
-                    style: new TextStyle(
-                        color: Constants.iWhite,
-                        fontSize: 50.0,
-                        fontWeight: FontWeight.w300),
-                    maxLines: 1,
+            padding: EdgeInsets.only(left: 22, right: 22, bottom: 40),
+            child: Center(
+              child: Container(
+                color: Constants.iBlack,
+                child: Padding(
+                  padding: const EdgeInsets.all(36.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      AutoSizeText(
+                        "Create new Game",
+                        style: new TextStyle(
+                            color: Constants.iWhite,
+                            fontSize: 50.0,
+                            fontWeight: FontWeight.w300),
+                        maxLines: 1,
+                      ),
+                      SizedBox(height: 60.0),
+                      Text(
+                        'Enter game details',
+                        style: new TextStyle(
+                            color: Constants.colors[Constants.colorindex],
+                            fontSize: 30.0),
+                      ),
+                      SizedBox(height: 45.0),
+                      nameField,
+                      SizedBox(height: 100.0),
+                      createButton,
+                      SizedBox(height: 15.0),
+                    ],
                   ),
-                  SizedBox(height: 60.0),
-                  Text(
-                    'Enter game details',
-                    style: new TextStyle(
-                        color: Constants.colors[Constants.colorindex],
-                        fontSize: 30.0),
-                  ),
-                  SizedBox(height: 45.0),
-                  nameField,
-                  SizedBox(height: 100.0),
-                  createButton,
-                  SizedBox(height: 15.0),
-                ],
+                ),
               ),
-            ),
-          ),
-        )),
+            )),
       ),
     );
   }

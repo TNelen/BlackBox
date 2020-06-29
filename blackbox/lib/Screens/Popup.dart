@@ -2,7 +2,6 @@ import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
 import '../Interfaces/Database.dart';
-import '../DataContainers/UserData.dart';
 import '../DataContainers/Question.dart';
 import 'Home/HomeScreen.dart';
 

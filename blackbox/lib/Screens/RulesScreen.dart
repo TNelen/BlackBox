@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
-import 'Popup.dart';
 import '../Constants.dart';
 
 class RuleScreen extends StatefulWidget {

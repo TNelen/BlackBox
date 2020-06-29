@@ -1,13 +1,11 @@
 import 'package:blackbox/Screens/Home/CreateGameBox.dart';
 import 'package:blackbox/Screens/Home/RateAppButton.dart';
 import 'package:blackbox/Screens/Home/TopIconBar.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../Constants.dart';
 import 'CreateGameBox.dart';
 import 'JoinGameBox.dart';
 import '../../Interfaces/Database.dart';
-import 'package:blackbox/DataContainers/Question.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../../DataContainers/Appinfo.dart';
 import '../Popup.dart';

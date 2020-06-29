@@ -2,7 +2,6 @@ import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/Screens/Home/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
-import 'Popup.dart';
 import '../Constants.dart';
 import '../DataContainers/UserRankData.dart';
 
