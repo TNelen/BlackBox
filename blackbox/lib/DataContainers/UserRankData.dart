@@ -1,11 +1,12 @@
 class UserRankData {
   
+  final String id; 
   String _username;
   int _numVotes;
 
 
   /// Create a leaderboard field with a username and amount of votes
-  UserRankData(this._username, this._numVotes);
+  UserRankData(this.id, this._username, this._numVotes);
 
 
   /// Get the name of this user

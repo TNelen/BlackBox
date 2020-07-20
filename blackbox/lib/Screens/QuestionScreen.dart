@@ -1,3 +1,4 @@
+import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:flutter/material.dart';
 import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
@@ -172,49 +173,33 @@ class _QuestionScreenState extends State<QuestionScreen>
       ),
     );
 
+    final List<UserData> userData = groupData.getPlayingUserdata();
+    if (groupData.canVoteBlank)
+      userData.add( GroupData.blankUser );
+    if ( ! groupData.canVoteOnSelf) 
+    {
+      int deleteIndex;
+      for (int i = 0; i < userData.length; i++)
+        if (Constants.getUserID() == userData[i].getUserID())
+          deleteIndex = i;
+      
+      if (deleteIndex != null)
+        userData.removeAt( deleteIndex );
+    }
+
     final membersList = Flexible(
       child: GridView.count(
         crossAxisCount: 2,
         childAspectRatio: (3 / 1),
         padding: EdgeInsets.symmetric(horizontal: 8.0),
-        children: groupData
-            .getPlayingUserdata()
-            .map((data) => Card(
-                  color: data.getUserID() == clickedmember
-                      ? Constants.iLight
-                      : Constants.iDarkGrey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: InkWell(
-                    splashColor: Constants.colors[Constants.colorindex],
-                    onTap: () {
-                      setState(() {
-                        color = Constants.colors[Constants.colorindex];
-                        clickedmember = data.getUserID();
-                      });
-                    },
-                    child: Container(
-                      child: Center(
-                          child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 1.0, bottom: 1, left: 7, right: 7),
-                        child: Text(
-                          data.getUsername().split(' ')[0],
-                          style: new TextStyle(
-                              color: data.getUserID() == clickedmember
-                                  ? Constants.iDarkGrey
-                                  : Constants.iWhite,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      )),
-                    ),
-                  ),
-                ))
+        children: 
+            userData
+            .map((data) => buildUserVoteCard( data ))
             .toList(),
       ),
     );
+
+
 
     final voteButton = Hero(
       tag: 'submit',
@@ -402,6 +387,45 @@ class _QuestionScreenState extends State<QuestionScreen>
           );
         });
   }
+
+
+  Widget buildUserVoteCard(UserData data)
+  {
+    return Card(
+      color: data.getUserID() == clickedmember
+          ? Constants.iLight
+          : Constants.iDarkGrey,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: InkWell(
+        splashColor: Constants.colors[Constants.colorindex],
+        onTap: () {
+          setState(() {
+            color = Constants.colors[Constants.colorindex];
+            clickedmember = data.getUserID();
+          });
+        },
+        child: Container(
+          child: Center(
+              child: Padding(
+            padding: const EdgeInsets.only(
+                top: 1.0, bottom: 1, left: 7, right: 7),
+            child: Text(
+              data.getUsername().split(' ')[0],
+              style: new TextStyle(
+                  color: data.getUserID() == clickedmember
+                      ? Constants.iDarkGrey
+                      : Constants.iWhite,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold),
+            ),
+          )),
+        ),
+      ),
+    );
+  }
+
 }
 
 class ReportPopup extends StatefulWidget {

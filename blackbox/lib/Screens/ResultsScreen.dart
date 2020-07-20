@@ -1,4 +1,5 @@
 import 'package:audioplayers/audio_cache.dart';
+import 'package:blackbox/DataContainers/UserRankData.dart';
 import 'package:blackbox/Util/VibrationHandler.dart';
 import 'package:flutter/material.dart';
 import '../DataContainers/GroupData.dart';
@@ -327,8 +328,45 @@ class ResultScreenState extends State<ResultScreen> {
                   ));
             }
           }
-          List currentWinners = groupData.getUserRankingList('previous', null);
-          List alltimeWinners = groupData.getUserRankingList('alltime', null);
+          List<UserRankData> currentWinners = groupData.getUserRankingList('previous', null);
+          List<UserRankData> alltimeWinners = groupData.getUserRankingList('alltime', null);
+
+          // Get current blank data and remove from users
+          UserRankData currentBlankData;
+          int deleteID;
+          int i = 0;
+          for (UserRankData userRankData in currentWinners)
+          {
+            if (userRankData.id == GroupData.blankUser.getUserID())
+            {
+              currentBlankData = userRankData;
+              deleteID = i;
+            }
+            i++;
+          }
+
+          if (deleteID != null)
+            currentWinners.removeAt( deleteID );
+
+          // Get alltime blank data and remove from users
+          UserRankData alltimeBlankData;
+          deleteID = null;
+          i = 0;
+          for (UserRankData userRankData in alltimeWinners)
+          {
+            if (userRankData.id == GroupData.blankUser.getUserID())
+            {
+              currentBlankData = userRankData;
+              deleteID = i;
+            }
+            i++;
+          }
+
+          if (deleteID != null)
+            alltimeWinners.removeAt( deleteID );
+
+          // currentWinners.removeWhere((element) => element.id == GroupData.blankUser.getUserID());
+          // alltimeWinners.removeWhere((element) => element.id == GroupData.blankUser.getUserID());
 
           void toggleAlltime() {
             showMoreAll = !showMoreAll;
@@ -584,6 +622,8 @@ class ResultScreenState extends State<ResultScreen> {
                                       child: Column(
                                         children: <Widget>[
                                           AutoSizeText(
+                                            currentWinners.length == 0 ?
+                                            "" :
                                             currentWinners[0]
                                                 .getUserName()
                                                 .split(' ')[0],
@@ -596,6 +636,8 @@ class ResultScreenState extends State<ResultScreen> {
                                             maxLines: 1,
                                           ),
                                           Text(
+                                            currentWinners.length == 0 ?
+                                            "" :
                                             currentWinners[0]
                                                     .getNumVotes()
                                                     .toString() +

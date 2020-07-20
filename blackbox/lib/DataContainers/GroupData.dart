@@ -10,6 +10,7 @@ import 'UserRankData.dart';
 
 class GroupData {
     
+  static final UserData blankUser = UserData("blank_vote", "Blank vote"); 
 
   /// ---------------- \\\
   /// GroupData Fields \\\
@@ -586,7 +587,7 @@ class GroupData {
     /// Convert the vote map to a list
     List<UserRankData> userRanking = new List<UserRankData>();
     voteCounts.forEach( (id, numVotes) {
-      userRanking.add( new UserRankData( getUserName(id), numVotes) );
+      userRanking.add( new UserRankData( id, getUserName(id), numVotes) );
     });
 
     /// Sort the list in descending order (highest # votes first)
