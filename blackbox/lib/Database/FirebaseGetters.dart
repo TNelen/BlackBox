@@ -235,8 +235,8 @@ class FirebaseGetters {
   }
 
   static Future<List<dynamic>> getQuestionCategories() async {
-    List categories;
-    List descriptions;
+    List<String> categories = List<String>();
+    List<String> descriptions = List<String>();
     await Firestore.instance
         .collection("questionsv2")
         .document("questionList")
