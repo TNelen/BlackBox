@@ -110,6 +110,16 @@ class FirebaseSetters {
       data['admin'] = groupData.getAdminID();
 
       ///
+      /// Handle group settings
+      ///
+      
+      // if (snap.data == null || snap.data['canVoteOnSelf'] == null)
+      data['canVoteOnSelf'] = groupData.canVoteOnSelf ?? true;
+      
+      // if (snap.data == null || snap.data['canVoteBlank'] == null)
+      data['canVoteBlank'] = groupData.canVoteBlank ?? false;
+
+      ///
       /// Handle members
       /// 
       

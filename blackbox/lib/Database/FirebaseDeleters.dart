@@ -164,7 +164,7 @@ class FirebaseDeleters {
           if (id != "S1REQ" && id != "ORVFA")
           {
             try {
-              GroupData groupData = new GroupData("", "", id, "", new Map<String, String>(), new List<String>()); /// Create empty group with the right ID
+              GroupData groupData = new GroupData("", "", false, true, id, "", new Map<String, String>(), new List<String>()); /// Create empty group with the right ID
               await deleteGroup(groupData);                                 // Delete the group
               print("The group with ID " + id + " has now been deleted!");  // Print info
               numDeleted++;
