@@ -174,78 +174,82 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
 
         return ListView.builder(
           shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
           itemCount: projectSnap.data.length,
           itemBuilder: (context, index) {
+
             int amount = projectSnap.data[index].amount;
             String description = projectSnap.data[index].description;
             String categoryname = projectSnap.data[index].name;
 
-            return Flexible(
-                child: Card(
-                    color: selectedCategory.contains(categoryname)
-                        ? Constants.iLight
-                        : Constants.iDarkGrey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: InkResponse(
-                      splashColor: Constants.colors[Constants.colorindex],
-                      radius: 50,
-                      onTap: () {
-                        setState(() {
-                          color = Constants.colors[Constants.colorindex];
-                          if (!selectedCategory.contains(categoryname)) {
-                            selectedCategory.add(categoryname);
-                          } else if (selectedCategory.contains(categoryname)) {
-                            selectedCategory.remove(categoryname);
-                          }
-                        });
-                      },
-                      child: Container(
-                        child: Center(
-                          child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 5, left: 10.0, right: 10, bottom: 5),
-                              child: Column(children: [
-                                Text(
-                                  categoryname,
-                                  style: new TextStyle(
-                                      color: selectedCategory
-                                              .contains(categoryname)
-                                          ? Constants.iDarkGrey
-                                          : Constants.iWhite,
-                                      fontSize: 25.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(height: 5),
-                                Text(
-                                  description,
-                                  textAlign: TextAlign.center,
-                                  style: new TextStyle(
-                                      color: selectedCategory
-                                              .contains(categoryname)
-                                          ? Constants.iBlack
-                                          : Constants.iLight,
-                                      fontSize: 17.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(height: 5),
-                                Text(
-                                  amount.toString() + '  questions',
-                                  textAlign: TextAlign.center,
-                                  style: new TextStyle(
-                                      color: selectedCategory
-                                              .contains(categoryname)
-                                          ? Constants.iBlack
-                                          : Constants.iLight,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(height: 3),
-                              ])),
-                        ),
+            return Card(
+              color: selectedCategory.contains(categoryname)
+              ? Constants.iLight
+              : Constants.iDarkGrey,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              child: InkResponse(
+                splashColor: Constants.colors[Constants.colorindex],
+                radius: 50,
+                onTap: () {
+                  setState(() {
+                    color = Constants.colors[Constants.colorindex];
+                    if (!selectedCategory.contains(categoryname)) {
+                      selectedCategory.add(categoryname);
+                    } else if (selectedCategory.contains(categoryname)) {
+                      selectedCategory.remove(categoryname);
+                    }
+                  });
+                },
+                child: Container(
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5, left: 10.0, right: 10, bottom: 5),
+                      child: Column(
+                        children: [
+                          Text(
+                            categoryname,
+                            style: new TextStyle(
+                                color: selectedCategory
+                                        .contains(categoryname)
+                                    ? Constants.iDarkGrey
+                                    : Constants.iWhite,
+                                fontSize: 25.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            description,
+                            textAlign: TextAlign.center,
+                            style: new TextStyle(
+                                color: selectedCategory
+                                        .contains(categoryname)
+                                    ? Constants.iBlack
+                                    : Constants.iLight,
+                                fontSize: 17.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            amount.toString() + '  questions',
+                            textAlign: TextAlign.center,
+                            style: new TextStyle(
+                                color: selectedCategory
+                                        .contains(categoryname)
+                                    ? Constants.iBlack
+                                    : Constants.iLight,
+                                fontSize: 13.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 3),
+                        ],
                       ),
-                    )));
+                    ),
+                  ),
+                ),
+              ),
+            );
           },
         );
       },
@@ -361,40 +365,52 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 color: Constants.iBlack,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 22, right: 22),
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      AutoSizeText(
-                        "Create new Game",
-                        style: new TextStyle(
-                            color: Constants.iWhite,
-                            fontSize: 50.0,
-                            fontWeight: FontWeight.w300),
-                        maxLines: 1,
-                      ),
-                      SizedBox(height: 30.0),
-                      Text(
-                        'Game settings',
-                        style: new TextStyle(
-                            color: Constants.colors[Constants.colorindex],
-                            fontSize: 30.0),
-                      ),
-                      SizedBox(height: 20.0),
-                      voteBlancoSwitch,
-                      voteOnSelfSwitch,
-                      SizedBox(height: 20.0),
-                      Text(
-                        'Choose a category',
-                        style: new TextStyle(
-                            color: Constants.colors[Constants.colorindex],
-                            fontSize: 30.0),
-                      ),
-                      SizedBox(height: 20.0),
-                      categoryField,
-                      SizedBox(height: 20.0),
-                      createButton,
-                      SizedBox(height: 15.0),
-                    ],
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return ListView(
+                        shrinkWrap: true,
+                        children: <Widget>[
+                          ListView(
+                            shrinkWrap: true,
+                            children: <Widget>[
+                              AutoSizeText(
+                                "Create new Game",
+                                style: new TextStyle(
+                                    color: Constants.iWhite,
+                                    fontSize: 50.0,
+                                    fontWeight: FontWeight.w300),
+                                maxLines: 1,
+                              ),
+                              SizedBox(height: 30.0),
+                              Text(
+                                'Game settings',
+                                style: new TextStyle(
+                                    color: Constants.colors[Constants.colorindex],
+                                    fontSize: 30.0),
+                              ),
+                              SizedBox(height: 20.0),
+                              voteBlancoSwitch,
+                              voteOnSelfSwitch,
+                              SizedBox(height: 20.0),
+                              Text(
+                                'Choose a category',
+                                style: new TextStyle(
+                                    color: Constants.colors[Constants.colorindex],
+                                    fontSize: 30.0),
+                              ),
+                              SizedBox(height: 20.0),
+                              LimitedBox(
+                                maxHeight: constraints.maxHeight / 3,
+                                child: categoryField
+                              ),
+                              SizedBox(height: 20.0),
+                            ],
+                          ),
+                          createButton,
+                          SizedBox(height: 15.0),
+                        ],
+                      );
+                    },
                   ),
                 ),
               ),
