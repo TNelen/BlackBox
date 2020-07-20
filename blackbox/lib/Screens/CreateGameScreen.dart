@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:blackbox/DataContainers/QuestionCategory.dart';
+import 'package:blackbox/Database/QuestionListGetter.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
 import '../DataContainers/GroupData.dart';
@@ -27,9 +31,10 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     this._database = db;
   }
 
+  final QuestionListGetter questionListGetter = QuestionListGetter();
+  List<QuestionCategory> categories = List<QuestionCategory>();
   List<String> selectedCategory = [];
   String _groupName;
-  String _groupCategory;
   bool _canVoteBlank = false;
   bool _canVoteOnSelf = true;
   Color color = Constants.iDarkGrey;
@@ -117,25 +122,33 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 Map<String, String> members = new Map<String, String>();
                 members[Constants.getUserID()] = Constants.getUsername();
                 _groupName = "default";
-                _groupCategory = "test";
-                if (_groupName.length != 0 && _groupCategory != null) {
+                if (_groupName.length != 0 && selectedCategory.length != 0) {
                   // Generate a unique ID and save the group
                   _database.generateUniqueGroupCode().then((code) {
-                    _database
-                        .createQuestionList(_groupCategory)
-                        .then((questionlist) {
-                      GroupData groupdata = new GroupData(
-                          _groupName,
-                          _groupCategory,
-                          _canVoteBlank,
-                          _canVoteOnSelf,
-                          code,
-                          Constants.getUserID(),
-                          members,
-                          questionlist);
-                      _database.updateGroup(groupdata);
-                      _showDialog(code);
-                    });
+                    
+                    List<String> questionIDs = List<String>();
+                    String description = "";
+
+                    for(String groupCategory in selectedCategory)
+                    {
+                      questionIDs.addAll( questionListGetter.mappings[ groupCategory ] ?? [] );
+                      description += groupCategory + " ";
+                    }
+
+                    questionIDs.shuffle( Random.secure() );
+
+                    GroupData groupdata = new GroupData(
+                        _groupName,
+                        description,
+                        _canVoteBlank,
+                        _canVoteOnSelf,
+                        code,
+                        Constants.getUserID(),
+                        members,
+                        questionIDs
+                      );
+                    _database.updateGroup(groupdata);
+                    _showDialog(code);
                   });
                 } else {
                   Popup.makePopup(
@@ -150,20 +163,27 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           ),
         ));
 
-    final categoryField = FutureBuilder(
+    final categoryField = FutureBuilder<List<QuestionCategory>>(
       builder: (context, projectSnap) {
         if (projectSnap.connectionState == ConnectionState.none &&
-            projectSnap.hasData == null) {
+            projectSnap.hasData == null
+            || projectSnap.data == null) {
           //print('project snapshot data is: ${projectSnap.data}');
           return Container();
         }
+
+        categories = List<QuestionCategory>();
+
         return ListView.builder(
           shrinkWrap: true,
-          itemCount: projectSnap.data[0].length,
+          itemCount: projectSnap.data.length,
           itemBuilder: (context, index) {
-            int amount = projectSnap.data[2][index];
-            String description = projectSnap.data[1][index];
-            String categoryname = projectSnap.data[0][index];
+            int amount = projectSnap.data[index].amount;
+            String description = projectSnap.data[index].description;
+            String categoryname = projectSnap.data[index].name;
+
+            categories.add( projectSnap.data[index] );
+
             return Flexible(
                 child: Card(
                     color: selectedCategory.contains(categoryname)
@@ -233,7 +253,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           },
         );
       },
-      future: FirebaseGetters.getQuestionCategories(),
+      future: questionListGetter.getCategories(),
     );
 
     final voteOnSelfSwitch = Container(

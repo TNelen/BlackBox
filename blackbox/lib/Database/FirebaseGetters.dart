@@ -1,5 +1,6 @@
 import 'package:blackbox/DataContainers/Appinfo.dart';
 import 'package:blackbox/DataContainers/GroupData.dart';
+import 'package:blackbox/DataContainers/QuestionCategory.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:blackbox/Exceptions/GroupNotFoundException.dart';
 import 'package:flutter/material.dart';
@@ -83,14 +84,23 @@ class FirebaseGetters {
   static Future<List<String>> createQuestionList(String category) async {
     List<String> questionlist;
     await Firestore.instance
-        .collection("questions")
+        .collection("questionsv2")
         .document("questionList")
         .get()
         .then((document) {
       /// Convert List<dynamic> to List<String>
       List<dynamic> existing = document.data[category];
       questionlist = existing.cast<String>().toList();
-      questionlist.shuffle(Random.secure());
+      if (questionlist.length > 1)
+      {
+        questionlist.removeAt(0);
+        return questionlist;
+        // questionlist.shuffle(Random.secure());
+      } 
+      else
+      {
+        return [];
+      }
     });
     return questionlist;
   }
@@ -234,10 +244,8 @@ class FirebaseGetters {
     return appinfo;
   }
 
-  static Future<List<dynamic>> getQuestionCategories() async {
-    List<String> categories = List<String>();
-    List<String> descriptions = List<String>();
-    List<int> amounts = List<int>();
+  static Future<List<QuestionCategory>> getQuestionCategories() async {
+    List<QuestionCategory> categories = List<QuestionCategory>();
 
     await Firestore.instance
         .collection("questionsv2")
@@ -248,16 +256,22 @@ class FirebaseGetters {
         Map<String, dynamic> data = document.data;
         for (MapEntry e in data.entries) {
           if (e.value is List<dynamic>) {
-            print("printing getter");
-            print(e.key + " : " + e.value[0]);
-            categories.add(e.key.toString());
-            descriptions.add(e.value[0].toString());
-            amounts.add(e.value.length - 1);
+            List<String> list = List<String>();
+            for (dynamic element in e.value)
+            {
+              list.add(element.toString());
+            }
+
+            String description = list.removeAt(0);
+            QuestionCategory qc = QuestionCategory(e.key.toString(), description, list);
+            print('Category: ' + qc.name + ", description: " + qc.description + ", size: " + qc.amount.toString());
+            categories.add( qc );
           }
         }
       }
     });
-    print([categories, descriptions, amounts]);
-    return [categories, descriptions, amounts];
+    print("return");
+    // print([categories, descriptions, amounts]);
+    return categories;
   }
 }
