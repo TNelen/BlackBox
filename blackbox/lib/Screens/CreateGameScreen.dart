@@ -22,8 +22,6 @@ class CreateGameScreen extends StatefulWidget {
 
 class _CreateGameScreenState extends State<CreateGameScreen> {
   Database _database;
-  TextEditingController nameController = new TextEditingController();
-  TextEditingController descController = new TextEditingController();
 
   _CreateGameScreenState(Database db) {
     this._database = db;
@@ -103,26 +101,13 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final nameField = TextField(
-      obscureText: false,
-      controller: nameController,
-      style: TextStyle(fontSize: 20, color: Colors.black),
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          fillColor: Constants.iWhite,
-          filled: true,
-          hintText: "Group Name",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
-    );
-
     final createButton = Hero(
         tag: 'tobutton',
         child: Padding(
           padding: EdgeInsets.only(left: 45, right: 45),
           child: Material(
             elevation: 5.0,
-            borderRadius: BorderRadius.circular(28.0),
+            borderRadius: BorderRadius.circular(26.0),
             color: Constants.colors[Constants.colorindex],
             child: MaterialButton(
               minWidth: MediaQuery.of(context).size.width,
@@ -131,7 +116,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 // Create map of members
                 Map<String, String> members = new Map<String, String>();
                 members[Constants.getUserID()] = Constants.getUsername();
-                _groupName = nameController.text;
+                _groupName = "default";
                 _groupCategory = selectedCategory;
                 if (_groupName.length != 0 && _groupCategory != null) {
                   // Generate a unique ID and save the group
@@ -174,20 +159,18 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
         }
         return ListView.builder(
           shrinkWrap: true,
-          itemCount: 5,
+          itemCount: projectSnap.data[0].length,
           itemBuilder: (context, index) {
-            print(projectSnap.data);
-            String description = projectSnap.data[0][index];
-            String categoryname = projectSnap.data[1][index];
-            print(description);
-            print(categoryname);
+            int amount = projectSnap.data[2][index];
+            String description = projectSnap.data[1][index];
+            String categoryname = projectSnap.data[0][index];
             return Flexible(
                 child: Card(
                     color: categoryname == selectedCategory
                         ? Constants.iLight
                         : Constants.iDarkGrey,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28.0),
+                      borderRadius: BorderRadius.circular(16.0),
                     ),
                     child: InkResponse(
                       splashColor: Constants.colors[Constants.colorindex],
@@ -201,18 +184,42 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                       child: Container(
                         child: Center(
                           child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 10.0, right: 10),
-                            child: Text(
-                              categoryname,
-                              style: new TextStyle(
-                                  color: categoryname == selectedCategory
-                                      ? Constants.iDarkGrey
-                                      : Constants.iWhite,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
+                              padding: const EdgeInsets.only(
+                                  top: 5, left: 10.0, right: 10, bottom: 5),
+                              child: Column(children: [
+                                Text(
+                                  categoryname,
+                                  style: new TextStyle(
+                                      color: categoryname == selectedCategory
+                                          ? Constants.iDarkGrey
+                                          : Constants.iWhite,
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  description,
+                                  textAlign: TextAlign.center,
+                                  style: new TextStyle(
+                                      color: categoryname == selectedCategory
+                                          ? Constants.iBlack
+                                          : Constants.iLight,
+                                      fontSize: 17.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  amount.toString() + '  questions',
+                                  textAlign: TextAlign.center,
+                                  style: new TextStyle(
+                                      color: categoryname == selectedCategory
+                                          ? Constants.iBlack
+                                          : Constants.iLight,
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 3),
+                              ])),
                         ),
                       ),
                     )));
@@ -221,6 +228,74 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       },
       future: FirebaseGetters.getQuestionCategories(),
     );
+
+    final voteOnSelfSwitch = Container(
+        child: Card(
+      color: Constants.iDarkGrey,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: Container(
+        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(children: <Widget>[
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                'Vote on yourself',
+                style: TextStyle(fontSize: 25.0, color: Constants.iWhite),
+              ),
+            ]),
+            Switch(
+              value: _canVoteOnSelf,
+              onChanged: (value) {
+                _canVoteOnSelf = value;
+                setState(() {});
+              },
+              activeTrackColor: Constants.colors[Constants.colorindex],
+              activeColor: Constants.iWhite,
+            ),
+          ],
+        ),
+      ),
+    ));
+
+    final voteBlancoSwitch = Container(
+        child: Card(
+      color: Constants.iDarkGrey,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: Container(
+        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(children: <Widget>[
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                'Blank vote',
+                style: TextStyle(fontSize: 25.0, color: Constants.iWhite),
+              ),
+            ]),
+            Switch(
+              value: _canVoteBlank,
+              onChanged: (value) {
+                _canVoteBlank = value;
+                setState(() {});
+              },
+              activeTrackColor: Constants.colors[Constants.colorindex],
+              activeColor: Constants.iWhite,
+            ),
+          ],
+        ),
+      ),
+    ));
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -257,15 +332,14 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           ]),
         ),
         body: Padding(
-            padding: EdgeInsets.only(left: 22, right: 22, bottom: 40),
+            padding: EdgeInsets.only(left: 22, right: 22, bottom: 0),
             child: Center(
               child: Container(
                 color: Constants.iBlack,
                 child: Padding(
-                  padding: const EdgeInsets.all(36.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                  padding: const EdgeInsets.only(left: 22, right: 22),
+                  child: ListView(
+                    shrinkWrap: true,
                     children: <Widget>[
                       AutoSizeText(
                         "Create new Game",
@@ -275,18 +349,26 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                             fontWeight: FontWeight.w300),
                         maxLines: 1,
                       ),
-                      SizedBox(height: 60.0),
+                      SizedBox(height: 30.0),
                       Text(
-                        'Enter game details',
+                        'Game settings',
                         style: new TextStyle(
                             color: Constants.colors[Constants.colorindex],
                             fontSize: 30.0),
                       ),
-                      SizedBox(height: 45.0),
-                      nameField,
-                      SizedBox(height: 45.0),
+                      SizedBox(height: 20.0),
+                      voteBlancoSwitch,
+                      voteOnSelfSwitch,
+                      SizedBox(height: 20.0),
+                      Text(
+                        'Choose a category',
+                        style: new TextStyle(
+                            color: Constants.colors[Constants.colorindex],
+                            fontSize: 30.0),
+                      ),
+                      SizedBox(height: 20.0),
                       categoryField,
-                      SizedBox(height: 100.0),
+                      SizedBox(height: 20.0),
                       createButton,
                       SizedBox(height: 15.0),
                     ],

@@ -237,6 +237,8 @@ class FirebaseGetters {
   static Future<List<dynamic>> getQuestionCategories() async {
     List<String> categories = List<String>();
     List<String> descriptions = List<String>();
+    List<int> amounts = List<int>();
+
     await Firestore.instance
         .collection("questionsv2")
         .document("questionList")
@@ -250,11 +252,12 @@ class FirebaseGetters {
             print(e.key + " : " + e.value[0]);
             categories.add(e.key.toString());
             descriptions.add(e.value[0].toString());
+            amounts.add(e.value.length - 1);
           }
         }
       }
     });
-    print([categories, descriptions]);
-    return [categories, descriptions];
+    print([categories, descriptions, amounts]);
+    return [categories, descriptions, amounts];
   }
 }
