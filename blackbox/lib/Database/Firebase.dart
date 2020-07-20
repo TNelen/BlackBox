@@ -61,7 +61,7 @@ class Firebase implements Database{
     }).catchError((error) {
         print(error);
         return false;
-    });;
+    });
   }
 
 
@@ -156,7 +156,7 @@ class Firebase implements Database{
         return value;
     }).catchError((error) {
         print(error);
-        return new GroupData("Default", "Default group", "00000", "None", new Map<String, String>(), new List<String>());
+        return new GroupData("Default", "Default group", false, true,"00000", "None", new Map<String, String>(), new List<String>());
     });
   }
 

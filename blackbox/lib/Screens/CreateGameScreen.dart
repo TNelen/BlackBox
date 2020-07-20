@@ -32,6 +32,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   String selectedCategory;
   String _groupName;
   String _groupCategory;
+  bool _canVoteBlank = false;
+  bool _canVoteOnSelf = true;
   Color color = Constants.iDarkGrey;
 
   void _showDialog(String code) {
@@ -140,6 +142,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                       GroupData groupdata = new GroupData(
                           _groupName,
                           _groupCategory,
+                          _canVoteBlank,
+                          _canVoteOnSelf,
                           code,
                           Constants.getUserID(),
                           members,

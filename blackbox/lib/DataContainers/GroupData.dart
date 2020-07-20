@@ -19,10 +19,13 @@ class GroupData {
   /// Basic data about this group
   String _groupName;         /// Name of the group
   String _groupDescription;  /// Description of the group
+  final bool canVoteBlank;
+  final bool canVoteOnSelf;
+
   String _groupID;           /// The unique ID of this group
   String _adminID;           /// The unique ID of the admin
   bool _isPlaying;           /// A bool indicating the game state
-  int _adminVoteTimestamp;       /// An int indicating when the admin has last voted (milliseconds). Will be null if the admin has not voted yet this round
+  int _adminVoteTimestamp;   /// An int indicating when the admin has last voted (milliseconds). Will be null if the admin has not voted yet this round
   Map<String, String> _members = new Map<String, String>(); /// A list of unique IDs of all members in this group
   List<String> _questionlist;          /// A list of available question id's
 
@@ -42,7 +45,7 @@ class GroupData {
 
 
   /// Create a group with the given data fields
-  GroupData(this._groupName, this._groupDescription, this._groupID, this._adminID, this._members, this._questionlist) {
+  GroupData(this._groupName, this._groupDescription, this.canVoteBlank, this.canVoteOnSelf, this._groupID, this._adminID, this._members, this._questionlist) {
     _isPlaying = true;
     _nextQuestion = new Question.empty();
     _lastVotes = new Map<String, String>();
@@ -54,8 +57,8 @@ class GroupData {
   }
 
   /// Create a group with the given data fields AND status fields
-  GroupData.extended(this._groupName, this._groupDescription, this._groupID, this._adminID, this._isPlaying, this._members, this._nextQuestion, 
-                     this._lastVotes, this._newVotes, this._totalVotes, this._playing, this._questionlist, this._adminVoteTimestamp, this._history);
+  GroupData.extended(this._groupName, this._groupDescription, this.canVoteBlank, this.canVoteOnSelf, this._groupID, this._adminID, this._isPlaying, this._members, 
+                     this._nextQuestion, this._lastVotes, this._newVotes, this._totalVotes, this._playing, this._questionlist, this._adminVoteTimestamp, this._history);
 
 
   /// ---------------- \\\
@@ -71,6 +74,8 @@ class GroupData {
     _groupID          = snap.documentID.toString(),
     _adminID          = snap.data['admin'],
     _isPlaying        = snap.data['isPlaying'],
+    canVoteBlank     = snap.data['canVoteBlank'],
+    canVoteOnSelf    = snap.data['canVoteOnSelf'],
     _adminVoteTimestamp   = snap.data['adminVoteTimestamp'],
     /// Get status data
     _nextQuestion = new Question( snap.data['nextQuestionID'], snap.data['nextQuestion'], Question.getCategoryFromString(snap.data['nextQuestionCategory']), snap.data['nextQuestionCreatorID'], snap.data['nextQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
@@ -825,8 +830,7 @@ class GroupData {
   }
 
 
-  /// A temporary method for testing by printing the contents of this group
-  @Deprecated('Will be deleted before release!')
+  /// A method for testing by printing the contents of this group
   void printData()
   {
     String membersString = "";
