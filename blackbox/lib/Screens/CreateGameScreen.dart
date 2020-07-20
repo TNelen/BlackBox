@@ -32,7 +32,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   }
 
   final QuestionListGetter questionListGetter = QuestionListGetter();
-  List<QuestionCategory> categories = List<QuestionCategory>();
   List<String> selectedCategory = [];
   String _groupName;
   bool _canVoteBlank = false;
@@ -172,7 +171,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           return Container();
         }
 
-        categories = List<QuestionCategory>();
 
         return ListView.builder(
           shrinkWrap: true,
@@ -181,8 +179,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             int amount = projectSnap.data[index].amount;
             String description = projectSnap.data[index].description;
             String categoryname = projectSnap.data[index].name;
-
-            categories.add( projectSnap.data[index] );
 
             return Flexible(
                 child: Card(
