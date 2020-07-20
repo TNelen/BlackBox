@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     /// Show a message if one is set in the database
   }
 
+
   void isAppUpToDate() async {
     Appinfo appinfo;
     if (Constants.enableMSG[Constants.enableVersionMSG]) {

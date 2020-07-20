@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import '../Constants.dart';
 import '../DataContainers/GroupData.dart';
+import '../DataContainers/Question.dart';
 import '../Interfaces/Database.dart';
 import 'GameScreen.dart';
 import 'Popup.dart';
 import 'package:share/share.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import '../Database/FirebaseGetters.dart';
 
 class CreateGameScreen extends StatefulWidget {
   Database _database;
@@ -27,8 +29,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     this._database = db;
   }
 
+  String selectedCategory;
   String _groupName;
-  String _groupCategory = "Official";
+  String _groupCategory;
   Color color = Constants.iDarkGrey;
 
   void _showDialog(String code) {
@@ -127,6 +130,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 Map<String, String> members = new Map<String, String>();
                 members[Constants.getUserID()] = Constants.getUsername();
                 _groupName = nameController.text;
+                _groupCategory = selectedCategory;
                 if (_groupName.length != 0 && _groupCategory != null) {
                   // Generate a unique ID and save the group
                   _database.generateUniqueGroupCode().then((code) {
@@ -156,6 +160,63 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             ),
           ),
         ));
+
+    final categoryField = FutureBuilder(
+      builder: (context, projectSnap) {
+        if (projectSnap.connectionState == ConnectionState.none &&
+            projectSnap.hasData == null) {
+          //print('project snapshot data is: ${projectSnap.data}');
+          return Container();
+        }
+        return ListView.builder(
+          shrinkWrap: true,
+          itemCount: 5,
+          itemBuilder: (context, index) {
+            print(projectSnap.data);
+            String description = projectSnap.data[0][index];
+            String categoryname = projectSnap.data[1][index];
+            print(description);
+            print(categoryname);
+            return Flexible(
+                child: Card(
+                    color: categoryname == selectedCategory
+                        ? Constants.iLight
+                        : Constants.iDarkGrey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28.0),
+                    ),
+                    child: InkResponse(
+                      splashColor: Constants.colors[Constants.colorindex],
+                      radius: 50,
+                      onTap: () {
+                        setState(() {
+                          color = Constants.colors[Constants.colorindex];
+                          selectedCategory = categoryname;
+                        });
+                      },
+                      child: Container(
+                        child: Center(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, right: 10),
+                            child: Text(
+                              categoryname,
+                              style: new TextStyle(
+                                  color: categoryname == selectedCategory
+                                      ? Constants.iDarkGrey
+                                      : Constants.iWhite,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )));
+          },
+        );
+      },
+      future: FirebaseGetters.getQuestionCategories(),
+    );
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -219,6 +280,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                       ),
                       SizedBox(height: 45.0),
                       nameField,
+                      SizedBox(height: 45.0),
+                      categoryField,
                       SizedBox(height: 100.0),
                       createButton,
                       SizedBox(height: 15.0),
