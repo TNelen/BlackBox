@@ -27,7 +27,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     this._database = db;
   }
 
-  String selectedCategory;
+  List<String> selectedCategory = [];
   String _groupName;
   String _groupCategory;
   bool _canVoteBlank = false;
@@ -117,7 +117,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 Map<String, String> members = new Map<String, String>();
                 members[Constants.getUserID()] = Constants.getUsername();
                 _groupName = "default";
-                _groupCategory = selectedCategory;
+                _groupCategory = "test";
                 if (_groupName.length != 0 && _groupCategory != null) {
                   // Generate a unique ID and save the group
                   _database.generateUniqueGroupCode().then((code) {
@@ -166,7 +166,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             String categoryname = projectSnap.data[0][index];
             return Flexible(
                 child: Card(
-                    color: categoryname == selectedCategory
+                    color: selectedCategory.contains(categoryname)
                         ? Constants.iLight
                         : Constants.iDarkGrey,
                     shape: RoundedRectangleBorder(
@@ -178,7 +178,11 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                       onTap: () {
                         setState(() {
                           color = Constants.colors[Constants.colorindex];
-                          selectedCategory = categoryname;
+                          if (!selectedCategory.contains(categoryname)) {
+                            selectedCategory.add(categoryname);
+                          } else if (selectedCategory.contains(categoryname)) {
+                            selectedCategory.remove(categoryname);
+                          }
                         });
                       },
                       child: Container(
@@ -190,7 +194,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                                 Text(
                                   categoryname,
                                   style: new TextStyle(
-                                      color: categoryname == selectedCategory
+                                      color: selectedCategory
+                                              .contains(categoryname)
                                           ? Constants.iDarkGrey
                                           : Constants.iWhite,
                                       fontSize: 25.0,
@@ -201,7 +206,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                                   description,
                                   textAlign: TextAlign.center,
                                   style: new TextStyle(
-                                      color: categoryname == selectedCategory
+                                      color: selectedCategory
+                                              .contains(categoryname)
                                           ? Constants.iBlack
                                           : Constants.iLight,
                                       fontSize: 17.0,
@@ -212,7 +218,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                                   amount.toString() + '  questions',
                                   textAlign: TextAlign.center,
                                   style: new TextStyle(
-                                      color: categoryname == selectedCategory
+                                      color: selectedCategory
+                                              .contains(categoryname)
                                           ? Constants.iBlack
                                           : Constants.iLight,
                                       fontSize: 13.0,
