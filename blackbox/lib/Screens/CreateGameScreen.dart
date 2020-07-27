@@ -38,6 +38,13 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   bool _canVoteOnSelf = true;
   Color color = Constants.iDarkGrey;
 
+  bool _isNumeric(String str) {
+    if (str == null) {
+      return false;
+    }
+    return double.tryParse(str) != null;
+  }
+
   void _showDialog(String code) {
     // flutter defined function
     showDialog(
@@ -58,12 +65,50 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           content: new Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                code,
-                style: TextStyle(
-                    fontFamily: "atarian",
-                    color: Constants.iBlack,
-                    fontSize: 25),
+              RichText(
+                text: TextSpan(
+                    // set the default style for the children TextSpans
+                    style: TextStyle(
+                        fontFamily: "atarian",
+                        color: Constants.iBlack,
+                        fontSize: 25),
+                    children: [
+                      TextSpan(
+                          text: code[0],
+                          style: !_isNumeric(code[0])
+                              ? TextStyle(color: Constants.iBlack)
+                              : TextStyle(
+                                  color:
+                                      Constants.colors[Constants.colorindex])),
+                      TextSpan(
+                          text: code[1],
+                          style: !_isNumeric(code[1])
+                              ? TextStyle(color: Constants.iBlack)
+                              : TextStyle(
+                                  color:
+                                      Constants.colors[Constants.colorindex])),
+                      TextSpan(
+                          text: code[2],
+                          style: !_isNumeric(code[2])
+                              ? TextStyle(color: Constants.iBlack)
+                              : TextStyle(
+                                  color:
+                                      Constants.colors[Constants.colorindex])),
+                      TextSpan(
+                          text: code[3],
+                          style: !_isNumeric(code[3])
+                              ? TextStyle(color: Constants.iBlack)
+                              : TextStyle(
+                                  color:
+                                      Constants.colors[Constants.colorindex])),
+                      TextSpan(
+                          text: code[4],
+                          style: !_isNumeric(code[4])
+                              ? TextStyle(color: Constants.iBlack)
+                              : TextStyle(
+                                  color:
+                                      Constants.colors[Constants.colorindex])),
+                    ]),
               ),
               IconButton(
                   icon: Icon(
@@ -124,17 +169,16 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 if (_groupName.length != 0 && selectedCategory.length != 0) {
                   // Generate a unique ID and save the group
                   _database.generateUniqueGroupCode().then((code) {
-                    
                     List<String> questionIDs = List<String>();
                     String description = "";
 
-                    for(String groupCategory in selectedCategory)
-                    {
-                      questionIDs.addAll( questionListGetter.mappings[ groupCategory ] ?? [] );
+                    for (String groupCategory in selectedCategory) {
+                      questionIDs.addAll(
+                          questionListGetter.mappings[groupCategory] ?? []);
                       description += groupCategory + " ";
                     }
 
-                    questionIDs.shuffle( Random.secure() );
+                    questionIDs.shuffle(Random.secure());
 
                     GroupData groupdata = new GroupData(
                         _groupName,
@@ -144,8 +188,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                         code,
                         Constants.getUserID(),
                         members,
-                        questionIDs
-                      );
+                        questionIDs);
                     _database.updateGroup(groupdata);
                     _showDialog(code);
                   });
@@ -165,27 +208,25 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     final categoryField = FutureBuilder<List<QuestionCategory>>(
       builder: (context, projectSnap) {
         if (projectSnap.connectionState == ConnectionState.none &&
-            projectSnap.hasData == null
-            || projectSnap.data == null) {
+                projectSnap.hasData == null ||
+            projectSnap.data == null) {
           //print('project snapshot data is: ${projectSnap.data}');
           return Container();
         }
-
 
         return ListView.builder(
           shrinkWrap: true,
           physics: ClampingScrollPhysics(),
           itemCount: projectSnap.data.length,
           itemBuilder: (context, index) {
-
             int amount = projectSnap.data[index].amount;
             String description = projectSnap.data[index].description;
             String categoryname = projectSnap.data[index].name;
 
             return Card(
               color: selectedCategory.contains(categoryname)
-              ? Constants.iLight
-              : Constants.iDarkGrey,
+                  ? Constants.iLight
+                  : Constants.iDarkGrey,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
               ),
@@ -205,14 +246,14 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 child: Container(
                   child: Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 5, left: 10.0, right: 10, bottom: 5),
+                      padding: const EdgeInsets.only(
+                          top: 5, left: 10.0, right: 10, bottom: 5),
                       child: Column(
                         children: [
                           Text(
                             categoryname,
                             style: new TextStyle(
-                                color: selectedCategory
-                                        .contains(categoryname)
+                                color: selectedCategory.contains(categoryname)
                                     ? Constants.iDarkGrey
                                     : Constants.iWhite,
                                 fontSize: 25.0,
@@ -223,8 +264,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                             description,
                             textAlign: TextAlign.center,
                             style: new TextStyle(
-                                color: selectedCategory
-                                        .contains(categoryname)
+                                color: selectedCategory.contains(categoryname)
                                     ? Constants.iBlack
                                     : Constants.iLight,
                                 fontSize: 17.0,
@@ -235,8 +275,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                             amount.toString() + '  questions',
                             textAlign: TextAlign.center,
                             style: new TextStyle(
-                                color: selectedCategory
-                                        .contains(categoryname)
+                                color: selectedCategory.contains(categoryname)
                                     ? Constants.iBlack
                                     : Constants.iLight,
                                 fontSize: 13.0,
@@ -385,7 +424,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                               Text(
                                 'Game settings',
                                 style: new TextStyle(
-                                    color: Constants.colors[Constants.colorindex],
+                                    color:
+                                        Constants.colors[Constants.colorindex],
                                     fontSize: 30.0),
                               ),
                               SizedBox(height: 20.0),
@@ -395,14 +435,14 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                               Text(
                                 'Choose a category',
                                 style: new TextStyle(
-                                    color: Constants.colors[Constants.colorindex],
+                                    color:
+                                        Constants.colors[Constants.colorindex],
                                     fontSize: 30.0),
                               ),
                               SizedBox(height: 20.0),
                               LimitedBox(
-                                maxHeight: constraints.maxHeight / 3,
-                                child: categoryField
-                              ),
+                                  maxHeight: constraints.maxHeight / 3,
+                                  child: categoryField),
                               SizedBox(height: 20.0),
                             ],
                           ),
