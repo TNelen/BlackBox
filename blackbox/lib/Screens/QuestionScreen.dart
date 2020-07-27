@@ -174,17 +174,13 @@ class _QuestionScreenState extends State<QuestionScreen>
     );
 
     final List<UserData> userData = groupData.getPlayingUserdata();
-    if (groupData.canVoteBlank)
-      userData.add( GroupData.blankUser );
-    if ( ! groupData.canVoteOnSelf) 
-    {
+    if (groupData.canVoteBlank) userData.add(GroupData.blankUser);
+    if (!groupData.canVoteOnSelf) {
       int deleteIndex;
       for (int i = 0; i < userData.length; i++)
-        if (Constants.getUserID() == userData[i].getUserID())
-          deleteIndex = i;
-      
-      if (deleteIndex != null)
-        userData.removeAt( deleteIndex );
+        if (Constants.getUserID() == userData[i].getUserID()) deleteIndex = i;
+
+      if (deleteIndex != null) userData.removeAt(deleteIndex);
     }
 
     final membersList = Flexible(
@@ -192,14 +188,9 @@ class _QuestionScreenState extends State<QuestionScreen>
         crossAxisCount: 2,
         childAspectRatio: (3 / 1),
         padding: EdgeInsets.symmetric(horizontal: 8.0),
-        children: 
-            userData
-            .map((data) => buildUserVoteCard( data ))
-            .toList(),
+        children: userData.map((data) => buildUserVoteCard(data)).toList(),
       ),
     );
-
-
 
     final voteButton = Hero(
       tag: 'submit',
@@ -351,7 +342,19 @@ class _QuestionScreenState extends State<QuestionScreen>
                                             fontWeight: FontWeight.bold),
                                         textAlign: TextAlign.center,
                                       ),
-                                      SizedBox(height: 30),
+                                      SizedBox(height: 5),
+                                      Text(
+                                        '- ' +
+                                            groupData
+                                                .getQuestion()
+                                                .getCategory() +
+                                            ' -',
+                                        style: new TextStyle(
+                                            color: Constants.iWhite,
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -388,9 +391,7 @@ class _QuestionScreenState extends State<QuestionScreen>
         });
   }
 
-
-  Widget buildUserVoteCard(UserData data)
-  {
+  Widget buildUserVoteCard(UserData data) {
     return Card(
       color: data.getUserID() == clickedmember
           ? Constants.iLight
@@ -409,8 +410,8 @@ class _QuestionScreenState extends State<QuestionScreen>
         child: Container(
           child: Center(
               child: Padding(
-            padding: const EdgeInsets.only(
-                top: 1.0, bottom: 1, left: 7, right: 7),
+            padding:
+                const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
             child: Text(
               data.getUsername().split(' ')[0],
               style: new TextStyle(
@@ -425,7 +426,6 @@ class _QuestionScreenState extends State<QuestionScreen>
       ),
     );
   }
-
 }
 
 class ReportPopup extends StatefulWidget {
