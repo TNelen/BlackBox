@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:blackbox/Database/GoogleUserHandler.dart';
 import 'package:flutter/material.dart';
 import 'package:blackbox/Screens/Home/HomeScreen.dart';
+import 'package:flutter/services.dart';
 import 'Constants.dart';
 import './Database/GoogleUserHandler.dart';
 import './DataContainers/UserData.dart';
@@ -18,6 +19,10 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: SplashScreen(Constants.database));
