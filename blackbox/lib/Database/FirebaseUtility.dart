@@ -51,7 +51,7 @@ class FirebaseUtility {
 
     /// Get group with ID
     await Firestore.instance
-        .collection("questions")
+        .collection("questionsv2")
         .document( questionID ).get().then( (document) {
           
           // Group exists!
@@ -74,7 +74,7 @@ class FirebaseUtility {
 
     /// Get group with ID
     await Firestore.instance
-        .collection("questions")
+        .collection("questionsv2")
         .document( question.getQuestionID() )
         .get()
         .then( (document) {
@@ -97,7 +97,7 @@ class FirebaseUtility {
 
     /// Get group with ID
     await Firestore.instance
-        .collection("questions")
+        .collection("questionsv2")
         .where( "question", isEqualTo: question.getQuestion()  )
         .getDocuments()
         .then( (documents) {
@@ -126,7 +126,7 @@ class FirebaseUtility {
 
         // Check whether or not the generated ID exists 
         await Firestore.instance
-            .collection("questions")
+            .collection("questionsv2")
             .document( newRandom ).get().then( (document) {
 
               // ID does not exist, unique code found!
@@ -264,7 +264,7 @@ class FirebaseUtility {
     /// Get all questions
     Map<String, Map<String, dynamic>> questions = new Map<String, Map<String, dynamic>>();  // Mapping document ID to its contents
 
-    await Firestore.instance.collection("questions").getDocuments().then( (docs) {          // Get ALL questions and add them to the Map
+    await Firestore.instance.collection("questionsv2").getDocuments().then( (docs) {          // Get ALL questions and add them to the Map
       for (DocumentSnapshot document in docs.documents)
       {
         questions[document.documentID] = document.data;
