@@ -334,27 +334,13 @@ class ResultScreenState extends State<ResultScreen> {
           List<UserRankData> alltimeWinners =
               groupData.getUserRankingList('alltime', null);
 
-          // Get current blank data and remove from users
-          UserRankData currentBlankData;
-          int deleteID;
-          int i = 0;
-          /*for (UserRankData userRankData in currentWinners) {
-            if (userRankData.id == GroupData.blankUser.getUserID()) {
-              currentBlankData = userRankData;
-              deleteID = i;
-            }
-            i++;
-          }
-
-          if (deleteID != null) currentWinners.removeAt(deleteID);*/
-
           // Get alltime blank data and remove from users
           UserRankData alltimeBlankData;
-          deleteID = null;
-          i = 0;
+          int deleteID;
+          int i = 0;
           for (UserRankData userRankData in alltimeWinners) {
             if (userRankData.id == GroupData.blankUser.getUserID()) {
-              currentBlankData = userRankData;
+              alltimeBlankData = userRankData;
               deleteID = i;
             }
             i++;
