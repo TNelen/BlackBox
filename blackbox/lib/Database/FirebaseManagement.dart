@@ -2,6 +2,29 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseManagement {
   
+  /// Remove groups where the last activity was a given number of days ago
+  /// Will not accept input under 7 days 
+  /// Timestamps are based on local time so they may only be accurate up to 27 hours
+  void removeOldGroups(int days) async
+  {
+    if (days < 7) {
+      print('You tried to delete recent groups. Now only deleting groups older than 7 days');
+      days = 7;
+    }
+
+    int now = DateTime.now().millisecondsSinceEpoch;
+    int threshold = now - (days * 86400000);  // x days * 86400000 milliseconds / day -> x*86400000 milliseconds
+
+    QuerySnapshot snap = await Firestore.instance.collection('groups').where( 'lastUpdate', isLessThan:  threshold).getDocuments();
+    print('Deleting ' + snap.documents.length.toString() + ' documents');
+    for (DocumentSnapshot doc in snap.documents)
+    {
+      await Firestore.instance.document( doc.documentID ).delete();
+    }
+    print('Deleting of old groups ($days+ days of inactivity) has been completed');
+  }
+
+  /// Add a list of question to an existing category
   void addQuestions(String category, List<String> newQuestions) async
   {
     print( 'Adding new questions...' );
