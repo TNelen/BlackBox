@@ -219,7 +219,8 @@ class ResultScreenState extends State<ResultScreen> {
             if (currentQuestion == groupData.getQuestionID()) {
               if (groupData.getAdminID() == Constants.getUserID()) {
                 if (groupData.getNumVotes() == groupData.getNumPlaying() ||
-                    timeout == true) {
+                    timeout == true ||
+                    !groupData.getIsPlaying()) {
                   timeout = false;
                   getRandomNexQuestion();
                 }
@@ -233,7 +234,7 @@ class ResultScreenState extends State<ResultScreen> {
               }
               remainingVotesText += ' remaining';
 
-              int remainingQuestions = groupData.getQuestionList().length + 1;
+              int remainingQuestions = groupData.getQuestionList().length;
               String remainingQuestionsText = ' question';
               if (remainingQuestions != 1) {
                 remainingQuestionsText += 's';
@@ -328,42 +329,38 @@ class ResultScreenState extends State<ResultScreen> {
                   ));
             }
           }
-          List<UserRankData> currentWinners = groupData.getUserRankingList('previous', null);
-          List<UserRankData> alltimeWinners = groupData.getUserRankingList('alltime', null);
+          List<UserRankData> currentWinners =
+              groupData.getUserRankingList('previous', null);
+          List<UserRankData> alltimeWinners =
+              groupData.getUserRankingList('alltime', null);
 
           // Get current blank data and remove from users
           UserRankData currentBlankData;
           int deleteID;
           int i = 0;
-          for (UserRankData userRankData in currentWinners)
-          {
-            if (userRankData.id == GroupData.blankUser.getUserID())
-            {
+          /*for (UserRankData userRankData in currentWinners) {
+            if (userRankData.id == GroupData.blankUser.getUserID()) {
               currentBlankData = userRankData;
               deleteID = i;
             }
             i++;
           }
 
-          if (deleteID != null)
-            currentWinners.removeAt( deleteID );
+          if (deleteID != null) currentWinners.removeAt(deleteID);*/
 
           // Get alltime blank data and remove from users
           UserRankData alltimeBlankData;
           deleteID = null;
           i = 0;
-          for (UserRankData userRankData in alltimeWinners)
-          {
-            if (userRankData.id == GroupData.blankUser.getUserID())
-            {
+          for (UserRankData userRankData in alltimeWinners) {
+            if (userRankData.id == GroupData.blankUser.getUserID()) {
               currentBlankData = userRankData;
               deleteID = i;
             }
             i++;
           }
 
-          if (deleteID != null)
-            alltimeWinners.removeAt( deleteID );
+          if (deleteID != null) alltimeWinners.removeAt(deleteID);
 
           // currentWinners.removeWhere((element) => element.id == GroupData.blankUser.getUserID());
           // alltimeWinners.removeWhere((element) => element.id == GroupData.blankUser.getUserID());
@@ -622,11 +619,11 @@ class ResultScreenState extends State<ResultScreen> {
                                       child: Column(
                                         children: <Widget>[
                                           AutoSizeText(
-                                            currentWinners.length == 0 ?
-                                            "" :
-                                            currentWinners[0]
-                                                .getUserName()
-                                                .split(' ')[0],
+                                            currentWinners.length == 0
+                                                ? ""
+                                                : currentWinners[0]
+                                                    .getUserName()
+                                                    .split(' ')[0],
                                             style: new TextStyle(
                                                 color: Constants.colors[
                                                     Constants.colorindex],
@@ -636,17 +633,17 @@ class ResultScreenState extends State<ResultScreen> {
                                             maxLines: 1,
                                           ),
                                           Text(
-                                            currentWinners.length == 0 ?
-                                            "" :
-                                            currentWinners[0]
-                                                    .getNumVotes()
-                                                    .toString() +
-                                                (currentWinners[0]
-                                                            .getNumVotes()
-                                                            .toString() ==
-                                                        '1'
-                                                    ? ' vote'
-                                                    : ' votes'),
+                                            currentWinners.length == 0
+                                                ? ""
+                                                : currentWinners[0]
+                                                        .getNumVotes()
+                                                        .toString() +
+                                                    (currentWinners[0]
+                                                                .getNumVotes()
+                                                                .toString() ==
+                                                            '1'
+                                                        ? ' vote'
+                                                        : ' votes'),
                                             style: new TextStyle(
                                                 color: Constants.iWhite,
                                                 fontSize: 17.0,

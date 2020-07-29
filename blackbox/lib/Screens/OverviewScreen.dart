@@ -157,7 +157,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                               ),
                                               Text(
                                                 results[index2]
-                                                    .getUserName()
+                                                    .getId()
                                                     .split(' ')[0],
                                                 style: new TextStyle(
                                                     color: index2 == 0
