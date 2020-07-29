@@ -1,7 +1,12 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:blackbox/Database/FirebaseManagement.dart';
 import 'package:blackbox/Screens/Home/CreateGameBox.dart';
 import 'package:blackbox/Screens/Home/RateAppButton.dart';
 import 'package:blackbox/Screens/Home/TopIconBar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../Constants.dart';
 import 'CreateGameBox.dart';
 import 'JoinGameBox.dart';
@@ -15,6 +20,28 @@ class HomeScreen extends StatefulWidget {
 
   HomeScreen(Database db) {
     database = db;
+    
+    // Add firebase management logic here
+    FirebaseManagement dbManagement = FirebaseManagement();
+    // handleAddQuestionsFromFile( dbManagement );
+  }
+
+  void handleAddQuestionsFromFile(FirebaseManagement management) async {
+    
+    // Read file
+    String data = await rootBundle.loadString( 'assets/questions.txt' );
+    List<String> lines = data.split('\n');
+
+    if (lines.length <= 1) {
+      print("Please add more data to the file");
+      return;
+    }
+
+    List<String> validQuestions = List<String>();
+    for (String q in lines)
+      if (q != null && q != '' && q != lines[0] && q!= lines[0].substring(0, lines[0].length-1))
+        validQuestions.add( q );
+    management.addQuestions(lines[0].substring(0, lines[0].length-1), validQuestions);
   }
 
   @override
