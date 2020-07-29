@@ -2,6 +2,7 @@ import 'package:blackbox/Constants.dart';
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:blackbox/DataContainers/Issue.dart';
+import 'package:blackbox/Database/QuestionListGetter.dart';
 import '../DataContainers/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Interfaces/Database.dart';
@@ -45,9 +46,6 @@ class FirebaseSetters {
 
   static Future< bool > voteOnQuestion(Question q) async
   {
-    /// Perform checks
-    if (q.getCategoryAsCategory() != Category.Community)
-      return false;
     
     if (q.getQuestionID() == null || q.getQuestionID() == "")
       return false;
@@ -56,7 +54,7 @@ class FirebaseSetters {
 
     await Firestore.instance.runTransaction((Transaction transaction) async {
       DocumentReference qRef = Firestore.instance
-                                    .collection("questions")
+                                    .collection("questionsv2")
                                     .document( q.getQuestionID() );
       
       DocumentSnapshot ds = await transaction.get( qRef );
@@ -310,7 +308,7 @@ class FirebaseSetters {
       {
         /// get current reports
         DocumentReference reportRef = Firestore.instance
-                                      .collection("questions")
+                                      .collection("questionsv2")
                                       .document( uniqueID );
 
         DocumentSnapshot reports = await transaction.get( reportRef );
@@ -321,7 +319,7 @@ class FirebaseSetters {
           data['disturbingReports'] = reports.data['disturbingReports'];
         if (reports.data['grammarReports'] != null)
           data['grammarReports'] = reports.data['grammarReports'];
-        if (reports.data['votes'] != null && reports.data["category"] == Question.getStringFromCategory( Category.Community ))
+        if (reports.data['votes'] != null)
           data['votes'] = reports.data['votes'];
       }
 
@@ -329,7 +327,7 @@ class FirebaseSetters {
 
       /// Save question
       DocumentReference qRef = Firestore.instance
-                .collection("questions")
+                .collection("questionsv2")
                 .document( uniqueID );
 
       await transaction.set(qRef, data);
@@ -337,9 +335,8 @@ class FirebaseSetters {
 
     /// Save question to the lists
     Question q = new Question(uniqueID, question.getQuestion(), question.getCategoryAsCategory(),question.getCreatorID(), question.getCreatorName());
-    List<Category> categories = new List<Category>();
-    categories.add( Category.All );
-    categories.add( question.getCategoryAsCategory() );
+    List<String> categories = new List<String>();
+    categories.add( question.getCategoryAsCategory().name );
 
     await _saveQuestionToList( q, categories );
     
@@ -350,7 +347,7 @@ class FirebaseSetters {
   /// Saves a question to the lists of the given categories
   /// The question will be removed from other arrays it is listed in. 
   /// Will create a list if none exists yet
-  static Future< void > _saveQuestionToList (Question question, List<Category> categories) async
+  static Future< void > _saveQuestionToList (Question question, List<String> categories) async
   {
 
     /// Update the question list
@@ -358,7 +355,7 @@ class FirebaseSetters {
       
       /// Update question list
       DocumentReference listRef = Firestore.instance
-                  .collection("questions")
+                  .collection("questionsv2")
                   .document( "questionList" );
 
       DocumentSnapshot doc = await transaction.get( listRef );
@@ -366,12 +363,8 @@ class FirebaseSetters {
       Map<String, dynamic> newData = new Map<String, dynamic>(); 
 
       /// Update every relevant category list
-      for (Category cat in Question.getCategoriesAsList())
+      for (String category in await QuestionListGetter().getCategoryNames())
       {
-
-        /// Get the category as String
-        String category = Question.getStringFromCategory( cat );
-
         /// Get the current List or create a new one
         List<String> questions;
         if (doc.data[ category ] != null)
@@ -383,7 +376,7 @@ class FirebaseSetters {
         }
 
         /// If the question SHOULD be in this list
-        if (categories.contains(cat)) {
+        if (categories.contains(category)) {
 
           if ( ! questions.contains( question.getQuestionID() ))
           {
@@ -426,7 +419,7 @@ class FirebaseSetters {
       await Firestore.instance.runTransaction((Transaction transaction) async {
 
         DocumentReference docRef = Firestore.instance
-                                    .collection("questions")
+                                    .collection("questionsv2")
                                     .document( question.getQuestionID() );
 
         /// Get the amount of current reports for each type
@@ -517,7 +510,7 @@ class FirebaseSetters {
       await Firestore.instance.runTransaction((Transaction transaction) async {
 
         DocumentReference docRef = Firestore.instance
-                                    .collection("questions")
+                                    .collection("questionsv2")
                                     .document( question.getQuestionID() );
         
 

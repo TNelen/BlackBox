@@ -55,17 +55,6 @@ class Firebase implements Database{
 
 
   @override
-  Future<bool> deleteQuestion(Question question) async {
-    return await FirebaseDeleters.deleteQuestion( question ).then((value) {
-        return true;
-    }).catchError((error) {
-        print(error);
-        return false;
-    });
-  }
-
-
-  @override
   Future<bool> deleteUser(UserData user) async {
     return await FirebaseDeleters.deleteUser( user ).then((value) {
         return true;
@@ -157,17 +146,6 @@ class Firebase implements Database{
     }).catchError((error) {
         print(error);
         return new GroupData("Default", "Default group", false, true,"00000", "None", new Map<String, String>(), new List<String>());
-    });
-  }
-
-
-  @override
-  Future<Question> getRandomQuestion(GroupData groupData, Category category) async {
-    return await FirebaseGetters.getRandomQuestion( groupData , category ).then((value) {
-        return value;
-    }).catchError((error) {
-        print(error);
-        return null;
     });
   }
 

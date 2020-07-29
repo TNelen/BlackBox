@@ -52,13 +52,6 @@ abstract class Database {
   Future< String > generateUniqueGroupCode();
 
 
-  /// Get a random question within the provided category
-  /// The question is guaranteed to not have a, Category anyppeared in the two rounds before
-  /// For a list of categories: check DataContainers/Question.dart
-  /// Returns null if an error occurred
-  Future< Question > getRandomQuestion( GroupData groupData, Category category );
-
-
   /// Get the next question in the list
   /// Returns null if an error occurred
   Future< Question > getNextQuestion( GroupData groupData);
@@ -177,14 +170,6 @@ abstract class Database {
   /// Returns true when complete
   /// Returns false when the group wasn't found or an error occurred
   Future< bool > deleteGroup( GroupData group );
-
-
-  /// Delete a Question from the database
-  /// Returns true when complete
-  /// Returns false when the question wasn't found
-  /// Returns true upon completion
-  /// Returns false after an error
-  Future< bool > deleteQuestion( Question question );
 
 
   /// Delete unused and/or testing groups from the database

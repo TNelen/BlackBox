@@ -25,62 +25,6 @@ class FirebaseDeleters {
   }
 
 
-  static Future< bool > deleteQuestion(Question question) async {
-
-    if ( ! await FirebaseUtility.doesQuestionExist( question.getQuestionID() ) )
-    {
-      return false;
-    }
-
-    Firestore.instance.runTransaction((Transaction transaction) async {
-            
-      /// Get the document containing the lists
-      DocumentReference listRef = Firestore.instance
-                                  .collection('questions')
-                                  .document( 'questionList' );
-      DocumentSnapshot snap = await transaction.get( listRef );
-
-
-      /// Create empty Map
-      Map<String, dynamic> newLists = new Map<String, dynamic>();
-      /// Fill the Map with new data, based on the current data
-      for (Category cat in Question.getCategoriesAsList())
-      {
-        /// Convert to String
-        String catString = Question.getStringFromCategory( cat );
-
-        /// Get list of questions
-        List<String> questions;
-        
-        if (snap.data[catString] != null)
-        {
-          List<dynamic> existing = snap.data[ catString ];
-          questions = existing.cast<String>().toList();
-
-          questions.remove( question.getQuestionID() );
-        } else {
-          questions = new List<String>();
-        }
-
-        newLists[ catString ] = questions;
-      }
-
-      /// Update list
-      await transaction.set(listRef, newLists);
-    });
-
-    /// Delete question document
-    await Firestore.instance
-      .collection('questions')
-      .document( question.getQuestionID() )
-      .delete();
-
-
-    return true;
-
-  }
-
-
   static Future< bool > deleteUser(UserData user) async {
     
     if ( ! await FirebaseUtility.doesUserExist( user.getUserID() ) )

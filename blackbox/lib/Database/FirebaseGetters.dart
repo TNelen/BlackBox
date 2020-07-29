@@ -2,8 +2,8 @@ import 'package:blackbox/DataContainers/Appinfo.dart';
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/QuestionCategory.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
+import 'package:blackbox/Database/QuestionListGetter.dart';
 import 'package:blackbox/Exceptions/GroupNotFoundException.dart';
-import 'package:flutter/material.dart';
 import '../DataContainers/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
@@ -106,27 +106,24 @@ class FirebaseGetters {
   }
 
   static Future<Question> getNextQuestion(GroupData groupData) async {
+    
+    QuestionListGetter getter = QuestionListGetter();
+    List<QuestionCategory> categories = await getter.getCategories();
+
     //get next question from arraylist.
     Question randomQuestion;
     if (groupData.getQuestionList().length != 0) {
       String questionId = groupData.getQuestionList().removeLast();
       await Firestore.instance
-          .collection("questions")
+          .collection("questionsv2")
           .document(questionId)
           .get()
           .then((document) {
-        Category category = Category.Official;
 
-        for (Category cat in Category.values) {
-          String comparableCategory = cat.toString().split('.').last;
-          if (document.data['category'] == null) {
-            cat = Category.Official;
-          }
-
-          if (comparableCategory == document.data['category']) {
+        QuestionCategory category = QuestionCategory.community();
+        for (QuestionCategory cat in categories)
+          if (cat.name == document.data['category'])
             category = cat;
-          }
-        }
 
         randomQuestion = new Question(
             document.documentID,
@@ -141,82 +138,9 @@ class FirebaseGetters {
       return new Question(
           "END",
           "The game has ended, please start a new game, or submit your own questions!",
-          Category.Official,
+          QuestionCategory.community(),
           "BlackBox",
           "BlackBox");
-  }
-
-  static Future<Question> getRandomQuestion(
-      GroupData groupData, Category category) async {
-    Question randomQuestion;
-    String randomQuestionID;
-
-    /// Select a random ID from the right category
-    await Firestore.instance
-        .collection("questions")
-        .document("questionList")
-        .get()
-        .then((document) {
-      /// Convert List<dynamic> to List<String>
-      List<dynamic> existing =
-          document.data[Question.getStringFromCategory(category)];
-      List<String> questions = existing.cast<String>().toList();
-
-      int randomID;
-      if (questions.length > 1) {
-        bool isSearching;
-        var random = new Random();
-
-        do {
-          isSearching = false;
-          randomID = random.nextInt(questions.length);
-          randomQuestionID = questions[randomID];
-
-          /// Make sure the question is not a duplicate
-          if (groupData.getLastQuestion().getQuestionID() == randomQuestionID)
-            isSearching = true;
-          else if (groupData.getQuestion().getQuestionID() == randomQuestionID)
-            isSearching = true;
-          else
-            isSearching = false;
-        } while (isSearching && questions.length > 3);
-      } else if (questions[0] != null) {
-        randomQuestionID = questions[0];
-      } else {
-        return new Question.add(
-            "Something went wrong wile fetching the question!",
-            Category.Official);
-      }
-    });
-
-    /// Get a random question
-    await Firestore.instance
-        .collection("questions")
-        .document(randomQuestionID)
-        .get()
-        .then((document) {
-      Category category = Category.Official;
-
-      for (Category cat in Category.values) {
-        String comparableCategory = cat.toString().split('.').last;
-        if (document.data['category'] == null) {
-          cat = Category.Official;
-        }
-
-        if (comparableCategory == document.data['category']) {
-          category = cat;
-        }
-      }
-
-      randomQuestion = new Question(
-          document.documentID,
-          document.data['question'],
-          category,
-          document.data['creatorID'],
-          document.data['creatorName']);
-    });
-
-    return randomQuestion;
   }
 
   static Future<Appinfo> getAppInfo() async {

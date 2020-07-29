@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:blackbox/DataContainers/QuestionCategory.dart';
+import 'package:blackbox/Database/QuestionListGetter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blackbox/Constants.dart';
 import '../DataContainers/UserData.dart';
@@ -79,8 +81,8 @@ class GroupData {
     canVoteOnSelf    = snap.data['canVoteOnSelf'],
     _adminVoteTimestamp   = snap.data['adminVoteTimestamp'],
     /// Get status data
-    _nextQuestion = new Question( snap.data['nextQuestionID'], snap.data['nextQuestion'], Question.getCategoryFromString(snap.data['nextQuestionCategory']), snap.data['nextQuestionCreatorID'], snap.data['nextQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
-    _lastQuestion = new Question( snap.data['lastQuestionID'], snap.data['lastQuestion'], Question.getCategoryFromString(snap.data['lastQuestionCategory']), snap.data['lastQuestionCreatorID'], snap.data['lastQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
+    _nextQuestion = new Question( snap.data['nextQuestionID'], snap.data['nextQuestion'], QuestionCategory( snap.data['nextQuestionCategory'], '', [''] ), snap.data['nextQuestionCreatorID'], snap.data['nextQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
+    _lastQuestion = new Question( snap.data['lastQuestionID'], snap.data['lastQuestion'], QuestionCategory( snap.data['lastQuestionCategory'], '', [''] ), snap.data['lastQuestionCreatorID'], snap.data['lastQuestionCreatorName']) ?? new Question.addDefault( snap.data['nextQuestion'] ) ?? new Question.empty(),
     _members      = _convertFirebaseMapString( snap.data['members']     ),
     _lastVotes    = _convertFirebaseMapString( snap.data['lastVotes']   ),
     _newVotes     = _convertFirebaseMapString( snap.data['newVotes']    ),

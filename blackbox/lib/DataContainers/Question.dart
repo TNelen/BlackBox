@@ -1,55 +1,14 @@
+import 'package:blackbox/DataContainers/QuestionCategory.dart';
+
 import '../Constants.dart';
 
 import 'UserData.dart';
 
-/// All question Categories should be put in here
-/// IMPORTANT NOTE: Also add each new category to Question#getCategoriesAsList()
-/// Otherwise, questions that are transfered from category may be within multiple categories
-enum Category { All, Official, Community }
-
 class Question {
-  /// Get a list of all values in the Category enum
-  static List<Category> getCategoriesAsList() {
-    List<Category> categories = new List<Category>();
-    categories.add(Category.All);
-    categories.add(Category.Official);
-    categories.add(Category.Community);
-    return categories;
-  }
-
-  /// Get a List of all categories in their String format
-  static List<String> getCategoriesAsStringList() {
-    List<Category> categories = getCategoriesAsList();
-    List<String> asString = new List<String>();
-    for (Category cat in categories) {
-      asString.add(getStringFromCategory(cat));
-    }
-
-    return asString;
-  }
-
-  /// Convert a String to Category
-  /// Will return Category.Default if no match was found
-  static Category getCategoryFromString(String category) {
-    for (Category cat in Category.values) {
-      String comparableCategory = cat.toString().split('.').last;
-      if (comparableCategory == category) {
-        return cat;
-      }
-    }
-
-    return Category.Official;
-  }
-
-  /// Turn a Category into a usable String
-  /// This String is display-friendly
-  static String getStringFromCategory(Category category) {
-    return category.toString().split('.').last;
-  }
 
   String _questionID = "";
   String _question = "";
-  Category _category = Category.Official;
+  QuestionCategory _category = QuestionCategory.community();
   String _creatorID = "";
   String _creatorName = "";
 
@@ -66,7 +25,7 @@ class Question {
       this._creatorName) {
     if (_questionID == null) _questionID = "";
     if (_question == null) _question = "";
-    if (_category == null) _category = Category.Official;
+    if (_category == null) _category = QuestionCategory.community();
     if (_creatorID == null) _creatorID = "";
     if (_creatorName == null) _creatorName = "";
   }
@@ -105,7 +64,7 @@ class Question {
   /// Category will be set to Category.Community
   /// User data will be those of the provided UserData
   Question.addFromUser(this._question, UserData user) {
-    _category = Category.Community;
+    _category = QuestionCategory.community();
     _creatorID = user.getUserID();
     _creatorName = user.getUsername();
   }
@@ -124,13 +83,13 @@ class Question {
     return _question;
   }
 
-  /// Get the category of this question
+  /// Get the category of this question as a String
   String getCategory() {
-    return _category.toString().split('.').last;
+    return _category.name;
   }
 
-  /// Get the enum value of Category
-  Category getCategoryAsCategory() {
+  /// Get the instance of the QuestionCategory of this question
+  QuestionCategory getCategoryAsCategory() {
     return _category;
   }
 
@@ -159,11 +118,8 @@ class Question {
   /// Database functions \\\
   /// ------------------ \\\
 
-  /// Cast a vote on this Category.Community question
-  /// Will fail silently if the category does not match
+  /// Cast a vote on this question
   Future<bool> castVoteOnQuestion() async {
-    if (_category != Category.Community) return false;
-
     return Constants.database.voteOnQuestion(this);
   }
 }
