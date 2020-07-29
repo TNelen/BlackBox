@@ -242,6 +242,8 @@ class FirebaseSetters {
       else 
         data['totalVotes'] = freshData.getTotalVotes();
 
+      data['lastUpdate'] = new DateTime.now().millisecondsSinceEpoch;
+
       /// Add the new data
       await transaction.set(docRef, data);
 
