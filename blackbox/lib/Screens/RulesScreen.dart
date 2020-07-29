@@ -125,6 +125,34 @@ class _RuleScreenState extends State<RuleScreen> {
                             ),
                             ExpansionTile(
                               title: Text(
+                                "Game settings",
+                                style: new TextStyle(
+                                  color: Constants.colors[Constants.colorindex],
+                                  fontSize: 30.0,
+                                ),
+                              ),
+                              backgroundColor: Constants.iBlack,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      "Game creator can enable or disable 'blanco vote'. The ability for the player to vote blanco" +
+                                          '\n' +
+                                          "Game creator can enable or diasble 'vote on self', this controls whether the player is able to cast a vote in himself" +
+                                          '\n' +
+                                          'These settings are made in the beginning of the game and cannot be changed during the game',
+                                      style: new TextStyle(
+                                        color: Constants.iWhite,
+                                        fontSize: 25.0,
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                  ],
+                                )
+                              ],
+                            ),
+                            ExpansionTile(
+                              title: Text(
                                 "Start Game",
                                 style: new TextStyle(
                                   color: Constants.colors[Constants.colorindex],
