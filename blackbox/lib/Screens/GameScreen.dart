@@ -105,7 +105,7 @@ class _GameScreenState extends State<GameScreen> {
                           Text(
                             'Back',
                             style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 25,
                               color: Constants.colors[Constants.colorindex],
                             ),
                           ),

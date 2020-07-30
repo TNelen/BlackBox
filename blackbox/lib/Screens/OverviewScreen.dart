@@ -36,7 +36,10 @@ class _OverviewScreenState extends State<OverviewScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BlackBox',
-      theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
+      theme: new ThemeData(
+        fontFamily: "atarian",
+        scaffoldBackgroundColor: Constants.iBlack,
+      ),
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Constants.iBlack,
@@ -61,7 +64,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                   Text(
                     'Home',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 25,
                       color: Constants.colors[Constants.colorindex],
                     ),
                   ),
@@ -94,7 +97,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                         textAlign: TextAlign.center,
                         style: new TextStyle(
                             color: Constants.iWhite,
-                            fontSize: 23.0,
+                            fontSize: 30.0,
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
@@ -147,7 +150,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                                             Constants
                                                                 .colorindex]
                                                         : Constants.iWhite,
-                                                    fontSize: 20.0,
+                                                    fontSize: 25.0,
                                                     fontWeight:
                                                         FontWeight.w400),
                                                 textAlign: TextAlign.start,
@@ -165,7 +168,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                                             Constants
                                                                 .colorindex]
                                                         : Constants.iWhite,
-                                                    fontSize: 20.0,
+                                                    fontSize: 25.0,
                                                     fontWeight:
                                                         FontWeight.w300),
                                                 textAlign: TextAlign.start,
@@ -180,7 +183,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                                   ? Constants.colors[
                                                       Constants.colorindex]
                                                   : Constants.iWhite,
-                                              fontSize: 25.0,
+                                              fontSize: 30.0,
                                               fontWeight: FontWeight.w600),
                                           textAlign: TextAlign.start,
                                         ),

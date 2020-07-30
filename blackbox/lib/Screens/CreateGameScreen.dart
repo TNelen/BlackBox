@@ -52,13 +52,14 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
+          backgroundColor: Constants.iDarkGrey,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: new Text(
             "Group Code",
             style: TextStyle(
                 fontFamily: "atarian",
-                color: Constants.iBlack,
+                color: Constants.iWhite,
                 fontSize: 40,
                 fontWeight: FontWeight.bold),
           ),
@@ -76,35 +77,35 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                       TextSpan(
                           text: code[0],
                           style: !_isNumeric(code[0])
-                              ? TextStyle(color: Constants.iBlack)
+                              ? TextStyle(color: Constants.iWhite)
                               : TextStyle(
                                   color:
                                       Constants.colors[Constants.colorindex])),
                       TextSpan(
                           text: code[1],
                           style: !_isNumeric(code[1])
-                              ? TextStyle(color: Constants.iBlack)
+                              ? TextStyle(color: Constants.iWhite)
                               : TextStyle(
                                   color:
                                       Constants.colors[Constants.colorindex])),
                       TextSpan(
                           text: code[2],
                           style: !_isNumeric(code[2])
-                              ? TextStyle(color: Constants.iBlack)
+                              ? TextStyle(color: Constants.iWhite)
                               : TextStyle(
                                   color:
                                       Constants.colors[Constants.colorindex])),
                       TextSpan(
                           text: code[3],
                           style: !_isNumeric(code[3])
-                              ? TextStyle(color: Constants.iBlack)
+                              ? TextStyle(color: Constants.iWhite)
                               : TextStyle(
                                   color:
                                       Constants.colors[Constants.colorindex])),
                       TextSpan(
                           text: code[4],
                           style: !_isNumeric(code[4])
-                              ? TextStyle(color: Constants.iBlack)
+                              ? TextStyle(color: Constants.iWhite)
                               : TextStyle(
                                   color:
                                       Constants.colors[Constants.colorindex])),
@@ -113,7 +114,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               IconButton(
                   icon: Icon(
                     Icons.share,
-                    color: Constants.iBlack,
+                    color: Constants.iWhite,
                   ),
                   onPressed: () {
                     final RenderBox box = context.findRenderObject();

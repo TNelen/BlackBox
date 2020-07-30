@@ -166,14 +166,14 @@ class ResultScreenState extends State<ResultScreen> {
           Icon(
             Icons.library_add,
             color: Constants.iWhite,
-            size: 20,
+            size: 25,
           ),
           SizedBox(
             width: 10,
           ),
           Text("Submit Question",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 15).copyWith(
+              style: TextStyle(fontSize: 20).copyWith(
                 color: Constants.iWhite,
               )),
         ],
@@ -195,7 +195,7 @@ class ResultScreenState extends State<ResultScreen> {
             "End Game",
             style: TextStyle(
                 color: Constants.colors[Constants.colorindex],
-                fontSize: 20,
+                fontSize: 25,
                 fontWeight: FontWeight.w400),
           ),
           SizedBox(
@@ -246,7 +246,9 @@ class ResultScreenState extends State<ResultScreen> {
                   child: MaterialApp(
                     debugShowCheckedModeBanner: false,
                     theme: new ThemeData(
-                        scaffoldBackgroundColor: Constants.iBlack),
+                      fontFamily: "atarian",
+                      scaffoldBackgroundColor: Constants.iBlack,
+                    ),
                     home: Scaffold(
                       appBar: AppBar(
                           backgroundColor: Constants.iBlack,
@@ -268,8 +270,9 @@ class ResultScreenState extends State<ResultScreen> {
                               text: TextSpan(
                                 text: 'Collecting votes...',
                                 style: TextStyle(
+                                    fontFamily: "atarian",
                                     color: Constants.iWhite,
-                                    fontSize: 35,
+                                    fontSize: 40,
                                     fontWeight: FontWeight.w300),
                               ),
                             ),
@@ -279,7 +282,7 @@ class ResultScreenState extends State<ResultScreen> {
                             Text(
                               remainingVotes.toString() + remainingVotesText,
                               style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: 30,
                                   color:
                                       Constants.colors[Constants.colorindex]),
                             ),
@@ -535,7 +538,7 @@ class ResultScreenState extends State<ResultScreen> {
                                                   style: new TextStyle(
                                                       color: Constants.colors[
                                                           Constants.colorindex],
-                                                      fontSize: 20.0,
+                                                      fontSize: 30.0,
                                                       fontWeight:
                                                           FontWeight.w600),
                                                   textAlign: TextAlign.center,
@@ -553,7 +556,7 @@ class ResultScreenState extends State<ResultScreen> {
                                                           : ' votes'),
                                                   style: new TextStyle(
                                                       color: Constants.iWhite,
-                                                      fontSize: 17.0,
+                                                      fontSize: 20.0,
                                                       fontWeight:
                                                           FontWeight.w400),
                                                   textAlign: TextAlign.center,
@@ -902,7 +905,10 @@ class ResultScreenState extends State<ResultScreen> {
           }
 
           return MaterialApp(
-            theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
+            theme: new ThemeData(
+              fontFamily: "atarian",
+              scaffoldBackgroundColor: Constants.iBlack,
+            ),
             home: Scaffold(
               appBar: AppBar(
                 backgroundColor: Constants.iBlack,
@@ -940,7 +946,7 @@ class ResultScreenState extends State<ResultScreen> {
                         Text(
                           'Leaderboard',
                           style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 40,
                               color: Constants.colors[Constants.colorindex],
                               fontWeight: FontWeight.w600),
                         ),
@@ -949,7 +955,7 @@ class ResultScreenState extends State<ResultScreen> {
                         ),
                         Icon(
                           Icons.timeline,
-                          size: 30,
+                          size: 50,
                           color: Constants.colors[Constants.colorindex],
                         ),
                       ])),
@@ -963,7 +969,7 @@ class ResultScreenState extends State<ResultScreen> {
                       textAlign: TextAlign.center,
                       style: new TextStyle(
                           color: Constants.iWhite,
-                          fontSize: 20.0,
+                          fontSize: 30.0,
                           fontWeight: FontWeight.bold),
                     ),
                   ),

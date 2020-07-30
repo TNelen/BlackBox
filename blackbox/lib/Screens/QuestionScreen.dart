@@ -93,15 +93,20 @@ class _QuestionScreenState extends State<QuestionScreen>
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
+          backgroundColor: Constants.iBlack,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: new Text(
             "No members selected",
-            style: TextStyle(color: Constants.iBlack, fontSize: 25),
+            style: TextStyle(
+                fontFamily: "atarian",
+                color: Constants.colors[Constants.colorindex],
+                fontSize: 30),
           ),
           content: new Text(
             "Please make a valid choice",
-            style: TextStyle(color: Constants.iBlack, fontSize: 20),
+            style: TextStyle(
+                fontFamily: "atarian", color: Constants.iWhite, fontSize: 22),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
@@ -109,8 +114,9 @@ class _QuestionScreenState extends State<QuestionScreen>
               child: new Text(
                 "Close",
                 style: TextStyle(
+                    fontFamily: "atarian",
                     color: Constants.colors[Constants.colorindex],
-                    fontSize: 20,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
@@ -138,13 +144,13 @@ class _QuestionScreenState extends State<QuestionScreen>
         },
         child: Row(
           children: <Widget>[
-            Icon(Icons.report, color: Constants.iWhite, size: 20),
+            Icon(Icons.report, color: Constants.iWhite, size: 22),
             SizedBox(
               width: 10,
             ),
             Text(
               'Give Feedback on this question',
-              style: TextStyle(fontSize: 15, color: Constants.iWhite),
+              style: TextStyle(fontSize: 20, color: Constants.iWhite),
             ),
           ],
         ));
@@ -159,14 +165,14 @@ class _QuestionScreenState extends State<QuestionScreen>
           Icon(
             Icons.library_add,
             color: Constants.iWhite,
-            size: 20,
+            size: 22,
           ),
           SizedBox(
             width: 10,
           ),
           Text("Submit Question",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 15).copyWith(
+              style: TextStyle(fontSize: 20).copyWith(
                 color: Constants.iWhite,
               )),
         ],
@@ -230,7 +236,7 @@ class _QuestionScreenState extends State<QuestionScreen>
             },
             child: Text("Confirm choice",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20).copyWith(
+                style: TextStyle(fontSize: 25).copyWith(
                     color: Constants.iBlack, fontWeight: FontWeight.bold)),
           ),
         ),
@@ -248,7 +254,10 @@ class _QuestionScreenState extends State<QuestionScreen>
 
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
+            theme: new ThemeData(
+              fontFamily: "atarian",
+              scaffoldBackgroundColor: Constants.iBlack,
+            ),
             home: Scaffold(
                 appBar: AppBar(
                   backgroundColor: Constants.iBlack,
@@ -274,7 +283,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                           child: Text(
                             "Results",
                             style: TextStyle(
-                                fontSize: 20.0,
+                                fontSize: 25.0,
                                 color: Constants.colors[Constants.colorindex]),
                           ),
                         ),
@@ -293,7 +302,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                         child: Text(
                           "Leave",
                           style: TextStyle(
-                              fontSize: 20.0,
+                              fontSize: 25.0,
                               color: Constants.colors[Constants.colorindex]),
                         ),
                       )
@@ -329,7 +338,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                                         'Question',
                                         style: new TextStyle(
                                             color: Constants.iWhite,
-                                            fontSize: 22.0,
+                                            fontSize: 40.0,
                                             fontWeight: FontWeight.w700),
                                       ),
                                       SizedBox(height: 30),
@@ -338,7 +347,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                                         style: new TextStyle(
                                             color: Constants
                                                 .colors[Constants.colorindex],
-                                            fontSize: 20.0,
+                                            fontSize: 30.0,
                                             fontWeight: FontWeight.bold),
                                         textAlign: TextAlign.center,
                                       ),
@@ -351,7 +360,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                                             ' -',
                                         style: new TextStyle(
                                             color: Constants.iWhite,
-                                            fontSize: 14.0,
+                                            fontSize: 18.0,
                                             fontWeight: FontWeight.bold),
                                         textAlign: TextAlign.center,
                                       ),
@@ -368,7 +377,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                         'Select a friend',
                         style: new TextStyle(
                             color: Constants.iWhite,
-                            fontSize: 22.0,
+                            fontSize: 40.0,
                             fontWeight: FontWeight.w700),
                       ),
                       SizedBox(
@@ -418,7 +427,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                   color: data.getUserID() == clickedmember
                       ? Constants.iDarkGrey
                       : Constants.iWhite,
-                  fontSize: 20.0,
+                  fontSize: 25.0,
                   fontWeight: FontWeight.bold),
             ),
           )),
@@ -474,24 +483,30 @@ class _ReportPopupState extends State<ReportPopup> {
           children: !reportMap[ReportType.DISTURBING]
               ? <Widget>[
                   Icon(Icons.sentiment_dissatisfied,
-                      color: Constants.iBlack, size: 20),
+                      color: Constants.iWhite, size: 20),
                   SizedBox(
                     width: 20,
                   ),
                   Text(
                     'Disturbing',
-                    style: TextStyle(fontSize: 15, color: Constants.iBlack),
+                    style: TextStyle(
+                        fontFamily: "atarian",
+                        fontSize: 20,
+                        color: Constants.iWhite),
                   ),
                 ]
               : <Widget>[
                   Icon(Icons.sentiment_dissatisfied,
-                      color: Colors.grey, size: 20),
+                      color: Constants.iGrey, size: 25),
                   SizedBox(
                     width: 20,
                   ),
                   Text(
                     'Disturbing',
-                    style: TextStyle(fontSize: 15, color: Colors.grey),
+                    style: TextStyle(
+                        fontFamily: "atarian",
+                        fontSize: 20,
+                        color: Constants.iGrey),
                   ),
                 ],
         ));
@@ -505,25 +520,29 @@ class _ReportPopupState extends State<ReportPopup> {
         child: Row(
           children: !reportMap[ReportType.GRAMMAR]
               ? <Widget>[
-                  Icon(Icons.spellcheck, color: Constants.iBlack, size: 20),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    'Grammar Mistake',
-                    style: TextStyle(fontSize: 15, color: Constants.iBlack),
-                  ),
-                ]
-              : <Widget>[
-                  Icon(Icons.spellcheck, color: Colors.grey, size: 20),
+                  Icon(Icons.spellcheck, color: Constants.iWhite, size: 20),
                   SizedBox(
                     width: 20,
                   ),
                   Text(
                     'Grammar Mistake',
                     style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey,
+                        fontFamily: "atarian",
+                        fontSize: 20,
+                        color: Constants.iWhite),
+                  ),
+                ]
+              : <Widget>[
+                  Icon(Icons.spellcheck, color: Constants.iGrey, size: 25),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    'Grammar Mistake',
+                    style: TextStyle(
+                      fontFamily: "atarian",
+                      fontSize: 20,
+                      color: Constants.iGrey,
                     ),
                   ),
                 ],
@@ -537,23 +556,29 @@ class _ReportPopupState extends State<ReportPopup> {
         child: Row(
           children: !reportMap[ReportType.LOVE]
               ? <Widget>[
-                  Icon(Icons.favorite, color: Constants.iBlack, size: 20),
+                  Icon(Icons.favorite, color: Constants.iWhite, size: 20),
                   SizedBox(
                     width: 20,
                   ),
                   Text(
                     'Love it!',
-                    style: TextStyle(fontSize: 15, color: Constants.iBlack),
+                    style: TextStyle(
+                        fontFamily: "atarian",
+                        fontSize: 20,
+                        color: Constants.iWhite),
                   ),
                 ]
               : <Widget>[
-                  Icon(Icons.favorite, color: Colors.red, size: 20),
+                  Icon(Icons.favorite, color: Colors.red, size: 25),
                   SizedBox(
                     width: 20,
                   ),
                   Text(
                     'Love it!',
-                    style: TextStyle(fontSize: 15, color: Colors.grey),
+                    style: TextStyle(
+                        fontFamily: "atarian",
+                        fontSize: 20,
+                        color: Constants.iGrey),
                   ),
                 ],
         ));
@@ -563,12 +588,15 @@ class _ReportPopupState extends State<ReportPopup> {
     // return object of type Dialog
 
     return AlertDialog(
-      backgroundColor: Constants.iWhite,
+      backgroundColor: Constants.iBlack,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(16.0))),
       title: new Text(
         'What do you think about this question?',
-        style: TextStyle(color: Constants.iBlack, fontSize: 25),
+        style: TextStyle(
+            fontFamily: "atarian",
+            color: Constants.colors[Constants.colorindex],
+            fontSize: 30),
       ),
       content: new Container(
         height: 200,
@@ -583,8 +611,9 @@ class _ReportPopupState extends State<ReportPopup> {
             Text(
               'Thank you! Via your feedback we can improve the questions.',
               style: TextStyle(
-                  fontSize: 15,
-                  color: Constants.iDarkGrey,
+                  fontFamily: "atarian",
+                  fontSize: 20,
+                  color: Constants.iGrey,
                   fontWeight: FontWeight.w400),
             )
           ],
@@ -596,6 +625,7 @@ class _ReportPopupState extends State<ReportPopup> {
           child: new Text(
             "Close",
             style: TextStyle(
+                fontFamily: "atarian",
                 color: Constants.colors[Constants.colorindex],
                 fontSize: 20,
                 fontWeight: FontWeight.bold),
