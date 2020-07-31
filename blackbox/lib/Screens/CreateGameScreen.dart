@@ -31,7 +31,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     this._database = db;
   }
 
-  final QuestionListGetter questionListGetter = QuestionListGetter();
+  final QuestionListGetter questionListGetter = QuestionListGetter.instance;
   List<String> selectedCategory = [];
   String _groupName;
   bool _canVoteBlank = false;

@@ -107,7 +107,7 @@ class FirebaseGetters {
 
   static Future<Question> getNextQuestion(GroupData groupData) async {
     
-    QuestionListGetter getter = QuestionListGetter();
+    QuestionListGetter getter = QuestionListGetter.instance;
     List<QuestionCategory> categories = await getter.getCategories();
 
     //get next question from arraylist.

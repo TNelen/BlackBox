@@ -6,14 +6,11 @@ class QuestionListGetter {
   List<QuestionCategory> categories;  // Holds all categories with all info
   Map<String, List<String>> mappings = Map<String, List<String>>(); // Maps category name to question IDs
 
-  static final QuestionListGetter _buffer = QuestionListGetter._internal();
+  static final QuestionListGetter _instance = QuestionListGetter._privateConstructor();
 
-  QuestionListGetter._internal() : categories = List<QuestionCategory>();
+  QuestionListGetter._privateConstructor() : categories = List<QuestionCategory>();
 
-  factory QuestionListGetter()
-  {
-    return QuestionListGetter._internal();
-  }
+  static QuestionListGetter get instance => _instance;
 
   Future<List<String>> getCategoryNames() async
   {

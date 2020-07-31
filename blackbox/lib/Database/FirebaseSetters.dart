@@ -365,7 +365,7 @@ class FirebaseSetters {
       Map<String, dynamic> newData = new Map<String, dynamic>(); 
 
       /// Update every relevant category list
-      for (String category in await QuestionListGetter().getCategoryNames())
+      for (String category in await QuestionListGetter.instance.getCategoryNames())
       {
         /// Get the current List or create a new one
         List<String> questions;
