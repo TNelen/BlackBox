@@ -207,8 +207,10 @@ class _QuestionScreenState extends State<QuestionScreen>
           borderRadius: BorderRadius.circular(28.0),
           color: Constants.colors[Constants.colorindex],
           child: MaterialButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(28.0),
+            ),
             minWidth: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.fromLTRB(3.0, 3.0, 3.0, 3.0),
             onPressed: () {
               if (clickedmember != null) {
                 _database.multiReportQuestion(
@@ -409,6 +411,7 @@ class _QuestionScreenState extends State<QuestionScreen>
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: InkWell(
+        borderRadius: BorderRadius.circular(16.0),
         splashColor: Constants.colors[Constants.colorindex],
         onTap: () {
           setState(() {

@@ -427,6 +427,9 @@ class _GameScreenState extends State<GameScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
                 FlatButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28.0),
+                  ),
                   color: Constants.colors[Constants.colorindex],
                   onPressed: () {
                     if (groupdata.isUserPlaying(Constants.getUserData())) {
@@ -459,6 +462,9 @@ class _GameScreenState extends State<GameScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
                 FlatButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28.0),
+                  ),
                   color: Constants.colors[Constants.colorindex],
                   onPressed: () {
                     Navigator.push(

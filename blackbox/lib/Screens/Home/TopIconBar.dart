@@ -17,6 +17,7 @@ class TopIconBar {
             borderRadius: BorderRadius.circular(32.0),
           ),
           child: InkWell(
+              borderRadius: BorderRadius.circular(32.0),
               splashColor: Constants.colors[Constants.colorindex],
               onTap: () {
                 //  if (GoogleUserHandler.isLoggedIn()) {
@@ -56,6 +57,7 @@ class TopIconBar {
                 borderRadius: BorderRadius.circular(32.0),
               ),
               child: InkWell(
+                  borderRadius: BorderRadius.circular(32.0),
                   splashColor: Constants.colors[Constants.colorindex],
                   onTap: () {
                     FirebaseAnalytics()
@@ -80,6 +82,7 @@ class TopIconBar {
                 borderRadius: BorderRadius.circular(32.0),
               ),
               child: InkWell(
+                  borderRadius: BorderRadius.circular(32.0),
                   splashColor: Constants.colors[Constants.colorindex],
                   onTap: () {
                     FirebaseAnalytics().logEvent(

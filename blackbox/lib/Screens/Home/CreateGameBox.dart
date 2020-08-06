@@ -13,6 +13,7 @@ class CreateGameBox {
             borderRadius: BorderRadius.circular(16.0),
           ),
           child: InkWell(
+              borderRadius: BorderRadius.circular(16.0),
               splashColor: Constants.colors[Constants.colorindex],
               onTap: () {
                 // if (GoogleUserHandler.isLoggedIn()) {

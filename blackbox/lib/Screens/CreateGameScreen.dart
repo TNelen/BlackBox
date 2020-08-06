@@ -161,6 +161,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             borderRadius: BorderRadius.circular(26.0),
             color: Constants.colors[Constants.colorindex],
             child: MaterialButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(26.0),
+              ),
               minWidth: MediaQuery.of(context).size.width,
               padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
               onPressed: () {

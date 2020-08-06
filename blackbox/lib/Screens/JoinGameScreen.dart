@@ -32,6 +32,9 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
         borderRadius: BorderRadius.circular(28.0),
         color: Constants.colors[Constants.colorindex],
         child: MaterialButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(28.0),
+          ),
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           onPressed: () {
