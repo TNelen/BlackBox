@@ -4,6 +4,7 @@ import '../../Constants.dart';
 import '../ProfileScreen.dart';
 import '../SettingsScreen.dart';
 import '../RulesScreen.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class TopIconBar {
   static Widget topIcons(BuildContext context, Database database) {
@@ -19,6 +20,9 @@ class TopIconBar {
               splashColor: Constants.colors[Constants.colorindex],
               onTap: () {
                 //  if (GoogleUserHandler.isLoggedIn()) {
+                FirebaseAnalytics()
+                    .logEvent(name: 'ProfileScreenOpened', parameters: null);
+
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -54,6 +58,8 @@ class TopIconBar {
               child: InkWell(
                   splashColor: Constants.colors[Constants.colorindex],
                   onTap: () {
+                    FirebaseAnalytics()
+                        .logEvent(name: 'HelpScreenOpened', parameters: null);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -76,6 +82,8 @@ class TopIconBar {
               child: InkWell(
                   splashColor: Constants.colors[Constants.colorindex],
                   onTap: () {
+                    FirebaseAnalytics().logEvent(
+                        name: 'SettingsScreenOpened', parameters: null);
                     Navigator.push(
                         context,
                         MaterialPageRoute(

@@ -12,6 +12,7 @@ import 'Popup.dart';
 import 'package:share/share.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../Database/FirebaseGetters.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class CreateGameScreen extends StatefulWidget {
   Database _database;
@@ -163,6 +164,12 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               minWidth: MediaQuery.of(context).size.width,
               padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
               onPressed: () {
+                FirebaseAnalytics()
+                    .logEvent(name: 'NewGameCreated', parameters: {
+                  'voteblank': _canVoteBlank,
+                  'voteOnSelf': _canVoteOnSelf,
+                  "categories": selectedCategory
+                });
                 // Create map of members
                 Map<String, String> members = new Map<String, String>();
                 members[Constants.getUserID()] = Constants.getUsername();

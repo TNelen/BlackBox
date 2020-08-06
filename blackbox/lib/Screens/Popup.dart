@@ -67,7 +67,7 @@ class Popup {
           filled: true,
           hintText: Constants.getUsername(),
           hintStyle: TextStyle(
-              fontFamily: "atarian", fontSize: 20, color: Constants.iWhite),
+              fontFamily: "atarian", fontSize: 20, color: Constants.iGrey),
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
