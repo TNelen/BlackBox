@@ -38,7 +38,8 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           onPressed: () {
-            String groupCode = codeController.text.toUpperCase();
+            // Replace 1 by I and 0 by O to prevent confusion (group codes do not contain 1's and 0's for this reason)
+            String groupCode = codeController.text.toUpperCase().replaceAll('0', 'O').replaceAll('1', 'I');
             if (groupCode.length == Constants.groupCodeLength) {
               Navigator.push(
                   context,

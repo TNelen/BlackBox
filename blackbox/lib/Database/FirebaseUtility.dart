@@ -169,6 +169,7 @@ class FirebaseUtility {
 
   /// Create a random alphanumeric code
   /// Returns as a String
+  /// Contains A-Z and 2-9. One and Zero are excluded to prevent confusion with 1-I and 0-O
   static String getRandomID(int length)
   {
       var random = new Random();
@@ -178,14 +179,14 @@ class FirebaseUtility {
       for (int i = 0; i < length; i++)
       {
           // Generate random int => [0, 35[
-          int gen = random.nextInt(35);
+          int gen = random.nextInt(33);
           
           // Smaller than 25 => Generate character
           // Otherwise, add a number
           if (gen <= 24) {
             result += _intToAlphabet( gen );
           } else {
-            gen -= 25;
+            gen -= 23;
             result += gen.toString();
           }
       }
