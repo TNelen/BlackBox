@@ -176,7 +176,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 _groupName = "default";
                 if (_groupName.length != 0 && selectedCategory.length != 0) {
                   // Generate a unique ID and save the group
-                  _database.generateUniqueGroupCode().then((code) {
+                  _database.generateUniqueGroupCode().then((code) async {
                     List<String> questionIDs = List<String>();
                     String description = "";
 
@@ -194,8 +194,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                       'can_vote_on_self' : _canVoteOnSelf,
                     };
 
-                    // for (String category in selectedCategory)
-                    //   map[category] = true;
+                    List<String> allCategories = await QuestionListGetter.instance.getCategoryNames();
+                    for (String category in allCategories)
+                      map[category.replaceAll(' ', '_').replaceAll("'", '').replaceAll('+', 'P')] = selectedCategory.contains( category );
 
                     FirebaseAnalytics().logEvent(name: 'game_action', parameters: map);
 
