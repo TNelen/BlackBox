@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blackbox/Screens/Home/HomeScreen.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
 import '../Constants.dart';
@@ -21,6 +22,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   _SettingsScreenState(Database db) {
     this._database = db;
+
+    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'Settings'});
+    
   }
 
   @override

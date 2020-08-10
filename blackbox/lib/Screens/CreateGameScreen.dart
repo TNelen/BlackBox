@@ -30,6 +30,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
 
   _CreateGameScreenState(Database db) {
     this._database = db;
+
+    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'CreateGameScreen'});
+
   }
 
   final QuestionListGetter questionListGetter = QuestionListGetter.instance;
@@ -190,6 +193,14 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     }
 
                     questionIDs.shuffle(Random.secure());
+
+                    FirebaseAnalytics().logEvent(name: 'game_action', parameters: 
+                    {   
+                      'type' : 'GameCreated',
+                      'can_vote_blank' : _canVoteBlank,
+                      'can_vote_on_self' : _canVoteOnSelf,
+                      'categories': selectedCategory,
+                    });
 
                     GroupData groupdata = new GroupData(
                         _groupName,

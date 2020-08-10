@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
 import '../Constants.dart';
@@ -19,6 +20,9 @@ class _RuleScreenState extends State<RuleScreen> {
 
   _RuleScreenState(Database db) {
     this._database = db;
+
+    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'RulesScreen'});
+
   }
 
   @override

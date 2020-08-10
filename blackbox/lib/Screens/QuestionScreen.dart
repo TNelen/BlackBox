@@ -1,4 +1,5 @@
 import 'package:blackbox/DataContainers/UserData.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
@@ -213,6 +214,16 @@ class _QuestionScreenState extends State<QuestionScreen>
             minWidth: MediaQuery.of(context).size.width,
             onPressed: () {
               if (clickedmember != null) {
+
+                if(reportMap.containsValue(true))
+                  FirebaseAnalytics().logEvent(name: 'action_performed', parameters: 
+                  {   'action_name' : 'RateQuestion', 
+                      'disturbing'  : reportMap[ReportType.DISTURBING],
+                      'grammar'     : reportMap[ReportType.GRAMMAR],
+                      'category'    : reportMap[ReportType.CATEGORY],
+                      'love'        : reportMap[ReportType.LOVE]
+                  });
+
                 _database.multiReportQuestion(
                     groupData.getQuestion(), reportMap);
                 //_database.voteOnUser(groupData, clickedmember);

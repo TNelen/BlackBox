@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'GameScreen.dart';
 import '../Interfaces/Database.dart';
@@ -21,6 +22,9 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
 
   _JoinGameScreenState(Database db) {
     this._database = db;
+
+    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'JoinGameScreen'});
+
   }
 
   @override
@@ -41,6 +45,13 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
             // Replace 1 by I and 0 by O to prevent confusion (group codes do not contain 1's and 0's for this reason)
             String groupCode = codeController.text.toUpperCase().replaceAll('0', 'O').replaceAll('1', 'I');
             if (groupCode.length == Constants.groupCodeLength) {
+
+              FirebaseAnalytics().logEvent(name: 'game_action', parameters: 
+              {   
+                'type' : 'GameJoined',
+                'code' : codeController.text.toUpperCase() 
+              });
+
               Navigator.push(
                   context,
                   MaterialPageRoute(

@@ -33,9 +33,7 @@ dependencies:
   audioplayers: ^0.14.0       # Used to play sounds
   vibration: 1.2.2            # Can make the mobile device vibrate
   store_redirect: ^1.0.2
-  firebase_analytics: ^5.0.11
-
-
+  firebase_analytics: ^5.0.11 # Used to gather more detailed usage statistics
 
 
   flutter:

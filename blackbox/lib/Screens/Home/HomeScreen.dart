@@ -5,6 +5,7 @@ import 'package:blackbox/Database/FirebaseManagement.dart';
 import 'package:blackbox/Screens/Home/CreateGameBox.dart';
 import 'package:blackbox/Screens/Home/RateAppButton.dart';
 import 'package:blackbox/Screens/Home/TopIconBar.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../Constants.dart';
@@ -59,6 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _HomeScreenState(Database db) {
     this.database = db;
+
+    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'HomeScreen'});
 
     isAppUpToDate();
 

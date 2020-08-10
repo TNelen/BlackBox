@@ -1,4 +1,5 @@
 import 'package:blackbox/DataContainers/GroupData.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
 import '../Interfaces/Database.dart';
@@ -209,6 +210,9 @@ class Popup {
                       'You cannot submit an empty question');
                 } else if (question.length >= 20) {
                   if (question.endsWith('?')) {
+
+                    FirebaseAnalytics().logEvent(name: 'action_performed', parameters: {'action_name': 'AddQuestionIngame'});
+
                     List<String> questions = new List<String>();
                     questions.add(question);
                     _addQuestions(questions, database, groupData);
