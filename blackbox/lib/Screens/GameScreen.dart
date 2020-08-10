@@ -1,4 +1,5 @@
 import 'package:blackbox/Screens/rules-list.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import '../Interfaces/Database.dart';
@@ -467,6 +468,12 @@ class _GameScreenState extends State<GameScreen> {
                   ),
                   color: Constants.colors[Constants.colorindex],
                   onPressed: () {
+
+                  FirebaseAnalytics().logEvent(name: 'game_action', parameters: 
+                  {   
+                    'type' : 'GameStarted',
+                  });
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(

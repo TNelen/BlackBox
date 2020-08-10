@@ -170,12 +170,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               minWidth: MediaQuery.of(context).size.width,
               padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
               onPressed: () {
-                FirebaseAnalytics()
-                    .logEvent(name: 'NewGameCreated', parameters: {
-                  'voteblank': _canVoteBlank,
-                  'voteOnSelf': _canVoteOnSelf,
-                  "categories": selectedCategory
-                });
                 // Create map of members
                 Map<String, String> members = new Map<String, String>();
                 members[Constants.getUserID()] = Constants.getUsername();
@@ -194,13 +188,17 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
 
                     questionIDs.shuffle(Random.secure());
 
-                    FirebaseAnalytics().logEvent(name: 'game_action', parameters: 
-                    {   
+                    Map<String, dynamic> map = {   
                       'type' : 'GameCreated',
                       'can_vote_blank' : _canVoteBlank,
                       'can_vote_on_self' : _canVoteOnSelf,
-                      'categories': selectedCategory,
-                    });
+                    };
+
+                    // for (String category in selectedCategory)
+                    //   map[category] = true;
+
+                    FirebaseAnalytics().logEvent(name: 'game_action', parameters: map);
+
 
                     GroupData groupdata = new GroupData(
                         _groupName,
