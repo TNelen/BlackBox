@@ -3,6 +3,7 @@ import 'package:blackbox/DataContainers/UserRankData.dart';
 import 'package:blackbox/Util/VibrationHandler.dart';
 import 'package:flutter/material.dart';
 import '../DataContainers/GroupData.dart';
+import '../DataContainers/Question.dart';
 import '../Constants.dart';
 import 'QuestionScreen.dart';
 import '../Interfaces/Database.dart';
@@ -142,8 +143,13 @@ class ResultScreenState extends State<ResultScreen> {
   }
 
   void getRandomNexQuestion() async {
-    groupData.setNextQuestion(
-        await _database.getNextQuestion(groupData), Constants.getUserData());
+    Question question = await _database.getNextQuestion(groupData);
+    if (question.getQuestionID() == "END") {
+      groupData.setNextQuestion(question, Constants.getUserData());
+      groupData.setIsPlaying(false);
+    } else {
+      groupData.setNextQuestion(question, Constants.getUserData());
+    }
   }
 
   void pageChanged(int index) {
