@@ -891,7 +891,7 @@ class ResultScreenState extends State<ResultScreen> {
                     child: Text(
                       "Leave",
                       style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 25.0,
                           color: Constants.colors[Constants.colorindex]),
                     ),
                   )
