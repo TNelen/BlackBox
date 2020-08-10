@@ -63,6 +63,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Switch(
                 value: blueAccentColor,
                 onChanged: (value) {
+                  FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Blue");
                   Constants.setAccentColor(1);
                   setState(() {});
                 },
@@ -104,6 +105,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Switch(
                 value: yellowAccentColor,
                 onChanged: (value) {
+                  FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Yellow");
                   Constants.setAccentColor(2);
                   setState(() {});
                 },
@@ -145,6 +147,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Switch(
                 value: redAccentColor,
                 onChanged: (value) {
+                  FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Red");
                   Constants.setAccentColor(3);
                   setState(() {});
                 },
@@ -186,6 +189,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Switch(
                 value: greenAccentColor,
                 onChanged: (value) {
+                  FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Green");
                   Constants.setAccentColor(4);
                   setState(() {});
                 },
@@ -277,10 +281,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             fontWeight: FontWeight.w300),
                       ),
                       SizedBox(height: 5),
-                      _buildMediaSetting(Icons.audiotrack, 'Sounds',
+                      _buildMediaSetting(Icons.audiotrack, 'Sounds', 'is_sound_enabled',
                           Constants.getSoundEnabled(), _soundAction),
                       SizedBox(height: 5),
-                      _buildMediaSetting(Icons.vibration, 'Vibration',
+                      _buildMediaSetting(Icons.vibration, 'Vibration', 'is_vibration_enabled',
                           Constants.getVibrationEnabled(), _vibrationAction),
                       SizedBox(height: 40.0),
                       Text(
@@ -332,7 +336,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       Constants.setSoundEnabled(!Constants.getSoundEnabled());
 
   Container _buildMediaSetting(
-      IconData icon, String label, bool isEnabled, Function() action) {
+      IconData icon, String label, String analyticsUserProperty, bool isEnabled, Function() action) {
     Color foregroundColor;
     Color textColor;
     Color backgroundColor;
@@ -378,6 +382,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Switch(
                       value: isEnabled,
                       onChanged: (value) {
+                        FirebaseAnalytics().setUserProperty(name: analyticsUserProperty, value: value.toString());
                         action();
                         _database.updateUser(Constants.getUserData());
                         setState(() {});
