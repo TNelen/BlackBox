@@ -13,6 +13,7 @@ import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'Popup.dart';
 import 'OverviewScreen.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class ResultScreen extends StatefulWidget {
   Database _database;
@@ -879,6 +880,10 @@ class ResultScreenState extends State<ResultScreen> {
                 title: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                   FlatButton(
                     onPressed: () {
+                      FirebaseAnalytics()
+                          .logEvent(name: 'game_action', parameters: {
+                        'type': 'GameLeft',
+                      });
                       groupData.removePlayingUser(Constants.getUserData());
                       _database.updateGroup(groupData);
                       Navigator.push(
