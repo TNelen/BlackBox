@@ -440,7 +440,9 @@ class _GameScreenState extends State<GameScreen> {
                       groupdata.setPlayingUser(Constants.getUserData());
                       _database.updateGroup(groupdata);
                     }
-                    getRandomNexQuestion();
+                    
+                    if (groupdata.getNextQuestionString() == "")
+                      getRandomNexQuestion();
                   },
                   splashColor: Constants.iWhite,
                   child: Text(
