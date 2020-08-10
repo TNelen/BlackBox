@@ -180,31 +180,6 @@ class ResultScreenState extends State<ResultScreen> {
       ),
     );
 
-    final endGameButton = FlatButton(
-        color: Constants.iBlack,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(28.0),
-        ),
-        onPressed: () {
-          Popup.confirmEndGame(context, _database, groupData);
-        },
-        splashColor: Constants.colors[Constants.colorindex],
-        child: Container(
-            child: Row(children: [
-          Text(
-            "End Game",
-            style: TextStyle(
-                color: Constants.colors[Constants.colorindex],
-                fontSize: 25,
-                fontWeight: FontWeight.w400),
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Icon(Icons.exit_to_app,
-              size: 20, color: Constants.colors[Constants.colorindex])
-        ])));
-
     return StreamBuilder(
         stream: stream.groupData,
         builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
@@ -250,17 +225,6 @@ class ResultScreenState extends State<ResultScreen> {
                       scaffoldBackgroundColor: Constants.iBlack,
                     ),
                     home: Scaffold(
-                      appBar: AppBar(
-                          backgroundColor: Constants.iBlack,
-                          title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                groupData.getAdminID() == Constants.getUserID()
-                                    ? endGameButton
-                                    : SizedBox(
-                                        height: 0.1,
-                                      ),
-                              ])),
                       body: Center(
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
