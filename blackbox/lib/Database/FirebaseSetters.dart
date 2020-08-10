@@ -174,6 +174,8 @@ class FirebaseSetters {
         history = groupData.getHistory();
       }
 
+      data['questionlist'] = groupData.getQuestionList() ?? List<String>();
+
       /// If user is admin -> Overwrite permissions!
       if ( freshData.getAdminID() == Constants.getUserID() || freshData.getQuestion() == null)
       {
@@ -192,7 +194,6 @@ class FirebaseSetters {
         data['lastQuestionCategory'] = groupData.getLastQuestion().getCategory() ?? "Default";
         data['lastQuestionCreatorID'] = groupData.getLastQuestion().getCreatorID() ?? "";
         data['lastQuestionCreatorName'] = groupData.getLastQuestion().getCreatorName() ?? "";
-        data['questionlist'] = groupData.getQuestionList() ?? "";
         
         data['adminVoteTimestamp'] = groupData.getAdminVoteTimestamp() ?? null;
         data['history'] = history;
@@ -213,7 +214,6 @@ class FirebaseSetters {
         data['lastQuestionCategory'] = freshData.getLastQuestion().getCategory() ?? "Default";
         data['lastQuestionCreatorID'] = freshData.getLastQuestion().getCreatorID() ?? "";
         data['lastQuestionCreatorName'] = freshData.getLastQuestion().getCreatorName() ?? "";
-        data['questionlist'] = freshData.getQuestionList() ?? "";
 
         data['adminVoteTimestamp'] = freshData.getAdminVoteTimestamp() ?? null;
         data['history'] = freshData.getHistory();
