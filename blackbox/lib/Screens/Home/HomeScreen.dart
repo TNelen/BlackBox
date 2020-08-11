@@ -21,16 +21,15 @@ class HomeScreen extends StatefulWidget {
 
   HomeScreen(Database db) {
     database = db;
-    
+
     // Add firebase management logic here
     FirebaseManagement dbManagement = FirebaseManagement();
     // handleAddQuestionsFromFile( dbManagement );
   }
 
   void handleAddQuestionsFromFile(FirebaseManagement management) async {
-    
     // Read file
-    String data = await rootBundle.loadString( 'assets/questions.txt' );
+    String data = await rootBundle.loadString('assets/questions.txt');
     List<String> lines = data.split('\n');
 
     if (lines.length <= 1) {
@@ -40,9 +39,13 @@ class HomeScreen extends StatefulWidget {
 
     List<String> validQuestions = List<String>();
     for (String q in lines)
-      if (q != null && q != '' && q != lines[0] && q!= lines[0].substring(0, lines[0].length-1))
-        validQuestions.add( q );
-    management.addQuestions(lines[0].substring(0, lines[0].length-1), validQuestions);
+      if (q != null &&
+          q != '' &&
+          q != lines[0] &&
+          q != lines[0].substring(0, lines[0].length - 1))
+        validQuestions.add(q);
+    management.addQuestions(
+        lines[0].substring(0, lines[0].length - 1), validQuestions);
   }
 
   @override
@@ -56,12 +59,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Database database;
   int pageIndex = 0;
-  String version = '1.0.8+8';
+  String version = '2.0.0+0';
 
   _HomeScreenState(Database db) {
     this.database = db;
 
-    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'HomeScreen'});
+    FirebaseAnalytics().logEvent(
+        name: 'open_screen', parameters: {'screen_name': 'HomeScreen'});
 
     isAppUpToDate();
 
@@ -70,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     /// Show a message if one is set in the database
   }
-
 
   void isAppUpToDate() async {
     Appinfo appinfo;
