@@ -47,13 +47,17 @@ class FirebaseManagement {
     List<String> nonDupes = List<String>();
 
     // Get only the non-dupes
+    int i = 0;
     for (String question in newQuestions)
     {
+      print('Checking question  $i');
       QuerySnapshot snap = await Firestore.instance.collection( 'questionsv2' ).where( 'question', isEqualTo: question ).getDocuments();
       if (snap.documents.length != 0)
-        print( "'$question' is a duplicate! Skipping this one.." );
+        print( 'Found a duplicate. Skipping: $question' );
       else
         nonDupes.add( question );
+
+      i++;
     }
 
      print( 'Found ' + nonDupes.length.toString() + ' non duplicates!' );
