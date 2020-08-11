@@ -1,4 +1,4 @@
-<img align="left" width="30%" src="https://github.com/TNelen/BlackBox/blob/master/graphics/icon.png?raw=true">
+<img align="left" width="20%" src="https://github.com/TNelen/BlackBox/blob/master/graphics/icon.png?raw=true">
 
 # Blackbox, a mobile party game to play with friends!
 
