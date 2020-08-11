@@ -39,7 +39,7 @@ The app can be downloaded from the [Play Store](https://play.google.com/store/ap
 
 
 
-## Having trouble?
+### Having trouble?
 We’re sorry to hear that! Please open an issue at our github repository linked above, or mail us at magnetar.apps@gmail.com
 
 We are constantly working on updates to provide players with the best possible experience!
