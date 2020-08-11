@@ -47,7 +47,7 @@ class _GameScreenState extends State<GameScreen> {
     FirebaseStream(code).groupData.listen((_onGroupDataUpdate) {}, onDone: () {
       _loadingInProgress = false;
     }, onError: (error) {
-      _errorPopup(error);
+      //nothing;
     });
   }
 
@@ -440,7 +440,7 @@ class _GameScreenState extends State<GameScreen> {
                       groupdata.setPlayingUser(Constants.getUserData());
                       _database.updateGroup(groupdata);
                     }
-                    
+
                     if (groupdata.getNextQuestionString() == "")
                       getRandomNexQuestion();
                   },
@@ -470,11 +470,10 @@ class _GameScreenState extends State<GameScreen> {
                   ),
                   color: Constants.colors[Constants.colorindex],
                   onPressed: () {
-
-                  FirebaseAnalytics().logEvent(name: 'game_action', parameters: 
-                  {   
-                    'type' : 'GameStarted',
-                  });
+                    FirebaseAnalytics()
+                        .logEvent(name: 'game_action', parameters: {
+                      'type': 'GameStarted',
+                    });
 
                     Navigator.push(
                         context,
@@ -516,47 +515,5 @@ class _GameScreenState extends State<GameScreen> {
                   padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
                   child: _buildBottomCardChildren(context))),
         ));
-  }
-
-  void _errorPopup(String error) {
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          backgroundColor: Constants.iWhite,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30.0))),
-          title: new Text(
-            "Oops!",
-            style: TextStyle(color: Constants.iBlack, fontSize: 25),
-          ),
-          content: new Text(
-            error,
-            style: TextStyle(color: Constants.iBlack, fontSize: 20),
-          ),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text(
-                "Close",
-                style: TextStyle(
-                    color: Constants.colors[Constants.colorindex],
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-              ),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => HomeScreen(_database),
-                    ));
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 }
