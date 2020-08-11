@@ -8,7 +8,7 @@
 After each round the results are shown together with the all-time winners. 
 
 
-Choose between different categories with more than *120 questions* combined!
+Choose between different categories with more than **120 questions** combined!
 
 * **+18**: Spicy questions, aimed at adults
 * **Beer o'clock**: Questions involving partying and drinking
