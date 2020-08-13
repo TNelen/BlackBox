@@ -31,7 +31,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
    }
 
    android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     lintOptions {
         disable 'InvalidPackage'
@@ -42,13 +42,14 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
         // Defines the minimum API level required to run the app.
         minSdkVersion 20
         // Specifies the API level used to test the app.
-        targetSdkVersion 28
+        targetSdkVersion 29
         // Defines the version number of your app.
         versionCode flutterVersionCode.toInteger()
         // Defines a user-friendly version name for your app.
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+
 
     }
 
@@ -63,6 +64,9 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
    buildTypes {
        release {
            signingConfig signingConfigs.release
+           minifyEnabled true
+           shrinkResources true
+           proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
        }
    }
 }
