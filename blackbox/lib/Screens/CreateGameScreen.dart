@@ -238,7 +238,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
 
         return ListView.builder(
           shrinkWrap: true,
-          physics: ClampingScrollPhysics(),
+          // physics: ClampingScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           itemCount: projectSnap.data.length,
           itemBuilder: (context, index) {
             int amount = projectSnap.data[index].amount;
@@ -363,55 +364,47 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                       return ListView(
                         shrinkWrap: true,
                         children: <Widget>[
-                          ListView(
-                            shrinkWrap: true,
-                            children: <Widget>[
-                              AutoSizeText(
-                                "Create new Game",
-                                style: new TextStyle(
-                                    color: Constants.iWhite,
-                                    fontSize: 50.0,
-                                    fontWeight: FontWeight.w300),
-                                maxLines: 1,
-                              ),
-                              SizedBox(height: 30.0),
-                              Text(
-                                'Game settings',
-                                style: new TextStyle(
-                                    color:
-                                        Constants.colors[Constants.colorindex],
-                                    fontSize: 30.0),
-                              ),
-                              SizedBox(height: 20.0),
-                              
-                              ToggleButtonCard(
-                                'Blank vote',
-                                _canVoteBlank,
-                                onToggle: (bool newValue) => _canVoteBlank = newValue,
-                              ),
-
-                              ToggleButtonCard(
-                                'Vote on yourself',
-                                _canVoteOnSelf,
-                                onToggle: (bool newValue) => _canVoteOnSelf = newValue,
-                              ),
-
-                              SizedBox(height: 20.0),
-                              Text(
-                                'Choose a category',
-                                style: new TextStyle(
-                                    color:
-                                        Constants.colors[Constants.colorindex],
-                                    fontSize: 30.0),
-                              ),
-                              SizedBox(height: 20.0),
-                              LimitedBox(
-                                  maxHeight: constraints.maxHeight / 3,
-                                  child: categoryField),
-                              SizedBox(height: 20.0),
-                            ],
+                          AutoSizeText(
+                            "Create new Game",
+                            style: new TextStyle(
+                                color: Constants.iWhite,
+                                fontSize: 50.0,
+                                fontWeight: FontWeight.w300),
+                            maxLines: 1,
                           ),
-                          SizedBox(height: 15.0),
+                          SizedBox(height: 30.0),
+                          Text(
+                            'Game settings',
+                            style: new TextStyle(
+                                color:
+                                    Constants.colors[Constants.colorindex],
+                                fontSize: 30.0),
+                          ),
+                          SizedBox(height: 20.0),
+                          
+                          ToggleButtonCard(
+                            'Blank vote',
+                            _canVoteBlank,
+                            onToggle: (bool newValue) => _canVoteBlank = newValue,
+                          ),
+
+                          ToggleButtonCard(
+                            'Vote on yourself',
+                            _canVoteOnSelf,
+                            onToggle: (bool newValue) => _canVoteOnSelf = newValue,
+                          ),
+
+                          SizedBox(height: 20.0),
+                          Text(
+                            'Choose categories',
+                            style: TextStyle(
+                              color: Constants.colors[Constants.colorindex],
+                              fontSize: 30.0,
+                            ),
+                          ),
+                          SizedBox(height: 20.0),
+                          categoryField,
+                          SizedBox(height: 75.0),
                         ],
                       );
                     },
