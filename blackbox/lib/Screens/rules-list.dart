@@ -164,7 +164,7 @@ class RulesList {
                 Text(
                   'Questions are generated in a random order.' +
                       '\n' +
-                      'You can submit own question ideas ingame. These will be iserted in the queue of questions.' +
+                      'You can submit own question ideas ingame. These will be inserted in the queue of questions.' +
                       '\n' +
                       'All players have the ability to rate the questions, giving us feedback about the questions helps us inproving the game.',
                   style: new TextStyle(
