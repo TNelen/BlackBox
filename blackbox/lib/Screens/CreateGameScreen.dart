@@ -467,7 +467,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                               SizedBox(height: 20.0),
                             ],
                           ),
-                          createButton,
                           SizedBox(height: 15.0),
                         ],
                       );
@@ -475,7 +474,10 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   ),
                 ),
               ),
-            )),
+            )
+          ),
+        floatingActionButton: createButton,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }
