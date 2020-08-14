@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:blackbox/DataContainers/QuestionCategory.dart';
 import 'package:blackbox/Database/QuestionListGetter.dart';
+import 'package:blackbox/Screens/custom_widgets/toggle_button_card.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
 import '../DataContainers/GroupData.dart';
@@ -316,74 +317,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       future: questionListGetter.getCategories(),
     );
 
-    final voteOnSelfSwitch = Container(
-        child: Card(
-      color: Constants.iDarkGrey,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      child: Container(
-        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(children: <Widget>[
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                'Vote on yourself',
-                style: TextStyle(fontSize: 25.0, color: Constants.iWhite),
-              ),
-            ]),
-            Switch(
-              value: _canVoteOnSelf,
-              onChanged: (value) {
-                _canVoteOnSelf = value;
-                setState(() {});
-              },
-              activeTrackColor: Constants.colors[Constants.colorindex],
-              activeColor: Constants.iWhite,
-            ),
-          ],
-        ),
-      ),
-    ));
-
-    final voteBlancoSwitch = Container(
-        child: Card(
-      color: Constants.iDarkGrey,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      child: Container(
-        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(children: <Widget>[
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                'Blank vote',
-                style: TextStyle(fontSize: 25.0, color: Constants.iWhite),
-              ),
-            ]),
-            Switch(
-              value: _canVoteBlank,
-              onChanged: (value) {
-                _canVoteBlank = value;
-                setState(() {});
-              },
-              activeTrackColor: Constants.colors[Constants.colorindex],
-              activeColor: Constants.iWhite,
-            ),
-          ],
-        ),
-      ),
-    ));
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
@@ -450,8 +383,19 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                                     fontSize: 30.0),
                               ),
                               SizedBox(height: 20.0),
-                              voteBlancoSwitch,
-                              voteOnSelfSwitch,
+                              
+                              ToggleButtonCard(
+                                'Blank vote',
+                                _canVoteBlank,
+                                onToggle: (bool newValue) => _canVoteBlank = newValue,
+                              ),
+
+                              ToggleButtonCard(
+                                'Vote on yourself',
+                                _canVoteOnSelf,
+                                onToggle: (bool newValue) => _canVoteOnSelf = newValue,
+                              ),
+
                               SizedBox(height: 20.0),
                               Text(
                                 'Choose a category',
