@@ -8,6 +8,7 @@ import 'package:blackbox/Screens/Home/TopIconBar.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:package_info/package_info.dart';
 import '../../Constants.dart';
 import 'CreateGameBox.dart';
 import 'JoinGameBox.dart';
@@ -59,7 +60,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Database database;
   int pageIndex = 0;
-  String version = '2.0.0+0';
 
   _HomeScreenState(Database db) {
     this.database = db;
@@ -76,6 +76,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void isAppUpToDate() async {
+
+    // Grab the version of the current app from pubspec
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version + '+' + packageInfo.buildNumber;
+
+    // Compare the current version by that in the database
     Appinfo appinfo;
     if (Constants.enableMSG[Constants.enableVersionMSG]) {
       appinfo = await database.getAppInfo();
