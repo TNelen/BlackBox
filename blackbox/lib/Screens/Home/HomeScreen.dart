@@ -7,6 +7,7 @@ import 'package:blackbox/Screens/Home/RateAppButton.dart';
 import 'package:blackbox/Screens/Home/TopIconBar.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
 import '../../Constants.dart';
@@ -83,11 +84,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    // set up listener here
-    _controller.addListener(() {
-      if (_controller.position.extentBefore == 0 && _controller.position.extentAfter == 0) {
-        setScrollable = false;
-      }
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (setScrollable && _controller.position.extentAfter == 0)
+        setState(() {
+          setScrollable = false;
+        });
     });
   }
 
@@ -124,8 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
 
     return WillPopScope(
         onWillPop: () async {
