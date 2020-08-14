@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 physics: setScrollable ? AlwaysScrollableScrollPhysics() : NeverScrollableScrollPhysics(),
                 children: [
                   SizedBox(
-                    height: height / 30,
+                    height: 5.0 * MediaQuery.of(context).devicePixelRatio,
                   ),
                   TopIconBar.topIcons(context, database),
                   Column(
@@ -158,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Container(
                           padding: EdgeInsets.only(
-                              top: height / 10, left: 10, right: 10),
+                              top: 15 * MediaQuery.of(context).devicePixelRatio, left: 10, right: 10),
                           child: AutoSizeText(
                             'Hi, ' +
                                 Constants.getUsername().split(" ")[0] +
@@ -187,14 +187,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ]),
                   SizedBox(
-                    height: 55,
+                    height: 25 * MediaQuery.of(context).devicePixelRatio,
                   ),
                   Container(
                       padding: EdgeInsets.only(left: 45, right: 45),
                       child: Column(
                         children: <Widget>[
                           Container(
-                            padding: EdgeInsets.only(left: 10, bottom: 10),
+                            padding: EdgeInsets.only(left: 10, bottom: 10 * MediaQuery.of(context).devicePixelRatio),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(

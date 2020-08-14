@@ -139,7 +139,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                       'Join Group',
                       style: new TextStyle(color: Constants.iWhite, fontSize: 50.0, fontWeight: FontWeight.w300, fontFamily: "atarian",),
                     ),
-                    SizedBox(height: 80.0),
+                    SizedBox(height: 40.0),
                     Text(
                       'Enter group code below',
                       style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 30.0,fontFamily: "atarian", ),
