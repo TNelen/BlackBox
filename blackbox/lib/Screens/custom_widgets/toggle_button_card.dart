@@ -36,7 +36,7 @@ class _ToggleButtonCardState extends State<ToggleButtonCard>{
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: Container(
-        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
