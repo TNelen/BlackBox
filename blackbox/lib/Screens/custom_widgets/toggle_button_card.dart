@@ -6,19 +6,25 @@ class ToggleButtonCard extends StatefulWidget{
   final String text;
   final bool defaultValue;
   final Function(bool) onToggle;
+  final Icon icon;
 
-  ToggleButtonCard(this.text, this.defaultValue, {this.onToggle});
+  ToggleButtonCard(this.text, this.defaultValue, {this.onToggle, this.icon, Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _ToggleButtonCardState();
+    return ToggleButtonCardState();
   }
 
 }
 
-class _ToggleButtonCardState extends State<ToggleButtonCard>{
+class ToggleButtonCardState extends State<ToggleButtonCard>{
   
   bool _currentValue;
+
+  set currentValue (bool value) {
+    setState( () => _currentValue = value );
+  }
+  bool get currentValue => _currentValue;
 
   @override
   void initState()
@@ -40,13 +46,24 @@ class _ToggleButtonCardState extends State<ToggleButtonCard>{
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+
             Row(children: <Widget>[
+
+              (widget.icon != null) ?
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: widget.icon,
+                ) : SizedBox(),
+
               SizedBox(
                 width: 10,
               ),
               Text(
                 widget.text,
-                style: TextStyle(fontSize: 25.0, color: Constants.iWhite),
+                style: TextStyle(
+                  fontSize: 25.0, 
+                  color: Constants.iWhite,
+                ),
               ),
             ]),
             Switch(

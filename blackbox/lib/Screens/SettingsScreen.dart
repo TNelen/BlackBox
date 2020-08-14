@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blackbox/Screens/Home/HomeScreen.dart';
+import 'package:blackbox/Screens/custom_widgets/toggle_button_card.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
@@ -27,6 +28,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     
   }
 
+  final GlobalKey<ToggleButtonCardState> blueKey = GlobalKey();
+  final GlobalKey<ToggleButtonCardState> yellowKey = GlobalKey();
+  final GlobalKey<ToggleButtonCardState> redKey = GlobalKey();
+  final GlobalKey<ToggleButtonCardState> greenKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     bool blueAccentColor = Constants.getAccentColor(0);
@@ -34,173 +40,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
     bool redAccentColor = Constants.getAccentColor(2);
     bool greenAccentColor = Constants.getAccentColor(3);
 
-    Container blueAccent() {
-      return Container(
-          child: Card(
-        color: Constants.iDarkGrey,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        child: Container(
-          padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(children: <Widget>[
-                Icon(
-                  Icons.lens,
-                  size: 17,
-                  color: Constants.iAccent1,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'Blue',
-                  style: TextStyle(fontSize: 25.0, color: Constants.iWhite),
-                ),
-              ]),
-              Switch(
-                value: blueAccentColor,
-                onChanged: (value) {
-                  FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Blue");
-                  Constants.setAccentColor(1);
-                  setState(() {});
-                },
-                activeTrackColor: Constants.iAccent1,
-                activeColor: Constants.iWhite,
-              ),
-            ],
-          ),
-        ),
-      ));
-    }
+    // Update the toggle displays
+    if (blueKey.currentState != null)
+      blueKey.currentState.currentValue = blueAccentColor;
 
-    Container yellowAccent() {
-      return Container(
-          child: Card(
-        color: Constants.iDarkGrey,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        child: Container(
-          padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(children: <Widget>[
-                Icon(
-                  Icons.lens,
-                  size: 17,
-                  color: Constants.iAccent2,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'Yellow',
-                  style: TextStyle(fontSize: 25.0, color: Constants.iWhite),
-                ),
-              ]),
-              Switch(
-                value: yellowAccentColor,
-                onChanged: (value) {
-                  FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Yellow");
-                  Constants.setAccentColor(2);
-                  setState(() {});
-                },
-                activeTrackColor: Constants.iAccent2,
-                activeColor: Constants.iWhite,
-              ),
-            ],
-          ),
-        ),
-      ));
-    }
+    if (yellowKey.currentState != null)
+      yellowKey.currentState.currentValue = yellowAccentColor;
 
-    Container redAccent() {
-      return Container(
-          child: Card(
-        color: Constants.iDarkGrey,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        child: Container(
-          padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(children: <Widget>[
-                Icon(
-                  Icons.lens,
-                  size: 17,
-                  color: Constants.iAccent3,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'Red',
-                  style: TextStyle(fontSize: 25.0, color: Constants.iWhite),
-                ),
-              ]),
-              Switch(
-                value: redAccentColor,
-                onChanged: (value) {
-                  FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Red");
-                  Constants.setAccentColor(3);
-                  setState(() {});
-                },
-                activeTrackColor: Constants.iAccent3,
-                activeColor: Constants.iWhite,
-              ),
-            ],
-          ),
-        ),
-      ));
-    }
+    if (redKey.currentState != null)
+      redKey.currentState.currentValue = redAccentColor;
 
-    Container greenAccent() {
-      return Container(
-          child: Card(
-        color: Constants.iDarkGrey,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        child: Container(
-          padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(children: <Widget>[
-                Icon(
-                  Icons.lens,
-                  size: 17,
-                  color: Constants.iAccent4,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'Green',
-                  style: TextStyle(fontSize: 25.0, color: Constants.iWhite),
-                ),
-              ]),
-              Switch(
-                value: greenAccentColor,
-                onChanged: (value) {
-                  FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Green");
-                  Constants.setAccentColor(4);
-                  setState(() {});
-                },
-                activeTrackColor: Constants.iAccent4,
-                activeColor: Constants.iWhite,
-              ),
-            ],
-          ),
-        ),
-      ));
-    }
+    if (greenKey.currentState != null)
+      greenKey.currentState.currentValue = greenAccentColor;
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -315,13 +166,97 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       SizedBox(
                         height: 15,
                       ),
-                      blueAccent(),
+                      ToggleButtonCard(
+                        'Blue',
+                        blueAccentColor,
+                        key: blueKey,
+                        icon: Icon(
+                          Icons.lens,
+                          size: 17,
+                          color: Constants.iAccent1,
+                        ),
+                        onToggle: (bool value) {
+                          if (value)
+                          {
+                            FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Blue");
+                            Constants.setAccentColor(1);
+                            setState(() {});
+                          }
+                          else
+                          {
+                            blueKey.currentState.currentValue = true;
+                          }
+                        },
+                      ),
                       SizedBox(height: 5),
-                      yellowAccent(),
+                      ToggleButtonCard(
+                        'Yellow',
+                        yellowAccentColor,
+                        key: yellowKey,
+                        icon: Icon(
+                          Icons.lens,
+                          size: 17,
+                          color: Constants.iAccent2,
+                        ),
+                        onToggle: (bool value) {
+                          if (value)
+                          {
+                            FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Yellow");
+                            Constants.setAccentColor(2);
+                            setState(() {});
+                          }
+                          else
+                          {
+                            yellowKey.currentState.currentValue = true;
+                          }
+                        },
+                      ),
                       SizedBox(height: 5),
-                      redAccent(),
+                      ToggleButtonCard(
+                        'Red',
+                        redAccentColor,
+                        key: redKey,
+                        icon: Icon(
+                          Icons.lens,
+                          size: 17,
+                          color: Constants.iAccent3,
+                        ),
+                        onToggle: (bool value) {
+                          if (value)
+                          {
+                            FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Red");
+                            Constants.setAccentColor(3);
+                            setState(() {});
+                          }
+                          else
+                          {
+                            redKey.currentState.currentValue = true;
+                          }
+                        },
+                      ),
                       SizedBox(height: 5),
-                      greenAccent(),
+                      ToggleButtonCard(
+                        'Green',
+                        greenAccentColor,
+                        key: greenKey,
+                        icon: Icon(
+                          Icons.lens,
+                          size: 17,
+                          color: Constants.iAccent4,
+                        ),
+                        onToggle: (bool value) {
+                          if (value)
+                          {
+                            FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Green");
+                            Constants.setAccentColor(4);
+                            setState(() {});
+                          }
+                          else
+                          {
+                            greenKey.currentState.currentValue = true;
+                          }
+                        },
+                      ),
                     ],
                   ),
                 )))));
