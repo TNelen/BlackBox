@@ -224,6 +224,14 @@ class _QuestionScreenState extends State<QuestionScreen>
                       'love'        : reportMap[ReportType.LOVE]
                   });
 
+                FirebaseAnalytics().logEvent(name: 'game_action', parameters: 
+                {   
+                  'type' : 'VoteCast',
+                  'code' : groupData.getGroupCode(),
+                });
+
+                FirebaseAnalytics().logEvent(name: 'VoteOnUser', parameters: null);
+
                 _database.multiReportQuestion(
                     groupData.getQuestion(), reportMap);
                 //_database.voteOnUser(groupData, clickedmember);
