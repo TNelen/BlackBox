@@ -58,6 +58,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  
   Database database;
   int pageIndex = 0;
 
@@ -73,6 +74,21 @@ class _HomeScreenState extends State<HomeScreen> {
     isWelcomeMSG();
 
     /// Show a message if one is set in the database
+  }
+
+  ScrollController _controller = ScrollController();
+  bool setScrollable = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // set up listener here
+    _controller.addListener(() {
+      if (_controller.position.extentBefore == 0 && _controller.position.extentAfter == 0) {
+        setScrollable = false;
+      }
+    });
   }
 
   void isAppUpToDate() async {
@@ -125,7 +141,10 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Constants.iBlack,
             body: Container(
               margin: EdgeInsets.only(top: 16, left: 5, right: 5),
-              child: Column(
+              child: ListView(
+                shrinkWrap: true,
+                controller: _controller,
+                physics: setScrollable ? AlwaysScrollableScrollPhysics() : NeverScrollableScrollPhysics(),
                 children: [
                   SizedBox(
                     height: height / 30,
