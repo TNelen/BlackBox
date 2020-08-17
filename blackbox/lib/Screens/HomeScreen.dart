@@ -2,21 +2,20 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:blackbox/Database/FirebaseManagement.dart';
-import 'package:blackbox/Screens/Home/CreateGameBox.dart';
-import 'package:blackbox/Screens/Home/RateAppButton.dart';
-import 'package:blackbox/Screens/Home/TopIconBar.dart';
+import 'package:blackbox/Screens/widgets/CreateGameBox.dart';
+import 'package:blackbox/Screens/widgets/JoinGameBox.dart';
+import 'package:blackbox/Screens/widgets/RateAppButton.dart';
+import 'package:blackbox/Screens/widgets/TopIconBar.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
-import '../../Constants.dart';
-import 'CreateGameBox.dart';
-import 'JoinGameBox.dart';
-import '../../Interfaces/Database.dart';
+import '../Constants.dart';
+import '../Interfaces/Database.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../DataContainers/Appinfo.dart';
-import '../Popup.dart';
+import '../DataContainers/Appinfo.dart';
+import 'popups/Popup.dart';
 
 class HomeScreen extends StatefulWidget {
   Database database;

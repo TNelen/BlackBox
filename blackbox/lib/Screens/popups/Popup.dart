@@ -1,10 +1,10 @@
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import '../Constants.dart';
-import '../Interfaces/Database.dart';
-import '../DataContainers/Question.dart';
-import 'Home/HomeScreen.dart';
+import '../../Constants.dart';
+import '../../Interfaces/Database.dart';
+import '../../DataContainers/Question.dart';
+import '../HomeScreen.dart';
 
 class Popup {
   static void makePopup(BuildContext context, String title, String message) {

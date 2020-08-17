@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:blackbox/Screens/Home/HomeScreen.dart';
-import 'package:blackbox/Screens/custom_widgets/toggle_button_card.dart';
+import 'package:blackbox/Screens/HomeScreen.dart';
+import 'package:blackbox/Screens/widgets/toggle_button_card.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';

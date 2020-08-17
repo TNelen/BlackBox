@@ -7,7 +7,7 @@ import '../Database/FirebaseStream.dart';
 import '../DataContainers/GroupData.dart';
 import '../Constants.dart';
 import 'QuestionScreen.dart';
-import 'Home/HomeScreen.dart';
+import 'HomeScreen.dart';
 import 'package:share/share.dart';
 
 class GameScreen extends StatefulWidget {

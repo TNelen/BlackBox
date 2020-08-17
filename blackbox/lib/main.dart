@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'package:blackbox/Database/GoogleUserHandler.dart';
 import 'package:flutter/material.dart';
-import 'package:blackbox/Screens/Home/HomeScreen.dart';
+import 'package:blackbox/Screens/HomeScreen.dart';
 import 'package:flutter/services.dart';
 import 'Constants.dart';
 import './Database/GoogleUserHandler.dart';
 import './DataContainers/UserData.dart';
 import './Interfaces/Database.dart';
 import 'dart:io';
-import './Screens/Popup.dart';
+import './Screens/popups/Popup.dart';
 
 void main() {
   try {

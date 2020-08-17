@@ -12,7 +12,7 @@ import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
 import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'Popup.dart';
+import 'popups/Popup.dart';
 import 'OverviewScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 

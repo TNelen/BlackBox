@@ -2,15 +2,16 @@ import 'dart:math';
 
 import 'package:blackbox/DataContainers/QuestionCategory.dart';
 import 'package:blackbox/Database/QuestionListGetter.dart';
-import 'package:blackbox/Screens/custom_widgets/toggle_button_card.dart';
+import 'package:blackbox/Screens/popups/GroupCodePopup.dart';
+import 'package:blackbox/Screens/widgets/CategoryCard.dart';
+import 'package:blackbox/Screens/widgets/toggle_button_card.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
 import '../DataContainers/GroupData.dart';
 import '../DataContainers/Question.dart';
 import '../Interfaces/Database.dart';
 import 'GameScreen.dart';
-import 'Popup.dart';
-import 'package:share/share.dart';
+import 'popups/Popup.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../Database/FirebaseGetters.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -43,116 +44,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   bool _canVoteOnSelf = true;
   Color color = Constants.iDarkGrey;
 
-  bool _isNumeric(String str) {
-    if (str == null) {
-      return false;
-    }
-    return double.tryParse(str) != null;
-  }
 
-  void _showDialog(String code) {
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          backgroundColor: Constants.iDarkGrey,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(16.0))),
-          title: new Text(
-            "Group Code",
-            style: TextStyle(
-                fontFamily: "atarian",
-                color: Constants.iWhite,
-                fontSize: 40,
-                fontWeight: FontWeight.bold),
-          ),
-          content: new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              RichText(
-                text: TextSpan(
-                    // set the default style for the children TextSpans
-                    style: TextStyle(
-                        fontFamily: "atarian",
-                        color: Constants.iBlack,
-                        fontSize: 25),
-                    children: [
-                      TextSpan(
-                          text: code[0],
-                          style: !_isNumeric(code[0])
-                              ? TextStyle(color: Constants.iWhite)
-                              : TextStyle(
-                                  color:
-                                      Constants.colors[Constants.colorindex])),
-                      TextSpan(
-                          text: code[1],
-                          style: !_isNumeric(code[1])
-                              ? TextStyle(color: Constants.iWhite)
-                              : TextStyle(
-                                  color:
-                                      Constants.colors[Constants.colorindex])),
-                      TextSpan(
-                          text: code[2],
-                          style: !_isNumeric(code[2])
-                              ? TextStyle(color: Constants.iWhite)
-                              : TextStyle(
-                                  color:
-                                      Constants.colors[Constants.colorindex])),
-                      TextSpan(
-                          text: code[3],
-                          style: !_isNumeric(code[3])
-                              ? TextStyle(color: Constants.iWhite)
-                              : TextStyle(
-                                  color:
-                                      Constants.colors[Constants.colorindex])),
-                      TextSpan(
-                          text: code[4],
-                          style: !_isNumeric(code[4])
-                              ? TextStyle(color: Constants.iWhite)
-                              : TextStyle(
-                                  color:
-                                      Constants.colors[Constants.colorindex])),
-                    ]),
-              ),
-              IconButton(
-                  icon: Icon(
-                    Icons.share,
-                    color: Constants.iWhite,
-                  ),
-                  onPressed: () {
-                    final RenderBox box = context.findRenderObject();
-                    Share.share(code,
-                        sharePositionOrigin:
-                            box.localToGlobal(Offset.zero) & box.size);
-                  }),
-            ],
-          ),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text(
-                "Start",
-                style: TextStyle(
-                    fontFamily: "atarian",
-                    color: Constants.colors[Constants.colorindex],
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
-              ),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            GameScreen(_database, code)));
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +106,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                         members,
                         questionIDs);
                     _database.updateGroup(groupdata);
-                    _showDialog(code);
+                    GroupCodePopup.groupCodePopup(code, context, _database);
                   });
                 } else {
                   Popup.makePopup(
@@ -246,72 +140,23 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             String description = projectSnap.data[index].description;
             String categoryname = projectSnap.data[index].name;
 
-            return Card(
-              color: selectedCategory.contains(categoryname)
-                  ? Constants.iLight
-                  : Constants.iDarkGrey,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              child: InkResponse(
-                splashColor: Constants.colors[Constants.colorindex],
-                radius: 50,
-                onTap: () {
-                  setState(() {
-                    color = Constants.colors[Constants.colorindex];
-                    if (!selectedCategory.contains(categoryname)) {
-                      selectedCategory.add(categoryname);
-                    } else if (selectedCategory.contains(categoryname)) {
-                      selectedCategory.remove(categoryname);
-                    }
-                  });
-                },
-                child: Container(
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 5, left: 10.0, right: 10, bottom: 5),
-                      child: Column(
-                        children: [
-                          Text(
-                            categoryname,
-                            style: new TextStyle(
-                                color: selectedCategory.contains(categoryname)
-                                    ? Constants.iDarkGrey
-                                    : Constants.iWhite,
-                                fontSize: 25.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            description,
-                            textAlign: TextAlign.center,
-                            style: new TextStyle(
-                                color: selectedCategory.contains(categoryname)
-                                    ? Constants.iBlack
-                                    : Constants.iLight,
-                                fontSize: 17.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            amount.toString() + '  questions',
-                            textAlign: TextAlign.center,
-                            style: new TextStyle(
-                                color: selectedCategory.contains(categoryname)
-                                    ? Constants.iBlack
-                                    : Constants.iLight,
-                                fontSize: 13.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 3),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+            return CategoryCard(
+              selectedCategory.contains(categoryname),
+              categoryname,
+              description,
+              amount,
+              onTap: () {
+                if (!selectedCategory.contains(categoryname)) {
+                  selectedCategory.add(categoryname);
+                } else if (selectedCategory.contains(categoryname)) {
+                  selectedCategory.remove(categoryname);
+                }
+                setState(() {
+
+                });
+              },
             );
+
           },
         );
       },
