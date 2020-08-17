@@ -1,31 +1,26 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:blackbox/Database/FirebaseManagement.dart';
-import 'package:blackbox/Screens/Home/CreateGameBox.dart';
+import 'package:blackbox/Screens/CreateGameScreen.dart';
 import 'package:blackbox/Screens/Home/RateAppButton.dart';
 import 'package:blackbox/Screens/Home/TopIconBar.dart';
+import 'package:blackbox/Screens/JoinGameScreen.dart';
+import 'package:blackbox/Screens/custom_widgets/home_screen_button.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
 import '../../Constants.dart';
-import 'CreateGameBox.dart';
-import 'JoinGameBox.dart';
 import '../../Interfaces/Database.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../../DataContainers/Appinfo.dart';
 import '../Popup.dart';
 
 class HomeScreen extends StatefulWidget {
-  Database database;
+  final Database database;
 
-  HomeScreen(Database db) {
-    database = db;
-
+  HomeScreen(Database db) : database = db {
     // Add firebase management logic here
-    FirebaseManagement dbManagement = FirebaseManagement();
+    // FirebaseManagement dbManagement = FirebaseManagement();
     // handleAddQuestionsFromFile( dbManagement );
   }
 
@@ -52,10 +47,6 @@ class HomeScreen extends StatefulWidget {
 
   @override
   _HomeScreenState createState() => _HomeScreenState(database);
-
-  HomePage(Database db) {
-    this.database = db;
-  }
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -205,11 +196,41 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          CreateGameBox.createGame(context, database),
+                          Hero(
+                            tag: 'toberutton',
+                            child: HomeScreenButton(
+                              'Create Game', 
+                              'Invite friends to a new game',
+                              icon: Icons.edit,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) => CreateGameScreen(database),
+                                  )
+                                );
+                              }
+                            ),
+                          ),
                           SizedBox(
                             height: 6,
                           ),
-                          JoinGameBox.joinGame(context, database),
+                          Hero(
+                            tag: 'frfr',
+                            child: HomeScreenButton(
+                              'Join Game', 
+                              'Join with the group code',
+                              icon: Icons.search,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) => JoinGameScreen(database),
+                                  )
+                                );
+                              }
+                            ),
+                          ),
                           SizedBox(
                             height: 20,
                           ),
