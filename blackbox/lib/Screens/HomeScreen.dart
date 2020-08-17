@@ -1,11 +1,10 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:blackbox/Database/FirebaseManagement.dart';
-import 'package:blackbox/Screens/widgets/CreateGameBox.dart';
-import 'package:blackbox/Screens/widgets/JoinGameBox.dart';
 import 'package:blackbox/Screens/widgets/RateAppButton.dart';
 import 'package:blackbox/Screens/widgets/TopIconBar.dart';
+import 'package:blackbox/Screens/CreateGameScreen.dart';
+import 'package:blackbox/Screens/Home/RateAppButton.dart';
+import 'package:blackbox/Screens/JoinGameScreen.dart';
+import 'package:blackbox/Screens/custom_widgets/home_screen_button.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -18,13 +17,11 @@ import '../DataContainers/Appinfo.dart';
 import 'popups/Popup.dart';
 
 class HomeScreen extends StatefulWidget {
-  Database database;
+  final Database database;
 
-  HomeScreen(Database db) {
-    database = db;
-
+  HomeScreen(Database db) : database = db {
     // Add firebase management logic here
-    FirebaseManagement dbManagement = FirebaseManagement();
+    // FirebaseManagement dbManagement = FirebaseManagement();
     // handleAddQuestionsFromFile( dbManagement );
   }
 
@@ -51,14 +48,9 @@ class HomeScreen extends StatefulWidget {
 
   @override
   _HomeScreenState createState() => _HomeScreenState(database);
-
-  HomePage(Database db) {
-    this.database = db;
-  }
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  
   Database database;
   int pageIndex = 0;
 
@@ -92,7 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void isAppUpToDate() async {
-
     // Grab the version of the current app from pubspec
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String version = packageInfo.version + '+' + packageInfo.buildNumber;
@@ -124,7 +115,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
         onWillPop: () async {
           return false;
@@ -142,7 +132,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ListView(
                 shrinkWrap: true,
                 controller: _controller,
-                physics: setScrollable ? AlwaysScrollableScrollPhysics() : NeverScrollableScrollPhysics(),
+                physics: setScrollable
+                    ? AlwaysScrollableScrollPhysics()
+                    : NeverScrollableScrollPhysics(),
                 children: [
                   SizedBox(
                     height: 5.0 * MediaQuery.of(context).devicePixelRatio,
@@ -156,7 +148,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Container(
                           padding: EdgeInsets.only(
-                              top: 15 * MediaQuery.of(context).devicePixelRatio, left: 10, right: 10),
+                              top: 15 * MediaQuery.of(context).devicePixelRatio,
+                              left: 10,
+                              right: 10),
                           child: AutoSizeText(
                             'Hi, ' +
                                 Constants.getUsername().split(" ")[0] +
@@ -192,7 +186,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: <Widget>[
                           Container(
-                            padding: EdgeInsets.only(left: 10, bottom: 10 * MediaQuery.of(context).devicePixelRatio),
+                            padding: EdgeInsets.only(
+                                left: 10,
+                                bottom: 10 *
+                                    MediaQuery.of(context).devicePixelRatio),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
@@ -204,11 +201,35 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          CreateGameBox.createGame(context, database),
+                          Hero(
+                            tag: 'toberutton',
+                            child: HomeScreenButton(
+                                'Create Game', 'Invite friends to a new game',
+                                icon: Icons.edit, onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        CreateGameScreen(database),
+                                  ));
+                            }),
+                          ),
                           SizedBox(
                             height: 6,
                           ),
-                          JoinGameBox.joinGame(context, database),
+                          Hero(
+                            tag: 'frfr',
+                            child: HomeScreenButton(
+                                'Join Game', 'Join with the group code',
+                                icon: Icons.search, onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        JoinGameScreen(database),
+                                  ));
+                            }),
+                          ),
                           SizedBox(
                             height: 20,
                           ),
