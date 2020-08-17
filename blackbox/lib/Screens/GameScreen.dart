@@ -298,10 +298,7 @@ class _GameScreenState extends State<GameScreen> {
                                                               bottom: 1,
                                                               left: 7,
                                                               right: 7),
-                                                      child: groupdata
-                                                              .isUserPlaying(
-                                                                  data)
-                                                          ? Center(
+                                                      child: Center(
                                                               child: Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
@@ -321,6 +318,10 @@ class _GameScreenState extends State<GameScreen> {
                                                                         fontWeight:
                                                                             FontWeight.w400),
                                                                   ),
+                                                                  groupdata
+                                                                      .isUserPlaying(
+                                                                      data)
+                                                                      ?
                                                                   Icon(
                                                                     Icons
                                                                         .check_box,
@@ -329,31 +330,7 @@ class _GameScreenState extends State<GameScreen> {
                                                                             .colors[
                                                                         Constants
                                                                             .colorindex],
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            )
-                                                          : Center(
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: <
-                                                                    Widget>[
-                                                                  Text(
-                                                                    data
-                                                                        .getUsername()
-                                                                        .split(
-                                                                            ' ')[0],
-                                                                    style: new TextStyle(
-                                                                        color: Constants
-                                                                            .iWhite,
-                                                                        fontSize:
-                                                                            25.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w400),
-                                                                  ),
-                                                                  Icon(
+                                                                  ):  Icon(
                                                                     Icons
                                                                         .check_box_outline_blank,
                                                                     size: 25,
@@ -362,7 +339,8 @@ class _GameScreenState extends State<GameScreen> {
                                                                   )
                                                                 ],
                                                               ),
-                                                            ))),
+                                                            )
+                                                          )),
                                             ))
                                         .toList(),
                                   ),
