@@ -204,7 +204,32 @@ class _GameScreenState extends State<GameScreen> {
                                       SizedBox(height: 10),
                                       Container(
                                         padding: EdgeInsets.fromLTRB(15, 1, 15, 1),
-                                        child: Row(
+                                        child: InkWell(
+                                          onTap: ()  {
+                                            final RenderBox box = context.findRenderObject();
+                                            Share.share(code, sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+                                          },
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "   Invite players  ",
+                                                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w700, color: Constants.colors[Constants.colorindex]),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.only(right: 20),
+                                                child:Icon(
+                                                  Icons.group_add,
+                                                  color: Constants.colors[Constants.colorindex],
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),
+                                        ),
+
+
+                                       /* Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Text(
@@ -225,7 +250,7 @@ class _GameScreenState extends State<GameScreen> {
                                               ],
                                             )
                                           ],
-                                        ),
+                                        ),*/
                                       ),
                                       Container(
                                         padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
