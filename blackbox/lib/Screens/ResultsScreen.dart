@@ -152,11 +152,6 @@ class ResultScreenState extends State<ResultScreen> {
     }
   }
 
-  void pageChanged(int index) {
-    setState(() {
-      //pageIndex = index;
-    });
-  }
 
   @override
   Widget _buildBody(BuildContext context) {
@@ -863,11 +858,6 @@ class ResultScreenState extends State<ResultScreen> {
 
           timer.cancel();
 
-          void pageChanged(int index) {
-            setState(() {
-              pageIndex = index;
-            });
-          }
 
           /// Play audio indicating whether or not the player is in the previous top three
           if (_firstTimeLoaded) {
