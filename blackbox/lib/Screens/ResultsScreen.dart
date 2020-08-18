@@ -584,7 +584,7 @@ class ResultScreenState extends State<ResultScreen> {
                         },
                       )
                     : SizedBox(
-                        height: 25,
+                        height: 1,
                       ),
                 currentWinners.length >= 3
                     ? FlatButton(
@@ -611,15 +611,17 @@ class ResultScreenState extends State<ResultScreen> {
 
           final nextButton = Hero(
             tag: 'button',
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 35, right: 35),
               child: Material(
-                elevation: 0.0,
-                borderRadius: BorderRadius.circular(16.0),
+                elevation: 5.0,
+                borderRadius: BorderRadius.circular(28.0),
                 color: Constants.colors[Constants.colorindex],
                 child: MaterialButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28.0),
+                    ),
                     minWidth: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.all(20),
                     onPressed: () {
                       if (groupData.getIsPlaying()) {
                         Navigator.push(
@@ -681,8 +683,7 @@ class ResultScreenState extends State<ResultScreen> {
                   )
                 ]),
               ),
-              body: Center(
-                  child: ListView(
+              body: ListView(
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 children: <Widget>[
@@ -722,10 +723,13 @@ class ResultScreenState extends State<ResultScreen> {
                   //AllTime
                   Padding(padding: EdgeInsets.only(left: 35, right: 35), child: alltime),
 
-                  //Nextbutton
-                  Padding(padding: EdgeInsets.only(left: 35, right: 35), child: nextButton),
+                  SizedBox(
+                    height: 75,
+                  ),
                 ],
-              )),
+              ),
+              floatingActionButton: nextButton,
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
             ),
           );
         });

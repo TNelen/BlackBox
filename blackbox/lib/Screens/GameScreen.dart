@@ -285,7 +285,7 @@ class _GameScreenState extends State<GameScreen> {
 
                             //tab2
                             Container(
-                              child: ListView(shrinkWrap: true, padding: const EdgeInsets.only(top: 10, left:25.0, right:25.0), children: [
+                              child: ListView(shrinkWrap: true, padding: const EdgeInsets.only(top: 10, left: 25.0, right: 25.0), children: [
                                 RulesList.getRules(),
                               ]),
                             )

@@ -180,6 +180,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
 
     final membersList = Flexible(
       child: GridView.count(
+        shrinkWrap: true,
         crossAxisCount: 2,
         childAspectRatio: (3 / 1),
         padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -190,7 +191,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
     final voteButton = Hero(
       tag: 'submit',
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 60, left: 35, right: 35),
+        padding: const EdgeInsets.only(left: 35, right: 35),
         child: Material(
           elevation: 5.0,
           borderRadius: BorderRadius.circular(28.0),
@@ -255,120 +256,115 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
               scaffoldBackgroundColor: Constants.iBlack,
             ),
             home: Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Constants.iBlack,
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(children: [
-                        InkWell(
-                          onTap: () => Navigator.of(context).pop(true),
-                          child: Padding(
-                            padding: EdgeInsets.only(right: 1),
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Constants.colors[Constants.colorindex],
-                            ),
+              appBar: AppBar(
+                backgroundColor: Constants.iBlack,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(children: [
+                      InkWell(
+                        onTap: () => Navigator.of(context).pop(true),
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 1),
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Constants.colors[Constants.colorindex],
                           ),
                         ),
-                        FlatButton(
-                          padding: EdgeInsets.all(10),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            "Results",
-                            style: TextStyle(fontSize: 25.0, color: Constants.colors[Constants.colorindex]),
-                          ),
-                        ),
-                      ]),
+                      ),
                       FlatButton(
+                        padding: EdgeInsets.all(10),
                         onPressed: () {
-                          groupData.removePlayingUser(Constants.getUserData());
-                          _database.updateGroup(groupData);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) => GameScreen(_database, code),
-                              ));
+                          Navigator.pop(context);
                         },
                         child: Text(
-                          "Leave",
+                          "Results",
                           style: TextStyle(fontSize: 25.0, color: Constants.colors[Constants.colorindex]),
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    ]),
+                    FlatButton(
+                      onPressed: () {
+                        groupData.removePlayingUser(Constants.getUserData());
+                        _database.updateGroup(groupData);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => GameScreen(_database, code),
+                            ));
+                      },
+                      child: Text(
+                        "Leave",
+                        style: TextStyle(fontSize: 25.0, color: Constants.colors[Constants.colorindex]),
+                      ),
+                    )
+                  ],
                 ),
-                body: Padding(
-                  padding: EdgeInsets.only(left: 30, right: 30),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      //submit own question button
-
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-                        child: Hero(
-                          tag: 'questionToVote',
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
-                            color: Constants.iBlack,
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      SizedBox(height: 10),
-                                      Text(
-                                        'Question',
-                                        style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w700),
-                                      ),
-                                      SizedBox(height: 30),
-                                      Text(
-                                        groupData.getNextQuestionString(),
-                                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 30.0, fontWeight: FontWeight.bold),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      SizedBox(height: 5),
-                                      Text(
-                                        '- ' + groupData.getQuestion().getCategory() + ' -',
-                                        style: new TextStyle(color: Constants.iWhite, fontSize: 18.0, fontWeight: FontWeight.bold),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
-                                  ),
+              ),
+              body: Padding(
+                padding: EdgeInsets.only(left: 30, right: 30),
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    //submit own question button
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          color: Constants.iBlack,
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    SizedBox(height: 10),
+                                    Text(
+                                      'Question',
+                                      style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w700),
+                                    ),
+                                    SizedBox(height: 30),
+                                    Text(
+                                      groupData.getNextQuestionString(),
+                                      style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 30.0, fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(height: 5),
+                                    Text(
+                                      '- ' + groupData.getQuestion().getCategory() + ' -',
+                                      style: new TextStyle(color: Constants.iWhite, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
+                    ),
 
-                      Text(
-                        'Select a friend',
-                        style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w700),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
+                    Text(
+                      'Select a friend',
+                      style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w700),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
 
-                      membersList,
-                      reportButton,
-                      submitquestionbutton,
+                    membersList,
+                    reportButton,
+                    submitquestionbutton,
 
-                      SizedBox(
-                        height: 20,
-                      ),
-
-                      voteButton
-                    ],
-                  ),
-                )),
+                    SizedBox(height: 75,),
+                  ],
+                ),
+              ),
+              floatingActionButton: voteButton,
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+            ),
           );
         });
   }
