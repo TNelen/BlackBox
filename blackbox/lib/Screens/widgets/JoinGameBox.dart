@@ -19,8 +19,7 @@ class JoinGameBox {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          JoinGameScreen(database),
+                      builder: (BuildContext context) => JoinGameScreen(database),
                     ));
               },
               child: Container(
@@ -42,18 +41,12 @@ class JoinGameBox {
                         children: <Widget>[
                           Text(
                             "Join Game",
-                            style: TextStyle(
-                                fontSize: 30.0,
-                                color: Constants.iWhite,
-                                fontWeight: FontWeight.w400),
+                            style: TextStyle(fontSize: 30.0, color: Constants.iWhite, fontWeight: FontWeight.w400),
                           ),
                           SizedBox(height: 5),
                           Text(
                             "Join with the group code",
-                            style: TextStyle(
-                                fontSize: 20.0,
-                                color: Constants.iLight,
-                                fontWeight: FontWeight.w300),
+                            style: TextStyle(fontSize: 20.0, color: Constants.iLight, fontWeight: FontWeight.w300),
                           ),
                         ],
                       ),

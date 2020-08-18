@@ -20,9 +20,7 @@ class RulesList {
             Column(
               children: [
                 Text(
-                  'Create a new game and invite your friends by sharing the group code.' +
-                      '\n' +
-                      'Or join a game by entering the group code.',
+                  'Create a new game and invite your friends by sharing the group code.' + '\n' + 'Or join a game by entering the group code.',
                   style: new TextStyle(
                     color: Constants.iWhite,
                     fontSize: 25.0,
@@ -104,9 +102,7 @@ class RulesList {
             Column(
               children: [
                 Text(
-                  'Vote on a group member.' +
-                      '\n' +
-                      'Once a vote is submitted, it can not be changed.',
+                  'Vote on a group member.' + '\n' + 'Once a vote is submitted, it can not be changed.',
                   style: new TextStyle(
                     color: Constants.iWhite,
                     fontSize: 25.0,
@@ -190,9 +186,7 @@ class RulesList {
             Column(
               children: [
                 Text(
-                  'Leave a running game by clicking on the leave in the top right corner.' +
-                      '\n' +
-                      'Please do not close the app before leaving an active game.',
+                  'Leave a running game by clicking on the leave in the top right corner.' + '\n' + 'Please do not close the app before leaving an active game.',
                   style: new TextStyle(
                     color: Constants.iWhite,
                     fontSize: 25.0,

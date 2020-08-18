@@ -29,12 +29,10 @@ class QuestionScreen extends StatefulWidget {
     reportMap[ReportType.LOVE] = false;
   }
 
-  _QuestionScreenState createState() =>
-      _QuestionScreenState(_database, groupData, code);
+  _QuestionScreenState createState() => _QuestionScreenState(_database, groupData, code);
 }
 
-class _QuestionScreenState extends State<QuestionScreen>
-    with WidgetsBindingObserver {
+class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObserver {
   Database _database;
   GroupData groupData;
   String code;
@@ -95,30 +93,21 @@ class _QuestionScreenState extends State<QuestionScreen>
         // return object of type Dialog
         return AlertDialog(
           backgroundColor: Constants.iBlack,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(16.0))),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: new Text(
             "No members selected",
-            style: TextStyle(
-                fontFamily: "atarian",
-                color: Constants.colors[Constants.colorindex],
-                fontSize: 30),
+            style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: 30),
           ),
           content: new Text(
             "Please make a valid choice",
-            style: TextStyle(
-                fontFamily: "atarian", color: Constants.iWhite, fontSize: 22),
+            style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: 22),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
               child: new Text(
                 "Close",
-                style: TextStyle(
-                    fontFamily: "atarian",
-                    color: Constants.colors[Constants.colorindex],
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: 25, fontWeight: FontWeight.bold),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -184,8 +173,7 @@ class _QuestionScreenState extends State<QuestionScreen>
     if (groupData.canVoteBlank) userData.add(GroupData.blankUser);
     if (!groupData.canVoteOnSelf) {
       int deleteIndex;
-      for (int i = 0; i < userData.length; i++)
-        if (Constants.getUserID() == userData[i].getUserID()) deleteIndex = i;
+      for (int i = 0; i < userData.length; i++) if (Constants.getUserID() == userData[i].getUserID()) deleteIndex = i;
 
       if (deleteIndex != null) userData.removeAt(deleteIndex);
     }
@@ -214,51 +202,38 @@ class _QuestionScreenState extends State<QuestionScreen>
             minWidth: MediaQuery.of(context).size.width,
             onPressed: () {
               if (clickedmember != null) {
-
-                if(reportMap.containsValue(true))
-                  FirebaseAnalytics().logEvent(name: 'action_performed', parameters: 
-                  {   'action_name' : 'RateQuestion', 
-                      'disturbing'  : reportMap[ReportType.DISTURBING],
-                      'grammar'     : reportMap[ReportType.GRAMMAR],
-                      'category'    : reportMap[ReportType.CATEGORY],
-                      'love'        : reportMap[ReportType.LOVE]
+                if (reportMap.containsValue(true))
+                  FirebaseAnalytics().logEvent(name: 'action_performed', parameters: {
+                    'action_name': 'RateQuestion',
+                    'disturbing': reportMap[ReportType.DISTURBING],
+                    'grammar': reportMap[ReportType.GRAMMAR],
+                    'category': reportMap[ReportType.CATEGORY],
+                    'love': reportMap[ReportType.LOVE]
                   });
 
-                FirebaseAnalytics().logEvent(name: 'game_action', parameters: 
-                {   
-                  'type' : 'VoteCast',
-                  'code' : groupData.getGroupCode(),
+                FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
+                  'type': 'VoteCast',
+                  'code': groupData.getGroupCode(),
                 });
 
                 FirebaseAnalytics().logEvent(name: 'VoteOnUser', parameters: null);
 
-                _database.multiReportQuestion(
-                    groupData.getQuestion(), reportMap);
+                _database.multiReportQuestion(groupData.getQuestion(), reportMap);
                 //_database.voteOnUser(groupData, clickedmember);
-                groupData.addVote(
-                    clickedmember); // GroupData#addVote automatically updates the database. This is preferred because random retries are built in
+                groupData.addVote(clickedmember); // GroupData#addVote automatically updates the database. This is preferred because random retries are built in
                 currentQuestion = groupData.getQuestionID();
                 currentQuestionString = groupData.getNextQuestionString();
 
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => ResultScreen(
-                          _database,
-                          groupData,
-                          code,
-                          currentQuestion,
-                          currentQuestionString,
-                          clickedmember),
+                      builder: (BuildContext context) => ResultScreen(_database, groupData, code, currentQuestion, currentQuestionString, clickedmember),
                     ));
               } else {
                 _showDialog();
               }
             },
-            child: Text("Confirm choice",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 25).copyWith(
-                    color: Constants.iBlack, fontWeight: FontWeight.bold)),
+            child: Text("Confirm choice", textAlign: TextAlign.center, style: TextStyle(fontSize: 25).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold)),
           ),
         ),
       ),
@@ -303,9 +278,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                           },
                           child: Text(
                             "Results",
-                            style: TextStyle(
-                                fontSize: 25.0,
-                                color: Constants.colors[Constants.colorindex]),
+                            style: TextStyle(fontSize: 25.0, color: Constants.colors[Constants.colorindex]),
                           ),
                         ),
                       ]),
@@ -316,15 +289,12 @@ class _QuestionScreenState extends State<QuestionScreen>
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    GameScreen(_database, code),
+                                builder: (BuildContext context) => GameScreen(_database, code),
                               ));
                         },
                         child: Text(
                           "Leave",
-                          style: TextStyle(
-                              fontSize: 25.0,
-                              color: Constants.colors[Constants.colorindex]),
+                          style: TextStyle(fontSize: 25.0, color: Constants.colors[Constants.colorindex]),
                         ),
                       )
                     ],
@@ -338,8 +308,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                       //submit own question button
 
                       Container(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 10),
+                        margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
                         child: Hero(
                           tag: 'questionToVote',
                           child: Card(
@@ -357,32 +326,18 @@ class _QuestionScreenState extends State<QuestionScreen>
                                       SizedBox(height: 10),
                                       Text(
                                         'Question',
-                                        style: new TextStyle(
-                                            color: Constants.iWhite,
-                                            fontSize: 40.0,
-                                            fontWeight: FontWeight.w700),
+                                        style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w700),
                                       ),
                                       SizedBox(height: 30),
                                       Text(
                                         groupData.getNextQuestionString(),
-                                        style: new TextStyle(
-                                            color: Constants
-                                                .colors[Constants.colorindex],
-                                            fontSize: 30.0,
-                                            fontWeight: FontWeight.bold),
+                                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 30.0, fontWeight: FontWeight.bold),
                                         textAlign: TextAlign.center,
                                       ),
                                       SizedBox(height: 5),
                                       Text(
-                                        '- ' +
-                                            groupData
-                                                .getQuestion()
-                                                .getCategory() +
-                                            ' -',
-                                        style: new TextStyle(
-                                            color: Constants.iWhite,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold),
+                                        '- ' + groupData.getQuestion().getCategory() + ' -',
+                                        style: new TextStyle(color: Constants.iWhite, fontSize: 18.0, fontWeight: FontWeight.bold),
                                         textAlign: TextAlign.center,
                                       ),
                                     ],
@@ -396,10 +351,7 @@ class _QuestionScreenState extends State<QuestionScreen>
 
                       Text(
                         'Select a friend',
-                        style: new TextStyle(
-                            color: Constants.iWhite,
-                            fontSize: 40.0,
-                            fontWeight: FontWeight.w700),
+                        style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w700),
                       ),
                       SizedBox(
                         height: 20,
@@ -423,9 +375,7 @@ class _QuestionScreenState extends State<QuestionScreen>
 
   Widget buildUserVoteCard(UserData data) {
     return Card(
-      color: data.getUserID() == clickedmember
-          ? Constants.iLight
-          : Constants.iDarkGrey,
+      color: data.getUserID() == clickedmember ? Constants.iLight : Constants.iDarkGrey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
@@ -441,16 +391,10 @@ class _QuestionScreenState extends State<QuestionScreen>
         child: Container(
           child: Center(
               child: Padding(
-            padding:
-                const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
+            padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
             child: Text(
               data.getUsername().split(' ')[0],
-              style: new TextStyle(
-                  color: data.getUserID() == clickedmember
-                      ? Constants.iDarkGrey
-                      : Constants.iWhite,
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.bold),
+              style: new TextStyle(color: data.getUserID() == clickedmember ? Constants.iDarkGrey : Constants.iWhite, fontSize: 25.0, fontWeight: FontWeight.bold),
             ),
           )),
         ),
@@ -471,8 +415,7 @@ class ReportPopup extends StatefulWidget {
     this.code = code;
   }
 
-  _ReportPopupState createState() =>
-      _ReportPopupState(_database, groupData, code);
+  _ReportPopupState createState() => _ReportPopupState(_database, groupData, code);
 }
 
 class _ReportPopupState extends State<ReportPopup> {
@@ -504,31 +447,23 @@ class _ReportPopupState extends State<ReportPopup> {
         child: Row(
           children: !reportMap[ReportType.DISTURBING]
               ? <Widget>[
-                  Icon(Icons.sentiment_dissatisfied,
-                      color: Constants.iWhite, size: 20),
+                  Icon(Icons.sentiment_dissatisfied, color: Constants.iWhite, size: 20),
                   SizedBox(
                     width: 20,
                   ),
                   Text(
                     'Disturbing',
-                    style: TextStyle(
-                        fontFamily: "atarian",
-                        fontSize: 20,
-                        color: Constants.iWhite),
+                    style: TextStyle(fontFamily: "atarian", fontSize: 20, color: Constants.iWhite),
                   ),
                 ]
               : <Widget>[
-                  Icon(Icons.sentiment_dissatisfied,
-                      color: Constants.iGrey, size: 25),
+                  Icon(Icons.sentiment_dissatisfied, color: Constants.iGrey, size: 25),
                   SizedBox(
                     width: 20,
                   ),
                   Text(
                     'Disturbing',
-                    style: TextStyle(
-                        fontFamily: "atarian",
-                        fontSize: 20,
-                        color: Constants.iGrey),
+                    style: TextStyle(fontFamily: "atarian", fontSize: 20, color: Constants.iGrey),
                   ),
                 ],
         ));
@@ -548,10 +483,7 @@ class _ReportPopupState extends State<ReportPopup> {
                   ),
                   Text(
                     'Grammar Mistake',
-                    style: TextStyle(
-                        fontFamily: "atarian",
-                        fontSize: 20,
-                        color: Constants.iWhite),
+                    style: TextStyle(fontFamily: "atarian", fontSize: 20, color: Constants.iWhite),
                   ),
                 ]
               : <Widget>[
@@ -584,10 +516,7 @@ class _ReportPopupState extends State<ReportPopup> {
                   ),
                   Text(
                     'Love it!',
-                    style: TextStyle(
-                        fontFamily: "atarian",
-                        fontSize: 20,
-                        color: Constants.iWhite),
+                    style: TextStyle(fontFamily: "atarian", fontSize: 20, color: Constants.iWhite),
                   ),
                 ]
               : <Widget>[
@@ -597,10 +526,7 @@ class _ReportPopupState extends State<ReportPopup> {
                   ),
                   Text(
                     'Love it!',
-                    style: TextStyle(
-                        fontFamily: "atarian",
-                        fontSize: 20,
-                        color: Constants.iGrey),
+                    style: TextStyle(fontFamily: "atarian", fontSize: 20, color: Constants.iGrey),
                   ),
                 ],
         ));
@@ -611,14 +537,10 @@ class _ReportPopupState extends State<ReportPopup> {
 
     return AlertDialog(
       backgroundColor: Constants.iBlack,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
       title: new Text(
         'What do you think about this question?',
-        style: TextStyle(
-            fontFamily: "atarian",
-            color: Constants.colors[Constants.colorindex],
-            fontSize: 30),
+        style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: 30),
       ),
       content: new Container(
         height: 200,
@@ -632,11 +554,7 @@ class _ReportPopupState extends State<ReportPopup> {
             ),
             Text(
               'Thank you! Via your feedback we can improve the questions.',
-              style: TextStyle(
-                  fontFamily: "atarian",
-                  fontSize: 20,
-                  color: Constants.iGrey,
-                  fontWeight: FontWeight.w400),
+              style: TextStyle(fontFamily: "atarian", fontSize: 20, color: Constants.iGrey, fontWeight: FontWeight.w400),
             )
           ],
         ),
@@ -646,11 +564,7 @@ class _ReportPopupState extends State<ReportPopup> {
         new FlatButton(
           child: new Text(
             "Close",
-            style: TextStyle(
-                fontFamily: "atarian",
-                color: Constants.colors[Constants.colorindex],
-                fontSize: 20,
-                fontWeight: FontWeight.bold),
+            style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: 20, fontWeight: FontWeight.bold),
           ),
           onPressed: () {
             Navigator.pop(context);

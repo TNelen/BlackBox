@@ -25,7 +25,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     this._database = db;
 
     FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'Settings'});
-    
   }
 
   final GlobalKey<ToggleButtonCardState> blueKey = GlobalKey();
@@ -41,23 +40,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
     bool greenAccentColor = Constants.getAccentColor(3);
 
     // Update the toggle displays
-    if (blueKey.currentState != null)
-      blueKey.currentState.currentValue = blueAccentColor;
+    if (blueKey.currentState != null) blueKey.currentState.currentValue = blueAccentColor;
 
-    if (yellowKey.currentState != null)
-      yellowKey.currentState.currentValue = yellowAccentColor;
+    if (yellowKey.currentState != null) yellowKey.currentState.currentValue = yellowAccentColor;
 
-    if (redKey.currentState != null)
-      redKey.currentState.currentValue = redAccentColor;
+    if (redKey.currentState != null) redKey.currentState.currentValue = redAccentColor;
 
-    if (greenKey.currentState != null)
-      greenKey.currentState.currentValue = greenAccentColor;
+    if (greenKey.currentState != null) greenKey.currentState.currentValue = greenAccentColor;
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
-        theme: new ThemeData(
-            fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
+        theme: new ThemeData(fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
             appBar: AppBar(
               backgroundColor: Constants.iBlack,
@@ -67,8 +61,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              HomeScreen(_database),
+                          builder: (BuildContext context) => HomeScreen(_database),
                         ));
                   },
                   child: Row(
@@ -118,32 +111,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       SizedBox(height: 40.0),
                       Text(
                         'Settings',
-                        style: new TextStyle(
-                            color: Constants.colors[Constants.colorindex],
-                            fontSize: 40.0,
-                            fontWeight: FontWeight.w500),
+                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 40.0, fontWeight: FontWeight.w500),
                       ),
                       SizedBox(height: 40.0),
                       Text(
                         'Sounds and vibration',
-                        style: new TextStyle(
-                            color: Constants.colors[Constants.colorindex],
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.w300),
+                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 30.0, fontWeight: FontWeight.w300),
                       ),
                       SizedBox(height: 5),
-                      _buildMediaSetting(Icons.audiotrack, 'Sounds', 'is_sound_enabled',
-                          Constants.getSoundEnabled(), _soundAction),
+                      _buildMediaSetting(Icons.audiotrack, 'Sounds', 'is_sound_enabled', Constants.getSoundEnabled(), _soundAction),
                       SizedBox(height: 5),
-                      _buildMediaSetting(Icons.vibration, 'Vibration', 'is_vibration_enabled',
-                          Constants.getVibrationEnabled(), _vibrationAction),
+                      _buildMediaSetting(Icons.vibration, 'Vibration', 'is_vibration_enabled', Constants.getVibrationEnabled(), _vibrationAction),
                       SizedBox(height: 40.0),
                       Text(
                         'Personalization',
-                        style: new TextStyle(
-                            color: Constants.colors[Constants.colorindex],
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.w300),
+                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 30.0, fontWeight: FontWeight.w300),
                       ),
                       SizedBox(height: 20.0),
                       Row(children: <Widget>[
@@ -157,10 +139,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         Text(
                           'Choose your accent color...',
-                          style: new TextStyle(
-                              color: Constants.iWhite,
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.w300),
+                          style: new TextStyle(color: Constants.iWhite, fontSize: 25.0, fontWeight: FontWeight.w300),
                         ),
                       ]),
                       SizedBox(
@@ -176,14 +155,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: Constants.iAccent1,
                         ),
                         onToggle: (bool value) {
-                          if (value)
-                          {
+                          if (value) {
                             FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Blue");
                             Constants.setAccentColor(1);
                             setState(() {});
-                          }
-                          else
-                          {
+                          } else {
                             blueKey.currentState.currentValue = true;
                           }
                         },
@@ -199,14 +175,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: Constants.iAccent2,
                         ),
                         onToggle: (bool value) {
-                          if (value)
-                          {
+                          if (value) {
                             FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Yellow");
                             Constants.setAccentColor(2);
                             setState(() {});
-                          }
-                          else
-                          {
+                          } else {
                             yellowKey.currentState.currentValue = true;
                           }
                         },
@@ -222,14 +195,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: Constants.iAccent3,
                         ),
                         onToggle: (bool value) {
-                          if (value)
-                          {
+                          if (value) {
                             FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Red");
                             Constants.setAccentColor(3);
                             setState(() {});
-                          }
-                          else
-                          {
+                          } else {
                             redKey.currentState.currentValue = true;
                           }
                         },
@@ -245,14 +215,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: Constants.iAccent4,
                         ),
                         onToggle: (bool value) {
-                          if (value)
-                          {
+                          if (value) {
                             FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Green");
                             Constants.setAccentColor(4);
                             setState(() {});
-                          }
-                          else
-                          {
+                          } else {
                             greenKey.currentState.currentValue = true;
                           }
                         },
@@ -264,14 +231,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void plusOne() => 1;
 
-  void _vibrationAction() =>
-      Constants.setVibrationEnabled(!Constants.getVibrationEnabled());
+  void _vibrationAction() => Constants.setVibrationEnabled(!Constants.getVibrationEnabled());
 
-  void _soundAction() =>
-      Constants.setSoundEnabled(!Constants.getSoundEnabled());
+  void _soundAction() => Constants.setSoundEnabled(!Constants.getSoundEnabled());
 
-  Container _buildMediaSetting(
-      IconData icon, String label, String analyticsUserProperty, bool isEnabled, Function() action) {
+  Container _buildMediaSetting(IconData icon, String label, String analyticsUserProperty, bool isEnabled, Function() action) {
     Color foregroundColor;
     Color textColor;
     Color backgroundColor;

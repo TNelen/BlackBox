@@ -15,8 +15,7 @@ class OverviewScreen extends StatefulWidget {
   }
 
   @override
-  _OverviewScreenState createState() =>
-      new _OverviewScreenState(_database, groupData);
+  _OverviewScreenState createState() => new _OverviewScreenState(_database, groupData);
 }
 
 class _OverviewScreenState extends State<OverviewScreen> {
@@ -80,8 +79,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
             itemCount: groupData.getHistory().length,
             itemBuilder: (context, index) {
               String key = groupData.getHistory().keys.elementAt(index);
-              List<UserRankData> results = groupData.getUserRankingList(
-                  'overview', groupData.getHistory()[key]);
+              List<UserRankData> results = groupData.getUserRankingList('overview', groupData.getHistory()[key]);
               return results.length != 0
                   ? Card(
                       shape: RoundedRectangleBorder(
@@ -96,10 +94,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                           Text(
                             key,
                             textAlign: TextAlign.center,
-                            style: new TextStyle(
-                                color: Constants.iWhite,
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold),
+                            style: new TextStyle(color: Constants.iWhite, fontSize: 30.0, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             height: 5,
@@ -120,72 +115,31 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                   color: Constants.iBlack,
                                   child: Center(
                                     child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 1.0,
-                                            bottom: 1,
-                                            left: 15,
-                                            right: 30),
+                                        padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 15, right: 30),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
-                                            Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: <Widget>[
-                                                  SizedBox(
-                                                    width: 15,
-                                                  ),
-                                                  Text(
-                                                    (index2 + 1).toString() +
-                                                        (index2 == 0
-                                                            ? 'st'
-                                                            : index2 == 1
-                                                                ? 'nd'
-                                                                : index2 == 2
-                                                                    ? 'rd'
-                                                                    : 'th'),
-                                                    style: new TextStyle(
-                                                        color: index2 == 0
-                                                            ? Constants.colors[
-                                                                Constants
-                                                                    .colorindex]
-                                                            : Constants.iWhite,
-                                                        fontSize: 25.0,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                    textAlign: TextAlign.start,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 12,
-                                                  ),
-                                                  Text(
-                                                    results[index2]
-                                                        .getId()
-                                                        .split(' ')[0],
-                                                    style: new TextStyle(
-                                                        color: index2 == 0
-                                                            ? Constants.colors[
-                                                                Constants
-                                                                    .colorindex]
-                                                            : Constants.iWhite,
-                                                        fontSize: 25.0,
-                                                        fontWeight:
-                                                            FontWeight.w300),
-                                                    textAlign: TextAlign.start,
-                                                  ),
-                                                ]),
+                                            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+                                              SizedBox(
+                                                width: 15,
+                                              ),
+                                              Text(
+                                                (index2 + 1).toString() + (index2 == 0 ? 'st' : index2 == 1 ? 'nd' : index2 == 2 ? 'rd' : 'th'),
+                                                style: new TextStyle(color: index2 == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: 25.0, fontWeight: FontWeight.w400),
+                                                textAlign: TextAlign.start,
+                                              ),
+                                              SizedBox(
+                                                width: 12,
+                                              ),
+                                              Text(
+                                                results[index2].getId().split(' ')[0],
+                                                style: new TextStyle(color: index2 == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: 25.0, fontWeight: FontWeight.w300),
+                                                textAlign: TextAlign.start,
+                                              ),
+                                            ]),
                                             Text(
-                                              results[index2]
-                                                  .getNumVotes()
-                                                  .toString(),
-                                              style: new TextStyle(
-                                                  color: index2 == 0
-                                                      ? Constants.colors[
-                                                          Constants.colorindex]
-                                                      : Constants.iWhite,
-                                                  fontSize: 30.0,
-                                                  fontWeight: FontWeight.w600),
+                                              results[index2].getNumVotes().toString(),
+                                              style: new TextStyle(color: index2 == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: 30.0, fontWeight: FontWeight.w600),
                                               textAlign: TextAlign.start,
                                             ),
                                           ],

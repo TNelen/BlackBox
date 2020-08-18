@@ -12,10 +12,7 @@ class RateAppButton {
           children: <Widget>[
             Text(
               "rate this app",
-              style: TextStyle(
-                  color: Constants.colors[Constants.colorindex],
-                  fontSize: 15,
-                  fontWeight: FontWeight.w300),
+              style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 15, fontWeight: FontWeight.w300),
             ),
             SizedBox(
               width: 10,
@@ -28,9 +25,8 @@ class RateAppButton {
           ],
         ),
         onPressed: () {
-
           FirebaseAnalytics().logEvent(name: 'button_pressed', parameters: {'button_name': 'RateAppButton'});
-          
+
           StoreRedirect.redirect();
         });
   }

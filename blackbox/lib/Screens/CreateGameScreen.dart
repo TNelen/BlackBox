@@ -34,7 +34,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     this._database = db;
 
     FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'CreateGameScreen'});
-
   }
 
   final QuestionListGetter questionListGetter = QuestionListGetter.instance;
@@ -43,10 +42,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   bool _canVoteBlank = false;
   bool _canVoteOnSelf = true;
   Color color = Constants.iDarkGrey;
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -76,56 +71,39 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     String description = "";
 
                     for (String groupCategory in selectedCategory) {
-                      questionIDs.addAll(
-                          questionListGetter.mappings[groupCategory] ?? []);
+                      questionIDs.addAll(questionListGetter.mappings[groupCategory] ?? []);
                       description += groupCategory + " ";
                     }
 
                     questionIDs.shuffle(Random.secure());
 
-                    Map<String, dynamic> map = {   
-                      'type' : 'GameCreated',
-                      'can_vote_blank' : _canVoteBlank,
-                      'can_vote_on_self' : _canVoteOnSelf,
+                    Map<String, dynamic> map = {
+                      'type': 'GameCreated',
+                      'can_vote_blank': _canVoteBlank,
+                      'can_vote_on_self': _canVoteOnSelf,
                     };
 
                     List<String> allCategories = await QuestionListGetter.instance.getCategoryNames();
-                    for (String category in allCategories)
-                      map[category.replaceAll(' ', '_').replaceAll("'", '').replaceAll('+', 'P')] = selectedCategory.contains( category );
+                    for (String category in allCategories) map[category.replaceAll(' ', '_').replaceAll("'", '').replaceAll('+', 'P')] = selectedCategory.contains(category);
 
                     FirebaseAnalytics().logEvent(name: 'game_action', parameters: map);
 
-
-                    GroupData groupdata = new GroupData(
-                        _groupName,
-                        description,
-                        _canVoteBlank,
-                        _canVoteOnSelf,
-                        code,
-                        Constants.getUserID(),
-                        members,
-                        questionIDs);
+                    GroupData groupdata = new GroupData(_groupName, description, _canVoteBlank, _canVoteOnSelf, code, Constants.getUserID(), members, questionIDs);
                     _database.updateGroup(groupdata);
                     GroupCodePopup.groupCodePopup(code, context, _database);
                   });
                 } else {
-                  Popup.makePopup(
-                      context, "Woops!", "Please fill in all fields!");
+                  Popup.makePopup(context, "Woops!", "Please fill in all fields!");
                 }
               },
-              child: Text("Create",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 30).copyWith(
-                      color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
+              child: Text("Create", textAlign: TextAlign.center, style: TextStyle(fontSize: 30).copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
             ),
           ),
         ));
 
     final categoryField = FutureBuilder<List<QuestionCategory>>(
       builder: (context, projectSnap) {
-        if (projectSnap.connectionState == ConnectionState.none &&
-                projectSnap.hasData == null ||
-            projectSnap.data == null) {
+        if (projectSnap.connectionState == ConnectionState.none && projectSnap.hasData == null || projectSnap.data == null) {
           //print('project snapshot data is: ${projectSnap.data}');
           return Container();
         }
@@ -151,12 +129,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 } else if (selectedCategory.contains(categoryname)) {
                   selectedCategory.remove(categoryname);
                 }
-                setState(() {
-
-                });
+                setState(() {});
               },
             );
-
           },
         );
       },
@@ -211,34 +186,25 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                         children: <Widget>[
                           AutoSizeText(
                             "Create new Game",
-                            style: new TextStyle(
-                                color: Constants.iWhite,
-                                fontSize: 50.0,
-                                fontWeight: FontWeight.w300),
+                            style: new TextStyle(color: Constants.iWhite, fontSize: 50.0, fontWeight: FontWeight.w300),
                             maxLines: 1,
                           ),
                           SizedBox(height: 30.0),
                           Text(
                             'Game settings',
-                            style: new TextStyle(
-                                color:
-                                    Constants.colors[Constants.colorindex],
-                                fontSize: 30.0),
+                            style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 30.0),
                           ),
                           SizedBox(height: 20.0),
-                          
                           ToggleButtonCard(
                             'Blank vote',
                             _canVoteBlank,
                             onToggle: (bool newValue) => _canVoteBlank = newValue,
                           ),
-
                           ToggleButtonCard(
                             'Vote on yourself',
                             _canVoteOnSelf,
                             onToggle: (bool newValue) => _canVoteOnSelf = newValue,
                           ),
-
                           SizedBox(height: 20.0),
                           Text(
                             'Choose categories',
@@ -256,8 +222,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   ),
                 ),
               ),
-            )
-          ),
+            )),
         floatingActionButton: createButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),

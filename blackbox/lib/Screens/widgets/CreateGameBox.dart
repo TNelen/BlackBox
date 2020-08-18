@@ -20,8 +20,7 @@ class CreateGameBox {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          CreateGameScreen(database),
+                      builder: (BuildContext context) => CreateGameScreen(database),
                     ));
                 // } else {
                 //Popup.makePopup(context, "Wait!", "You should be logged in to do that.");
@@ -46,18 +45,12 @@ class CreateGameBox {
                         children: <Widget>[
                           Text(
                             "Create Game",
-                            style: TextStyle(
-                                fontSize: 30.0,
-                                color: Constants.iWhite,
-                                fontWeight: FontWeight.w400),
+                            style: TextStyle(fontSize: 30.0, color: Constants.iWhite, fontWeight: FontWeight.w400),
                           ),
                           SizedBox(height: 5),
                           Text(
                             "Invite friends to a new game",
-                            style: TextStyle(
-                                fontSize: 20.0,
-                                color: Constants.iLight,
-                                fontWeight: FontWeight.w300),
+                            style: TextStyle(fontSize: 20.0, color: Constants.iLight, fontWeight: FontWeight.w300),
                           ),
                         ],
                       ),

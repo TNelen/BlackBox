@@ -9,8 +9,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 class TopIconBar {
   static Widget topIcons(BuildContext context, Database database) {
     return Container(
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       Card(
           color: Constants.iDarkGrey,
           shape: RoundedRectangleBorder(
@@ -21,26 +20,20 @@ class TopIconBar {
               splashColor: Constants.colors[Constants.colorindex],
               onTap: () {
                 //  if (GoogleUserHandler.isLoggedIn()) {
-                FirebaseAnalytics()
-                    .logEvent(name: 'ProfileScreenOpened', parameters: null);
+                FirebaseAnalytics().logEvent(name: 'ProfileScreenOpened', parameters: null);
 
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          ProfileScreen(database),
+                      builder: (BuildContext context) => ProfileScreen(database),
                     ));
               },
               child: Container(
                   padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  child:
-                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                     Text(
                       "Profile",
-                      style: TextStyle(
-                          color: Constants.colors[Constants.colorindex],
-                          fontSize: 25,
-                          fontWeight: FontWeight.w300),
+                      style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 25, fontWeight: FontWeight.w300),
                     ),
                     SizedBox(width: 5),
                     Icon(
@@ -60,13 +53,11 @@ class TopIconBar {
                   borderRadius: BorderRadius.circular(32.0),
                   splashColor: Constants.colors[Constants.colorindex],
                   onTap: () {
-                    FirebaseAnalytics()
-                        .logEvent(name: 'HelpScreenOpened', parameters: null);
+                    FirebaseAnalytics().logEvent(name: 'HelpScreenOpened', parameters: null);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              RuleScreen(database),
+                          builder: (BuildContext context) => RuleScreen(),
                         ));
                   },
                   child: Container(
@@ -85,13 +76,11 @@ class TopIconBar {
                   borderRadius: BorderRadius.circular(32.0),
                   splashColor: Constants.colors[Constants.colorindex],
                   onTap: () {
-                    FirebaseAnalytics().logEvent(
-                        name: 'SettingsScreenOpened', parameters: null);
+                    FirebaseAnalytics().logEvent(name: 'SettingsScreenOpened', parameters: null);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              SettingsScreen(database),
+                          builder: (BuildContext context) => SettingsScreen(database),
                         ));
                   },
                   child: Container(

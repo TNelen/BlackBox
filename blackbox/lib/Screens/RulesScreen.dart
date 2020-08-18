@@ -1,28 +1,18 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import '../Interfaces/Database.dart';
 import '../Constants.dart';
 import 'rules-list.dart';
 
 class RuleScreen extends StatefulWidget {
-  Database _database;
-
-  RuleScreen(Database db) {
-    this._database = db;
-  }
+  RuleScreen();
 
   @override
-  _RuleScreenState createState() => new _RuleScreenState(_database);
+  _RuleScreenState createState() => new _RuleScreenState();
 }
 
 class _RuleScreenState extends State<RuleScreen> {
-  Database _database;
-
-  _RuleScreenState(Database db) {
-    this._database = db;
-
+  _RuleScreenState() {
     FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'RulesScreen'});
-
   }
 
   @override
@@ -30,11 +20,8 @@ class _RuleScreenState extends State<RuleScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
-        theme: new ThemeData(
-            accentColor: Constants.colors[Constants.colorindex],
-            disabledColor: Constants.colors[Constants.colorindex],
-            fontFamily: "atarian",
-            scaffoldBackgroundColor: Constants.iBlack),
+        theme:
+            new ThemeData(accentColor: Constants.colors[Constants.colorindex], disabledColor: Constants.colors[Constants.colorindex], fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
             appBar: AppBar(
               backgroundColor: Constants.iBlack,
@@ -85,10 +72,7 @@ class _RuleScreenState extends State<RuleScreen> {
                             Text(
                               'Game rules',
                               textAlign: TextAlign.center,
-                              style: new TextStyle(
-                                  color: Constants.iWhite,
-                                  fontSize: 50.0,
-                                  fontWeight: FontWeight.w300),
+                              style: new TextStyle(color: Constants.iWhite, fontSize: 50.0, fontWeight: FontWeight.w300),
                             ),
                           ],
                         ),

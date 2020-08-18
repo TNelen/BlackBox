@@ -24,7 +24,6 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
     this._database = db;
 
     FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'JoinGameScreen'});
-
   }
 
   @override
@@ -45,34 +44,18 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
             // Replace 1 by I and 0 by O to prevent confusion (group codes do not contain 1's and 0's for this reason)
             String groupCode = codeController.text.toUpperCase().replaceAll('0', 'O').replaceAll('1', 'I');
             if (groupCode.length == Constants.groupCodeLength) {
-
-              FirebaseAnalytics().logEvent(name: 'game_action', parameters: 
-              {   
-                'type' : 'GameJoined',
-                'code' : codeController.text.toUpperCase() 
-              });
+              FirebaseAnalytics().logEvent(name: 'game_action', parameters: {'type': 'GameJoined', 'code': codeController.text.toUpperCase()});
 
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => GameScreen(
-                        _database, codeController.text.toUpperCase()),
+                    builder: (BuildContext context) => GameScreen(_database, codeController.text.toUpperCase()),
                   ));
             } else {
-              Popup.makePopup(
-                  context,
-                  "Please check your code",
-                  "A code should contain " +
-                      Constants.groupCodeLength.toString() +
-                      " symbols!");
+              Popup.makePopup(context, "Please check your code", "A code should contain " + Constants.groupCodeLength.toString() + " symbols!");
             }
           },
-          child: Text("Join",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: "atarian",
-                fontSize: 30)
-                  .copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
+          child: Text("Join", textAlign: TextAlign.center, style: TextStyle(fontFamily: "atarian", fontSize: 30).copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
         ),
       ),
     );
@@ -81,16 +64,13 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
       maxLength: 5,
       obscureText: false,
       controller: codeController,
-      style: TextStyle(
-          fontFamily: "atarian",
-          fontSize: 20, color: Colors.black),
+      style: TextStyle(fontFamily: "atarian", fontSize: 20, color: Colors.black),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           fillColor: Constants.iWhite,
           filled: true,
           hintText: "Game code",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
 
     return MaterialApp(
@@ -98,20 +78,20 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
         title: 'BlackBox',
         theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Constants.iBlack,
-            title: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  InkWell(
-                    onTap: () => Navigator.pop(context),
-                    child: Row(children: [Padding(
-                      padding: EdgeInsets.only(right: 20),
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Constants.colors[Constants.colorindex],
+            appBar: AppBar(
+              backgroundColor: Constants.iBlack,
+              title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                InkWell(
+                  onTap: () => Navigator.pop(context),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Constants.colors[Constants.colorindex],
+                        ),
                       ),
-                    ),
                       Text(
                         'Back',
                         style: TextStyle(
@@ -121,44 +101,54 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+              ]),
+            ),
+            body: Padding(
+              padding: EdgeInsets.only(left: 30, right: 30),
+              child: Center(
+                child: Container(
+                  color: Constants.iBlack,
+                  child: Padding(
+                    padding: const EdgeInsets.all(36.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Join Group',
+                          style: new TextStyle(
+                            color: Constants.iWhite,
+                            fontSize: 50.0,
+                            fontWeight: FontWeight.w300,
+                            fontFamily: "atarian",
+                          ),
+                        ),
+                        Expanded(
+                          child: SizedBox(),
+                        ),
+                        Text(
+                          'Enter group code below',
+                          style: new TextStyle(
+                            color: Constants.colors[Constants.colorindex],
+                            fontSize: 30.0,
+                            fontFamily: "atarian",
+                          ),
+                        ),
+                        SizedBox(
+                          height: 40.0,
+                        ),
+                        codeField,
+                        joinButton,
+                        Expanded(
+                          child: SizedBox(),
+                        ),
+                      ],
                     ),
                   ),
-                ]),),
-          body: Padding(
-            padding: EdgeInsets.only(left: 30, right: 30),
-            child: Center(
-            child: Container(
-              color: Constants.iBlack,
-              child: Padding(
-                padding: const EdgeInsets.all(36.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Join Group',
-                      style: new TextStyle(color: Constants.iWhite, fontSize: 50.0, fontWeight: FontWeight.w300, fontFamily: "atarian",),
-                    ),
-                    Expanded(
-                      child: SizedBox(),
-                    ),
-                    Text(
-                      'Enter group code below',
-                      style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 30.0,fontFamily: "atarian", ),
-                    ),
-                    SizedBox(
-                      height: 40.0,
-                    ),
-                    codeField,
-                    joinButton,
-                    Expanded(
-                      child: SizedBox(),
-                    ),
-                  ],
                 ),
               ),
-            ),
-          ),
-        )));
+            )));
   }
 }

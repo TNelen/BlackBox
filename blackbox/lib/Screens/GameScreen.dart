@@ -52,8 +52,7 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void getRandomNexQuestion() async {
-    groupdata.setNextQuestion(
-        await _database.getNextQuestion(groupdata), Constants.getUserData());
+    groupdata.setNextQuestion(await _database.getNextQuestion(groupdata), Constants.getUserData());
   }
 
   @override
@@ -67,8 +66,7 @@ class _GameScreenState extends State<GameScreen> {
         home: Scaffold(
           body: StreamBuilder(
               stream: stream.groupData,
-              builder:
-                  (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
+              builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
                 groupdata = snapshot.data;
                 if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                 if (!snapshot.hasData) {
@@ -95,8 +93,7 @@ class _GameScreenState extends State<GameScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        HomeScreen(_database),
+                                    builder: (BuildContext context) => HomeScreen(_database),
                                   ));
                               groupdata.removeMember(Constants.getUserData());
                               _database.updateGroup(groupdata);
@@ -107,9 +104,15 @@ class _GameScreenState extends State<GameScreen> {
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(right: 20),
-                                  child: Icon(Icons.arrow_back, color:Constants.colors[Constants.colorindex]),
+                                  child: Icon(Icons.arrow_back, color: Constants.colors[Constants.colorindex]),
                                 ),
-                                Text('Back',style: TextStyle(fontSize: 25, color:Constants.colors[Constants.colorindex], ),),
+                                Text(
+                                  'Back',
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    color: Constants.colors[Constants.colorindex],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -126,7 +129,13 @@ class _GameScreenState extends State<GameScreen> {
                                 new Icon(Icons.people, color: Constants.iWhite),
                                 Container(
                                   margin: const EdgeInsets.only(top: 8),
-                                  child: Text( 'Game Lobby', style: TextStyle(fontSize: 30,fontWeight: FontWeight.w600,color: Constants.iWhite,),
+                                  child: Text(
+                                    'Game Lobby',
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w600,
+                                      color: Constants.iWhite,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -135,10 +144,19 @@ class _GameScreenState extends State<GameScreen> {
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                new Icon(Icons.help_outline,color: Constants.iWhite,),
+                                new Icon(
+                                  Icons.help_outline,
+                                  color: Constants.iWhite,
+                                ),
                                 Container(
                                   margin: const EdgeInsets.only(top: 8),
-                                  child: Text('Rules',style: TextStyle( fontSize: 30, fontWeight: FontWeight.w600,color: Constants.iWhite,),
+                                  child: Text(
+                                    'Rules',
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w600,
+                                      color: Constants.iWhite,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -158,61 +176,51 @@ class _GameScreenState extends State<GameScreen> {
                                     children: <Widget>[
                                       SizedBox(height: 40),
                                       Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(15, 10, 15, 5),
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Expanded(
-                                                child: Text('You can start the game if all players are ready!', style: new TextStyle(  color: Constants.colors[Constants.colorindex],fontSize: 25.0,fontWeight:FontWeight.w400),
-                                                    textAlign:
-                                                        TextAlign.center),
-                                              ),
-                                            ]),
+                                        padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                          Expanded(
+                                            child: Text('You can start the game if all players are ready!',
+                                                style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 25.0, fontWeight: FontWeight.w400), textAlign: TextAlign.center),
+                                          ),
+                                        ]),
                                       ),
                                       SizedBox(height: 30),
                                       Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(15, 5, 15, 3),
+                                        padding: EdgeInsets.fromLTRB(15, 5, 15, 3),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Text("Players ready:  ",style: TextStyle(fontSize: 30.0,color: Constants.iWhite),),
-                                            Text(snapshot.data.getNumPlaying().toString() + ' / ' + snapshot.data.getNumMembers().toString(),
-                                              style: TextStyle(fontSize: 30.0,color: Constants.iWhite), ),
+                                            Text(
+                                              "Players ready:  ",
+                                              style: TextStyle(fontSize: 30.0, color: Constants.iWhite),
+                                            ),
+                                            Text(
+                                              snapshot.data.getNumPlaying().toString() + ' / ' + snapshot.data.getNumMembers().toString(),
+                                              style: TextStyle(fontSize: 30.0, color: Constants.iWhite),
+                                            ),
                                           ],
                                         ),
                                       ),
                                       SizedBox(height: 10),
                                       Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(15, 1, 15, 1),
+                                        padding: EdgeInsets.fromLTRB(15, 1, 15, 1),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Text("   Invite players  ", style: TextStyle( fontSize: 30.0,fontWeight: FontWeight.w700,color: Constants.colors[ Constants.colorindex]),
+                                            Text(
+                                              "   Invite players  ",
+                                              style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w700, color: Constants.colors[Constants.colorindex]),
                                             ),
                                             Row(
                                               children: <Widget>[
                                                 IconButton(
                                                     icon: Icon(
                                                       Icons.group_add,
-                                                      color: Constants.colors[
-                                                          Constants.colorindex],
+                                                      color: Constants.colors[Constants.colorindex],
                                                     ),
                                                     onPressed: () {
-                                                      final RenderBox box =
-                                                          context
-                                                              .findRenderObject();
-                                                      Share.share(code,
-                                                          sharePositionOrigin:
-                                                              box.localToGlobal(
-                                                                      Offset
-                                                                          .zero) &
-                                                                  box.size);
+                                                      final RenderBox box = context.findRenderObject();
+                                                      Share.share(code, sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
                                                     }),
                                               ],
                                             )
@@ -220,15 +228,13 @@ class _GameScreenState extends State<GameScreen> {
                                         ),
                                       ),
                                       Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(15, 10, 15, 5),
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text("Players",style: TextStyle(fontSize: 30.0, color: Constants.iWhite, fontWeight: FontWeight.w500),
-                                              ),
-                                            ]),
+                                        padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                          Text(
+                                            "Players",
+                                            style: TextStyle(fontSize: 30.0, color: Constants.iWhite, fontWeight: FontWeight.w500),
+                                          ),
+                                        ]),
                                       ),
                                       Flexible(
                                         child: GridView.count(
@@ -239,31 +245,32 @@ class _GameScreenState extends State<GameScreen> {
                                           children: snapshot.data
                                               .getMembers()
                                               .map((data) => Card(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.0),
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(10.0),
                                                     ),
-                                                    color: groupdata
-                                                            .isUserPlaying(data)
-                                                        ? Constants.iDarkGrey
-                                                        : Constants.iDarkGrey,
+                                                    color: groupdata.isUserPlaying(data) ? Constants.iDarkGrey : Constants.iDarkGrey,
                                                     child: Center(
                                                         child: Padding(
-                                                            padding:  const EdgeInsets .only(top: 1.0,bottom: 1,  left: 7,right: 7),
+                                                            padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
                                                             child: Center(
                                                               child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: <
-                                                                    Widget>[
-                                                                  Text( data.getUsername().split(' ')[0],
-                                                                    style: new TextStyle(color: Constants.iWhite,fontSize:25.0, fontWeight:FontWeight.w400),
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: <Widget>[
+                                                                  Text(
+                                                                    data.getUsername().split(' ')[0],
+                                                                    style: new TextStyle(color: Constants.iWhite, fontSize: 25.0, fontWeight: FontWeight.w400),
                                                                   ),
-                                                                  groupdata.isUserPlaying( data) ? Icon(Icons.check_box, size: 25,color:Constants.colors[Constants.colorindex], )
-                                                                      : Icon( Icons.check_box_outline_blank,size:25, color:Constants.iWhite,)
+                                                                  groupdata.isUserPlaying(data)
+                                                                      ? Icon(
+                                                                          Icons.check_box,
+                                                                          size: 25,
+                                                                          color: Constants.colors[Constants.colorindex],
+                                                                        )
+                                                                      : Icon(
+                                                                          Icons.check_box_outline_blank,
+                                                                          size: 25,
+                                                                          color: Constants.iWhite,
+                                                                        )
                                                                 ],
                                                               ),
                                                             ))),
@@ -278,150 +285,77 @@ class _GameScreenState extends State<GameScreen> {
 
                             //tab2
                             Center(
-                              child: ListView(
-                                  shrinkWrap: true,
-                                  padding: const EdgeInsets.all(25.0),
-                                  children: [
-                                    RulesList.getRules(),
-                                  ]),
+                              child: ListView(shrinkWrap: true, padding: const EdgeInsets.all(25.0), children: [
+                                RulesList.getRules(),
+                              ]),
                             )
                           ],
                         ),
                         Align(
                             alignment: Alignment.bottomCenter,
                             child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: 100, right: 100, bottom: 25),
+                                padding: EdgeInsets.only(left: 100, right: 100, bottom: 25),
                                 child: Card(
                                   color: Constants.colors[Constants.colorindex],
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(28.0),
                                   ),
                                   child: InkWell(
-                                      splashColor: Constants
-                                          .colors[Constants.colorindex],
+                                      splashColor: Constants.colors[Constants.colorindex],
                                       onTap: () {
                                         //nothing yet
                                       },
                                       child: Container(
-                                          padding:
-                                              EdgeInsets.fromLTRB(3, 3, 3, 3),
-                                          child: groupdata
-                                                          .getPlaying()
-                                                          .length !=
-                                                      groupdata
-                                                          .getMembers()
-                                                          .length ||
-                                                  groupdata
-                                                          .getNextQuestionString() ==
-                                                      ""
-                                              ? Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: <Widget>[
-                                                      FlatButton(
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      28.0),
-                                                        ),
-                                                        color: Constants.colors[
-                                                            Constants
-                                                                .colorindex],
-                                                        onPressed: () {
-                                                          if (groupdata
-                                                              .isUserPlaying(
-                                                                  Constants
-                                                                      .getUserData())) {
-                                                            groupdata
-                                                                .removePlayingUser(
-                                                                    Constants
-                                                                        .getUserData());
-                                                            _database
-                                                                .updateGroup(
-                                                                    groupdata);
-                                                          } else {
-                                                            groupdata
-                                                                .setPlayingUser(
-                                                                    Constants
-                                                                        .getUserData());
-                                                            _database
-                                                                .updateGroup(
-                                                                    groupdata);
-                                                          }
+                                          padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
+                                          child: groupdata.getPlaying().length != groupdata.getMembers().length || groupdata.getNextQuestionString() == ""
+                                              ? Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
+                                                  FlatButton(
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(28.0),
+                                                    ),
+                                                    color: Constants.colors[Constants.colorindex],
+                                                    onPressed: () {
+                                                      if (groupdata.isUserPlaying(Constants.getUserData())) {
+                                                        groupdata.removePlayingUser(Constants.getUserData());
+                                                        _database.updateGroup(groupdata);
+                                                      } else {
+                                                        groupdata.setPlayingUser(Constants.getUserData());
+                                                        _database.updateGroup(groupdata);
+                                                      }
 
-                                                          if (groupdata
-                                                                  .getNextQuestionString() ==
-                                                              "")
-                                                            getRandomNexQuestion();
-                                                        },
-                                                        splashColor:
-                                                            Constants.iWhite,
-                                                        child: Text(
-                                                          "Ready",
-                                                          style: TextStyle(
-                                                              color: Constants
-                                                                  .iBlack,
-                                                              fontSize: 22,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      )
-                                                    ])
-                                              : Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: <Widget>[
-                                                      FlatButton(
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      28.0),
-                                                        ),
-                                                        color: Constants.colors[
-                                                            Constants
-                                                                .colorindex],
-                                                        onPressed: () {
-                                                          FirebaseAnalytics()
-                                                              .logEvent(
-                                                                  name:
-                                                                      'game_action',
-                                                                  parameters: {
-                                                                'type':
-                                                                    'GameStarted',
-                                                              });
+                                                      if (groupdata.getNextQuestionString() == "") getRandomNexQuestion();
+                                                    },
+                                                    splashColor: Constants.iWhite,
+                                                    child: Text(
+                                                      "Ready",
+                                                      style: TextStyle(color: Constants.iBlack, fontSize: 22, fontWeight: FontWeight.bold),
+                                                    ),
+                                                  )
+                                                ])
+                                              : Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
+                                                  FlatButton(
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(28.0),
+                                                    ),
+                                                    color: Constants.colors[Constants.colorindex],
+                                                    onPressed: () {
+                                                      FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
+                                                        'type': 'GameStarted',
+                                                      });
 
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    QuestionScreen(
-                                                                        _database,
-                                                                        groupdata,
-                                                                        code),
-                                                              ));
-                                                        },
-                                                        splashColor: Constants
-                                                                .colors[
-                                                            Constants
-                                                                .colorindex],
-                                                        child: Text(
-                                                          "Start Game",
-                                                          style: TextStyle(
-                                                              color: Constants
-                                                                  .iBlack,
-                                                              fontSize: 22),
-                                                        ),
-                                                      )
-                                                    ]))),
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (BuildContext context) => QuestionScreen(_database, groupdata, code),
+                                                          ));
+                                                    },
+                                                    splashColor: Constants.colors[Constants.colorindex],
+                                                    child: Text(
+                                                      "Start Game",
+                                                      style: TextStyle(color: Constants.iBlack, fontSize: 22),
+                                                    ),
+                                                  )
+                                                ]))),
                                 )))
                       ]),
                     ),

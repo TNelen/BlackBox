@@ -19,13 +19,11 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SplashScreen(Constants.database));
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    return MaterialApp(debugShowCheckedModeBanner: false, home: SplashScreen(Constants.database));
     //home: HomeScreen( Constants.database ));
   }
 }
@@ -107,8 +105,7 @@ class _SplashScreenState extends State<SplashScreen> {
             if (connected) {
               wifiPopup = true;
             } else {
-              Popup.makePopup(context, "Woops!",
-                  "Please turn on your internet connectivity!");
+              Popup.makePopup(context, "Woops!", "Please turn on your internet connectivity!");
               wifiPopup = true;
             }
           });
@@ -128,8 +125,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    HomeScreen(Constants.database),
+                builder: (BuildContext context) => HomeScreen(Constants.database),
               ));
         }
       });
@@ -154,29 +150,20 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    CircleAvatar(
-                        backgroundColor: Constants.iBlack,
-                        radius: 100,
-                        child: Image.asset('images/icon_transparent.png')),
+                    CircleAvatar(backgroundColor: Constants.iBlack, radius: 100, child: Image.asset('images/icon_transparent.png')),
                     Padding(
                       padding: EdgeInsets.only(top: 10),
                     ),
                     Text(
                       "BlackBox",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 35,
-                          fontWeight: FontWeight.w300),
+                      style: TextStyle(color: Colors.white, fontSize: 35, fontWeight: FontWeight.w300),
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     Text(
                       "A MAGNETAR Game",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w300),
+                      style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w300),
                     )
                   ],
                 )),
@@ -195,8 +182,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                     CircularProgressIndicator(
                       value: _progress,
-                      valueColor:
-                          new AlwaysStoppedAnimation<Color>(Constants.iWhite),
+                      valueColor: new AlwaysStoppedAnimation<Color>(Constants.iWhite),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 20),
