@@ -205,7 +205,7 @@ class _GameScreenState extends State<GameScreen> {
                                       Container(
                                         padding: EdgeInsets.fromLTRB(15, 1, 15, 1),
                                         child: InkWell(
-                                          onTap: ()  {
+                                          onTap: () {
                                             final RenderBox box = context.findRenderObject();
                                             Share.share(code, sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
                                           },
@@ -218,39 +218,14 @@ class _GameScreenState extends State<GameScreen> {
                                               ),
                                               Padding(
                                                 padding: EdgeInsets.only(right: 20),
-                                                child:Icon(
+                                                child: Icon(
                                                   Icons.group_add,
                                                   color: Constants.colors[Constants.colorindex],
                                                 ),
                                               ),
-
                                             ],
                                           ),
                                         ),
-
-
-                                       /* Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "   Invite players  ",
-                                              style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w700, color: Constants.colors[Constants.colorindex]),
-                                            ),
-                                            Row(
-                                              children: <Widget>[
-                                                IconButton(
-                                                    icon: Icon(
-                                                      Icons.group_add,
-                                                      color: Constants.colors[Constants.colorindex],
-                                                    ),
-                                                    onPressed: () {
-                                                      final RenderBox box = context.findRenderObject();
-                                                      Share.share(code, sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
-                                                    }),
-                                              ],
-                                            )
-                                          ],
-                                        ),*/
                                       ),
                                       Container(
                                         padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
@@ -309,8 +284,8 @@ class _GameScreenState extends State<GameScreen> {
                             ),
 
                             //tab2
-                            Center(
-                              child: ListView(shrinkWrap: true, padding: const EdgeInsets.all(25.0), children: [
+                            Container(
+                              child: ListView(shrinkWrap: true, padding: const EdgeInsets.only(top: 10, left:25.0, right:25.0), children: [
                                 RulesList.getRules(),
                               ]),
                             )

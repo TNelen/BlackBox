@@ -1,12 +1,14 @@
+import 'package:blackbox/main.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:blackbox/Constants.dart';
 
 class RulesList {
   static Widget getRules() {
-    return Center(
+    return Container(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 20),
         ExpansionTile(
           title: Text(
             "New Game",
