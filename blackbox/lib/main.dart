@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:blackbox/Database/GoogleUserHandler.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:blackbox/Screens/HomeScreen.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'Constants.dart';
 import './Database/GoogleUserHandler.dart';
@@ -44,11 +46,15 @@ class SplashScreen extends StatefulWidget {
   }
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
   Database database;
   double _progress;
   bool loggedIn = false;
   bool wifiPopup = false;
+  AnimationController motionController;
+  Animation motionAnimation;
+
+  double size = 20;
 
   Future<void> login() async {
     if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
@@ -97,6 +103,36 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
+    motionController = AnimationController(
+      duration: Duration(seconds: 1),
+      vsync: this,
+      lowerBound: 0.5,
+    );
+
+    motionAnimation = CurvedAnimation(
+      parent: motionController,
+      curve: Curves.ease,
+    );
+
+    motionController.forward();
+    motionController.addStatusListener((status) {
+      setState(() {
+        if (status == AnimationStatus.completed) {
+          motionController.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          motionController.forward();
+        }
+      });
+    });
+
+    motionController.addListener(() {
+      setState(() {
+        size = motionController.value * 65;
+      });
+    });
+    // motionController.repeat();
+
     _progress = 0;
     new Timer.periodic(Duration(seconds: 1), (Timer t) {
       setState(() {
@@ -122,18 +158,46 @@ class _SplashScreenState extends State<SplashScreen> {
         // we "finish" downloading here
         if (_progress.toStringAsFixed(2) == '0.99' && loggedIn) {
           t.cancel();
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => HomeScreen(Constants.database),
-              ));
         }
       });
     });
   }
 
   @override
+  void dispose() {
+    motionController.dispose();
+    super.dispose();
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
+
+    final startButton = Padding(
+        padding: EdgeInsets.symmetric(vertical: 15,horizontal: 80),
+        child:Material(
+      elevation: 1.0,
+      borderRadius: BorderRadius.circular(28.0),
+      color: Constants.iDarkGrey,
+      child: MaterialButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(28.0),
+        ),
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: () {
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => HomeScreen(Constants.database),
+              ));
+
+        },
+        child: Text("Start game", textAlign: TextAlign.center, style: TextStyle(fontFamily: "atarian",fontSize: 20).copyWith(color: Constants.iWhite,)),
+      ),
+    ));
+
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -145,55 +209,52 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Expanded(
-                flex: 5,
+                flex: 1,
                 child: Container(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                    child: Stack(
                   children: <Widget>[
-                    CircleAvatar(backgroundColor: Constants.iBlack, radius: 100, child: Image.asset('images/icon_transparent.png')),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10),
-                    ),
-                    Text(
-                      "BlackBox",
-                      style: TextStyle(color: Colors.white, fontSize: 35, fontWeight: FontWeight.w300),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "A MAGNETAR Game",
-                      style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w300),
-                    )
+                    Align(
+                        alignment: const Alignment(0, -0.5),
+                        child: CircleAvatar(
+                          backgroundColor: Constants.iBlack,
+                          radius: size,
+                          child: Image.asset('images/icon_transparent.png'),
+                        )),
+                    Center(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 4,
+                        ),
+                        Text(
+                          "BlackBox",
+                          style: TextStyle(fontFamily: "atarian",color: Colors.white, fontSize: 40, fontWeight: FontWeight.w300),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "A MAGNETAR Game",
+                          style: TextStyle(fontFamily: "atarian",color: Colors.white, fontSize: 20, fontWeight: FontWeight.w300),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 5,
+                        ),
+                        loggedIn
+                            ? Container(height: 80,child:startButton)
+                            : Container(height: 80, child:Text(
+                                "Logging you in...",
+                                style: TextStyle(fontFamily: "atarian",color: Constants.colors[3], fontSize: 20, fontWeight: FontWeight.w300),
+                              )),
+                      ],
+                    ))
                   ],
                 )),
               ),
-              Expanded(
-                flex: 3,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "Get to know each other!",
-                      style: TextStyle(color: Constants.iAccent4, fontSize: 20),
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    CircularProgressIndicator(
-                      value: _progress,
-                      valueColor: new AlwaysStoppedAnimation<Color>(Constants.iWhite),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20),
-                    ),
-                    Text(
-                      (_progress * 100).toInt().toString() + "%",
-                      style: TextStyle(color: Constants.iWhite, fontSize: 17),
-                    )
-                  ],
-                ),
-              )
+              /*SizedBox(
+                height: MediaQuery.of(context).size.height / 2.5,
+              )*/
             ],
           )
         ],
