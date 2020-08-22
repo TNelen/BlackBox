@@ -1,5 +1,6 @@
 import 'package:blackbox/Screens/rules-list.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import '../Interfaces/Database.dart';
@@ -295,47 +296,40 @@ class _GameScreenState extends State<GameScreen> {
                         ),
                         Align(
                             alignment: Alignment.bottomCenter,
-                            child: Padding(
-                                padding: EdgeInsets.only(left: 100, right: 100, bottom: 25),
-                                child: Card(
-                                  color: Constants.colors[Constants.colorindex],
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(28.0),
-                                  ),
-                                  child: InkWell(
-                                      splashColor: Constants.colors[Constants.colorindex],
-                                      onTap: () {
-                                        //nothing yet
-                                      },
-                                      child: Container(
+                            child:
+                        Padding(
+                            padding: EdgeInsets.only(bottom:25),
+                            child:Container(
                                           padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
                                           child: groupdata.getPlaying().length != groupdata.getMembers().length || groupdata.getNextQuestionString() == ""
-                                              ? Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
-                                                  FlatButton(
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(28.0),
-                                                    ),
-                                                    color: Constants.colors[Constants.colorindex],
-                                                    onPressed: () {
-                                                      if (groupdata.isUserPlaying(Constants.getUserData())) {
-                                                        groupdata.removePlayingUser(Constants.getUserData());
-                                                        _database.updateGroup(groupdata);
-                                                      } else {
-                                                        groupdata.setPlayingUser(Constants.getUserData());
-                                                        _database.updateGroup(groupdata);
-                                                      }
+                                              ? Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
 
-                                                      if (groupdata.getNextQuestionString() == "") getRandomNexQuestion();
-                                                    },
-                                                    splashColor: Constants.iWhite,
-                                                    child: Text(
-                                                      "Ready",
-                                                      style: TextStyle(color: Constants.iBlack, fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
-                                                    ),
-                                                  )
+                                            FloatingActionButton(
+                                                elevation: 0.0,
+                                                child: new Icon(Icons.check, color: Constants.iBlack),
+                                                backgroundColor: Constants.colors[Constants.colorindex],
+                                                onPressed: (){
+                                                  if (groupdata.isUserPlaying(Constants.getUserData())) {
+                                                    groupdata.removePlayingUser(Constants.getUserData());
+                                                    _database.updateGroup(groupdata);
+                                                  } else {
+                                                    groupdata.setPlayingUser(Constants.getUserData());
+                                                    _database.updateGroup(groupdata);
+                                                  }
+
+                                                  if (groupdata.getNextQuestionString() == "") getRandomNexQuestion();}
+                                            ),
+                                            SizedBox(width: 20,),
+                                            FloatingActionButton(
+                                                elevation: 0.0,
+                                                child: new Icon(Icons.group_add, color: Constants.iBlack,),
+                                                backgroundColor: Constants.colors[Constants.colorindex],
+                                                onPressed: (){}
+                                            ),
                                                 ])
                                               : Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
                                                   FlatButton(
+                                                    padding: EdgeInsets.fromLTRB(50.0, 15.0, 50.0, 15.0),
                                                     shape: RoundedRectangleBorder(
                                                       borderRadius: BorderRadius.circular(28.0),
                                                     ),
@@ -357,7 +351,7 @@ class _GameScreenState extends State<GameScreen> {
                                                       style: TextStyle(color: Constants.iBlack, fontSize: Constants.actionbuttonFontSize),
                                                     ),
                                                   )
-                                                ]))),
+                                                ]),
                                 )))
                       ]),
                     ),
