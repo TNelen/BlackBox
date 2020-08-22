@@ -63,7 +63,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                   Text(
                     'Home',
                     style: TextStyle(
-                      fontSize: 25,
+                      fontSize: Constants.actionbuttonFontSize,
                       color: Constants.colors[Constants.colorindex],
                     ),
                   ),
@@ -94,7 +94,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                           Text(
                             key,
                             textAlign: TextAlign.center,
-                            style: new TextStyle(color: Constants.iWhite, fontSize: 30.0, fontWeight: FontWeight.bold),
+                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             height: 5,
@@ -125,7 +125,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                               ),
                                               Text(
                                                 (index2 + 1).toString() + (index2 == 0 ? 'st' : index2 == 1 ? 'nd' : index2 == 2 ? 'rd' : 'th'),
-                                                style: new TextStyle(color: index2 == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: 25.0, fontWeight: FontWeight.w400),
+                                                style: new TextStyle(color: index2 == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                                 textAlign: TextAlign.start,
                                               ),
                                               SizedBox(
@@ -133,13 +133,13 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                               ),
                                               Text(
                                                 results[index2].getId().split(' ')[0],
-                                                style: new TextStyle(color: index2 == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: 25.0, fontWeight: FontWeight.w300),
+                                                style: new TextStyle(color: index2 == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                                                 textAlign: TextAlign.start,
                                               ),
                                             ]),
                                             Text(
                                               results[index2].getNumVotes().toString(),
-                                              style: new TextStyle(color: index2 == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: 30.0, fontWeight: FontWeight.w600),
+                                              style: new TextStyle(color: index2 == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                               textAlign: TextAlign.start,
                                             ),
                                           ],

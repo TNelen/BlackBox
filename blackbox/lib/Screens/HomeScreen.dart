@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: EdgeInsets.only(top: 15 * MediaQuery.of(context).devicePixelRatio, left: 10, right: 10),
                       child: AutoSizeText(
                         'Hi, ' + Constants.getUsername().split(" ")[0] + '!',
-                        style: TextStyle(fontSize: 60, color: Constants.iWhite, fontWeight: FontWeight.w300),
+                        style: TextStyle(fontSize: Constants.titleFontSize, color: Constants.iWhite, fontWeight: FontWeight.w300),
                         maxLines: 1,
                       ),
                     ),
@@ -149,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: EdgeInsets.only(left: 10, right: 10),
                         child: Text(
                           ' Welcome to BlackBox! ',
-                          style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 30, fontWeight: FontWeight.w300),
+                          style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
                         )),
                     SizedBox(
                       height: 25,
@@ -168,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 'Start playing...',
-                                style: TextStyle(fontSize: 40, color: Constants.iWhite, fontWeight: FontWeight.w300),
+                                style: TextStyle(fontSize: Constants.subtitleFontSize, color: Constants.iWhite, fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),

@@ -14,7 +14,7 @@ class RulesList {
             "New Game",
             style: new TextStyle(
               color: Constants.colors[Constants.colorindex],
-              fontSize: 30.0,
+              fontSize: Constants.normalFontSize,
             ),
           ),
           backgroundColor: Constants.iBlack,
@@ -25,7 +25,7 @@ class RulesList {
                   'Create a new game and invite your friends by sharing the group code.' + '\n' + 'Or join a game by entering the group code.',
                   style: new TextStyle(
                     color: Constants.iWhite,
-                    fontSize: 25.0,
+                    fontSize: Constants.smallFontSize,
                   ),
                 ),
                 SizedBox(height: 10),
@@ -38,7 +38,7 @@ class RulesList {
             "Game settings",
             style: new TextStyle(
               color: Constants.colors[Constants.colorindex],
-              fontSize: 30.0,
+              fontSize: Constants.normalFontSize,
             ),
           ),
           backgroundColor: Constants.iBlack,
@@ -53,7 +53,7 @@ class RulesList {
                       'These settings are set in the beginning of the game and cannot be changed during the game',
                   style: new TextStyle(
                     color: Constants.iWhite,
-                    fontSize: 25.0,
+                    fontSize: Constants.smallFontSize,
                   ),
                 ),
                 SizedBox(height: 10),
@@ -66,7 +66,7 @@ class RulesList {
             "Start Game",
             style: new TextStyle(
               color: Constants.colors[Constants.colorindex],
-              fontSize: 30.0,
+              fontSize: Constants.normalFontSize,
             ),
           ),
           backgroundColor: Constants.iBlack,
@@ -83,7 +83,7 @@ class RulesList {
                       'Each player name has an indicator, indicating whether the layer is ready or not.',
                   style: new TextStyle(
                     color: Constants.iWhite,
-                    fontSize: 25.0,
+                    fontSize: Constants.smallFontSize,
                   ),
                 ),
                 SizedBox(height: 10),
@@ -96,7 +96,7 @@ class RulesList {
             "Voting",
             style: new TextStyle(
               color: Constants.colors[Constants.colorindex],
-              fontSize: 30.0,
+              fontSize: Constants.normalFontSize
             ),
           ),
           backgroundColor: Constants.iBlack,
@@ -107,7 +107,7 @@ class RulesList {
                   'Vote on a group member.' + '\n' + 'Once a vote is submitted, it can not be changed.',
                   style: new TextStyle(
                     color: Constants.iWhite,
-                    fontSize: 25.0,
+                    fontSize: Constants.smallFontSize,
                   ),
                 ),
                 SizedBox(height: 10),
@@ -120,7 +120,7 @@ class RulesList {
             "Collecting results",
             style: new TextStyle(
               color: Constants.colors[Constants.colorindex],
-              fontSize: 30.0,
+              fontSize: Constants.normalFontSize,
             ),
           ),
           backgroundColor: Constants.iBlack,
@@ -139,7 +139,7 @@ class RulesList {
                       '',
                   style: new TextStyle(
                     color: Constants.iWhite,
-                    fontSize: 25.0,
+                    fontSize: Constants.smallFontSize,
                   ),
                 ),
                 SizedBox(height: 10),
@@ -152,7 +152,7 @@ class RulesList {
             "Questions",
             style: new TextStyle(
               color: Constants.colors[Constants.colorindex],
-              fontSize: 30.0,
+              fontSize: Constants.normalFontSize,
             ),
           ),
           backgroundColor: Constants.iBlack,
@@ -167,7 +167,7 @@ class RulesList {
                       'All players have the ability to rate the questions, giving us feedback about the questions helps us inproving the game.',
                   style: new TextStyle(
                     color: Constants.iWhite,
-                    fontSize: 25.0,
+                    fontSize: Constants.smallFontSize,
                   ),
                 ),
                 SizedBox(height: 10),
@@ -180,7 +180,7 @@ class RulesList {
             "Leave",
             style: new TextStyle(
               color: Constants.colors[Constants.colorindex],
-              fontSize: 30.0,
+              fontSize: Constants.normalFontSize,
             ),
           ),
           backgroundColor: Constants.iBlack,
@@ -191,14 +191,14 @@ class RulesList {
                   'Leave a running game by clicking on the leave in the top right corner.' + '\n' + 'Please do not close the app before leaving an active game.',
                   style: new TextStyle(
                     color: Constants.iWhite,
-                    fontSize: 25.0,
+                    fontSize: Constants.smallFontSize,
                   ),
                 ),
                 Text(
                   'If there are no more players in a group, the group is deleted',
                   style: new TextStyle(
                     color: Constants.iWhite,
-                    fontSize: 25.0,
+                    fontSize: Constants.smallFontSize,
                   ),
                 ),
                 SizedBox(height: 10),
@@ -211,7 +211,7 @@ class RulesList {
             "End game",
             style: new TextStyle(
               color: Constants.colors[Constants.colorindex],
-              fontSize: 30.0,
+              fontSize: Constants.normalFontSize,
             ),
           ),
           backgroundColor: Constants.iBlack,
@@ -224,7 +224,7 @@ class RulesList {
                       'The group leader has the ability to end the game prematurely, after the next questions the results are shown.',
                   style: new TextStyle(
                     color: Constants.iWhite,
-                    fontSize: 25.0,
+                    fontSize: Constants.smallFontSize,
                   ),
                 ),
                 SizedBox(height: 10),

@@ -56,7 +56,7 @@ class ToggleButtonCardState extends State<ToggleButtonCard> {
               Text(
                 widget.text,
                 style: TextStyle(
-                  fontSize: 25.0,
+                  fontSize: Constants.actionbuttonFontSize,
                   color: Constants.iWhite,
                 ),
               ),

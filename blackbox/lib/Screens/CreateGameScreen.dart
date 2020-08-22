@@ -96,7 +96,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   Popup.makePopup(context, "Woops!", "Please fill in all fields!");
                 }
               },
-              child: Text("Create", textAlign: TextAlign.center, style: TextStyle(fontSize: 30).copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
+              child: Text("Create", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
             ),
           ),
         ));
@@ -163,7 +163,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   Text(
                     'Back',
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: Constants.actionbuttonFontSize,
                       color: Constants.colors[Constants.colorindex],
                     ),
                   ),
@@ -186,13 +186,13 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                         children: <Widget>[
                           AutoSizeText(
                             "Create new Game",
-                            style: new TextStyle(color: Constants.iWhite, fontSize: 50.0, fontWeight: FontWeight.w300),
+                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
                             maxLines: 1,
                           ),
                           SizedBox(height: 30.0),
                           Text(
                             'Game settings',
-                            style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 30.0),
+                            style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
                           ),
                           SizedBox(height: 20.0),
                           ToggleButtonCard(
@@ -210,7 +210,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                             'Choose categories',
                             style: TextStyle(
                               color: Constants.colors[Constants.colorindex],
-                              fontSize: 30.0,
+                              fontSize: Constants.normalFontSize,
                             ),
                           ),
                           SizedBox(height: 20.0),

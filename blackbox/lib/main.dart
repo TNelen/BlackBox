@@ -194,7 +194,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
               ));
 
         },
-        child: Text("Start game", textAlign: TextAlign.center, style: TextStyle(fontFamily: "atarian",fontSize: 20).copyWith(color: Constants.iWhite,)),
+        child: Text("Start game", textAlign: TextAlign.center, style: TextStyle(fontFamily: "atarian",fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iWhite,)),
       ),
     ));
 
@@ -229,14 +229,14 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                         ),
                         Text(
                           "BlackBox",
-                          style: TextStyle(fontFamily: "atarian",color: Colors.white, fontSize: 40, fontWeight: FontWeight.w300),
+                          style: TextStyle(fontFamily: "atarian",color: Colors.white, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w300),
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         Text(
                           "A MAGNETAR Game",
-                          style: TextStyle(fontFamily: "atarian",color: Colors.white, fontSize: 20, fontWeight: FontWeight.w300),
+                          style: TextStyle(fontFamily: "atarian",color: Colors.white, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 5,
@@ -245,7 +245,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                             ? Container(height: 80,child:startButton)
                             : Container(height: 80, child:Text(
                                 "Logging you in...",
-                                style: TextStyle(fontFamily: "atarian",color: Constants.colors[3], fontSize: 20, fontWeight: FontWeight.w300),
+                                style: TextStyle(fontFamily: "atarian",color: Constants.colors[3], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                               )),
                       ],
                     ))

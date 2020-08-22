@@ -40,19 +40,19 @@ class CategoryCardState extends State<CategoryCard> {
                 children: [
                   Text(
                     widget.categoryname,
-                    style: new TextStyle(color: widget.defaultValue ? Constants.iDarkGrey : Constants.iWhite, fontSize: 25.0, fontWeight: FontWeight.bold),
+                    style: new TextStyle(color: widget.defaultValue ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 5),
                   Text(
                     widget.description,
                     textAlign: TextAlign.center,
-                    style: new TextStyle(color: widget.defaultValue ? Constants.iBlack : Constants.iLight, fontSize: 17.0, fontWeight: FontWeight.bold),
+                    style: new TextStyle(color: widget.defaultValue ? Constants.iBlack : Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 5),
                   Text(
                     widget.amount.toString() + '  questions',
                     textAlign: TextAlign.center,
-                    style: new TextStyle(color: widget.defaultValue ? Constants.iBlack : Constants.iLight, fontSize: 13.0, fontWeight: FontWeight.bold),
+                    style: new TextStyle(color: widget.defaultValue ? Constants.iBlack : Constants.iLight, fontSize: Constants.miniFontSize, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 3),
                 ],

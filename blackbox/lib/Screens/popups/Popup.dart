@@ -22,12 +22,12 @@ class Popup {
             style: TextStyle(
                 fontFamily: "atarian",
                 color: Constants.colors[Constants.colorindex],
-                fontSize: 30),
+                fontSize: Constants.normalFontSize),
           ),
           content: new Text(
             message,
             style: TextStyle(
-                fontFamily: "atarian", color: Constants.iWhite, fontSize: 20),
+                fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.smallFontSize),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
@@ -37,7 +37,7 @@ class Popup {
                 style: TextStyle(
                     fontFamily: "atarian",
                     color: Constants.colors[Constants.colorindex],
-                    fontSize: 25,
+                    fontSize: Constants.actionbuttonFontSize,
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
@@ -68,7 +68,7 @@ class Popup {
           filled: true,
           hintText: Constants.getUsername(),
           hintStyle: TextStyle(
-              fontFamily: "atarian", fontSize: 20, color: Constants.iGrey),
+              fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iGrey),
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
@@ -86,7 +86,7 @@ class Popup {
             style: TextStyle(
                 fontFamily: "atarian",
                 color: Constants.colors[Constants.colorindex],
-                fontSize: 30),
+                fontSize: Constants.normalFontSize),
           ),
           content: Container(
               height: 230,
@@ -96,7 +96,7 @@ class Popup {
                   style: TextStyle(
                       fontFamily: "atarian",
                       color: Constants.iWhite,
-                      fontSize: 20,
+                      fontSize: Constants.smallFontSize,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 25),
@@ -110,7 +110,7 @@ class Popup {
                 style: TextStyle(
                     fontFamily: "atarian",
                     color: Constants.colors[Constants.colorindex],
-                    fontSize: 20,
+                    fontSize: Constants.actionbuttonFontSize,
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
@@ -158,14 +158,14 @@ class Popup {
       maxLines: 1,
       controller: questionController,
       style: TextStyle(
-          fontFamily: "atarian", fontSize: 20, color: Constants.iWhite),
+          fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iWhite),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
           fillColor: Constants.iBlack,
           filled: true,
           hintText: "Start typing here...",
           hintStyle: TextStyle(
-              fontFamily: "atarian", fontSize: 20, color: Constants.iGrey),
+              fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iGrey),
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
@@ -183,7 +183,7 @@ class Popup {
             style: TextStyle(
                 fontFamily: "atarian",
                 color: Constants.colors[Constants.colorindex],
-                fontSize: 30),
+                fontSize: Constants.subtitleFontSize),
           ),
           content: Container(
               height: 230,
@@ -199,7 +199,7 @@ class Popup {
                 style: TextStyle(
                     fontFamily: "atarian",
                     color: Constants.colors[Constants.colorindex],
-                    fontSize: 25,
+                    fontSize: Constants.actionbuttonFontSize,
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
@@ -250,12 +250,12 @@ class Popup {
             style: TextStyle(
                 fontFamily: "atarian",
                 color: Constants.colors[Constants.colorindex],
-                fontSize: 30),
+                fontSize: Constants.subtitleFontSize),
           ),
           content: Text(
             'Are you sure to end the game? \nThe game will end for all users.',
             style: TextStyle(
-                fontFamily: "atarian", color: Constants.iWhite, fontSize: 20),
+                fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.smallFontSize),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
@@ -265,7 +265,7 @@ class Popup {
                 style: TextStyle(
                     fontFamily: "atarian",
                     color: Constants.colors[Constants.colorindex],
-                    fontSize: 25,
+                    fontSize: Constants.actionbuttonFontSize,
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {

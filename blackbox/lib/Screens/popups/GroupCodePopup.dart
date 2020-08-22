@@ -30,7 +30,7 @@ class GroupCodePopup {
               style: TextStyle(
                   fontFamily: "atarian",
                   color: Constants.iWhite,
-                  fontSize: 40,
+                  fontSize: Constants.subtitleFontSize,
                   fontWeight: FontWeight.bold),
             ),
             content: new Row(
@@ -42,7 +42,7 @@ class GroupCodePopup {
                       style: TextStyle(
                           fontFamily: "atarian",
                           color: Constants.iBlack,
-                          fontSize: 25),
+                          fontSize: Constants.normalFontSize),
                       children: [
                         TextSpan(
                             text: groupCode[0],
@@ -102,7 +102,7 @@ class GroupCodePopup {
                   style: TextStyle(
                       fontFamily: "atarian",
                       color: Constants.colors[Constants.colorindex],
-                      fontSize: 30,
+                      fontSize: Constants.actionbuttonFontSize,
                       fontWeight: FontWeight.bold),
                 ),
                 onPressed: () {

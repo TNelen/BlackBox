@@ -55,7 +55,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
               Popup.makePopup(context, "Please check your code", "A code should contain " + Constants.groupCodeLength.toString() + " symbols!");
             }
           },
-          child: Text("Join", textAlign: TextAlign.center, style: TextStyle(fontFamily: "atarian", fontSize: 30).copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
+          child: Text("Join", textAlign: TextAlign.center, style: TextStyle(fontFamily: "atarian", fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
         ),
       ),
     );
@@ -64,7 +64,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
       maxLength: 5,
       obscureText: false,
       controller: codeController,
-      style: TextStyle(fontFamily: "atarian", fontSize: 20, color: Colors.black),
+      style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Colors.black),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           fillColor: Constants.iWhite,
@@ -96,7 +96,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                         'Back',
                         style: TextStyle(
                           fontFamily: "atarian",
-                          fontSize: 30,
+                          fontSize: Constants.actionbuttonFontSize,
                           color: Constants.colors[Constants.colorindex],
                         ),
                       ),
@@ -120,7 +120,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                           'Join Group',
                           style: new TextStyle(
                             color: Constants.iWhite,
-                            fontSize: 50.0,
+                            fontSize: Constants.titleFontSize,
                             fontWeight: FontWeight.w300,
                             fontFamily: "atarian",
                           ),
@@ -132,7 +132,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                           'Enter group code below',
                           style: new TextStyle(
                             color: Constants.colors[Constants.colorindex],
-                            fontSize: 30.0,
+                            fontSize: Constants.normalFontSize,
                             fontFamily: "atarian",
                           ),
                         ),

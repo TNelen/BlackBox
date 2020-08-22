@@ -41,12 +41,12 @@ class HomeScreenButton extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     this._title,
-                    style: TextStyle(fontSize: 30.0, color: Constants.iWhite, fontWeight: FontWeight.w400),
+                    style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.iWhite, fontWeight: FontWeight.w400),
                   ),
                   SizedBox(height: 5),
                   Text(
                     this._description,
-                    style: TextStyle(fontSize: 20.0, color: Constants.iLight, fontWeight: FontWeight.w300),
+                    style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iLight, fontWeight: FontWeight.w300),
                   ),
                 ],
               ),

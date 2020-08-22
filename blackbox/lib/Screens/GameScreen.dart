@@ -111,7 +111,7 @@ class _GameScreenState extends State<GameScreen> {
                                 Text(
                                   'Back',
                                   style: TextStyle(
-                                    fontSize: 25,
+                                    fontSize: Constants.actionbuttonFontSize,
                                     color: Constants.colors[Constants.colorindex],
                                   ),
                                 ),
@@ -134,7 +134,7 @@ class _GameScreenState extends State<GameScreen> {
                                   child: Text(
                                     'Game Lobby',
                                     style: TextStyle(
-                                      fontSize: 30,
+                                      fontSize: Constants.normalFontSize,
                                       fontWeight: FontWeight.w600,
                                       color: Constants.iWhite,
                                     ),
@@ -155,7 +155,7 @@ class _GameScreenState extends State<GameScreen> {
                                   child: Text(
                                     'Rules',
                                     style: TextStyle(
-                                      fontSize: 30,
+                                      fontSize: Constants.normalFontSize,
                                       fontWeight: FontWeight.w600,
                                       color: Constants.iWhite,
                                     ),
@@ -182,11 +182,11 @@ class _GameScreenState extends State<GameScreen> {
                                         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                                           Expanded(
                                             child: Text('You can start the game if all players are ready!',
-                                                style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 25.0, fontWeight: FontWeight.w400), textAlign: TextAlign.center),
+                                                style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400), textAlign: TextAlign.center),
                                           ),
                                         ]),
                                       ),
-                                      SizedBox(height: 30),
+                                      SizedBox(height: 15),
                                       Container(
                                         padding: EdgeInsets.fromLTRB(15, 5, 15, 3),
                                         child: Row(
@@ -194,16 +194,16 @@ class _GameScreenState extends State<GameScreen> {
                                           children: [
                                             Text(
                                               "Players ready:  ",
-                                              style: TextStyle(fontSize: 30.0, color: Constants.iWhite),
+                                              style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
                                             ),
                                             Text(
                                               snapshot.data.getNumPlaying().toString() + ' / ' + snapshot.data.getNumMembers().toString(),
-                                              style: TextStyle(fontSize: 30.0, color: Constants.iWhite),
+                                              style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
                                             ),
                                           ],
                                         ),
                                       ),
-                                      SizedBox(height: 10),
+                                      SizedBox(height: 15),
                                       Container(
                                         padding: EdgeInsets.fromLTRB(15, 1, 15, 1),
                                         child: InkWell(
@@ -216,7 +216,7 @@ class _GameScreenState extends State<GameScreen> {
                                             children: [
                                               Text(
                                                 "   Invite players  ",
-                                                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w700, color: Constants.colors[Constants.colorindex]),
+                                                style: TextStyle(fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.w700, color: Constants.colors[Constants.colorindex]),
                                               ),
                                               Padding(
                                                 padding: EdgeInsets.only(right: 20),
@@ -230,11 +230,11 @@ class _GameScreenState extends State<GameScreen> {
                                         ),
                                       ),
                                       Container(
-                                        padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                                        padding: EdgeInsets.fromLTRB(15, 20, 15, 5),
                                         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                                           Text(
                                             "Players",
-                                            style: TextStyle(fontSize: 30.0, color: Constants.iWhite, fontWeight: FontWeight.w500),
+                                            style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.iWhite, fontWeight: FontWeight.w500),
                                           ),
                                         ]),
                                       ),
@@ -260,7 +260,7 @@ class _GameScreenState extends State<GameScreen> {
                                                                 children: <Widget>[
                                                                   Text(
                                                                     data.getUsername().split(' ')[0],
-                                                                    style: new TextStyle(color: Constants.iWhite, fontSize: 25.0, fontWeight: FontWeight.w400),
+                                                                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                                                   ),
                                                                   groupdata.isUserPlaying(data)
                                                                       ? Icon(
@@ -330,7 +330,7 @@ class _GameScreenState extends State<GameScreen> {
                                                     splashColor: Constants.iWhite,
                                                     child: Text(
                                                       "Ready",
-                                                      style: TextStyle(color: Constants.iBlack, fontSize: 22, fontWeight: FontWeight.bold),
+                                                      style: TextStyle(color: Constants.iBlack, fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
                                                     ),
                                                   )
                                                 ])
@@ -354,7 +354,7 @@ class _GameScreenState extends State<GameScreen> {
                                                     splashColor: Constants.colors[Constants.colorindex],
                                                     child: Text(
                                                       "Start Game",
-                                                      style: TextStyle(color: Constants.iBlack, fontSize: 22),
+                                                      style: TextStyle(color: Constants.iBlack, fontSize: Constants.actionbuttonFontSize),
                                                     ),
                                                   )
                                                 ]))),

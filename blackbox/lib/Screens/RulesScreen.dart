@@ -40,7 +40,7 @@ class _RuleScreenState extends State<RuleScreen> {
                       Text(
                         'Back',
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: Constants.actionbuttonFontSize,
                           color: Constants.colors[Constants.colorindex],
                         ),
                       ),
@@ -72,7 +72,7 @@ class _RuleScreenState extends State<RuleScreen> {
                             Text(
                               'Game rules',
                               textAlign: TextAlign.center,
-                              style: new TextStyle(color: Constants.iWhite, fontSize: 50.0, fontWeight: FontWeight.w300),
+                              style: new TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
                             ),
                           ],
                         ),

@@ -33,7 +33,7 @@ class TopIconBar {
                   child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                     Text(
                       "Profile",
-                      style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 25, fontWeight: FontWeight.w300),
+                      style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.w300),
                     ),
                     SizedBox(width: 5),
                     Icon(

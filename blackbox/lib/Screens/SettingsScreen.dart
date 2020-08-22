@@ -76,7 +76,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Text(
                         'Back',
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: Constants.actionbuttonFontSize,
                           color: Constants.colors[Constants.colorindex],
                         ),
                       ),
@@ -111,12 +111,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       SizedBox(height: 40.0),
                       Text(
                         'Settings',
-                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 40.0, fontWeight: FontWeight.w500),
+                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w500),
                       ),
                       SizedBox(height: 40.0),
                       Text(
                         'Sounds and vibration',
-                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 30.0, fontWeight: FontWeight.w300),
+                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
                       ),
                       SizedBox(height: 5),
                       _buildMediaSetting(Icons.audiotrack, 'Sounds', 'is_sound_enabled', Constants.getSoundEnabled(), _soundAction),
@@ -125,7 +125,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       SizedBox(height: 40.0),
                       Text(
                         'Personalization',
-                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 30.0, fontWeight: FontWeight.w300),
+                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
                       ),
                       SizedBox(height: 20.0),
                       Row(children: <Widget>[
@@ -139,7 +139,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         Text(
                           'Choose your accent color...',
-                          style: new TextStyle(color: Constants.iWhite, fontSize: 25.0, fontWeight: FontWeight.w300),
+                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                         ),
                       ]),
                       SizedBox(

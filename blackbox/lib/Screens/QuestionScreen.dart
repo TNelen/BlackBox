@@ -96,18 +96,18 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: new Text(
             "No members selected",
-            style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: 30),
+            style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
           ),
           content: new Text(
             "Please make a valid choice",
-            style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: 22),
+            style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.smallFontSize),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
               child: new Text(
                 "Close",
-                style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: 25, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -140,7 +140,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
             ),
             Text(
               'Give Feedback on this question',
-              style: TextStyle(fontSize: 20, color: Constants.iWhite),
+              style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
             ),
           ],
         ));
@@ -162,7 +162,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
           ),
           Text("Submit Question",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20).copyWith(
+              style: TextStyle(fontSize: Constants.smallFontSize).copyWith(
                 color: Constants.iWhite,
               )),
         ],
@@ -234,7 +234,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                 _showDialog();
               }
             },
-            child: Text("Confirm choice", textAlign: TextAlign.center, style: TextStyle(fontSize: 25).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold)),
+            child: Text("Confirm choice", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold)),
           ),
         ),
       ),
@@ -279,7 +279,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                         },
                         child: Text(
                           "Results",
-                          style: TextStyle(fontSize: 25.0, color: Constants.colors[Constants.colorindex]),
+                          style: TextStyle(fontSize: Constants.actionbuttonFontSize, color: Constants.colors[Constants.colorindex]),
                         ),
                       ),
                     ]),
@@ -295,7 +295,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                       },
                       child: Text(
                         "Leave",
-                        style: TextStyle(fontSize: 25.0, color: Constants.colors[Constants.colorindex]),
+                        style: TextStyle(fontSize: Constants.actionbuttonFontSize, color: Constants.colors[Constants.colorindex]),
                       ),
                     )
                   ],
@@ -309,46 +309,47 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                     //submit own question button
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          color: Constants.iBlack,
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    SizedBox(height: 10),
-                                    Text(
-                                      'Question',
-                                      style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w700),
-                                    ),
-                                    SizedBox(height: 30),
-                                    Text(
-                                      groupData.getNextQuestionString(),
-                                      style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: 30.0, fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(height: 5),
-                                    Text(
-                                      '- ' + groupData.getQuestion().getCategory() + ' -',
-                                      style: new TextStyle(color: Constants.iWhite, fontSize: 18.0, fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        color: Constants.iBlack,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(height: 10),
+                                  Text(
+                                    'Question',
+                                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
+                                  ),
+                                  SizedBox(height: 30),
+                                  Text(
+                                    groupData.getNextQuestionString(),
+                                    style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text(
+                                    '- ' + groupData.getQuestion().getCategory() + ' -',
+                                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
+                      ),
                     ),
 
                     Text(
                       'Select a friend',
-                      style: new TextStyle(color: Constants.iWhite, fontSize: 40.0, fontWeight: FontWeight.w700),
+                      textAlign: TextAlign.center,
+                      style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
                     ),
                     SizedBox(
                       height: 20,
@@ -358,7 +359,9 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                     reportButton,
                     submitquestionbutton,
 
-                    SizedBox(height: 75,),
+                    SizedBox(
+                      height: 75,
+                    ),
                   ],
                 ),
               ),
@@ -390,7 +393,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
             padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
             child: Text(
               data.getUsername().split(' ')[0],
-              style: new TextStyle(color: data.getUserID() == clickedmember ? Constants.iDarkGrey : Constants.iWhite, fontSize: 25.0, fontWeight: FontWeight.bold),
+              style: new TextStyle(color: data.getUserID() == clickedmember ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
             ),
           )),
         ),
@@ -449,7 +452,7 @@ class _ReportPopupState extends State<ReportPopup> {
                   ),
                   Text(
                     'Disturbing',
-                    style: TextStyle(fontFamily: "atarian", fontSize: 20, color: Constants.iWhite),
+                    style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iWhite),
                   ),
                 ]
               : <Widget>[
@@ -459,7 +462,7 @@ class _ReportPopupState extends State<ReportPopup> {
                   ),
                   Text(
                     'Disturbing',
-                    style: TextStyle(fontFamily: "atarian", fontSize: 20, color: Constants.iGrey),
+                    style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iGrey),
                   ),
                 ],
         ));
@@ -479,7 +482,11 @@ class _ReportPopupState extends State<ReportPopup> {
                   ),
                   Text(
                     'Grammar Mistake',
-                    style: TextStyle(fontFamily: "atarian", fontSize: 20, color: Constants.iWhite),
+                    style: TextStyle(
+                      fontFamily: "atarian",
+                      fontSize: Constants.smallFontSize,
+                      color: Constants.iWhite,
+                    ),
                   ),
                 ]
               : <Widget>[
@@ -491,7 +498,7 @@ class _ReportPopupState extends State<ReportPopup> {
                     'Grammar Mistake',
                     style: TextStyle(
                       fontFamily: "atarian",
-                      fontSize: 20,
+                      fontSize: Constants.smallFontSize,
                       color: Constants.iGrey,
                     ),
                   ),
@@ -512,7 +519,7 @@ class _ReportPopupState extends State<ReportPopup> {
                   ),
                   Text(
                     'Love it!',
-                    style: TextStyle(fontFamily: "atarian", fontSize: 20, color: Constants.iWhite),
+                    style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iWhite),
                   ),
                 ]
               : <Widget>[
@@ -522,7 +529,7 @@ class _ReportPopupState extends State<ReportPopup> {
                   ),
                   Text(
                     'Love it!',
-                    style: TextStyle(fontFamily: "atarian", fontSize: 20, color: Constants.iGrey),
+                    style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iGrey),
                   ),
                 ],
         ));
@@ -536,7 +543,7 @@ class _ReportPopupState extends State<ReportPopup> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
       title: new Text(
         'What do you think about this question?',
-        style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: 30),
+        style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
       ),
       content: new Container(
         height: 200,
@@ -550,7 +557,7 @@ class _ReportPopupState extends State<ReportPopup> {
             ),
             Text(
               'Thank you! Via your feedback we can improve the questions.',
-              style: TextStyle(fontFamily: "atarian", fontSize: 20, color: Constants.iGrey, fontWeight: FontWeight.w400),
+              style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iGrey, fontWeight: FontWeight.w400),
             )
           ],
         ),
@@ -560,7 +567,7 @@ class _ReportPopupState extends State<ReportPopup> {
         new FlatButton(
           child: new Text(
             "Close",
-            style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
           ),
           onPressed: () {
             Navigator.pop(context);

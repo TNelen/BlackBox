@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Text(
                         'Back',
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: Constants.actionbuttonFontSize,
                           color: Constants.colors[Constants.colorindex],
                         ),
                       ),
@@ -70,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Text(
                           'Your Profile',
                           textAlign: TextAlign.center,
-                          style: new TextStyle(color: Constants.iWhite, fontSize: 50.0, fontWeight: FontWeight.w300),
+                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
                         ),
                         SizedBox(height: 20.0),
                         Container(
@@ -91,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Text(
                             Constants.getUsername(),
                             textAlign: TextAlign.center,
-                            style: new TextStyle(color: Constants.iWhite, fontSize: 30.0, fontWeight: FontWeight.w300),
+                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
                           ),
                           InkWell(
                             splashColor: Constants.colors[Constants.colorindex],

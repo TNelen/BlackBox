@@ -27,6 +27,18 @@ class Constants {
   //accent color list
   static const colors = [Color(0xFF92dff3), Color(0xFFffe082), Color(0xFFef5350), Color(0xFFA2DAAF)];
 
+
+  //fontsizes
+  static const titleFontSize = 50.0;
+  static const subtitleFontSize = 40.0;
+  static const normalFontSize = 30.0;
+  static const smallFontSize = 18.0;
+  static const miniFontSize = 13.0;
+
+  static const actionbuttonFontSize = 25.0;
+
+
+
   static int enableVersionMSG = 0;
   static int enableWelcomeMSG = 0;
   static const enableMSG = [true, false];

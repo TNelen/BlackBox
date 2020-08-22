@@ -45,12 +45,12 @@ class CreateGameBox {
                         children: <Widget>[
                           Text(
                             "Create Game",
-                            style: TextStyle(fontSize: 30.0, color: Constants.iWhite, fontWeight: FontWeight.w400),
+                            style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.iWhite, fontWeight: FontWeight.w400),
                           ),
                           SizedBox(height: 5),
                           Text(
                             "Invite friends to a new game",
-                            style: TextStyle(fontSize: 20.0, color: Constants.iLight, fontWeight: FontWeight.w300),
+                            style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iLight, fontWeight: FontWeight.w300),
                           ),
                         ],
                       ),
