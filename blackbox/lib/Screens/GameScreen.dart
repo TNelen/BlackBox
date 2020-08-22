@@ -320,12 +320,17 @@ class _GameScreenState extends State<GameScreen> {
                                                   if (groupdata.getNextQuestionString() == "") getRandomNexQuestion();}
                                             ),
                                             SizedBox(width: 20,),
-                                            FloatingActionButton(
+                                            Tooltip(
+                                                message: "Invite players",
+                                                child: FloatingActionButton(
                                                 elevation: 0.0,
                                                 child: new Icon(Icons.group_add, color: Constants.iBlack,),
                                                 backgroundColor: Constants.colors[Constants.colorindex],
-                                                onPressed: (){}
-                                            ),
+                                                onPressed: (){
+                                                  final RenderBox box = context.findRenderObject();
+                                                  Share.share(code, sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+                                                }
+                                            )),
                                                 ])
                                               : Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
                                                   FlatButton(
