@@ -297,68 +297,77 @@ class _GameScreenState extends State<GameScreen> {
                         Align(
                             alignment: Alignment.bottomCenter,
                             child:
-                        Padding(
-                            padding: EdgeInsets.only(bottom:25),
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 25.0),
                             child:Container(
-                                          padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
-                                          child: groupdata.getPlaying().length != groupdata.getMembers().length || groupdata.getNextQuestionString() == ""
-                                              ? Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+                              padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
+                              child: groupdata.getPlaying().length != groupdata.getMembers().length || groupdata.getNextQuestionString() == ""
+                                  ? GridView.count(
+                                    crossAxisCount: 7,
+                                    shrinkWrap: true,
+                                    // mainAxisAlignment: MainAxisAlignment.spaceAround, 
+                                    children: <Widget>[
+                                SizedBox(),
+                                Tooltip(
+                                  message: "Invite players",
+                                  child: FloatingActionButton(
+                                    elevation: 0.0,
+                                    child: new Icon(Icons.group_add, color: Constants.iBlack,),
+                                    backgroundColor: Constants.colors[Constants.colorindex],
+                                    onPressed: (){
+                                      final RenderBox box = context.findRenderObject();
+                                      Share.share(code, sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+                                    }
+                                  ),
+                                ),
+                                SizedBox(),
+                                FloatingActionButton(
+                                    elevation: 0.0,
+                                    child: new Icon(Icons.check, color: Constants.iBlack),
+                                    backgroundColor: Constants.colors[Constants.colorindex],
+                                    onPressed: (){
+                                      if (groupdata.isUserPlaying(Constants.getUserData())) {
+                                        groupdata.removePlayingUser(Constants.getUserData());
+                                        _database.updateGroup(groupdata);
+                                      } else {
+                                        groupdata.setPlayingUser(Constants.getUserData());
+                                        _database.updateGroup(groupdata);
+                                      }
 
-                                            FloatingActionButton(
-                                                elevation: 0.0,
-                                                child: new Icon(Icons.check, color: Constants.iBlack),
-                                                backgroundColor: Constants.colors[Constants.colorindex],
-                                                onPressed: (){
-                                                  if (groupdata.isUserPlaying(Constants.getUserData())) {
-                                                    groupdata.removePlayingUser(Constants.getUserData());
-                                                    _database.updateGroup(groupdata);
-                                                  } else {
-                                                    groupdata.setPlayingUser(Constants.getUserData());
-                                                    _database.updateGroup(groupdata);
-                                                  }
+                                      if (groupdata.getNextQuestionString() == "") getRandomNexQuestion();}
+                                ),
+                                    ])
+                                  : Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
+                                      FlatButton(
+                                        padding: EdgeInsets.fromLTRB(50.0, 15.0, 50.0, 15.0),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(28.0),
+                                        ),
+                                        color: Constants.colors[Constants.colorindex],
+                                        onPressed: () {
+                                          FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
+                                            'type': 'GameStarted',
+                                          });
 
-                                                  if (groupdata.getNextQuestionString() == "") getRandomNexQuestion();}
-                                            ),
-                                            SizedBox(width: 20,),
-                                            Tooltip(
-                                                message: "Invite players",
-                                                child: FloatingActionButton(
-                                                elevation: 0.0,
-                                                child: new Icon(Icons.group_add, color: Constants.iBlack,),
-                                                backgroundColor: Constants.colors[Constants.colorindex],
-                                                onPressed: (){
-                                                  final RenderBox box = context.findRenderObject();
-                                                  Share.share(code, sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
-                                                }
-                                            )),
-                                                ])
-                                              : Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
-                                                  FlatButton(
-                                                    padding: EdgeInsets.fromLTRB(50.0, 15.0, 50.0, 15.0),
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(28.0),
-                                                    ),
-                                                    color: Constants.colors[Constants.colorindex],
-                                                    onPressed: () {
-                                                      FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
-                                                        'type': 'GameStarted',
-                                                      });
-
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder: (BuildContext context) => QuestionScreen(_database, groupdata, code),
-                                                          ));
-                                                    },
-                                                    splashColor: Constants.colors[Constants.colorindex],
-                                                    child: Text(
-                                                      "Start Game",
-                                                      style: TextStyle(color: Constants.iBlack, fontSize: Constants.actionbuttonFontSize),
-                                                    ),
-                                                  )
-                                                ]),
-                                )))
-                      ]),
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (BuildContext context) => QuestionScreen(_database, groupdata, code),
+                                              ));
+                                        },
+                                        splashColor: Constants.colors[Constants.colorindex],
+                                        child: Text(
+                                          "Start Game",
+                                          style: TextStyle(color: Constants.iBlack, fontSize: Constants.actionbuttonFontSize),
+                                        ),
+                                      )
+                                    ]
+                                  ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
