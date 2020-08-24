@@ -46,9 +46,9 @@ class RulesList {
             Column(
               children: [
                 Text(
-                  "Game creator can enable or disable 'blanco vote'. The ability for the player to vote blanco" +
+                  "The game creator can enable or disable 'blanco vote'. This is ability for the player to vote blanco" +
                       '\n' +
-                      "Game creator can enable or diasble 'vote on self', this controls whether the player is able to cast a vote on himself" +
+                      "The game creator can enable or disable 'vote on self'. This controls whether the player is able to cast a vote on himself" +
                       '\n' +
                       'These settings are set in the beginning of the game and cannot be changed during the game',
                   style: new TextStyle(
@@ -80,7 +80,7 @@ class RulesList {
                       '\n' +
                       'When all players are ready, the ready button on the bottom becomes the start button, press start to begin the game.' +
                       '\n' +
-                      'Each player name has an indicator, indicating whether the layer is ready or not.',
+                      'Each player name has an indicator, indicating whether the player is ready or not.',
                   style: new TextStyle(
                     color: Constants.iWhite,
                     fontSize: Constants.smallFontSize,
@@ -128,7 +128,7 @@ class RulesList {
             Column(
               children: [
                 Text(
-                  'After you have voted you will enter a collecting results waiting screen.' +
+                  'After you have voted you will enter a waiting screen.' +
                       '\n' +
                       'It shows the number of people that still have to vote.' +
                       '\n' +

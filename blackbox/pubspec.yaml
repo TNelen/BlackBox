@@ -34,6 +34,7 @@ dependencies:
   vibration: 1.2.2            # Can make the mobile device vibrate
   store_redirect: ^1.0.2
   firebase_analytics: ^5.0.11 # Used to gather more detailed usage statistics
+  avatar_glow: ^1.2.0         #glow around ready button
 
 
   flutter:

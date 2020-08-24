@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  avatar_glow:
+    dependency: "direct main"
+    description:
+      name: avatar_glow
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   back_button_interceptor:
     dependency: "direct main"
     description:

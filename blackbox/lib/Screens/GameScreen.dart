@@ -10,6 +10,7 @@ import '../Constants.dart';
 import 'QuestionScreen.dart';
 import 'HomeScreen.dart';
 import 'package:share/share.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 
 class GameScreen extends StatefulWidget {
   Database _database;
@@ -58,8 +59,6 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: new ThemeData(
@@ -167,202 +166,199 @@ class _GameScreenState extends State<GameScreen> {
                           ],
                         ),
                       ),
-                      body: Stack(children: <Widget>[
-                        TabBarView(
-                          children: [
-                            //tab 1
-                            Center(
-                              child: Container(
-                                  padding: EdgeInsets.only(left: 22, right: 22),
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    children: <Widget>[
-                                      SizedBox(height: 40),
-                                      Container(
-                                        padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                          Expanded(
-                                            child: Text('You can start the game if all players are ready!',
-                                                style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400), textAlign: TextAlign.center),
-                                          ),
-                                        ]),
-                                      ),
-                                      SizedBox(height: 15),
-                                      Container(
-                                        padding: EdgeInsets.fromLTRB(15, 5, 15, 3),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "Players ready:  ",
-                                              style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
+                      body: Stack(
+                        children: <Widget>[
+                          TabBarView(
+                            children: [
+                              //tab 1
+                              Center(
+                                child: Container(
+                                    padding: EdgeInsets.only(left: 22, right: 22),
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      children: <Widget>[
+                                        SizedBox(height: 40),
+                                        Container(
+                                          padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                            Expanded(
+                                              child: Text('Press the check mark to get ready!',
+                                                  style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                                  textAlign: TextAlign.center),
                                             ),
-                                            Text(
-                                              snapshot.data.getNumPlaying().toString() + ' / ' + snapshot.data.getNumMembers().toString(),
-                                              style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
-                                            ),
-                                          ],
+                                          ]),
                                         ),
-                                      ),
-                                      SizedBox(height: 15),
-                                      Container(
-                                        padding: EdgeInsets.fromLTRB(15, 1, 15, 1),
-                                        child: InkWell(
-                                          onTap: () {
-                                            final RenderBox box = context.findRenderObject();
-                                            Share.share(code, sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
-                                          },
+                                        Container(
+                                          padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                            Expanded(
+                                              child: Text('You can start the game if all players are ready!',
+                                                  style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                                  textAlign: TextAlign.center),
+                                            ),
+                                          ]),
+                                        ),
+                                        SizedBox(height: 15),
+                                        Container(
+                                          padding: EdgeInsets.fromLTRB(15, 5, 15, 3),
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                "   Invite players  ",
-                                                style: TextStyle(fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.w700, color: Constants.colors[Constants.colorindex]),
+                                                "Players ready:  ",
+                                                style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
                                               ),
-                                              Padding(
-                                                padding: EdgeInsets.only(right: 20),
-                                                child: Icon(
-                                                  Icons.group_add,
-                                                  color: Constants.colors[Constants.colorindex],
-                                                ),
+                                              Text(
+                                                snapshot.data.getNumPlaying().toString() + ' / ' + snapshot.data.getNumMembers().toString(),
+                                                style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
                                               ),
                                             ],
                                           ),
                                         ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.fromLTRB(15, 20, 15, 5),
-                                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                          Text(
-                                            "Players",
-                                            style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.iWhite, fontWeight: FontWeight.w500),
+                                        SizedBox(height: 15),
+                                        Container(
+                                          padding: EdgeInsets.fromLTRB(15, 20, 15, 5),
+                                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                            Text(
+                                              "Players",
+                                              style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.iWhite, fontWeight: FontWeight.w500),
+                                            ),
+                                          ]),
+                                        ),
+                                        Flexible(
+                                          child: GridView.count(
+                                            crossAxisCount: 2,
+                                            childAspectRatio: (4 / 1),
+                                            shrinkWrap: true,
+                                            padding: EdgeInsets.all(2.0),
+                                            children: snapshot.data
+                                                .getMembers()
+                                                .map((data) => Card(
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(10.0),
+                                                      ),
+                                                      color: groupdata.isUserPlaying(data) ? Constants.iDarkGrey : Constants.iDarkGrey,
+                                                      child: Center(
+                                                          child: Padding(
+                                                              padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
+                                                              child: Center(
+                                                                child: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  children: <Widget>[
+                                                                    Text(
+                                                                      data.getUsername().split(' ')[0],
+                                                                      style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                                                    ),
+                                                                    groupdata.isUserPlaying(data)
+                                                                        ? Icon(
+                                                                            Icons.check_box,
+                                                                            size: 25,
+                                                                            color: Constants.colors[Constants.colorindex],
+                                                                          )
+                                                                        : Icon(
+                                                                            Icons.check_box_outline_blank,
+                                                                            size: 25,
+                                                                            color: Constants.iWhite,
+                                                                          )
+                                                                  ],
+                                                                ),
+                                                              ))),
+                                                    ))
+                                                .toList(),
                                           ),
-                                        ]),
-                                      ),
-                                      Flexible(
-                                        child: GridView.count(
-                                          crossAxisCount: 2,
-                                          childAspectRatio: (4 / 1),
-                                          shrinkWrap: true,
-                                          padding: EdgeInsets.all(2.0),
-                                          children: snapshot.data
-                                              .getMembers()
-                                              .map((data) => Card(
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(10.0),
-                                                    ),
-                                                    color: groupdata.isUserPlaying(data) ? Constants.iDarkGrey : Constants.iDarkGrey,
-                                                    child: Center(
-                                                        child: Padding(
-                                                            padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
-                                                            child: Center(
-                                                              child: Row(
-                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                children: <Widget>[
-                                                                  Text(
-                                                                    data.getUsername().split(' ')[0],
-                                                                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
-                                                                  ),
-                                                                  groupdata.isUserPlaying(data)
-                                                                      ? Icon(
-                                                                          Icons.check_box,
-                                                                          size: 25,
-                                                                          color: Constants.colors[Constants.colorindex],
-                                                                        )
-                                                                      : Icon(
-                                                                          Icons.check_box_outline_blank,
-                                                                          size: 25,
-                                                                          color: Constants.iWhite,
-                                                                        )
-                                                                ],
-                                                              ),
-                                                            ))),
-                                                  ))
-                                              .toList(),
                                         ),
-                                      ),
-                                      SizedBox(height: 120),
-                                    ],
-                                  )),
-                            ),
+                                        SizedBox(height: 120),
+                                      ],
+                                    )),
+                              ),
 
-                            //tab2
-                            Container(
-                              child: ListView(shrinkWrap: true, padding: const EdgeInsets.only(top: 10, left: 25.0, right: 25.0), children: [
-                                RulesList.getRules(),
-                              ]),
-                            )
-                          ],
-                        ),
-                        Align(
+                              //tab2
+                              Container(
+                                child: ListView(shrinkWrap: true, padding: const EdgeInsets.only(top: 10, left: 25.0, right: 25.0), children: [
+                                  RulesList.getRules(),
+                                ]),
+                              )
+                            ],
+                          ),
+                          Align(
                             alignment: Alignment.bottomCenter,
-                            child:
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 25.0),
-                            child:Container(
-                              padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
-                              child: groupdata.getPlaying().length != groupdata.getMembers().length || groupdata.getNextQuestionString() == ""
-                                  ? GridView.count(
-                                    crossAxisCount: 7,
-                                    shrinkWrap: true,
-                                    // mainAxisAlignment: MainAxisAlignment.spaceAround, 
-                                    children: <Widget>[
-                                SizedBox(),
-                                Tooltip(
-                                  message: "Invite players",
-                                  child: FloatingActionButton(
-                                    elevation: 0.0,
-                                    child: new Icon(Icons.group_add, color: Constants.iBlack,),
-                                    backgroundColor: Constants.colors[Constants.colorindex],
-                                    onPressed: (){
-                                      final RenderBox box = context.findRenderObject();
-                                      Share.share(code, sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
-                                    }
-                                  ),
-                                ),
-                                SizedBox(),
-                                FloatingActionButton(
-                                    elevation: 0.0,
-                                    child: new Icon(Icons.check, color: Constants.iBlack),
-                                    backgroundColor: Constants.colors[Constants.colorindex],
-                                    onPressed: (){
-                                      if (groupdata.isUserPlaying(Constants.getUserData())) {
-                                        groupdata.removePlayingUser(Constants.getUserData());
-                                        _database.updateGroup(groupdata);
-                                      } else {
-                                        groupdata.setPlayingUser(Constants.getUserData());
-                                        _database.updateGroup(groupdata);
-                                      }
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 25.0),
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
+                                child: groupdata.getPlaying().length != groupdata.getMembers().length || groupdata.getNextQuestionString() == ""
+                                    ? GridView.count(crossAxisCount: 7, shrinkWrap: true,
+                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: <Widget>[
+                                            SizedBox(),
+                                            SizedBox(),
+                                            Tooltip(
+                                              message: "Invite players",
+                                              child: FloatingActionButton(
+                                                  elevation: 0.0,
+                                                  child: new Icon(
+                                                    Icons.group_add,
+                                                    color: Constants.iBlack,
+                                                  ),
+                                                  backgroundColor: Constants.colors[Constants.colorindex],
+                                                  onPressed: () {
+                                                    final RenderBox box = context.findRenderObject();
+                                                    Share.share(code, sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+                                                  }),
+                                            ),
+                                            SizedBox(),
+                                            Tooltip(
+                                                message: "Ready",
+                                                child: FloatingActionButton(
+                                                  elevation: 0.0,
+                                                  child: AvatarGlow(
+                                                      startDelay: Duration(milliseconds: 50),
+                                                      glowColor: Constants.iGrey,
+                                                      endRadius: 40.0,
+                                                      duration: Duration(milliseconds: 1000),
+                                                      repeat: true,
+                                                      showTwoGlows: true,
+                                                      repeatPauseDuration: Duration(milliseconds: 10),
+                                                      child: new Icon(Icons.check, color: Constants.iBlack)),
+                                                  backgroundColor: Constants.colors[Constants.colorindex],
+                                                  onPressed: () {
+                                                    if (groupdata.isUserPlaying(Constants.getUserData())) {
+                                                      groupdata.removePlayingUser(Constants.getUserData());
+                                                      _database.updateGroup(groupdata);
+                                                    } else {
+                                                      groupdata.setPlayingUser(Constants.getUserData());
+                                                      _database.updateGroup(groupdata);
+                                                    }
 
-                                      if (groupdata.getNextQuestionString() == "") getRandomNexQuestion();}
-                                ),
-                                    ])
-                                  : Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
-                                      FlatButton(
-                                        padding: EdgeInsets.fromLTRB(50.0, 15.0, 50.0, 15.0),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(28.0),
-                                        ),
-                                        color: Constants.colors[Constants.colorindex],
-                                        onPressed: () {
-                                          FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
-                                            'type': 'GameStarted',
-                                          });
+                                                    if (groupdata.getNextQuestionString() == "") getRandomNexQuestion();
+                                                  },
+                                                )),
+                                          ])
+                                    : Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
+                                        FlatButton(
+                                          padding: EdgeInsets.fromLTRB(50.0, 15.0, 50.0, 15.0),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(28.0),
+                                          ),
+                                          color: Constants.colors[Constants.colorindex],
+                                          onPressed: () {
+                                            FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
+                                              'type': 'GameStarted',
+                                            });
 
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (BuildContext context) => QuestionScreen(_database, groupdata, code),
-                                              ));
-                                        },
-                                        splashColor: Constants.colors[Constants.colorindex],
-                                        child: Text(
-                                          "Start Game",
-                                          style: TextStyle(color: Constants.iBlack, fontSize: Constants.actionbuttonFontSize),
-                                        ),
-                                      )
-                                    ]
-                                  ),
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (BuildContext context) => QuestionScreen(_database, groupdata, code),
+                                                ));
+                                          },
+                                          splashColor: Constants.colors[Constants.colorindex],
+                                          child: Text(
+                                            "Start Game",
+                                            style: TextStyle(color: Constants.iBlack, fontSize: Constants.actionbuttonFontSize),
+                                          ),
+                                        )
+                                      ]),
                               ),
                             ),
                           ),
