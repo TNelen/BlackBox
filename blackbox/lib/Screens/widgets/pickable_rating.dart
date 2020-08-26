@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class PickableRating extends StatefulWidget {
   
-  final double _size;
+  final double size;
   final void Function(int rating) onTap;
   final int defaultRating;
 
-  PickableRating(this._size, {this.onTap, int startRating: 0}) : defaultRating = startRating;
+  PickableRating({this.size: 25.0, this.onTap, int startRating: 0}) : defaultRating = startRating;
 
   @override
   State<StatefulWidget> createState() {
@@ -31,7 +31,7 @@ class _PickableRatingState extends State<PickableRating> {
     return IconButton(
       icon: Icon(
         index <= rating ? Icons.star : Icons.star_border,
-        size: widget._size,
+        size: widget.size,
         color: Colors.yellow,
       ), 
       onPressed: () => {

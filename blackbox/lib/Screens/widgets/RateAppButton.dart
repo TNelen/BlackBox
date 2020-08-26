@@ -1,8 +1,8 @@
 import 'package:blackbox/Interfaces/Database.dart';
+import 'package:blackbox/Screens/popups/rate_popup.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../../Constants.dart';
-import 'package:store_redirect/store_redirect.dart';
 
 class RateAppButton {
   static Widget rateAppButton(BuildContext context, Database database) {
@@ -27,7 +27,11 @@ class RateAppButton {
         onPressed: () {
           FirebaseAnalytics().logEvent(name: 'button_pressed', parameters: {'button_name': 'RateAppButton'});
 
-          StoreRedirect.redirect();
+          showDialog(
+            context: context,
+            child: RatePopup(),
+          );
+
         });
   }
 }
