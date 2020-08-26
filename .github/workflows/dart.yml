@@ -1,0 +1,24 @@
+name: Dart build status
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image:  google/dart:latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      working-directory: blackbox
+      run: flutter pub get
+    - name: Run tests
+      working-directory: blackbox
+      run: flutter pub run test
