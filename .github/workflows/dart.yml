@@ -1,24 +1,24 @@
-name: Dart build status
+# name: Dart build status
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+# on:
+#   push:
+#     branches: [ master ]
+#   pull_request:
+#     branches: [ master ]
 
-jobs:
-  build:
+# jobs:
+#   build:
 
-    runs-on: ubuntu-latest
+#     runs-on: ubuntu-latest
 
-    container:
-      image:  google/dart:latest
+#     container:
+#       image:  google/dart:latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Install dependencies
-      working-directory: blackbox
-      run: pub get
-    - name: Run tests
-      working-directory: blackbox
-      run: pub run test
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Install dependencies
+#       working-directory: blackbox
+#       run: pub get
+#     - name: Run tests
+#       working-directory: blackbox
+#       run: pub run test
