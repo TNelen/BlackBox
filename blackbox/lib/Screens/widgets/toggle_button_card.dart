@@ -3,11 +3,23 @@ import 'package:flutter/material.dart';
 
 class ToggleButtonCard extends StatefulWidget {
   final String text;
+  final TextStyle textStyle;
   final bool defaultValue;
   final Function(bool) onToggle;
   final Icon icon;
 
-  ToggleButtonCard(this.text, this.defaultValue, {this.onToggle, this.icon, Key key}) : super(key: key);
+  ToggleButtonCard(
+    this.text, this.defaultValue, 
+    { this.onToggle, 
+      this.textStyle: 
+        const TextStyle(
+          fontSize: Constants.actionbuttonFontSize,
+          color: Constants.iWhite,
+        ), 
+      this.icon, 
+      Key key
+    }
+  ) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -30,52 +42,56 @@ class ToggleButtonCardState extends State<ToggleButtonCard> {
     _currentValue = widget.defaultValue ?? false;
   }
 
+  void _setValue( bool value )
+  {
+    _currentValue = value;
+
+    if (widget.onToggle != null) widget.onToggle( value );
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Card(
-      color: Constants.iDarkGrey,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(children: <Widget>[
-              (widget.icon != null)
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: widget.icon,
-                    )
-                  : SizedBox(),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                widget.text,
-                style: TextStyle(
-                  fontSize: Constants.actionbuttonFontSize,
-                  color: Constants.iWhite,
+      child: Card(
+        color: Constants.iDarkGrey,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: InkWell(
+          onTap: () => _setValue( !_currentValue ),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(children: <Widget>[
+                  (widget.icon != null)
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: widget.icon,
+                        )
+                      : SizedBox(),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    widget.text,
+                    style: widget.textStyle,
+                  ),
+                ]),
+                Switch(
+                  value: _currentValue,
+                  onChanged: (value) => _setValue( value ),
+                  activeTrackColor: Constants.colors[Constants.colorindex],
+                  activeColor: Constants.iWhite,
                 ),
-              ),
-            ]),
-            Switch(
-              value: _currentValue,
-              onChanged: (value) {
-                _currentValue = value;
-
-                if (widget.onToggle != null) widget.onToggle(value);
-
-                setState(() {});
-              },
-              activeTrackColor: Constants.colors[Constants.colorindex],
-              activeColor: Constants.iWhite,
+              ],
             ),
-          ],
+          ),
         ),
       ),
-    ));
+    );
   }
 }

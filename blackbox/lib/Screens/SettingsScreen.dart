@@ -32,6 +32,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   final GlobalKey<ToggleButtonCardState> redKey = GlobalKey();
   final GlobalKey<ToggleButtonCardState> greenKey = GlobalKey();
 
+  final GlobalKey<ToggleButtonCardState> soundKey = GlobalKey();
+  final GlobalKey<ToggleButtonCardState> vibrateKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     bool blueAccentColor = Constants.getAccentColor(0);
@@ -119,9 +122,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
                       ),
                       SizedBox(height: 5),
-                      _buildMediaSetting(Icons.audiotrack, 'Sounds', 'is_sound_enabled', Constants.getSoundEnabled(), _soundAction),
+                      ToggleButtonCard(
+                        'Sounds',
+                        Constants.getSoundEnabled(),
+                        key: soundKey,
+                        textStyle: TextStyle(
+                          color: Constants.getSoundEnabled() ? Constants.iWhite : Constants.iGrey,
+                          fontSize: Constants.actionbuttonFontSize,
+                        ),
+                        icon: Icon(
+                          Icons.audiotrack,
+                          size: 17,
+                          color: Constants.getSoundEnabled() ? Constants.colors[Constants.colorindex] : Constants.iGrey,
+                        ),
+                        onToggle: (bool value) {
+                          FirebaseAnalytics().setUserProperty(name: 'is_sound_enabled', value: value.toString());
+                          Constants.setVibrationEnabled(!Constants.getVibrationEnabled());
+                          _database.updateUser(Constants.getUserData());
+                          setState(() {});
+                        },
+                      ),
                       SizedBox(height: 5),
-                      _buildMediaSetting(Icons.vibration, 'Vibration', 'is_vibration_enabled', Constants.getVibrationEnabled(), _vibrationAction),
+                      ToggleButtonCard(
+                        'Vibration',
+                        Constants.getVibrationEnabled(),
+                        key: vibrateKey,
+                        textStyle: TextStyle(
+                          color: Constants.getVibrationEnabled() ? Constants.iWhite : Constants.iGrey,
+                          fontSize: Constants.actionbuttonFontSize,
+                        ),
+                        icon: Icon(
+                          Icons.vibration,
+                          size: 17,
+                          color: Constants.getVibrationEnabled() ? Constants.colors[Constants.colorindex] : Constants.iGrey,
+                        ),
+                        onToggle: (bool value) {
+                          FirebaseAnalytics().setUserProperty(name: 'is_vibration_enabled', value: value.toString());
+                          Constants.setSoundEnabled(!Constants.getSoundEnabled());
+                          _database.updateUser(Constants.getUserData());
+                          setState(() {});
+                        },
+                      ),
                       SizedBox(height: 40.0),
                       Text(
                         'Personalization',
@@ -226,70 +267,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ],
                   ),
-                )))));
-  }
-
-  void plusOne() => 1;
-
-  void _vibrationAction() => Constants.setVibrationEnabled(!Constants.getVibrationEnabled());
-
-  void _soundAction() => Constants.setSoundEnabled(!Constants.getSoundEnabled());
-
-  Container _buildMediaSetting(IconData icon, String label, String analyticsUserProperty, bool isEnabled, Function() action) {
-    Color foregroundColor;
-    Color textColor;
-    Color backgroundColor;
-    if (isEnabled) {
-      foregroundColor = Constants.colors[Constants.colorindex];
-      textColor = Constants.iWhite;
-      backgroundColor = Constants.iDarkGrey;
-    } else {
-      foregroundColor = Constants.iGrey;
-      textColor = Constants.iGrey;
-      backgroundColor = Constants.iDarkGrey;
-    }
-
-    return Container(
-        constraints: BoxConstraints(minWidth: 100, maxWidth: 120),
-        child: Card(
-            color: backgroundColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: Container(
-                padding: EdgeInsets.fromLTRB(15, 6, 15, 6),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Row(children: [
-                      Hero(
-                          tag: 'topicon' + label,
-                          child: Icon(
-                            icon,
-                            color: foregroundColor,
-                            size: 17,
-                          )),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      AutoSizeText(
-                        label,
-                        style: TextStyle(fontSize: 25, color: textColor),
-                        maxLines: 1,
-                      ),
-                    ]),
-                    Switch(
-                      value: isEnabled,
-                      onChanged: (value) {
-                        FirebaseAnalytics().setUserProperty(name: analyticsUserProperty, value: value.toString());
-                        action();
-                        _database.updateUser(Constants.getUserData());
-                        setState(() {});
-                      },
-                      activeTrackColor: foregroundColor,
-                      activeColor: Constants.iWhite,
-                    ),
-                  ],
-                ))));
+                )
+              )
+            )
+          )
+        );
   }
 }
