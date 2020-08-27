@@ -137,7 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         onToggle: (bool value) {
                           FirebaseAnalytics().setUserProperty(name: 'is_sound_enabled', value: value.toString());
-                          Constants.setVibrationEnabled(!Constants.getVibrationEnabled());
+                          Constants.setSoundEnabled(!Constants.getSoundEnabled());
                           _database.updateUser(Constants.getUserData());
                           setState(() {});
                         },
@@ -158,7 +158,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         onToggle: (bool value) {
                           FirebaseAnalytics().setUserProperty(name: 'is_vibration_enabled', value: value.toString());
-                          Constants.setSoundEnabled(!Constants.getSoundEnabled());
+                          Constants.setVibrationEnabled(!Constants.getVibrationEnabled());
                           _database.updateUser(Constants.getUserData());
                           setState(() {});
                         },
