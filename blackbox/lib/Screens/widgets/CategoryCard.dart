@@ -24,9 +24,9 @@ class CategoryCardState extends State<CategoryCard> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
-      child: InkResponse(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16.0),
         splashColor: Constants.colors[Constants.colorindex],
-        radius: 50,
         onTap: () {
           setState(() {
             if (widget.onTap != null) widget.onTap();
