@@ -178,10 +178,10 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
       if (deleteIndex != null) userData.removeAt(deleteIndex);
     }
 
-    final membersList = Flexible(
+    final membersList = Expanded(
       child: GridView.count(
-        shrinkWrap: true,
         crossAxisCount: 2,
+        shrinkWrap: true,
         childAspectRatio: (3 / 1),
         padding: EdgeInsets.symmetric(horizontal: 8.0),
         children: userData.map((data) => buildUserVoteCard(data)).toList(),
@@ -303,8 +303,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
               ),
               body: Padding(
                 padding: EdgeInsets.only(left: 30, right: 30),
-                child: ListView(
-                  shrinkWrap: true,
+                child: Expanded(child:ListView(
                   children: [
                     //submit own question button
                     Container(
@@ -364,7 +363,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                     ),
                   ],
                 ),
-              ),
+              )),
               floatingActionButton: voteButton,
               floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
             ),
@@ -373,7 +372,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
   }
 
   Widget buildUserVoteCard(UserData data) {
-    return Card(
+    return Container(child:Card(
       color: data.getUserID() == clickedmember ? Constants.iLight : Constants.iDarkGrey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
@@ -387,7 +386,6 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
             clickedmember = data.getUserID();
           });
         },
-        child: Container(
           child: Center(
               child: Padding(
             padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
@@ -396,9 +394,8 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
               style: new TextStyle(color: data.getUserID() == clickedmember ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
             ),
           )),
-        ),
       ),
-    );
+    ));
   }
 }
 
