@@ -61,8 +61,12 @@ class ToggleButtonCardState extends State<ToggleButtonCard> {
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(16.0),
+          splashColor: Constants.colors[Constants.colorindex],
           onTap: () => _setValue( !_currentValue ),
           child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
