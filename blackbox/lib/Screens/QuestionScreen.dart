@@ -178,14 +178,13 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
       if (deleteIndex != null) userData.removeAt(deleteIndex);
     }
 
-    final membersList = Expanded(
-      child: GridView.count(
+    final membersList =  GridView.count(
         crossAxisCount: 2,
         shrinkWrap: true,
         childAspectRatio: (3 / 1),
         padding: EdgeInsets.symmetric(horizontal: 8.0),
         children: userData.map((data) => buildUserVoteCard(data)).toList(),
-      ),
+
     );
 
     final voteButton = Hero(
@@ -301,68 +300,68 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                   ],
                 ),
               ),
-              body: Padding(
-                padding: EdgeInsets.only(left: 30, right: 30),
-                child: Expanded(child:ListView(
-                  children: [
-                    //submit own question button
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        color: Constants.iBlack,
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(5),
+              body: Container(
+              margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+
+          child:ListView(
+                      children: [
+                        //submit own question button
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
+                            color: Constants.iBlack,
                             child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  SizedBox(height: 10),
-                                  Text(
-                                    'Question',
-                                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
+                              child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      SizedBox(height: 10),
+                                      Text(
+                                        'Question',
+                                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
+                                      ),
+                                      SizedBox(height: 30),
+                                      Text(
+                                        groupData.getNextQuestionString(),
+                                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(height: 5),
+                                      Text(
+                                        '- ' + groupData.getQuestion().getCategory() + ' -',
+                                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(height: 30),
-                                  Text(
-                                    groupData.getNextQuestionString(),
-                                    style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    '- ' + groupData.getQuestion().getCategory() + ' -',
-                                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
+
+
+                        Text(
+                          'Select a friend',
+                          textAlign: TextAlign.center,
+                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
                         ),
-                      ),
-                    ),
+                        SizedBox(
+                          height: 20,
+                        ),
 
-                    Text(
-                      'Select a friend',
-                      textAlign: TextAlign.center,
-                      style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                        membersList,
+                        reportButton,
+                        submitquestionbutton,
 
-                    membersList,
-                    reportButton,
-                    submitquestionbutton,
+                        SizedBox(
+                          height: 75,
+                        ),
+                      ],
 
-                    SizedBox(
-                      height: 75,
-                    ),
-                  ],
-                ),
+
               )),
               floatingActionButton: voteButton,
               floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -372,7 +371,8 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
   }
 
   Widget buildUserVoteCard(UserData data) {
-    return Container(child:Card(
+    return Container(
+        child: Card(
       color: data.getUserID() == clickedmember ? Constants.iLight : Constants.iDarkGrey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
@@ -386,14 +386,14 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
             clickedmember = data.getUserID();
           });
         },
-          child: Center(
-              child: Padding(
-            padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
-            child: Text(
-              data.getUsername().split(' ')[0],
-              style: new TextStyle(color: data.getUserID() == clickedmember ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
-            ),
-          )),
+        child: Center(
+            child: Padding(
+          padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
+          child: Text(
+            data.getUsername().split(' ')[0],
+            style: new TextStyle(color: data.getUserID() == clickedmember ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+          ),
+        )),
       ),
     ));
   }
