@@ -12,10 +12,6 @@ class Constants {
   static const iWhite = Color(0xFFE6E7EB);
   static const iAccent = Color(0xFF92dff3);
 
-  static const iAccent1 = Color(0xFF92dff3);
-  static const iAccent2 = Color(0xFFffe082);
-  static const iAccent3 = Color(0xFFef5350);
-  static const iAccent4 = Color(0xFFA2DAAF);
 
   static int colorindex = 1;
 

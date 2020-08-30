@@ -193,7 +193,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         icon: Icon(
                           Icons.lens,
                           size: 17,
-                          color: Constants.iAccent1,
+                          color: Constants.colors[0],
                         ),
                         onToggle: (bool value) {
                           if (value) {
@@ -213,7 +213,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         icon: Icon(
                           Icons.lens,
                           size: 17,
-                          color: Constants.iAccent2,
+                          color:Constants.colors[1],
                         ),
                         onToggle: (bool value) {
                           if (value) {
@@ -233,7 +233,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         icon: Icon(
                           Icons.lens,
                           size: 17,
-                          color: Constants.iAccent3,
+                          color: Constants.colors[2],
                         ),
                         onToggle: (bool value) {
                           if (value) {
@@ -253,7 +253,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         icon: Icon(
                           Icons.lens,
                           size: 17,
-                          color: Constants.iAccent4,
+                          color: Constants.colors[3],
                         ),
                         onToggle: (bool value) {
                           if (value) {
