@@ -7,16 +7,19 @@ class ToggleButtonCard extends StatefulWidget {
   final bool defaultValue;
   final Function(bool) onToggle;
   final Icon icon;
+  final Color splashColor;
 
   ToggleButtonCard(
     this.text, this.defaultValue, 
-    { this.onToggle, 
+    { 
+      this.onToggle, 
       this.textStyle: 
         const TextStyle(
           fontSize: Constants.actionbuttonFontSize,
           color: Constants.iWhite,
         ), 
-      this.icon, 
+      this.icon,
+      this.splashColor,
       Key key
     }
   ) : super(key: key);
@@ -61,7 +64,7 @@ class ToggleButtonCardState extends State<ToggleButtonCard> {
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(16.0),
-          splashColor: Constants.colors[Constants.colorindex],
+          splashColor: widget.splashColor ?? Constants.colors[Constants.colorindex],
           onTap: () => _setValue( !_currentValue ),
           child: Container(
           decoration: BoxDecoration(
