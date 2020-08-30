@@ -1,4 +1,5 @@
 import 'package:blackbox/DataContainers/UserData.dart';
+import 'package:blackbox/Screens/popups/noMembersScelectedPopup.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../DataContainers/GroupData.dart';
@@ -85,39 +86,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
     if (state == AppLifecycleState.paused) {}
   }
 
-  void _showDialog() {
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          backgroundColor: Constants.iBlack,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
-          title: new Text(
-            "No members selected",
-            style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
-          ),
-          content: new Text(
-            "Please make a valid choice",
-            style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.smallFontSize),
-          ),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text(
-                "Close",
-                style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -178,13 +147,12 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
       if (deleteIndex != null) userData.removeAt(deleteIndex);
     }
 
-    final membersList =  GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        childAspectRatio: (3 / 1),
-        padding: EdgeInsets.symmetric(horizontal: 8.0),
-        children: userData.map((data) => buildUserVoteCard(data)).toList(),
-
+    final membersList = GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      childAspectRatio: (3 / 1),
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      children: userData.map((data) => buildUserVoteCard(data)).toList(),
     );
 
     final voteButton = Hero(
@@ -230,7 +198,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                       builder: (BuildContext context) => ResultScreen(_database, groupData, code, currentQuestion, currentQuestionString, clickedmember),
                     ));
               } else {
-                _showDialog();
+                NoMemberSelectedPopup.noMemberSelectedPopup(context);
               }
             },
             child: Text("Confirm choice", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold)),
@@ -301,68 +269,64 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                 ),
               ),
               body: Container(
-              margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-
-          child:ListView(
-                      children: [
-                        //submit own question button
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
-                            color: Constants.iBlack,
+                  margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+                  child: ListView(
+                    children: [
+                      //submit own question button
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          color: Constants.iBlack,
+                          child: Center(
                             child: Center(
-                              child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      SizedBox(height: 10),
-                                      Text(
-                                        'Question',
-                                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
-                                      ),
-                                      SizedBox(height: 30),
-                                      Text(
-                                        groupData.getNextQuestionString(),
-                                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      SizedBox(height: 5),
-                                      Text(
-                                        '- ' + groupData.getQuestion().getCategory() + ' -',
-                                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(height: 10),
+                                  Text(
+                                    'Question',
+                                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
                                   ),
-                                ),
+                                  SizedBox(height: 30),
+                                  Text(
+                                    groupData.getNextQuestionString(),
+                                    style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text(
+                                    '- ' + groupData.getQuestion().getCategory() + ' -',
+                                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-
-
-                        Text(
-                          'Select a friend',
-                          textAlign: TextAlign.center,
-                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
+                      ),
 
-                        membersList,
-                        reportButton,
-                        submitquestionbutton,
+                      Text(
+                        'Select a friend',
+                        textAlign: TextAlign.center,
+                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
 
-                        SizedBox(
-                          height: 75,
-                        ),
-                      ],
+                      membersList,
+                      reportButton,
+                      submitquestionbutton,
 
-
-              )),
+                      SizedBox(
+                        height: 75,
+                      ),
+                    ],
+                  )),
               floatingActionButton: voteButton,
               floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
             ),
