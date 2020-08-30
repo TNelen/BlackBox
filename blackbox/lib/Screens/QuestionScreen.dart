@@ -86,8 +86,6 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
     if (state == AppLifecycleState.paused) {}
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
