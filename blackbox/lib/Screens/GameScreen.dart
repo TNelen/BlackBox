@@ -312,13 +312,16 @@ class _GameScreenState extends State<GameScreen> {
                                                 child: FloatingActionButton(
                                                   elevation: 0.0,
                                                   child: AvatarGlow(
-                                                      startDelay: Duration(milliseconds: 50),
+                                                      startDelay: Duration(milliseconds: 1),
                                                       glowColor: Constants.iGrey,
                                                       endRadius: 40.0,
-                                                      duration: Duration(milliseconds: 1000),
+                                                      duration: Duration(milliseconds: 1250),
+                                                      shape: BoxShape.circle,
+                                                      animate: true,
+                                                      curve: Curves.easeOut,
                                                       repeat: true,
                                                       showTwoGlows: true,
-                                                      repeatPauseDuration: Duration(milliseconds: 10),
+                                                      //repeatPauseDuration: Duration(milliseconds: 1),
                                                       child: new Icon(Icons.check, color: Constants.iBlack)),
                                                   backgroundColor: Constants.colors[Constants.colorindex],
                                                   onPressed: () {

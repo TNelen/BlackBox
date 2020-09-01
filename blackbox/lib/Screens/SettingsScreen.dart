@@ -195,6 +195,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           size: 17,
                           color: Constants.colors[0],
                         ),
+                        splashColor: Constants.colors[0],
                         onToggle: (bool value) {
                           if (value) {
                             FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Blue");
@@ -215,6 +216,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           size: 17,
                           color:Constants.colors[1],
                         ),
+                        splashColor: Constants.colors[1],
                         onToggle: (bool value) {
                           if (value) {
                             FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Yellow");
@@ -235,6 +237,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           size: 17,
                           color: Constants.colors[2],
                         ),
+                        splashColor: Constants.colors[2],
                         onToggle: (bool value) {
                           if (value) {
                             FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Red");
@@ -255,6 +258,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           size: 17,
                           color: Constants.colors[3],
                         ),
+                        splashColor: Constants.colors[3],
                         onToggle: (bool value) {
                           if (value) {
                             FirebaseAnalytics().setUserProperty(name: "accent_color", value: "Green");
