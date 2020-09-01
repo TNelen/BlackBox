@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (Constants.enableMSG[Constants.enableVersionMSG]) {
       appinfo = await database.getAppInfo();
       String versionCodeDatabase = appinfo.getVersion().toString();
-      if (versionCodeDatabase != version) {
+      if (versionCodeDatabase != version && versionCodeDatabase.length !=0) {
         Constants.enableVersionMSG = 1;
         Popup.makePopup(context, 'Whooohooo!', 'A new app version is available! \n\nUpdate your app to get the best experience.');
       }
