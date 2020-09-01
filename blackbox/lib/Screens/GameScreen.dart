@@ -83,6 +83,10 @@ class _GameScreenState extends State<GameScreen> {
 
                 }
 
+                print("playing : " + groupdata.getPlaying().length.toString());
+                print("total: " + groupdata.getMembers().length.toString());
+                print("question: " +groupdata.getNextQuestionString());
+
                 return new Scaffold(
                   body: DefaultTabController(
                     length: 2,
