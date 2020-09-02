@@ -59,18 +59,18 @@ class _GameScreenState extends State<GameScreen> {
     });
 
     // Rebuild this screen each second
-    _rebuildTimer = new Timer.periodic(
+   /* _rebuildTimer = new Timer.periodic(
       Duration(seconds: 1, ),
       (Timer t) => setState((){})
-    ); 
+    ); */
   }
 
-  @override
+ /* @override
   void dispose() {
     // Dispose the timer
     _rebuildTimer.cancel();
     super.dispose();
-  }
+  }*/
 
   void getRandomNexQuestion() async {
     groupdata.setNextQuestion(await _database.getNextQuestion(groupdata), Constants.getUserData());
@@ -353,10 +353,11 @@ class _GameScreenState extends State<GameScreen> {
                                                       _database.updateGroup(groupdata);
                                                     } else {
                                                       groupdata.setPlayingUser(Constants.getUserData());
+                                                      if (groupdata.getNextQuestionString() == "") getRandomNexQuestion();
+
                                                       _database.updateGroup(groupdata);
                                                     }
 
-                                                    if (groupdata.getNextQuestionString() == "") getRandomNexQuestion();
                                                   },
                                                 )),
                                           ])
