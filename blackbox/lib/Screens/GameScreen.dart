@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:blackbox/Screens/rules-list.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,6 +29,7 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
+  
   Database _database;
   FirebaseStream stream;
   String code;
@@ -34,6 +37,9 @@ class _GameScreenState extends State<GameScreen> {
 
   bool _loadingInProgress;
   GroupData groupdata;
+
+  // Used to rebuild this screen each second
+  Timer _rebuildTimer;
 
   _GameScreenState(Database db, String code) {
     this._database = db;
@@ -51,6 +57,19 @@ class _GameScreenState extends State<GameScreen> {
     }, onError: (error) {
       //nothing;
     });
+
+    // Rebuild this screen each second
+    _rebuildTimer = new Timer.periodic(
+      Duration(seconds: 1, ),
+      (Timer t) => setState((){})
+    ); 
+  }
+
+  @override
+  void dispose() {
+    // Dispose the timer
+    _rebuildTimer.cancel();
+    super.dispose();
   }
 
   void getRandomNexQuestion() async {
