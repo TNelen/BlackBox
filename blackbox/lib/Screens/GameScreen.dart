@@ -58,19 +58,10 @@ class _GameScreenState extends State<GameScreen> {
       //nothing;
     });
 
-    // Rebuild this screen each second
-   /* _rebuildTimer = new Timer.periodic(
-      Duration(seconds: 1, ),
-      (Timer t) => setState((){})
-    ); */
+
   }
 
- /* @override
-  void dispose() {
-    // Dispose the timer
-    _rebuildTimer.cancel();
-    super.dispose();
-  }*/
+
 
   void getRandomNexQuestion() async {
     groupdata.setNextQuestion(await _database.getNextQuestion(groupdata), Constants.getUserData());
