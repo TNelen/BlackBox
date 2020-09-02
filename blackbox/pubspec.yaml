@@ -35,6 +35,7 @@ dependencies:
   store_redirect: ^1.0.2
   firebase_analytics: ^5.0.11 # Used to gather more detailed usage statistics
   avatar_glow: ^1.2.0         #glow around ready button
+  adv_fab: ^1.0.5             # homescreen actionbar
 
 
   flutter:

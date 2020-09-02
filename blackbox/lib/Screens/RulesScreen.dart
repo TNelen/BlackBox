@@ -2,16 +2,27 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
 import 'rules-list.dart';
+import '../Interfaces/Database.dart';
+
+import 'package:blackbox/Screens/HomeScreen.dart';
 
 class RuleScreen extends StatefulWidget {
-  RuleScreen();
+  Database _database;
+
+  RuleScreen(Database db) {
+    this._database = db;
+  }
 
   @override
-  _RuleScreenState createState() => new _RuleScreenState();
+  _RuleScreenState createState() => new _RuleScreenState(_database);
 }
 
 class _RuleScreenState extends State<RuleScreen> {
-  _RuleScreenState() {
+  Database _database;
+
+  _RuleScreenState(Database db) {
+    this._database = db;
+
     FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'RulesScreen'});
   }
 
@@ -27,7 +38,13 @@ class _RuleScreenState extends State<RuleScreen> {
               backgroundColor: Constants.iBlack,
               title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 InkWell(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => HomeScreen(_database),
+                        ));
+                  },
                   child: Row(
                     children: [
                       Padding(

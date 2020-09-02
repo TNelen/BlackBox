@@ -4,6 +4,7 @@ import 'package:blackbox/Screens/widgets/TopIconBar.dart';
 import 'package:blackbox/Screens/CreateGameScreen.dart';
 import 'package:blackbox/Screens/widgets/RateAppButton.dart';
 import 'package:blackbox/Screens/JoinGameScreen.dart';
+import 'package:blackbox/Screens/widgets/animatedIconBar.dart';
 import 'package:blackbox/Screens/widgets/home_screen_button.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -129,7 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: 5.0 * MediaQuery.of(context).devicePixelRatio,
                   ),
-                  TopIconBar.topIcons(context, database),
+                  //TopIconBar.topIcons(context, database),
+                  FancyFab(),
                   Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
                     SizedBox(
                       height: 10,

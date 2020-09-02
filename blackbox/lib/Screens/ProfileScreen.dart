@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
 import 'popups/Popup.dart';
 import '../Constants.dart';
-
+import 'HomeScreen.dart';
 class ProfileScreen extends StatefulWidget {
   Database _database;
 
@@ -36,8 +36,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               backgroundColor: Constants.iBlack,
               title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 InkWell(
-                  onTap: () => Navigator.pop(context),
-                  child: Row(
+                  onTap: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                builder: (BuildContext context) => HomeScreen(_database),
+                ));
+                },
+
+            child: Row(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(right: 20),

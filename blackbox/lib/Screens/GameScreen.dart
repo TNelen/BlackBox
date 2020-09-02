@@ -29,7 +29,6 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  
   Database _database;
   FirebaseStream stream;
   String code;
@@ -57,11 +56,7 @@ class _GameScreenState extends State<GameScreen> {
     }, onError: (error) {
       //nothing;
     });
-
-
   }
-
-
 
   void getRandomNexQuestion() async {
     groupdata.setNextQuestion(await _database.getNextQuestion(groupdata), Constants.getUserData());
@@ -88,14 +83,7 @@ class _GameScreenState extends State<GameScreen> {
                   groupdata.addMember(Constants.getUserData());
                   Constants.database.updateGroup(groupdata);
                   joined = true;
-
-                  //_database.updateGroup(groupdata);
-
                 }
-
-                print("playing : " + groupdata.getPlaying().length.toString());
-                print("total: " + groupdata.getMembers().length.toString());
-                print("question: " +groupdata.getNextQuestionString());
 
                 return new Scaffold(
                   body: DefaultTabController(
@@ -348,7 +336,6 @@ class _GameScreenState extends State<GameScreen> {
 
                                                       _database.updateGroup(groupdata);
                                                     }
-
                                                   },
                                                 )),
                                           ])

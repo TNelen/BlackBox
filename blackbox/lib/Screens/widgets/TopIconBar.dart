@@ -8,6 +8,8 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 
 class TopIconBar {
   static Widget topIcons(BuildContext context, Database database) {
+
+
     return Container(
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       Card(
@@ -57,7 +59,7 @@ class TopIconBar {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) => RuleScreen(),
+                          builder: (BuildContext context) => RuleScreen(database),
                         ));
                   },
                   child: Container(

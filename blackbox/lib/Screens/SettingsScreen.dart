@@ -64,8 +64,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) => HomeScreen(_database),
-                        ));
+                      builder: (BuildContext context) => HomeScreen(_database),
+                    ));
                   },
                   child: Row(
                     children: [
