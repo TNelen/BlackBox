@@ -5,6 +5,7 @@
 // @dart = 2.8
 
 import 'package:flutter/material.dart';
+import '../../Constants.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
@@ -265,10 +266,10 @@ class BetterExpansionTileState extends State<BetterExpansionTile> with SingleTic
     final ThemeData theme = Theme.of(context);
     _borderColorTween.end = theme.dividerColor;
     _headerColorTween
-      ..begin = theme.textTheme.subtitle1.color
+      ..begin = Constants.iWhite
       ..end = theme.accentColor;
     _iconColorTween
-      ..begin = theme.unselectedWidgetColor
+      ..begin = Constants.iWhite
       ..end = theme.accentColor;
     _backgroundColorTween.end = widget.backgroundColor;
     super.didChangeDependencies();
