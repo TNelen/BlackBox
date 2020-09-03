@@ -20,8 +20,7 @@ class _RuleScreenState extends State<RuleScreen> {
   
   Database _database;
 
-  _RuleScreenState(Database db) {
-    this._database = db;
+  _RuleScreenState(this._database) {
 
     FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'RulesScreen'});
   }
@@ -39,11 +38,14 @@ class _RuleScreenState extends State<RuleScreen> {
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => HomeScreen(_database),
-                      ));
+                  Navigator.pop(context);
+
+                  // Somehow caused database to be null at times.
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (BuildContext context) => HomeScreen(_database),
+                  //     ));
                 },
                 child: Row(
                   children: [
