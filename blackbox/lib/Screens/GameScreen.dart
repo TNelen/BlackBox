@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:blackbox/Screens/rules-list.dart';
+import 'package:blackbox/Screens/rules_column.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -277,7 +277,7 @@ class _GameScreenState extends State<GameScreen> {
                               //tab2
                               Container(
                                 child: ListView(shrinkWrap: true, padding: const EdgeInsets.only(top: 10, left: 25.0, right: 25.0), children: [
-                                  RulesList.getRules(),
+                                  RulesColumn(),
                                 ]),
                               )
                             ],
