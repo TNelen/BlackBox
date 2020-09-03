@@ -297,6 +297,7 @@ class _GameScreenState extends State<GameScreen> {
                                             Tooltip(
                                               message: "Invite players",
                                               child: FloatingActionButton(
+                                                  heroTag: 'invite',
                                                   elevation: 0.0,
                                                   child: new Icon(
                                                     Icons.group_add,
@@ -312,6 +313,7 @@ class _GameScreenState extends State<GameScreen> {
                                             Tooltip(
                                                 message: "Ready",
                                                 child: FloatingActionButton(
+                                                  heroTag: 'ready',
                                                   elevation: 0.0,
                                                   child: AvatarGlow(
                                                       startDelay: Duration(milliseconds: 1),
