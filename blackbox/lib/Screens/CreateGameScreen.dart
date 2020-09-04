@@ -89,9 +89,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     FirebaseAnalytics().logEvent(name: 'game_action', parameters: map);
 
                     GroupData groupdata = new GroupData(_groupName, description, _canVoteBlank, _canVoteOnSelf, code, Constants.getUserID(), members, questionIDs);
-                    groupdata.printData();
                     await groupdata.setNextQuestion(await _database.getNextQuestion(groupdata), Constants.getUserData(), doDatabaseUpdate: false);
-                    groupdata.printData();
                     await _database.updateGroup(groupdata);
                     GroupCodePopup.groupCodePopup(code, context, _database);
                   });
