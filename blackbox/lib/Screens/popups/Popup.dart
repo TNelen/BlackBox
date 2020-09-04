@@ -281,7 +281,7 @@ class Popup {
 }
 
 _launchURL() async {
-  const url = 'mailto:magnetar.apps@gmail.com?subject=Problem report&body=body';
+  const url = 'mailto:magnetar.apps@gmail.com?subject=Problem report&body=';
   if (await canLaunch(url)) {
     await launch(url);
   } else {
