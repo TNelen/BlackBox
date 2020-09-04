@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:blackbox/Database/FirebaseGetters.dart';
-
 import '../DataContainers/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Constants.dart';

@@ -83,7 +83,7 @@ class Firebase implements Database{
   @override
   Future<bool> doesGroupExist(String groupID) async {
     return await FirebaseUtility.doesGroupExist( groupID ).then((value) {
-        return true;
+        return value;
     }).catchError((error) {
         print(error);
         return false;
