@@ -26,6 +26,28 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
     FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'JoinGameScreen'});
   }
 
+  void joinGame(String groupID) async {
+    bool exists = false;
+    print(exists);
+    exists = await _database.doesGroupExist(groupID);
+    print(exists);
+    if (groupID.length == Constants.groupCodeLength) {
+        if (exists) {
+          FirebaseAnalytics().logEvent(name: 'game_action', parameters: {'type': 'GameJoined', 'code': codeController.text.toUpperCase()});
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => GameScreen(_database, codeController.text.toUpperCase()),
+              ));
+        } else {
+          Popup.makePopup(context, "Invalid code", "Please check you code and try again!");
+        }
+    } else {
+      Popup.makePopup(context, "Please check your code", "A code should contain " + Constants.groupCodeLength.toString() + " symbols!");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final joinButton = Hero(
@@ -43,19 +65,10 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
           onPressed: () {
             // Replace 1 by I and 0 by O to prevent confusion (group codes do not contain 1's and 0's for this reason)
             String groupCode = codeController.text.toUpperCase().replaceAll('0', 'O').replaceAll('1', 'I');
-            if (groupCode.length == Constants.groupCodeLength) {
-              FirebaseAnalytics().logEvent(name: 'game_action', parameters: {'type': 'GameJoined', 'code': codeController.text.toUpperCase()});
-
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => GameScreen(_database, codeController.text.toUpperCase()),
-                  ));
-            } else {
-              Popup.makePopup(context, "Please check your code", "A code should contain " + Constants.groupCodeLength.toString() + " symbols!");
-            }
+            joinGame(groupCode);
           },
-          child: Text("Join", textAlign: TextAlign.center, style: TextStyle(fontFamily: "atarian", fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
+          child: Text("Join",
+              textAlign: TextAlign.center, style: TextStyle(fontFamily: "atarian", fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
         ),
       ),
     );
