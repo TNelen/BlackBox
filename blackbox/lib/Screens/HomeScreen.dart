@@ -78,19 +78,39 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void isAppUpToDate() async {
-    // Grab the version of the current app from pubspec
+    // Grab the build number of the current app from pubspec
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    String version = packageInfo.version + '+' + packageInfo.buildNumber;
+    String buildNumberString = packageInfo.buildNumber;
 
     // Compare the current version by that in the database
     Appinfo appinfo;
+
+    // Only proceed if this popup is enabled
     if (Constants.enableMSG[Constants.enableVersionMSG]) {
+
       appinfo = await database.getAppInfo();
-      String versionCodeDatabase = appinfo.getVersion().toString();
-      if (versionCodeDatabase != version && versionCodeDatabase.length !=0) {
+      List<String> versionParts = appinfo.getVersion().toString().split('+');
+
+      // Build numbers must exist and may not be null (see int.tryParse docs)
+      if (buildNumberString == null || versionParts.length < 2 || versionParts[1] == null)
+        return;
+
+      // Convert the versions in String to int
+      int currentBuid = int.tryParse( buildNumberString );
+      int latestBuild = int.tryParse( versionParts[1] );
+
+      // int.tryParse returns null on error, return if this happened
+      if (currentBuid == null || latestBuild == null)
+        return;
+
+      print('Current build number: $currentBuid - Latest build number: $latestBuild');
+
+      // Simple version comparison
+      if ( currentBuid < latestBuild ) {
         Constants.enableVersionMSG = 1;
         Popup.makePopup(context, 'Whooohooo!', 'A new app version is available! \n\nUpdate your app to get the best experience.');
       }
+
     }
   }
 
