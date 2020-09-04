@@ -45,10 +45,10 @@ class _RatePopupState extends State<RatePopup> {
           }
           else
           {
-            Popup.makePopup(
+            Popup.makeNotSatisfiedPopup(
               context, 
               'Woops', 
-              'We are very sorry to hear that you are not satisfied with our app. Please contact us at magnetar.apps@gmail.com, maybe we can improve your experience.',
+              'We are very sorry to hear that you are not satisfied with our app. Please contact us with your issue and we will do our best to improve your experience',
             );
           }
         },
