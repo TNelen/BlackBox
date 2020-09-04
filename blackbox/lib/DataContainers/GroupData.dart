@@ -380,8 +380,8 @@ class GroupData {
   /// Admin account must be provided for authentication
   /// Non-admins will cause this function to fail silently
   /// The admin's vote timestamp will be reset to null
-  /// The database is updated automatically with this change
-  void setNextQuestion(Question newQuestion, UserData admin) {
+  /// The database is updated automatically if doDatabaseUpdate is not provided or is set to true
+  Future<void> setNextQuestion(Question newQuestion, UserData admin, {bool doDatabaseUpdate: true}) async {
     if (admin.getUserID() == _adminID) {
       /// Move the questions
       _lastQuestion = new Question(
@@ -398,7 +398,8 @@ class GroupData {
 
       _adminVoteTimestamp = null;
 
-      Constants.database.updateGroup(this);
+      if (doDatabaseUpdate)
+        Constants.database.updateGroup(this);
     }
   }
 
