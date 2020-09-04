@@ -1,5 +1,6 @@
 import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:blackbox/Screens/popups/noMembersScelectedPopup.dart';
+import 'package:blackbox/Screens/popups/report_question_popup.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../DataContainers/GroupData.dart';
@@ -14,16 +15,12 @@ import 'ResultsScreen.dart';
 Map<ReportType, bool> reportMap = new Map<ReportType, bool>();
 
 class QuestionScreen extends StatefulWidget {
-  Database _database;
-  GroupData groupData;
-  String code;
+  final Database _database;
+  final GroupData groupData;
+  final String code;
 
   @override
-  QuestionScreen(Database db, GroupData gd, String code) {
-    this._database = db;
-    this.groupData = gd;
-    this.code = code;
-
+  QuestionScreen(this._database, this.groupData, this.code) {
     reportMap[ReportType.DISTURBING] = false;
     reportMap[ReportType.GRAMMAR] = false;
     reportMap[ReportType.CATEGORY] = false;
@@ -358,181 +355,5 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
         )),
       ),
     ));
-  }
-}
-
-class ReportPopup extends StatefulWidget {
-  Database _database;
-  GroupData groupData;
-  String code;
-
-  @override
-  ReportPopup(Database db, GroupData gd, String code) {
-    this._database = db;
-    this.groupData = gd;
-    this.code = code;
-  }
-
-  _ReportPopupState createState() => _ReportPopupState(_database, groupData, code);
-}
-
-class _ReportPopupState extends State<ReportPopup> {
-  Database database;
-  GroupData groupdata;
-  String code;
-
-  _ReportPopupState(Database db, GroupData groupData, String code) {
-    this.database = db;
-    this.groupdata = groupData;
-    this.code = code;
-  }
-
-  @override
-  void initState() {}
-
-  void toggle(ReportType type) {
-    reportMap[type] = !reportMap[type];
-  }
-
-  @override
-  Widget build(BuildContext context2) {
-    Widget disturbingButton = FlatButton(
-        onPressed: () {
-          toggle(ReportType.DISTURBING);
-
-          setState(() {});
-        },
-        child: Row(
-          children: !reportMap[ReportType.DISTURBING]
-              ? <Widget>[
-                  Icon(Icons.sentiment_dissatisfied, color: Constants.iWhite, size: 20),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    'Disturbing',
-                    style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iWhite),
-                  ),
-                ]
-              : <Widget>[
-                  Icon(Icons.sentiment_dissatisfied, color: Constants.iGrey, size: 25),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    'Disturbing',
-                    style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iGrey),
-                  ),
-                ],
-        ));
-
-    Widget grammarButton = FlatButton(
-        onPressed: () {
-          toggle(ReportType.GRAMMAR);
-
-          setState(() {});
-        },
-        child: Row(
-          children: !reportMap[ReportType.GRAMMAR]
-              ? <Widget>[
-                  Icon(Icons.spellcheck, color: Constants.iWhite, size: 20),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    'Grammar Mistake',
-                    style: TextStyle(
-                      fontFamily: "atarian",
-                      fontSize: Constants.smallFontSize,
-                      color: Constants.iWhite,
-                    ),
-                  ),
-                ]
-              : <Widget>[
-                  Icon(Icons.spellcheck, color: Constants.iGrey, size: 25),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    'Grammar Mistake',
-                    style: TextStyle(
-                      fontFamily: "atarian",
-                      fontSize: Constants.smallFontSize,
-                      color: Constants.iGrey,
-                    ),
-                  ),
-                ],
-        ));
-
-    Widget loveButton = FlatButton(
-        onPressed: () {
-          toggle(ReportType.LOVE);
-          setState(() {});
-        },
-        child: Row(
-          children: !reportMap[ReportType.LOVE]
-              ? <Widget>[
-                  Icon(Icons.favorite, color: Constants.iWhite, size: 20),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    'Love it!',
-                    style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iWhite),
-                  ),
-                ]
-              : <Widget>[
-                  Icon(Icons.favorite, color: Colors.red, size: 25),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    'Love it!',
-                    style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iGrey),
-                  ),
-                ],
-        ));
-
-    // flutter defined function
-
-    // return object of type Dialog
-
-    return AlertDialog(
-      backgroundColor: Constants.iBlack,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
-      title: new Text(
-        'What do you think about this question?',
-        style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
-      ),
-      content: new Container(
-        height: 200,
-        child: Column(
-          children: <Widget>[
-            disturbingButton,
-            grammarButton,
-            loveButton,
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Thank you! Via your feedback we can improve the questions.',
-              style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iGrey, fontWeight: FontWeight.w400),
-            )
-          ],
-        ),
-      ),
-      actions: <Widget>[
-        // usually buttons at the bottom of the dialog
-        new FlatButton(
-          child: new Text(
-            "Close",
-            style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ],
-    );
   }
 }
