@@ -7,21 +7,20 @@ import '../Interfaces/Database.dart';
 import 'package:blackbox/Screens/HomeScreen.dart';
 
 class RuleScreen extends StatefulWidget {
-  
-  final Database _database;
+  Database _database;
 
-  RuleScreen(this._database);
+  RuleScreen(Database db) {
+    this._database = db;
+  }
 
   @override
   _RuleScreenState createState() => new _RuleScreenState(_database);
 }
 
 class _RuleScreenState extends State<RuleScreen> {
-  
   Database _database;
 
   _RuleScreenState(this._database) {
-
     FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'RulesScreen'});
   }
 
@@ -30,22 +29,21 @@ class _RuleScreenState extends State<RuleScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BlackBox',
-      theme: new ThemeData(accentColor: Constants.colors[Constants.colorindex], disabledColor: Constants.colors[Constants.colorindex], fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
+      theme:
+          new ThemeData(accentColor: Constants.colors[Constants.colorindex], disabledColor: Constants.colors[Constants.colorindex], fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Constants.iBlack,
-          title: 
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
               InkWell(
                 onTap: () {
-                  Navigator.pop(context);
-
-                  // Somehow caused database to be null at times.
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (BuildContext context) => HomeScreen(_database),
-                  //     ));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => HomeScreen(_database),
+                      ));
                 },
                 child: Row(
                   children: [

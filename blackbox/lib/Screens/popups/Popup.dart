@@ -43,7 +43,6 @@ class Popup {
   }
 
   static void makeNotSatisfiedPopup(BuildContext context, String title, String message) {
-
     // flutter defined function
     showDialog(
       context: context,
@@ -58,23 +57,20 @@ class Popup {
           ),
           content: Container(
               height: 120,
-              child:  Column(
-
-              children: [
-            new Text(
-              message,
-              style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.smallFontSize),
-            ),
-            FlatButton(
-              onPressed: _launchURL,
-              //color: Constants.iDarkGrey,
-              child: Text(
-                "Contact us!",
-                style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize),
-              ),
-            ),
-
-          ])),
+              child: Column(children: [
+                new Text(
+                  message,
+                  style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.smallFontSize),
+                ),
+                FlatButton(
+                  onPressed: _launchURL,
+                  //color: Constants.iDarkGrey,
+                  child: Text(
+                    "Contact us!",
+                    style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize),
+                  ),
+                ),
+              ])),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
@@ -91,8 +87,6 @@ class Popup {
       },
     );
   }
-
-
 
   static void makeChangeUsernamePopup(BuildContext context, Database database) {
     TextEditingController usernameController = new TextEditingController();
@@ -217,7 +211,6 @@ class Popup {
               ),
               onPressed: () {
                 Navigator.pop(context);
-
               },
             ),
 
