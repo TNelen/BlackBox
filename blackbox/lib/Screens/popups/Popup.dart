@@ -212,6 +212,17 @@ class Popup {
             // usually buttons at the bottom of the dialog
             new FlatButton(
               child: new Text(
+                "Cancel",
+                style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+
+              },
+            ),
+
+            new FlatButton(
+              child: new Text(
                 "Submit",
                 style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
               ),
