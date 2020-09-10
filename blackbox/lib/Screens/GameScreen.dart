@@ -350,6 +350,7 @@ class _GameScreenState extends State<GameScreen> {
                                           color: Constants.colors[Constants.colorindex],
                                           onPressed: () {
                                             FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
+                                              'code': groupdata.getGroupCode(),
                                               'type': 'GameStarted',
                                             });
 

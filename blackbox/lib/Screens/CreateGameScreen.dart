@@ -78,6 +78,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     questionIDs.shuffle(Random.secure());
 
                     Map<String, dynamic> map = {
+                      'code': 'New group',
                       'type': 'GameCreated',
                       'can_vote_blank': _canVoteBlank,
                       'can_vote_on_self': _canVoteOnSelf,

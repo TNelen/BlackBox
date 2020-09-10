@@ -666,6 +666,7 @@ class ResultScreenState extends State<ResultScreen> {
                   FlatButton(
                     onPressed: () {
                       FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
+                        'code': groupData.getGroupCode(),
                         'type': 'GameLeft',
                       });
                       groupData.removePlayingUser(Constants.getUserData());
