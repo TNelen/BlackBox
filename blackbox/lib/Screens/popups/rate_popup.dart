@@ -39,7 +39,7 @@ class _RatePopupState extends State<RatePopup> {
 
           FirebaseAnalytics().logEvent(name: 'in_app_rating', parameters: {'score': rating});
 
-          if (rating > 3)
+          if (rating >= 3)
           {
             StoreRedirect.redirect();
           }
