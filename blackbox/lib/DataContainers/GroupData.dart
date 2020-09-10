@@ -16,57 +16,57 @@ class GroupData {
   /// GroupData Fields \\\
   /// ---------------- \\\
 
-  /// Basic data about this group
-  String _groupName;
-
-  /// Name of the group
-  String _groupDescription;
-
-  /// Description of the group
+  /// Game setting: whether users can choose to not vote on another user
   final bool canVoteBlank;
+
+  /// Game setting: whether users can cast a vote on themselves
   final bool canVoteOnSelf;
 
-  String _groupID;
+  /// Name of the group
+  String _groupName;
+
+  /// Description of the group
+  String _groupDescription;
 
   /// The unique ID of this group
-  String _adminID;
+  String _groupID;
 
   /// The unique ID of the admin
-  bool _isPlaying;
+  String _adminID;
 
   /// A bool indicating the game state
-  int _adminVoteTimestamp;
+  bool _isPlaying;
 
   /// An int indicating when the admin has last voted (milliseconds). Will be null if the admin has not voted yet this round
-  Map<String, String> _members = new Map<String, String>();
+  int _adminVoteTimestamp;
 
   /// A list of unique IDs of all members in this group
-  List<String> _questionlist;
+  Map<String, String> _members = new Map<String, String>();
 
   /// A list of available question id's
-
-  /// Status information about this group
-  Question _nextQuestion = new Question.empty();
+  List<String> _questionlist;
 
   /// Data container for the current/next question
-  Question _lastQuestion = new Question.empty();
+  Question _nextQuestion = new Question.empty();
 
   /// Data container for the previous question
-  Map<String, String> _lastVotes;
+  Question _lastQuestion = new Question.empty();
 
   /// Mapping the voter to the votee (previous round)
-  Map<String, String> _newVotes;
+  Map<String, String> _lastVotes;
 
   /// Mapping the voter to the votee (current round)
-  Map<String, int> _totalVotes;
+  Map<String, String> _newVotes;
 
   /// Mapping unique IDs to the total amount of votes for that user
-  List<String> _playing;
+  Map<String, int> _totalVotes;
 
   /// A list of all IDs of members that are currently playing
-  Map<String, Map<String, int>> _history;
+  List<String> _playing;
 
   /// A map that combines each question (not ID) with another Map that links each username to amount of votes
+  Map<String, Map<String, int>> _history;
+
 
   /// ---------------------- \\\
   /// GroupData constructors \\\
@@ -729,7 +729,7 @@ class GroupData {
   }
 
   /// Get the amount of votes each user has gotten in the previous round
-  /// Users without votes will not be in this list
+  /// Members without votes will also be added to this map (with 0 votes)
   Map<String, int> _getLastVoteCounts() {
     Map<String, int> voteCount = new Map<String, int>();
 
@@ -738,6 +738,14 @@ class GroupData {
         voteCount[votee] += 1;
       } else {
         voteCount[votee] = 1;
+      }
+    });
+
+    // Add users that did not get any votes
+    _playing.forEach(( id ) { 
+      if ( ! voteCount.containsKey( id ))
+      {
+        voteCount[id] = 0;
       }
     });
 
@@ -827,7 +835,17 @@ class GroupData {
   /// Unique user IDs are mapped to the amount of votes
   /// Get the name of a user with: GroupData#getUserName( String ID )
   Map<String, int> getTotalVotes() {
-    return _totalVotes;
+    
+    Map<String, int> votes = _totalVotes;
+
+    _playing.forEach(( userID ) {
+      if ( ! votes.containsKey( userID ))
+      {
+        votes[userID] = 0;
+      }
+    });
+
+    return votes;
   }
 
   /// A method for testing by printing the contents of this group
