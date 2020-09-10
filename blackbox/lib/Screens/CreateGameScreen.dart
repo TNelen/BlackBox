@@ -86,7 +86,11 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     List<String> allCategories = await QuestionListGetter.instance.getCategoryNames();
                     for (String category in allCategories) map[category.replaceAll(' ', '_').replaceAll("'", '').replaceAll('+', 'P')] = selectedCategory.contains(category);
 
+                    // General game action log
                     FirebaseAnalytics().logEvent(name: 'game_action', parameters: map);
+
+                    // Only logged here
+                    FirebaseAnalytics().logEvent(name: 'game_created', parameters: map);
 
                     GroupData groupdata = new GroupData(_groupName, description, _canVoteBlank, _canVoteOnSelf, code, Constants.getUserID(), members, questionIDs);
                     await groupdata.setNextQuestion(await _database.getNextQuestion(groupdata), Constants.getUserData(), doDatabaseUpdate: false);

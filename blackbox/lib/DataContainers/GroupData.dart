@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:blackbox/DataContainers/QuestionCategory.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blackbox/Constants.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import '../DataContainers/UserData.dart';
 import '../DataContainers/Question.dart';
 import 'dart:math';
@@ -383,6 +384,11 @@ class GroupData {
   /// The database is updated automatically if doDatabaseUpdate is not provided or is set to true
   Future<void> setNextQuestion(Question newQuestion, UserData admin, {bool doDatabaseUpdate: true}) async {
     if (admin.getUserID() == _adminID) {
+
+      FirebaseAnalytics().logEvent(name: 'next_question', parameters: {
+        'id': _groupID
+      });
+
       /// Move the questions
       _lastQuestion = new Question(
           _nextQuestion.getQuestionID(),
