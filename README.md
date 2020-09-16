@@ -10,11 +10,11 @@ After each round the results are shown together with the all-time winners.
 
 Choose between different categories with more than **120 questions** combined!
 
-* **+18**: Spicy questions, aimed at adults
+* **Casual**: General black box questions, a rather soft category. Great to get started.
 * **Beer o'clock**: Questions involving partying and drinking
 * **Superstar**: Admire your friends’ actions or abilities
+* **+18**: Spicy questions, aimed at adults
 * **Character traits**: Questions about your friends’ character traits
-* **Casual**: General black box questions, a rather soft category. Great to get started.
 * **Friendship killers**: The biggest friendship test, your friendship can handle anything if it survives this category
 
 Pick one or more when creating your game. 
