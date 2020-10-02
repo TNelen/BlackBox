@@ -403,13 +403,13 @@ class ResultScreenState extends State<ResultScreen> {
                                               children: <Widget>[
                                                 AutoSizeText(
                                                   currentWinners[1].getUserName().split(' ')[0],
-                                                  style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w600),
+                                                  style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                                   textAlign: TextAlign.center,
                                                   maxLines: 1,
                                                 ),
                                                 Text(
                                                   currentWinners[1].getNumVotes().toString() + (currentWinners[1].getNumVotes().toString() == '1' ? ' vote' : ' votes'),
-                                                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.w400),
                                                   textAlign: TextAlign.center,
                                                 ),
                                                 SizedBox(
@@ -456,13 +456,13 @@ class ResultScreenState extends State<ResultScreen> {
                                         children: <Widget>[
                                           AutoSizeText(
                                             currentWinners.length == 0 ? "" : currentWinners[0].getUserName().split(' ')[0],
-                                            style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
+                                            style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w600),
                                             textAlign: TextAlign.center,
                                             maxLines: 1,
                                           ),
                                           Text(
                                             currentWinners.length == 0 ? "" : currentWinners[0].getNumVotes().toString() + (currentWinners[0].getNumVotes().toString() == '1' ? ' vote' : ' votes'),
-                                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.w400),
+                                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                             textAlign: TextAlign.center,
                                           ),
                                           SizedBox(
@@ -586,7 +586,7 @@ class ResultScreenState extends State<ResultScreen> {
                     : SizedBox(
                         height: 1,
                       ),
-                currentWinners.length >= 3
+                currentWinners.length > 3
                     ? FlatButton(
                         color: Constants.iBlack,
                         onPressed: () {
@@ -655,6 +655,8 @@ class ResultScreenState extends State<ResultScreen> {
           }
 
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
+
             theme: new ThemeData(
               fontFamily: "atarian",
               scaffoldBackgroundColor: Constants.iBlack,
