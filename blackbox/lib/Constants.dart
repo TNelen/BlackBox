@@ -21,7 +21,7 @@ class Constants {
   /// The default color that a new user will get
 
   //accent color list
-  static const colors = [Color(0xFF92dff3), Color(0xFFffe082), Color(0xFFef5350), Color(0xFFA2DAAF)];
+  static const colors = [Color(0xFF92dff3), Color(0xFFffe082), Color(0xFFcd5c5c), Color(0xFFA2DAAF)];
 
 
   //fontsizes
