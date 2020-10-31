@@ -139,7 +139,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 setState(() {});
               },
             ),
-              SizedBox(height: 10,)
+              SizedBox(height: 5,)
                 ]);
           },
         );
@@ -213,7 +213,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                             _canVoteBlank,
                             onToggle: (bool newValue) => _canVoteBlank = newValue,
                           ),
-                          SizedBox(height: 10.0),
+                          SizedBox(height: 5.0),
                           ToggleButtonCard(
                             'Vote on yourself',
                             _canVoteOnSelf,
