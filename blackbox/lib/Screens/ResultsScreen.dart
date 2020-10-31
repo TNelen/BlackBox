@@ -304,6 +304,7 @@ class ResultScreenState extends State<ResultScreen> {
                   itemCount: !showMoreAll ? (alltimeWinners.length >= 3 ? 3 : alltimeWinners.length) : alltimeWinners.length,
                   itemBuilder: (context, index) {
                     return Card(
+                      elevation: 0.0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -471,6 +472,7 @@ class ResultScreenState extends State<ResultScreen> {
                                         ],
                                       ))))),
                       Card(
+                        elevation: 0.0,
                           color: Constants.colors[Constants.colorindex],
                           child: Padding(
                               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 11),
@@ -545,6 +547,7 @@ class ResultScreenState extends State<ResultScreen> {
                         itemCount: !showMoreCurrent ? (currentWinners.length >= 3 ? 0 : currentWinners.length - 3) : currentWinners.length - 3,
                         itemBuilder: (context, index) {
                           return Card(
+                            elevation: 0.0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
@@ -663,6 +666,8 @@ class ResultScreenState extends State<ResultScreen> {
             ),
             home: Scaffold(
               appBar: AppBar(
+                elevation: 0,
+
                 backgroundColor: Constants.iBlack,
                 title: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                   FlatButton(

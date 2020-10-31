@@ -92,6 +92,8 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
         theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
             appBar: AppBar(
+              elevation: 0,
+
               backgroundColor: Constants.iBlack,
               title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 InkWell(

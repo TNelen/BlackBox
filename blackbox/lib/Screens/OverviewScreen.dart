@@ -41,6 +41,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
       ),
       home: Scaffold(
         appBar: AppBar(
+          elevation: 0,
+
           backgroundColor: Constants.iBlack,
           title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
             InkWell(

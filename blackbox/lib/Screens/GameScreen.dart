@@ -90,6 +90,8 @@ class _GameScreenState extends State<GameScreen> {
                     length: 2,
                     child: Scaffold(
                       appBar: AppBar(
+                        elevation: 0,
+
                         title: Container(
                           padding: EdgeInsets.only(bottom: 10),
                           child: InkWell(
@@ -298,7 +300,7 @@ class _GameScreenState extends State<GameScreen> {
                                               message: "Invite players",
                                               child: FloatingActionButton(
                                                   heroTag: 'invite',
-                                                  elevation: 0.0,
+                                                  elevation: 5.0,
                                                   child: new Icon(
                                                     Icons.group_add,
                                                     color: Constants.iBlack,

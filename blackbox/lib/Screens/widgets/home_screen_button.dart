@@ -13,6 +13,7 @@ class HomeScreenButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Constants.iDarkGrey,
+      elevation: 5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),

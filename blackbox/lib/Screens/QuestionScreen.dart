@@ -219,6 +219,8 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
             ),
             home: Scaffold(
               appBar: AppBar(
+                elevation: 0,
+
                 backgroundColor: Constants.iBlack,
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -271,6 +273,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
                         child: Card(
+                          elevation: 0.0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.0),
                           ),
@@ -332,6 +335,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
   Widget buildUserVoteCard(UserData data) {
     return Container(
         child: Card(
+          elevation: 5.0,
       color: data.getUserID() == clickedmember ? Constants.iLight : Constants.iDarkGrey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),

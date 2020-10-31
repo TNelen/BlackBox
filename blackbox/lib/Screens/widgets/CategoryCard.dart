@@ -20,6 +20,7 @@ class CategoryCardState extends State<CategoryCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 5.0,
       color: widget.defaultValue ? Constants.iLight : Constants.iDarkGrey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),

@@ -124,7 +124,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             String description = projectSnap.data[index].description;
             String categoryname = projectSnap.data[index].name;
 
-            return CategoryCard(
+            return Column(children: [
+              CategoryCard(
               selectedCategory.contains(categoryname),
               categoryname,
               description,
@@ -137,7 +138,9 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 }
                 setState(() {});
               },
-            );
+            ),
+              SizedBox(height: 10,)
+                ]);
           },
         );
       },
@@ -153,6 +156,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
+          elevation: 0,
+
           backgroundColor: Constants.iBlack,
           title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
             InkWell(
@@ -184,10 +189,12 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               child: Container(
                 color: Constants.iBlack,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 22, right: 22),
+                  padding: const EdgeInsets.only(top:1),
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       return ListView(
+                        padding: const EdgeInsets.all(20.0),
+
                         shrinkWrap: true,
                         children: <Widget>[
                           AutoSizeText(
@@ -206,6 +213,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                             _canVoteBlank,
                             onToggle: (bool newValue) => _canVoteBlank = newValue,
                           ),
+                          SizedBox(height: 10.0),
                           ToggleButtonCard(
                             'Vote on yourself',
                             _canVoteOnSelf,

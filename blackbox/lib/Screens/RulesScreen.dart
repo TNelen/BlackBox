@@ -33,6 +33,8 @@ class _RuleScreenState extends State<RuleScreen> {
           new ThemeData(accentColor: Constants.colors[Constants.colorindex], disabledColor: Constants.colors[Constants.colorindex], fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
       home: Scaffold(
         appBar: AppBar(
+          elevation: 0,
+
           backgroundColor: Constants.iBlack,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,

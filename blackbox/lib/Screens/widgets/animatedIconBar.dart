@@ -83,9 +83,9 @@ class _FancyFabState extends State<FancyFab> with SingleTickerProviderStateMixin
   Widget add() {
     return Container(
       child: FloatingActionButton(
-        heroTag: "add",
+        heroTag: "Profile",
         backgroundColor: Constants.iDarkGrey,
-        elevation: 0.0,
+        elevation: 5.0,
         onPressed: () {
           FirebaseAnalytics().logEvent(name: 'ProfileScreenOpened', parameters: null);
 
@@ -95,7 +95,7 @@ class _FancyFabState extends State<FancyFab> with SingleTickerProviderStateMixin
                 builder: (BuildContext context) => ProfileScreen(database),
               ));
         },
-        tooltip: 'Add',
+        tooltip: 'Profile',
         child: Icon(Icons.account_circle),
       ),
     );
@@ -104,9 +104,9 @@ class _FancyFabState extends State<FancyFab> with SingleTickerProviderStateMixin
   Widget image() {
     return Container(
       child: FloatingActionButton(
-        heroTag: "image",
+        heroTag: "Help",
         backgroundColor: Constants.iDarkGrey,
-        elevation: 0.0,
+        elevation: 5.0,
         onPressed: () {
           FirebaseAnalytics().logEvent(name: 'HelpScreenOpened', parameters: null);
           Navigator.push(
@@ -115,7 +115,7 @@ class _FancyFabState extends State<FancyFab> with SingleTickerProviderStateMixin
                 builder: (BuildContext context) => RuleScreen(database),
               ));
         },
-        tooltip: 'Image',
+        tooltip: 'Help',
         child: Icon(Icons.help),
       ),
     );
@@ -124,8 +124,8 @@ class _FancyFabState extends State<FancyFab> with SingleTickerProviderStateMixin
   Widget inbox() {
     return Container(
       child: FloatingActionButton(
-        heroTag: "inbox",
-        elevation: 0.0,
+        heroTag: "Settings",
+        elevation: 5.0,
         backgroundColor: Constants.iDarkGrey,
         onPressed: () {
           FirebaseAnalytics().logEvent(name: 'SettingsScreenOpened', parameters: null);
@@ -135,7 +135,7 @@ class _FancyFabState extends State<FancyFab> with SingleTickerProviderStateMixin
                 builder: (BuildContext context) => SettingsScreen(database),
               ));
         },
-        tooltip: 'Inbox',
+        tooltip: 'Settings',
         child: Icon(Icons.settings),
       ),
     );
@@ -145,7 +145,7 @@ class _FancyFabState extends State<FancyFab> with SingleTickerProviderStateMixin
     return Container(
       child: FloatingActionButton(
         backgroundColor: _buttonColor.value,
-        elevation: 0.0,
+        elevation: 5.0,
         onPressed: animate,
         tooltip: 'Toggle',
         child: AnimatedIcon(

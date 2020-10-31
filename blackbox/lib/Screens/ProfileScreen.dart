@@ -33,6 +33,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         theme: new ThemeData(fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
             appBar: AppBar(
+              elevation: 0,
+
               backgroundColor: Constants.iBlack,
               title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 InkWell(
