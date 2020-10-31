@@ -158,7 +158,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
         appBar: AppBar(
           elevation: 0,
 
-          backgroundColor: Constants.iBlack,
+          backgroundColor: Colors.transparent,
           title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
             InkWell(
               onTap: () => Navigator.pop(context),
@@ -183,17 +183,28 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             ),
           ]),
         ),
-        body: Padding(
-            padding: EdgeInsets.only(left: 22, right: 22, bottom: 0),
-            child: Center(
+        body:Center(
               child: Container(
-                color: Constants.iBlack,
+                //color: Constants.iBlack,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomLeft,
+                    stops: [0.1, 1.0],
+                    colors: [
+                      Constants.gradient1,
+                      Constants.gradient2,
+
+
+                    ],
+                  ),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.only(top:1),
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       return ListView(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.only(left:50, right:50, top:20, bottom:20),
 
                         shrinkWrap: true,
                         children: <Widget>[
@@ -236,7 +247,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   ),
                 ),
               ),
-            )),
+            ),
         floatingActionButton: createButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),

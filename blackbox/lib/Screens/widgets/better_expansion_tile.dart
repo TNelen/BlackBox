@@ -222,7 +222,7 @@ class BetterExpansionTileState extends State<BetterExpansionTile> with SingleTic
 
     return Container(
       decoration: BoxDecoration(
-        color: _backgroundColor.value ?? Colors.transparent,
+        color: Colors.transparent,
         border: Border(
           top: BorderSide(color: borderSideColor),
           bottom: BorderSide(color: borderSideColor),
@@ -271,7 +271,7 @@ class BetterExpansionTileState extends State<BetterExpansionTile> with SingleTic
     _iconColorTween
       ..begin = Constants.iWhite
       ..end = theme.accentColor;
-    _backgroundColorTween.end = widget.backgroundColor;
+    _backgroundColorTween.end = Colors.transparent;
     super.didChangeDependencies();
   }
 

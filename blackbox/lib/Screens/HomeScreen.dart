@@ -136,14 +136,28 @@ class _HomeScreenState extends State<HomeScreen> {
           debugShowCheckedModeBanner: false,
           theme: new ThemeData(
             fontFamily: "atarian",
-            scaffoldBackgroundColor: Constants.iBlack,
+            scaffoldBackgroundColor: Colors.transparent,
           ),
           home: Scaffold(
-            backgroundColor: Constants.iBlack,
+            backgroundColor: Colors.transparent,
+
             body: Container(
-              margin: EdgeInsets.only(top: 16, left: 5, right: 5),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  stops: [0.1, 0.9],
+                  colors: [
+                    Constants.gradient1,
+                    Constants.gradient2,
+
+
+                  ],
+                ),
+              ),
+              //margin: EdgeInsets.only(top: 16, left: 5, right: 5),
               child: ListView(
-                shrinkWrap: true,
+                //shrinkWrap: true,
                 controller: _controller,
                 physics: setScrollable ? AlwaysScrollableScrollPhysics() : NeverScrollableScrollPhysics(),
                 children: [

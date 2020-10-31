@@ -13,6 +13,7 @@ import 'QuestionScreen.dart';
 import 'HomeScreen.dart';
 import 'package:share/share.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class GameScreen extends StatefulWidget {
   Database _database;
@@ -91,7 +92,6 @@ class _GameScreenState extends State<GameScreen> {
                     child: Scaffold(
                       appBar: AppBar(
                         elevation: 0,
-
                         title: Container(
                           padding: EdgeInsets.only(bottom: 10),
                           child: InkWell(
@@ -124,165 +124,139 @@ class _GameScreenState extends State<GameScreen> {
                           ),
                         ),
                         backgroundColor: Constants.iBlack,
-                        bottom: TabBar(
-                          indicatorColor: Constants.colors[Constants.colorindex],
-                          indicatorSize: TabBarIndicatorSize.label,
-                          tabs: [
-                            new Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                new Icon(Icons.people, color: Constants.iWhite),
-                                Container(
-                                  margin: const EdgeInsets.only(top: 8),
-                                  child: Text(
-                                    'Game Lobby',
-                                    style: TextStyle(
-                                      fontSize: Constants.normalFontSize,
-                                      fontWeight: FontWeight.w600,
-                                      color: Constants.iWhite,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            new Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                new Icon(
-                                  Icons.help_outline,
-                                  color: Constants.iWhite,
-                                ),
-                                Container(
-                                  margin: const EdgeInsets.only(top: 8),
-                                  child: Text(
-                                    'Rules',
-                                    style: TextStyle(
-                                      fontSize: Constants.normalFontSize,
-                                      fontWeight: FontWeight.w600,
-                                      color: Constants.iWhite,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
                       ),
                       body: Stack(
                         children: <Widget>[
-                          TabBarView(
-                            children: [
-                              //tab 1
-                              Center(
-                                child: Container(
-                                    padding: EdgeInsets.only(left: 22, right: 22),
-                                    alignment: Alignment.center,
-                                    child: Column(
-                                      children: <Widget>[
-                                        SizedBox(height: 40),
-                                        Container(
-                                          padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                            Expanded(
-                                              child: Text('Press the check mark to get ready!',
-                                                  style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
-                                                  textAlign: TextAlign.center),
-                                            ),
-                                          ]),
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                            Expanded(
-                                              child: Text('You can start the game if all players are ready!',
-                                                  style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
-                                                  textAlign: TextAlign.center),
-                                            ),
-                                          ]),
-                                        ),
-                                        SizedBox(height: 15),
-                                        Container(
-                                          padding: EdgeInsets.fromLTRB(15, 5, 15, 3),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                "Players ready:  ",
-                                                style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
-                                              ),
-                                              Text(
-                                                snapshot.data.getNumPlaying().toString() + ' / ' + snapshot.data.getNumMembers().toString(),
-                                                style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(height: 15),
-                                        Container(
-                                          padding: EdgeInsets.fromLTRB(15, 20, 15, 5),
-                                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                            Text(
-                                              "Players",
-                                              style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.iWhite, fontWeight: FontWeight.w500),
-                                            ),
-                                          ]),
-                                        ),
-                                        Flexible(
-                                          child: GridView.count(
-                                            crossAxisCount: 2,
-                                            childAspectRatio: (4 / 1),
-                                            shrinkWrap: true,
-                                            padding: EdgeInsets.all(2.0),
-                                            children: snapshot.data
-                                                .getMembers()
-                                                .map((data) => Card(
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(10.0),
-                                                      ),
-                                                      color: groupdata.isUserPlaying(data) ? Constants.iDarkGrey : Constants.iDarkGrey,
-                                                      child: Center(
-                                                          child: Padding(
-                                                              padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
-                                                              child: Center(
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: <Widget>[
-                                                                    Text(
-                                                                      data.getUsername().split(' ')[0],
-                                                                      style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
-                                                                    ),
-                                                                    groupdata.isUserPlaying(data)
-                                                                        ? Icon(
-                                                                            Icons.check_box,
-                                                                            size: 25,
-                                                                            color: Constants.colors[Constants.colorindex],
-                                                                          )
-                                                                        : Icon(
-                                                                            Icons.check_box_outline_blank,
-                                                                            size: 25,
-                                                                            color: Constants.iWhite,
-                                                                          )
-                                                                  ],
-                                                                ),
-                                                              ))),
-                                                    ))
-                                                .toList(),
-                                          ),
-                                        ),
-                                        SizedBox(height: 120),
-                                      ],
-                                    )),
-                              ),
+                          Center(
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topRight,
+                                    end: Alignment.bottomLeft,
+                                    stops: [0.1, 0.9],
+                                    colors: [
+                                      Constants.gradient1,
+                                      Constants.gradient2,
 
-                              //tab2
-                              Container(
-                                child: ListView(shrinkWrap: true, padding: const EdgeInsets.only(top: 10, left: 25.0, right: 25.0), children: [
-                                  RulesColumn(),
-                                ]),
-                              )
-                            ],
+                                    ],
+                                  ),
+                                ),
+                                padding: EdgeInsets.only(left: 22, right: 22),
+                                alignment: Alignment.center,
+                                child: Column(
+                                  children: <Widget>[
+                                    SizedBox(height: 40),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        AutoSizeText(
+                                          "Game Lobby",
+                                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
+                                          maxLines: 1,
+                                        ),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        Icon(
+                                          Icons.people,
+                                          size: 55,
+                                          color: Constants.colors[Constants.colorindex],
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(height: 40),
+                                    Container(
+                                      padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                                      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                        Expanded(
+                                          child: Text('Press the check mark to get ready!',
+                                              style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                              textAlign: TextAlign.center),
+                                        ),
+                                      ]),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                                      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                        Expanded(
+                                          child: Text('You can start the game if all players are ready!',
+                                              style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                              textAlign: TextAlign.center),
+                                        ),
+                                      ]),
+                                    ),
+                                    SizedBox(height: 15),
+                                    Container(
+                                      padding: EdgeInsets.fromLTRB(15, 5, 15, 3),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Players ready:  ",
+                                            style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
+                                          ),
+                                          Text(
+                                            snapshot.data.getNumPlaying().toString() + ' / ' + snapshot.data.getNumMembers().toString(),
+                                            style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 15),
+                                    Container(
+                                      padding: EdgeInsets.fromLTRB(15, 20, 15, 5),
+                                      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                        Text(
+                                          "Players",
+                                          style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.iWhite, fontWeight: FontWeight.w500),
+                                        ),
+                                      ]),
+                                    ),
+                                    Flexible(
+                                      child: GridView.count(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: (4 / 1),
+                                        shrinkWrap: true,
+                                        padding: EdgeInsets.all(2.0),
+                                        children: snapshot.data
+                                            .getMembers()
+                                            .map((data) => Card(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(10.0),
+                                                  ),
+                                                  color: groupdata.isUserPlaying(data) ? Constants.iDarkGrey : Constants.iDarkGrey,
+                                                  child: Center(
+                                                      child: Padding(
+                                                          padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
+                                                          child: Center(
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: <Widget>[
+                                                                Text(
+                                                                  data.getUsername().split(' ')[0],
+                                                                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                                                ),
+                                                                groupdata.isUserPlaying(data)
+                                                                    ? Icon(
+                                                                        Icons.check_box,
+                                                                        size: 25,
+                                                                        color: Constants.colors[Constants.colorindex],
+                                                                      )
+                                                                    : Icon(
+                                                                        Icons.check_box_outline_blank,
+                                                                        size: 25,
+                                                                        color: Constants.iWhite,
+                                                                      )
+                                                              ],
+                                                            ),
+                                                          ))),
+                                                ))
+                                            .toList(),
+                                      ),
+                                    ),
+                                    SizedBox(height: 120),
+                                  ],
+                                )),
                           ),
                           Align(
                             alignment: Alignment.bottomCenter,

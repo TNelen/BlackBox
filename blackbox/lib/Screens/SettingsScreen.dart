@@ -54,7 +54,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
-        theme: new ThemeData(fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
+        theme: new ThemeData(fontFamily: "atarian", scaffoldBackgroundColor: Colors.transparent),
         home: Scaffold(
             appBar: AppBar(
               elevation: 0,
@@ -90,15 +90,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ]),
             ),
-            body: Padding(
-                padding: EdgeInsets.only(left: 22, right: 22),
-                child: Center(
-                    child: Container(
+            body: Container(
                   alignment: Alignment.center,
-                  color: Constants.iBlack,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomLeft,
+                          stops: [0.1, 1.0],
+                          colors: [
+                            Constants.gradient1,
+                            Constants.gradient2,
+
+
+                          ],
+                        ),
+                      ),
                   child: ListView(
                     shrinkWrap: true,
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.only(left:50, right: 50, top:20, bottom: 20),
                     children: [
                       SizedBox(height: 20.0),
                       Hero(
@@ -271,12 +280,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           }
                         },
                       ),
+
                     ],
                   ),
-                )
+
               )
             )
-          )
+
         );
   }
 }

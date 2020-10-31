@@ -203,56 +203,68 @@ class ResultScreenState extends State<ResultScreen> {
                     debugShowCheckedModeBanner: false,
                     theme: new ThemeData(
                       fontFamily: "atarian",
-                      scaffoldBackgroundColor: Constants.iBlack,
+                      scaffoldBackgroundColor: Colors.transparent,
                     ),
                     home: Scaffold(
-                      body: Center(
-                          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            text: 'Collecting votes...',
-                            style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w300),
+                      body: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              stops: [0.1, 0.9],
+                              colors: [
+                                Constants.gradient1,
+                                Constants.gradient2,
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        Text(
-                          remainingVotes.toString() + remainingVotesText,
-                          style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.colors[Constants.colorindex]),
-                        ),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        Text(
-                          remainingQuestions.toString() + remainingQuestionsText,
-                          style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
-                        ),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        groupData.getAdminID() == Constants.getUserID()
-                            ? Text(
-                                'Time left for voting',
-                                style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
-                              )
-                            : SizedBox(
-                                height: 0.1,
+                          child: Center(
+                              child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                            RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                text: 'Collecting votes...',
+                                style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w300),
                               ),
-                        SizedBox(
-                          height: 12,
-                        ),
-                        groupData.getAdminID() == Constants.getUserID()
-                            ? Text(
-                                _timeleft > 69 ? '1:' + (_timeleft - 60).toString() : _timeleft > 60 ? '1:0' + (_timeleft - 60).toString() : _timeleft.toString() + 's',
-                                style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.colors[Constants.colorindex]),
-                              )
-                            : SizedBox(
-                                height: 0.1,
-                              ),
-                        submitquestionbutton,
-                      ])),
+                            ),
+                            SizedBox(
+                              height: 25,
+                            ),
+                            Text(
+                              remainingVotes.toString() + remainingVotesText,
+                              style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.colors[Constants.colorindex]),
+                            ),
+                            SizedBox(
+                              height: 25,
+                            ),
+                            Text(
+                              remainingQuestions.toString() + remainingQuestionsText,
+                              style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
+                            ),
+                            SizedBox(
+                              height: 25,
+                            ),
+                            groupData.getAdminID() == Constants.getUserID()
+                                ? Text(
+                                    'Time left for voting',
+                                    style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
+                                  )
+                                : SizedBox(
+                                    height: 0.1,
+                                  ),
+                            SizedBox(
+                              height: 12,
+                            ),
+                            groupData.getAdminID() == Constants.getUserID()
+                                ? Text(
+                                    _timeleft > 69 ? '1:' + (_timeleft - 60).toString() : _timeleft > 60 ? '1:0' + (_timeleft - 60).toString() : _timeleft.toString() + 's',
+                                    style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.colors[Constants.colorindex]),
+                                  )
+                                : SizedBox(
+                                    height: 0.1,
+                                  ),
+                            submitquestionbutton,
+                          ]))),
                     ),
                   ));
             }
@@ -304,11 +316,11 @@ class ResultScreenState extends State<ResultScreen> {
                   itemCount: !showMoreAll ? (alltimeWinners.length >= 3 ? 3 : alltimeWinners.length) : alltimeWinners.length,
                   itemBuilder: (context, index) {
                     return Card(
-                      elevation: 0.0,
+                        elevation: 0.0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        color: Constants.iBlack,
+                        color: Colors.transparent,
                         child: Center(
                           child: Padding(
                               padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 15, right: 30),
@@ -321,7 +333,8 @@ class ResultScreenState extends State<ResultScreen> {
                                     ),
                                     Text(
                                       (index + 1).toString() + (index == 0 ? 'st' : index == 1 ? 'nd' : index == 2 ? 'rd' : 'th'),
-                                      style: new TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                      style:
+                                          new TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                       textAlign: TextAlign.start,
                                     ),
                                     SizedBox(
@@ -329,7 +342,8 @@ class ResultScreenState extends State<ResultScreen> {
                                     ),
                                     Text(
                                       alltimeWinners[index].getUserName().split(' ')[0],
-                                      style: new TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
+                                      style:
+                                          new TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                                       textAlign: TextAlign.start,
                                     ),
                                   ]),
@@ -345,7 +359,7 @@ class ResultScreenState extends State<ResultScreen> {
                 ),
                 alltimeWinners.length > 3
                     ? FlatButton(
-                        color: Constants.iBlack,
+                        color: Colors.transparent,
                         onPressed: () {
                           toggleAlltime();
                           setState(() {});
@@ -399,7 +413,7 @@ class ResultScreenState extends State<ResultScreen> {
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(10.0),
                                             ),
-                                            color: Constants.iBlack,
+                                            color: Colors.transparent,
                                             child: Column(
                                               children: <Widget>[
                                                 AutoSizeText(
@@ -452,7 +466,7 @@ class ResultScreenState extends State<ResultScreen> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10.0),
                                       ),
-                                      color: Constants.iBlack,
+                                      color: Colors.transparent,
                                       child: Column(
                                         children: <Widget>[
                                           AutoSizeText(
@@ -472,7 +486,7 @@ class ResultScreenState extends State<ResultScreen> {
                                         ],
                                       ))))),
                       Card(
-                        elevation: 0.0,
+                          elevation: 0.0,
                           color: Constants.colors[Constants.colorindex],
                           child: Padding(
                               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 11),
@@ -504,7 +518,7 @@ class ResultScreenState extends State<ResultScreen> {
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(10.0),
                                             ),
-                                            color: Constants.iBlack,
+                                            color: Colors.transparent,
                                             child: Column(
                                               children: <Widget>[
                                                 AutoSizeText(
@@ -547,11 +561,11 @@ class ResultScreenState extends State<ResultScreen> {
                         itemCount: !showMoreCurrent ? (currentWinners.length >= 3 ? 0 : currentWinners.length - 3) : currentWinners.length - 3,
                         itemBuilder: (context, index) {
                           return Card(
-                            elevation: 0.0,
+                              elevation: 0.0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              color: Constants.iBlack,
+                              color: Colors.transparent,
                               child: Center(
                                 child: Padding(
                                     padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 15, right: 30),
@@ -572,7 +586,7 @@ class ResultScreenState extends State<ResultScreen> {
                                           ),
                                           Text(
                                             currentWinners[index + 3].getUserName().split(' ')[0],
-                                            style: new TextStyle(color: Constants.iWhite, fontSize:  Constants.smallFontSize, fontWeight: FontWeight.w300),
+                                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                                             textAlign: TextAlign.start,
                                           ),
                                         ]),
@@ -591,7 +605,7 @@ class ResultScreenState extends State<ResultScreen> {
                       ),
                 currentWinners.length > 3
                     ? FlatButton(
-                        color: Constants.iBlack,
+                        color: Colors.transparent,
                         onPressed: () {
                           toggleCurrent();
                           setState(() {});
@@ -644,7 +658,8 @@ class ResultScreenState extends State<ResultScreen> {
                     //change isplaying field in database for this group to TRUE
                     child: groupData.getIsPlaying()
                         ? Text("Next Question", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold))
-                        : Text("The games has ended. \n Show overview", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold))),
+                        : Text("The games has ended. \n Show overview",
+                            textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold))),
               ),
             ),
           );
@@ -659,15 +674,13 @@ class ResultScreenState extends State<ResultScreen> {
 
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-
             theme: new ThemeData(
               fontFamily: "atarian",
-              scaffoldBackgroundColor: Constants.iBlack,
+              scaffoldBackgroundColor: Colors.transparent,
             ),
             home: Scaffold(
               appBar: AppBar(
                 elevation: 0,
-
                 backgroundColor: Constants.iBlack,
                 title: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                   FlatButton(
@@ -691,52 +704,65 @@ class ResultScreenState extends State<ResultScreen> {
                   )
                 ]),
               ),
-              body: ListView(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                children: <Widget>[
-                  //Title
-                  Center(
-                      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-                    Text(
-                      'Leaderboard',
-                      style: TextStyle(fontSize: Constants.subtitleFontSize, color: Constants.colors[Constants.colorindex], fontWeight: FontWeight.w600),
+              body: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    stops: [0.1, 0.9],
+                    colors: [
+                      Constants.gradient1,
+                      Constants.gradient2,
+                    ],
+                  ),
+                ),
+                child: ListView(
+                  //shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  children: <Widget>[
+                    //Title
+                    Center(
+                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+                      Text(
+                        'Leaderboard',
+                        style: TextStyle(fontSize: Constants.subtitleFontSize, color: Constants.colors[Constants.colorindex], fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Icon(
+                        Icons.timeline,
+                        size: 50,
+                        color: Constants.colors[Constants.colorindex],
+                      ),
+                    ])),
+
+                    //question
+                    SizedBox(height: 30),
+                    Padding(
+                      padding: EdgeInsets.only(left: 35, right: 35),
+                      child: Text(
+                        currentQuestionString,
+                        textAlign: TextAlign.center,
+                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                      ),
                     ),
+
+                    SizedBox(height: 30),
+
+                    //results
+                    Padding(padding: EdgeInsets.only(left: 35, right: 35), child: results),
+
+                    //AllTime
+                    Padding(padding: EdgeInsets.only(left: 35, right: 35), child: alltime),
+
                     SizedBox(
-                      width: 5,
+                      height: 75,
                     ),
-                    Icon(
-                      Icons.timeline,
-                      size: 50,
-                      color: Constants.colors[Constants.colorindex],
-                    ),
-                  ])),
-
-                  //question
-                  SizedBox(height: 30),
-                  Padding(
-                    padding: EdgeInsets.only(left: 35, right: 35),
-                    child: Text(
-                      currentQuestionString,
-                      textAlign: TextAlign.center,
-                      style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-
-                  SizedBox(height: 30),
-
-                  //results
-                  Padding(padding: EdgeInsets.only(left: 35, right: 35), child: results),
-
-                  //AllTime
-                  Padding(padding: EdgeInsets.only(left: 35, right: 35), child: alltime),
-
-                  SizedBox(
-                    height: 75,
-                  ),
-                ],
+                  ],
+                ),
               ),
-              floatingActionButton: nextButton,
+              floatingActionButton:nextButton,
               floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
             ),
           );
@@ -747,7 +773,7 @@ class ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: new ThemeData(
-          scaffoldBackgroundColor: Constants.iBlack,
+          scaffoldBackgroundColor: Colors.transparent,
         ),
         home: Scaffold(
           body: _buildBody(context),

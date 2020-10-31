@@ -32,17 +32,17 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
     exists = await _database.doesGroupExist(groupID);
     print(exists);
     if (groupID.length == Constants.groupCodeLength) {
-        if (exists) {
-          FirebaseAnalytics().logEvent(name: 'game_action', parameters: {'type': 'GameJoined', 'code': codeController.text.toUpperCase()});
+      if (exists) {
+        FirebaseAnalytics().logEvent(name: 'game_action', parameters: {'type': 'GameJoined', 'code': codeController.text.toUpperCase()});
 
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => GameScreen(_database, codeController.text.toUpperCase()),
-              ));
-        } else {
-          Popup.makePopup(context, "Invalid code", "Please check you code and try again!");
-        }
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => GameScreen(_database, codeController.text.toUpperCase()),
+            ));
+      } else {
+        Popup.makePopup(context, "Invalid code", "Please check you code and try again!");
+      }
     } else {
       Popup.makePopup(context, "Please check your code", "A code should contain " + Constants.groupCodeLength.toString() + " symbols!");
     }
@@ -91,79 +91,86 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
         title: 'BlackBox',
         theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-
-              backgroundColor: Constants.iBlack,
-              title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                InkWell(
-                  onTap: () => Navigator.pop(context),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 20),
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: Constants.colors[Constants.colorindex],
-                        ),
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Constants.iBlack,
+            title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              InkWell(
+                onTap: () => Navigator.pop(context),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 20),
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Constants.colors[Constants.colorindex],
                       ),
-                      Text(
-                        'Back',
-                        style: TextStyle(
-                          fontFamily: "atarian",
-                          fontSize: Constants.actionbuttonFontSize,
-                          color: Constants.colors[Constants.colorindex],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ]),
-            ),
-            body: Padding(
-              padding: EdgeInsets.only(left: 30, right: 30),
-              child: Center(
-                child: Container(
-                  color: Constants.iBlack,
-                  child: Padding(
-                    padding: const EdgeInsets.all(36.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'Join Group',
-                          style: new TextStyle(
-                            color: Constants.iWhite,
-                            fontSize: Constants.titleFontSize,
-                            fontWeight: FontWeight.w300,
-                            fontFamily: "atarian",
-                          ),
-                        ),
-                        Expanded(
-                          child: SizedBox(),
-                        ),
-                        Text(
-                          'Enter group code below',
-                          style: new TextStyle(
-                            color: Constants.colors[Constants.colorindex],
-                            fontSize: Constants.normalFontSize,
-                            fontFamily: "atarian",
-                          ),
-                        ),
-                        SizedBox(
-                          height: 40.0,
-                        ),
-                        codeField,
-                        joinButton,
-                        Expanded(
-                          child: SizedBox(),
-                        ),
-                      ],
                     ),
-                  ),
+                    Text(
+                      'Back',
+                      style: TextStyle(
+                        fontFamily: "atarian",
+                        fontSize: Constants.actionbuttonFontSize,
+                        color: Constants.colors[Constants.colorindex],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            )));
+            ]),
+          ),
+          body: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomLeft,
+                  stops: [0.1, 1.0],
+                  colors: [
+                    Constants.gradient1,
+                    Constants.gradient2,
+                  ],
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 36.0, bottom: 36, left: 63, right: 63),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Join Group',
+                      style: new TextStyle(
+                        color: Constants.iWhite,
+                        fontSize: Constants.titleFontSize,
+                        fontWeight: FontWeight.w300,
+                        fontFamily: "atarian",
+                      ),
+                    ),
+                    Expanded(
+                      child: SizedBox(),
+                    ),
+                    Text(
+                      'Enter group code below',
+                      style: new TextStyle(
+                        color: Constants.colors[Constants.colorindex],
+                        fontSize: Constants.normalFontSize,
+                        fontFamily: "atarian",
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40.0,
+                    ),
+                    codeField,
+                    joinButton,
+                    Expanded(
+                      child: SizedBox(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ));
   }
 }

@@ -34,7 +34,6 @@ class _RuleScreenState extends State<RuleScreen> {
       home: Scaffold(
         appBar: AppBar(
           elevation: 0,
-
           backgroundColor: Constants.iBlack,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -69,42 +68,49 @@ class _RuleScreenState extends State<RuleScreen> {
             ],
           ),
         ),
-        body: Padding(
-          padding: EdgeInsets.only(left: 22, right: 22),
-          child: Container(
-            color: Constants.iBlack,
-            child: ListView(
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(20.0),
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Hero(
-                        tag: 'topicon1',
-                        child: Icon(
-                          Icons.help,
-                          size: 50,
-                          color: Constants.colors[Constants.colorindex],
-                        )),
-                    SizedBox(width: 20.0),
-                    Text(
-                      'Game rules',
-                      textAlign: TextAlign.center,
-                      style: new TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20.0),
-                Container(
-                  height: 1.5,
-                  color: Constants.iWhite,
-                ),
-                SizedBox(height: 20.0),
-                RulesColumn(),
-                SizedBox(height: 15.0),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomLeft,
+              stops: [0.1, 1.0],
+              colors: [
+                Constants.gradient1,
+                Constants.gradient2,
               ],
             ),
+          ),
+          child: ListView(
+            //shrinkWrap: true,
+            padding: const EdgeInsets.only(top: 20.0, bottom: 20, left: 50, right: 50),
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Game rules',
+                    textAlign: TextAlign.center,
+                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
+                  ),
+                  SizedBox(width: 20.0),
+                  Hero(
+                      tag: 'topicon1',
+                      child: Icon(
+                        Icons.help,
+                        size: 50,
+                        color: Constants.colors[Constants.colorindex],
+                      )),
+                ],
+              ),
+              SizedBox(height: 20.0),
+              Container(
+                height: 1.5,
+                color: Constants.iWhite,
+              ),
+              SizedBox(height: 20.0),
+              RulesColumn(),
+              SizedBox(height: 20.0),
+            ],
           ),
         ),
       ),

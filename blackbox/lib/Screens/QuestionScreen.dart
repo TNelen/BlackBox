@@ -266,7 +266,20 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                 ),
               ),
               body: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      stops: [0.1, 0.9],
+                      colors: [
+                        Constants.gradient1,
+                        Constants.gradient2,
+
+
+                      ],
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 3.0),
                   child: ListView(
                     children: [
                       //submit own question button
@@ -277,7 +290,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.0),
                           ),
-                          color: Constants.iBlack,
+                          color: Colors.transparent,
                           child: Center(
                             child: Center(
                               child: Column(
@@ -306,7 +319,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                           ),
                         ),
                       ),
-
+                      SizedBox(height: 10),
                       Text(
                         'Select a friend',
                         textAlign: TextAlign.center,

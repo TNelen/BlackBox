@@ -122,7 +122,7 @@ class _RulesColumnState extends State<RulesColumn> {
               fontSize: Constants.normalFontSize,
             ),
           ),
-          backgroundColor: Constants.iBlack,
+          backgroundColor: Colors.transparent,
           children: [
             Column(
               children: [
