@@ -1,10 +1,9 @@
 import 'dart:async';
-
-import 'package:blackbox/Screens/rules_column.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import '../Interfaces/Database.dart';
 import '../Database/FirebaseStream.dart';
 import '../DataContainers/GroupData.dart';
@@ -35,7 +34,6 @@ class _GameScreenState extends State<GameScreen> {
   String code;
   bool joined = false;
 
-  bool _loadingInProgress;
   GroupData groupdata;
 
   // Used to rebuild this screen each second
@@ -51,9 +49,7 @@ class _GameScreenState extends State<GameScreen> {
   void initState() {
     groupdata = null;
     super.initState();
-    _loadingInProgress = true;
     FirebaseStream(code).groupData.listen((_onGroupDataUpdate) {}, onDone: () {
-      _loadingInProgress = false;
     }, onError: (error) {
       //nothing;
     });
@@ -160,7 +156,7 @@ class _GameScreenState extends State<GameScreen> {
                                         Icon(
                                           Icons.people,
                                           size: 55,
-                                          color: Constants.colors[Constants.colorindex],
+                                          color: Constants.iWhite,
                                         )
                                       ],
                                     ),
@@ -209,6 +205,11 @@ class _GameScreenState extends State<GameScreen> {
                                         Text(
                                           "Players",
                                           style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.iWhite, fontWeight: FontWeight.w500),
+                                        ),
+                                        JumpingDotsProgressIndicator(
+                                          numberOfDots: 3,
+                                          fontSize: Constants.normalFontSize,
+                                          color: Constants.iWhite,
                                         ),
                                       ]),
                                     ),
@@ -355,17 +356,6 @@ class _GameScreenState extends State<GameScreen> {
         ));
   }
 
-  Widget _onGroupDataUpdate(GroupData groupData) {
-    GroupData groupInfo = groupData;
-    bool loaded;
 
-    if (groupInfo == null) {
-      // Laadscherm
-      loaded = false;
-    } else {
-      // Refresh content
-      loaded = true;
-      //groupInfo.printData();
-    }
-  }
+
 }

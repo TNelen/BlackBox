@@ -196,7 +196,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                         SizedBox(
                           height: 10,
                         ),
-                        FadingText(
+                        Text(
                           "A MAGNETAR Game",
                           style: TextStyle(fontFamily: "atarian", color: Colors.white, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                         ),

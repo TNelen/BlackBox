@@ -1,8 +1,6 @@
 import 'package:blackbox/Database/FirebaseManagement.dart';
 import 'package:blackbox/Screens/widgets/RateAppButton.dart';
-import 'package:blackbox/Screens/widgets/TopIconBar.dart';
 import 'package:blackbox/Screens/CreateGameScreen.dart';
-import 'package:blackbox/Screens/widgets/RateAppButton.dart';
 import 'package:blackbox/Screens/JoinGameScreen.dart';
 import 'package:blackbox/Screens/widgets/animatedIconBar.dart';
 import 'package:blackbox/Screens/widgets/home_screen_button.dart';
@@ -198,6 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
+
                                 'Start playing...',
                                 style: TextStyle(fontSize: Constants.subtitleFontSize, color: Constants.iWhite, fontWeight: FontWeight.w300),
                               ),

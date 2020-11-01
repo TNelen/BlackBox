@@ -1,6 +1,5 @@
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
-import '../DataContainers/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'FirebaseUtility.dart';
