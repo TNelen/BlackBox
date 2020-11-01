@@ -220,7 +220,6 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
             home: Scaffold(
               appBar: AppBar(
                 elevation: 0,
-
                 backgroundColor: Constants.iBlack,
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -274,8 +273,6 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                       colors: [
                         Constants.gradient1,
                         Constants.gradient2,
-
-
                       ],
                     ),
                   ),
@@ -284,46 +281,53 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                     children: [
                       //submit own question button
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-                        child: Card(
-                          elevation: 0.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          color: Colors.transparent,
+                        margin: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
+                       color: Colors.transparent,
                           child: Center(
-                            child: Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   SizedBox(height: 10),
                                   Text(
                                     'Question',
-                                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
+                                    style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
                                   ),
-                                  SizedBox(height: 30),
-                                  Text(
-                                    groupData.getNextQuestionString(),
-                                    style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    '- ' + groupData.getQuestion().getCategory() + ' -',
-                                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
+                                  SizedBox(height: 15),
+                                  Card(
+
+                                    elevation: 5.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+                                    color: Constants.iDarkGrey,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                                      child:Column(
+                                      children: <Widget>[
+                                        Text(
+                                          groupData.getNextQuestionString(),
+                                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                          '- ' + groupData.getQuestion().getCategory() + ' -',
+                                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),),
                                   ),
                                 ],
                               ),
-                            ),
-                          ),
+
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 20),
                       Text(
                         'Select a friend',
                         textAlign: TextAlign.center,
-                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
+                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
                       ),
                       SizedBox(
                         height: 20,
@@ -348,7 +352,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
   Widget buildUserVoteCard(UserData data) {
     return Container(
         child: Card(
-          elevation: 5.0,
+      elevation: 5.0,
       color: data.getUserID() == clickedmember ? Constants.iLight : Constants.iDarkGrey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
