@@ -1,5 +1,6 @@
 import 'package:audioplayers/audio_cache.dart';
 import 'package:blackbox/DataContainers/UserRankData.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:blackbox/Util/VibrationHandler.dart';
 import 'package:flutter/material.dart';
 import '../DataContainers/GroupData.dart';
@@ -140,27 +141,38 @@ class ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget _buildBody(BuildContext context) {
-    final submitquestionbutton = FlatButton(
-      onPressed: () {
-        Popup.submitQuestionIngamePopup(context, _database, groupData);
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.library_add,
-            color: Constants.iWhite,
-            size: 25,
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Text("Submit Question",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(
+    final submitquestionbutton = Card(
+      elevation: 5.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      color: Constants.iDarkGrey,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16.0),
+        onTap: () {
+          Popup.submitQuestionIngamePopup(context, _database, groupData);
+        },
+        child: Container(
+          padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.library_add,
                 color: Constants.iWhite,
-              )),
-        ],
+                size: 25,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text("Submit Question",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(
+                    color: Constants.iWhite,
+                  )),
+            ],
+          ),
+        ),
       ),
     );
 
@@ -207,6 +219,7 @@ class ResultScreenState extends State<ResultScreen> {
                     ),
                     home: Scaffold(
                       body: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 50),
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               begin: Alignment.topRight,
@@ -220,12 +233,23 @@ class ResultScreenState extends State<ResultScreen> {
                           ),
                           child: Center(
                               child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                text: 'Collecting votes...',
-                                style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w300),
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    text: 'Collecting votes',
+                                    style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w300),
+                                  ),
+                                ),
+
+                                JumpingDotsProgressIndicator(
+                                  numberOfDots: 3,
+                                  fontSize: Constants.subtitleFontSize,
+                                  color: Constants.iWhite,
+                                ),
+                              ],
                             ),
                             SizedBox(
                               height: 25,
@@ -235,11 +259,23 @@ class ResultScreenState extends State<ResultScreen> {
                               style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.colors[Constants.colorindex]),
                             ),
                             SizedBox(
-                              height: 25,
+                              height: 50,
                             ),
                             Text(
-                              remainingQuestions.toString() + remainingQuestionsText,
+                              remainingQuestions.toString() + "/" + (groupData.getHistory().length + remainingQuestions + 1).toString() + remainingQuestionsText,
                               style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
+                            ),
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: EdgeInsets.only(left: 75, right: 75),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: LinearProgressIndicator(
+                                  backgroundColor: Constants.iWhite,
+                                  valueColor: new AlwaysStoppedAnimation<Color>(Constants.colors[Constants.colorindex]),
+                                  value: (groupData.getHistory().length + 1) / (groupData.getHistory().length + groupData.getQuestionList().length),
+                                ),
+                              ),
                             ),
                             SizedBox(
                               height: 25,
@@ -263,7 +299,7 @@ class ResultScreenState extends State<ResultScreen> {
                                 : SizedBox(
                                     height: 0.1,
                                   ),
-                            submitquestionbutton,
+                            Padding(padding: EdgeInsets.symmetric(horizontal: 35), child: submitquestionbutton),
                           ]))),
                     ),
                   ));
@@ -762,7 +798,7 @@ class ResultScreenState extends State<ResultScreen> {
                   ],
                 ),
               ),
-              floatingActionButton:nextButton,
+              floatingActionButton: nextButton,
               floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
             ),
           );

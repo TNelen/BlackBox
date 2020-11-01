@@ -11,6 +11,7 @@ import './DataContainers/UserData.dart';
 import './Interfaces/Database.dart';
 import 'dart:io';
 import './Screens/popups/Popup.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 void main() {
   try {
@@ -51,10 +52,6 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   double _progress;
   bool loggedIn = false;
   bool wifiPopup = false;
-  AnimationController motionController;
-  Animation motionAnimation;
-
-  double size = 20;
 
   Future<void> login() async {
     if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
@@ -104,35 +101,6 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   void initState() {
     super.initState();
 
-    motionController = AnimationController(
-      duration: Duration(seconds: 1),
-      vsync: this,
-      lowerBound: 0.5,
-    );
-
-    motionAnimation = CurvedAnimation(
-      parent: motionController,
-      curve: Curves.ease,
-    );
-
-    motionController.forward();
-    motionController.addStatusListener((status) {
-      setState(() {
-        if (status == AnimationStatus.completed) {
-          motionController.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-          motionController.forward();
-        }
-      });
-    });
-
-    motionController.addListener(() {
-      setState(() {
-        size = motionController.value * 65;
-      });
-    });
-    // motionController.repeat();
-
     _progress = 0;
     new Timer.periodic(Duration(seconds: 1), (Timer t) {
       setState(() {
@@ -164,39 +132,32 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 
   @override
-  void dispose() {
-    motionController.dispose();
-    super.dispose();
-  }
-
-
-
-  @override
   Widget build(BuildContext context) {
-
     final startButton = Padding(
-        padding: EdgeInsets.symmetric(vertical: 15,horizontal: 80),
-        child:Material(
-      elevation: 1.0,
-      borderRadius: BorderRadius.circular(28.0),
-      color: Constants.iDarkGrey,
-      child: MaterialButton(
-        shape: RoundedRectangleBorder(
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 80),
+        child: Material(
+          elevation: 1.0,
           borderRadius: BorderRadius.circular(28.0),
-        ),
-        minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {
-
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => HomeScreen(Constants.database),
-              ));
-
-        },
-        child: Text("Start game", textAlign: TextAlign.center, style: TextStyle(fontFamily: "atarian",fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iWhite,)),
-      ),
-    ));
+          color: Constants.iDarkGrey,
+          child: MaterialButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(28.0),
+            ),
+            minWidth: MediaQuery.of(context).size.width,
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => HomeScreen(Constants.database),
+                  ));
+            },
+            child: Text("Start game",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontFamily: "atarian", fontSize: Constants.actionbuttonFontSize).copyWith(
+                  color: Constants.iWhite,
+                )),
+          ),
+        ));
 
     return Scaffold(
       body: Stack(
@@ -215,11 +176,12 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                   children: <Widget>[
                     Align(
                         alignment: const Alignment(0, -0.5),
-                        child: CircleAvatar(
+                        child: GlowingProgressIndicator(
+                            child: CircleAvatar(
                           backgroundColor: Constants.iBlack,
-                          radius: size,
+                          radius: 70,
                           child: Image.asset('images/icon_transparent.png'),
-                        )),
+                        ))),
                     Center(
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -229,24 +191,26 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                         ),
                         Text(
                           "BlackBox",
-                          style: TextStyle(fontFamily: "atarian",color: Colors.white, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w300),
+                          style: TextStyle(fontFamily: "atarian", color: Colors.white, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w300),
                         ),
                         SizedBox(
                           height: 10,
                         ),
-                        Text(
+                        FadingText(
                           "A MAGNETAR Game",
-                          style: TextStyle(fontFamily: "atarian",color: Colors.white, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
+                          style: TextStyle(fontFamily: "atarian", color: Colors.white, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 5,
                         ),
                         loggedIn
-                            ? Container(height: 80,child:startButton)
-                            : Container(height: 80, child:Text(
-                                "Logging you in...",
-                                style: TextStyle(fontFamily: "atarian",color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
-                              )),
+                            ? Container(height: 80, child: startButton)
+                            : Container(
+                                height: 80,
+                                child: FadingText(
+                                  "Logging you in...",
+                                  style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
+                                )),
                       ],
                     ))
                   ],

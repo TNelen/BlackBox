@@ -282,45 +282,45 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                       //submit own question button
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
-                       color: Colors.transparent,
-                          child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  SizedBox(height: 10),
-                                  Text(
-                                    'Question',
-                                    style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
-                                  ),
-                                  SizedBox(height: 15),
-                                  Card(
-
-                                    elevation: 5.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                    ),
-                                    color: Constants.iDarkGrey,
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-                                      child:Column(
-                                      children: <Widget>[
-                                        Text(
-                                          groupData.getNextQuestionString(),
-                                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        SizedBox(height: 5),
-                                        Text(
-                                          '- ' + groupData.getQuestion().getCategory() + ' -',
-                                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ],
-                                    ),),
-                                  ),
-                                ],
+                        color: Colors.transparent,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(height: 10),
+                              Text(
+                                'Question',
+                                style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
                               ),
+                              SizedBox(height: 15),
+                              Card(
+                                elevation: 5.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                color: Constants.iDarkGrey,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                        groupData.getNextQuestionString(),
+                                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(height: 5),
+                                      Text(
+                                        '- ' + groupData.getQuestion().getCategory() + ' -',
+                                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
 
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(height: 20),
