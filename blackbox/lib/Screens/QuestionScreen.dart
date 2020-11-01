@@ -196,7 +196,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                 NoMemberSelectedPopup.noMemberSelectedPopup(context);
               }
             },
-            child: Text("Confirm choice", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold)),
+            child: Text("Vote", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold)),
           ),
         ),
       ),

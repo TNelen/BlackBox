@@ -87,30 +87,26 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Only proceed if this popup is enabled
     if (Constants.enableMSG[Constants.enableVersionMSG]) {
-
       appinfo = await database.getAppInfo();
       List<String> versionParts = appinfo.getVersion().toString().split('+');
 
       // Build numbers must exist and may not be null (see int.tryParse docs)
-      if (buildNumberString == null || versionParts.length < 2 || versionParts[1] == null)
-        return;
+      if (buildNumberString == null || versionParts.length < 2 || versionParts[1] == null) return;
 
       // Convert the versions in String to int
-      int currentBuid = int.tryParse( buildNumberString );
-      int latestBuild = int.tryParse( versionParts[1] );
+      int currentBuid = int.tryParse(buildNumberString);
+      int latestBuild = int.tryParse(versionParts[1]);
 
       // int.tryParse returns null on error, return if this happened
-      if (currentBuid == null || latestBuild == null)
-        return;
+      if (currentBuid == null || latestBuild == null) return;
 
       print('Current build number: $currentBuid - Latest build number: $latestBuild');
 
       // Simple version comparison
-      if ( currentBuid < latestBuild ) {
+      if (currentBuid < latestBuild) {
         Constants.enableVersionMSG = 1;
         Popup.makePopup(context, 'Whooohooo!', 'A new app version is available! \n\nUpdate your app to get the best experience.');
       }
-
     }
   }
 
@@ -140,7 +136,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           home: Scaffold(
             backgroundColor: Colors.transparent,
-
             body: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -150,8 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   colors: [
                     Constants.gradient1,
                     Constants.gradient2,
-
-
                   ],
                 ),
               ),
@@ -165,7 +158,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 5.0 * MediaQuery.of(context).devicePixelRatio,
                   ),
                   //TopIconBar.topIcons(context, database),
-                  FancyFab(database: database,),
+                  FancyFab(
+                    database: database,
+                  ),
                   Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
                     SizedBox(
                       height: 10,

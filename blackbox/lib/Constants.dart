@@ -8,11 +8,12 @@ class Constants {
   static const iBlack = Color(0xFF121212);
   static const iDarkGrey = Color(0xFF21272C);
   static const iGrey = Color(0xFF577D90);
-  static const iLight = Color(0xFFB5C3D7);
-  static const iWhite = Color(0xFFE6E7EB);
+  static const iLight = Color(0xFFb3b3b3);
+  static const iWhite = Color(0xFFF5F5F5);
   static const iAccent = Color(0xFF92dff3);
   static const gradient1 = Color(0xFF121212);
   static const gradient2 = Color(0xFF21272C);
+  //static const gradient3 = Color(0xFF0c4d4d);
 
   static int colorindex = 1;
 
@@ -22,7 +23,7 @@ class Constants {
   /// The default color that a new user will get
 
   //accent color list
-  static const colors = [Color(0xFF92dff3), Color(0xFFffe082), Color(0xFFcd5c5c), Color(0xFFA2DAAF)];
+  static const colors = [Color(0xFF92dff3), Color(0xFFffe082), Color(0xFFcd5c5c), Color(0xFF1DB854)];
 
 
   //fontsizes
