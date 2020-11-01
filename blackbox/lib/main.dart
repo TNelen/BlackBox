@@ -245,7 +245,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                             ? Container(height: 80,child:startButton)
                             : Container(height: 80, child:Text(
                                 "Logging you in...",
-                                style: TextStyle(fontFamily: "atarian",color: Constants.colors[3], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
+                                style: TextStyle(fontFamily: "atarian",color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                               )),
                       ],
                     ))
