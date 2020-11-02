@@ -134,7 +134,6 @@ abstract class Database {
   /// DISTURBING  ->  When the content of the question violates the BlackBox rules
   /// Will return true once completed
   /// Returns false if this question does not exist in the database or an error occurred
-  @Deprecated("Please use Database#multiReportQuestion instead for more optimised writing")
   Future< bool > reportQuestion( Question q, ReportType reportType );
 
 
