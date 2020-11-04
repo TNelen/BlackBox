@@ -155,7 +155,6 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
 
                 FirebaseAnalytics().logEvent(name: 'VoteOnUser', parameters: null);
 
-                print(reportMap);
                 groupData.addVote(clickedmember); // GroupData#addVote automatically updates the database. This is preferred because random retries are built in
                 currentQuestion = groupData.getQuestionID();
                 currentQuestionString = groupData.getNextQuestionString();

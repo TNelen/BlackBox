@@ -439,6 +439,7 @@ class ResultScreenState extends State<ResultScreen> {
                                     child: Container(
                                         padding: EdgeInsets.all(5),
                                         decoration: BoxDecoration(
+                                          color: Constants.iDarkGrey,
                                           borderRadius: BorderRadius.circular(10.0),
                                           border: Border.all(
                                             color: Constants.iWhite,
@@ -449,7 +450,7 @@ class ResultScreenState extends State<ResultScreen> {
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(10.0),
                                             ),
-                                            color: Colors.transparent,
+                                            color: Constants.iDarkGrey,
                                             child: Column(
                                               children: <Widget>[
                                                 AutoSizeText(
@@ -492,6 +493,7 @@ class ResultScreenState extends State<ResultScreen> {
                               child: Container(
                                   padding: EdgeInsets.all(5),
                                   decoration: BoxDecoration(
+                                    color: Constants.iDarkGrey,
                                     borderRadius: BorderRadius.circular(10.0),
                                     border: Border.all(
                                       color: Constants.iWhite,
@@ -502,7 +504,8 @@ class ResultScreenState extends State<ResultScreen> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10.0),
                                       ),
-                                      color: Colors.transparent,
+                                      color: Constants.iDarkGrey,
+                                      elevation: 0.0,
                                       child: Column(
                                         children: <Widget>[
                                           AutoSizeText(
@@ -544,6 +547,7 @@ class ResultScreenState extends State<ResultScreen> {
                                     child: Container(
                                         padding: EdgeInsets.all(5),
                                         decoration: BoxDecoration(
+                                          color: Constants.iDarkGrey,
                                           borderRadius: BorderRadius.circular(10.0),
                                           border: Border.all(
                                             color: Constants.iWhite,
@@ -554,7 +558,7 @@ class ResultScreenState extends State<ResultScreen> {
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(10.0),
                                             ),
-                                            color: Colors.transparent,
+                                            color: Constants.iDarkGrey,
                                             child: Column(
                                               children: <Widget>[
                                                 AutoSizeText(
