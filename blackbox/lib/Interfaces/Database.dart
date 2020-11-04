@@ -126,28 +126,6 @@ abstract class Database {
   Future< String > updateQuestion( Question question );
 
 
-  /// Add a report to the database for the given question
-  /// This will only update report fields AND fields that do not exist in the database for this question
-  /// Possible report types are: 
-  /// CATEGORY    ->  When the category of this question is not correct  
-  /// GRAMMAR     ->  When the question contains a spelling or grammar mistake
-  /// DISTURBING  ->  When the content of the question violates the BlackBox rules
-  /// Will return true once completed
-  /// Returns false if this question does not exist in the database or an error occurred
-  Future< bool > reportQuestion( Question q, ReportType reportType );
-
-
-  /// Perform zero or more reports at once
-  /// Only the report fields will be updated
-  /// ReportType includes:
-  /// CATEGORY    ->  When the category of this question is not correct  
-  /// GRAMMAR     ->  When the question contains a spelling or grammar mistake
-  /// DISTURBING  ->  When the content of the question violates the BlackBox rules
-  /// Will return true once completed
-  /// Returns false if this question does not exist in the database or an error occurred
-  Future< bool > multiReportQuestion(Question q, Map<ReportType, bool> reports);
-
-
   /// Send a new issue to the database
   /// Returns true when completed
   /// Returns false on error

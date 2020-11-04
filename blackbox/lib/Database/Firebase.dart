@@ -186,26 +186,6 @@ class Firebase implements Database{
   /// -------
 
   @override
-  Future<bool> reportQuestion(Question q, ReportType reportType) async {
-    return await FirebaseSetters.reportQuestion( q , reportType ).then((value) {
-        return value;
-    }).catchError((error) {
-        print(error);
-        return false;
-    });
-  }
-
-  @override
-  Future<bool> multiReportQuestion(Question q, Map<ReportType, bool> reports) async {
-    return await FirebaseSetters.multiReportQuestion( q , reports ).then((value) {
-        return value;
-    }).catchError((error) {
-        print(error);
-        return false;
-    });
-  }
-
-  @override
   Future<bool> submitIssue(Issue issue) async {
     return await FirebaseSetters.submitIssue( issue ).then((value) {
         return value;

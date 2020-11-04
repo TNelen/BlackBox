@@ -145,7 +145,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                     'action_name': 'RateQuestion',
                     'love': reportMap[ReportType.LOVE]
                   });
-                  _database.multiReportQuestion(groupData.getQuestion(), reportMap);
+                  _database.voteOnQuestion(groupData.getQuestion());
                 }
 
                 FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
