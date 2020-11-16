@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
 import '../Constants.dart';
 import '../Interfaces/Database.dart';
+import 'PartyScreens/CreatePartyScreen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../DataContainers/Appinfo.dart';
 import 'popups/Popup.dart';
@@ -203,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           Hero(
-                            tag: 'toberutton',
+                            tag: 'newgame',
                             child: HomeScreenButton('Create Game', 'Invite friends to a new game', icon: Icons.edit, onTap: () {
                               Navigator.push(
                                   context,
@@ -216,12 +217,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 6,
                           ),
                           Hero(
-                            tag: 'frfr',
+                            tag: 'joingame',
                             child: HomeScreenButton('Join Game', 'Join with the group code', icon: Icons.search, onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (BuildContext context) => JoinGameScreen(database),
+                                  ));
+                            }),
+                          ),
+                          SizedBox(
+                            height: 6,
+                          ),
+                          Hero(
+                            tag: 'partymode',
+                            child: HomeScreenButton('Party Mode', 'Play with all your friends on one single device', icon: Icons.people, onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) => CreatePartyScreen(database),
                                   ));
                             }),
                           ),

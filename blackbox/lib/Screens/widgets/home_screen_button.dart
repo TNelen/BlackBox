@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:blackbox/Constants.dart';
 import 'package:flutter/material.dart';
 
@@ -45,9 +46,13 @@ class HomeScreenButton extends StatelessWidget {
                     style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.iWhite, fontWeight: FontWeight.w400),
                   ),
                   SizedBox(height: 5),
-                  Text(
-                    this._description,
-                    style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iLight, fontWeight: FontWeight.w300),
+                  Container(
+                    width: 230,
+                    child: AutoSizeText(
+                      this._description,
+                      style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iLight, fontWeight: FontWeight.w300),
+                      maxLines: 2,
+                    ),
                   ),
                 ],
               ),
