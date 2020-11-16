@@ -283,7 +283,8 @@ class _GameScreenState extends State<GameScreen> {
                                                   backgroundColor: Constants.colors[Constants.colorindex],
                                                   onPressed: () {
                                                     final RenderBox box = context.findRenderObject();
-                                                    Share.share(code, sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+                                                    String shareText = "Join a game with this code:\n\n"  + code + "\n\n\nDownload BlackBox on Google Play \nhttps://play.google.com/store/apps/details?id=be.dezijwegel.blackbox ";
+                                                    Share.share(shareText, sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
                                                   }),
                                             ),
                                             SizedBox(),

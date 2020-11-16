@@ -88,7 +88,9 @@ class GroupCodePopup {
                     ),
                     onPressed: () {
                       final RenderBox box = context.findRenderObject();
-                      Share.share(groupCode,
+                      String shareText = "Join a game with this code:\n\n"  + groupCode + "\n\n\nDownload BlackBox on Google Play \nhttps://play.google.com/store/apps/details?id=be.dezijwegel.blackbox ";
+                      Share.share(shareText,
+
                           sharePositionOrigin:
                           box.localToGlobal(Offset.zero) & box.size);
                     }),
