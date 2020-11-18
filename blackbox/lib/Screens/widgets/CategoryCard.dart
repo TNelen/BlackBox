@@ -50,12 +50,7 @@ class CategoryCardState extends State<CategoryCard> {
                     style: new TextStyle(color: widget.defaultValue ? Constants.iBlack : Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 5),
-                  Text(
-                    widget.amount.toString() + '  questions',
-                    textAlign: TextAlign.center,
-                    style: new TextStyle(color: widget.defaultValue ? Constants.iBlack : Constants.iLight, fontSize: Constants.miniFontSize, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 3),
+                  
                 ],
               ),
             ),
