@@ -1,4 +1,4 @@
- import 'dart:math';
+import 'dart:math';
 
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/Screens/popups/GroupCodePopup.dart';
@@ -29,7 +29,7 @@ class SetPlayersScreen extends StatefulWidget {
 class _SetPlayersScreenState extends State<SetPlayersScreen> {
   Database _database;
   List<String> selectedCategory;
-  List<String> players = ["timo", "jarne", "kaat", "Dieter"];
+  List<String> players = [Constants.getUsername().split(" ")[0]];
   bool canVoteBlank;
   TextEditingController codeController = new TextEditingController();
 
@@ -49,10 +49,15 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
   @override
   Widget build(BuildContext context) {
 
+   String removedPlayer = "";
+   int removedIndex = null;
+
    final playerlist = ListView.separated(
      shrinkWrap: true,
   separatorBuilder: (context, index) => Divider(
-        color: Constants.iWhite,
+    indent: 40,
+    endIndent: 40,
+        color: Constants.iLight,
       ),
   itemCount: players.length  ,
   itemBuilder: (context, index) =>  Dismissible(
@@ -78,11 +83,26 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
     ),
     onDismissed: (direction) {
       // Show a snackbar. This snackbar could also contain "Undo" actions.
-    Scaffold
-        .of(context)
-        .showSnackBar(SnackBar(content: Text("removed player")));
+     Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(
+        'Player deleted.',
+        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.bold),
+        textAlign: TextAlign.left,
+      ),
+      duration: Duration(seconds: 3),
+      backgroundColor: Constants.iDarkGrey,
+      action: SnackBarAction(
+        label: 'Undo', textColor: Constants.colors[Constants.colorindex], // or some operation you would like
+        onPressed: () {
+          setState(() => players.insert(removedIndex, removedPlayer));
+        },
+      ),
+
+    ));
     // Remove the item from the data source.
     setState(() {
+      removedPlayer = players[index];
+      removedIndex = index;
       players.removeAt(index);
     });
     }
@@ -90,9 +110,92 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
     
 );
 
+    TextEditingController playerNameController = new TextEditingController();
+
+    final namefield = TextField(
+      obscureText: false,
+      keyboardType: TextInputType.text,
+      autocorrect: false,
+      maxLength: 15,
+      maxLines: 1,
+      controller: playerNameController,
+      style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iWhite),
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+          fillColor: Constants.iBlack,
+          filled: true,
+          hintText: "Start typing here...",
+          hintStyle: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iGrey),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
+    );
+
+    final addButton = IconButton(
+
+        onPressed: () {
+           showDialog(
+              context: context,
+              builder: (BuildContext context) {
+          // return object of type Dialog
+              return AlertDialog(
+                backgroundColor: Constants.iBlack,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
+                title: new Text(
+                  'Player Name',
+                  style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize),
+                ),
+                content: Container(
+                    height: 150,
+                    child: Column(children: [
+                      SizedBox(height: 25),
+                      namefield,
+                    ])),
+                actions: <Widget>[
+                  // usually buttons at the bottom of the dialog
+                  new FlatButton(
+                    child: new Text(
+                      "Cancel",
+                      style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+
+                  new FlatButton(
+                    child: new Text(
+                      "Add",
+                      style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      String name = playerNameController.text;
+                      //print('-' + question+ '-');
+                      if (name.length <= 2) {
+                        Popup.makePopup(context, 'Whoops!', 'Player nqme is too short');
+                      } else{
+                          FirebaseAnalytics().logEvent(name: 'action_performed', parameters: {'action_name': 'addPlayer'});
+                                                Navigator.pop(context);
+
+                        setState(() => players.add(name));
+
+                      }
+                    },
+                  ),
+                ],
+                );
+                },
+              );
+            },
+        icon: Icon(Icons.add, color: Constants.colors[Constants.colorindex]),
+        tooltip: "Add player",
+      );
+
+    
+
+
+
    final createButton = Hero(
         tag: 'tobutton',
-        child: Padding(
+        child:  Padding(
           padding: EdgeInsets.only(left: 45, right: 45),
           child: Material(
             elevation: 5.0,
@@ -109,7 +212,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                 Map<String, String> members = new Map<String, String>();
                 members[Constants.getUserID()] = Constants.getUsername();
                 String _groupName = "default";
-                if (_groupName.length != 0 && selectedCategory.length != 0) {
+                if (players.length != 0 && selectedCategory.length != 0) {
                   // Generate a unique ID and save the group
                   _database.generateUniqueGroupCode().then((code) async {
                     List<String> questionIDs = List<String>();
@@ -141,6 +244,8 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                     await groupdata.setNextQuestion(await _database.getNextQuestion(groupdata), Constants.getUserData(), doDatabaseUpdate: false);
                     await _database.updateGroup(groupdata);
 
+                    print(groupdata.getGroupCode());
+
 // GOTO THE NEXT SCREEN HERE
 
                   });
@@ -150,8 +255,8 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
               },
               child: Text("Start", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
             ),
-          ),
-        ));
+          ),),
+        );
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -201,9 +306,8 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
               ),
               child: Padding(
                 padding: const EdgeInsets.only(top: 36.0, bottom: 36, left: 63, right: 63),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                child: ListView(
+              
                   children: <Widget>[
                     Text(
                       'who\'s playing?',
@@ -215,7 +319,11 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                       ),
                     ),
                     SizedBox(height: 15,),
-                    
+                    Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+
+                      children: [
+                        
                     Text(
                       'Players',
                       style: new TextStyle(
@@ -224,18 +332,43 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                         fontFamily: "atarian",
                       ),
                     ),
+                    SizedBox(width:5 ,),
+                    Text(
+                      '('+  players.length.toString()+')',
+                      style: new TextStyle(
+                        color: Constants.colors[Constants.colorindex],
+                        fontSize: Constants.smallFontSize,
+                        fontFamily: "atarian",
+                      ),
+                    ),
+                    SizedBox(width: 25,),
+                    addButton
+                    ],),
                     SizedBox(
                       height: 20.0,
                     ),
-                    playerlist,
-                    Expanded(
-                      child: SizedBox(),
+                     playerlist,
+                    //),
+                    SizedBox(height: 20,),
+                    Text(
+                      'swipe to remove player',
+                      style: new TextStyle(
+                        color: Constants.colors[Constants.colorindex],
+                        fontSize: Constants.miniFontSize,
+                        fontFamily: "atarian",
+                      ),
                     ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                  
                   ],
                 ),
               ),
             ),
           ),
+          floatingActionButton: createButton,
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat ,
         ));
   }
 }

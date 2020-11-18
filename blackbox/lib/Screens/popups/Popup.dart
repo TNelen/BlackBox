@@ -244,6 +244,78 @@ class Popup {
     );
   }
 
+  static String addPlayer (BuildContext context, Database database, GroupData groupData) {
+    TextEditingController playerNameController = new TextEditingController();
+
+    final namefield = TextField(
+      obscureText: false,
+      keyboardType: TextInputType.text,
+      autocorrect: false,
+      maxLength: 15,
+      maxLines: 1,
+      controller: playerNameController,
+      style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iWhite),
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
+          fillColor: Constants.iBlack,
+          filled: true,
+          hintText: "Start typing here...",
+          hintStyle: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iGrey),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          backgroundColor: Constants.iBlack,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
+          title: new Text(
+            'Player Name',
+            style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize),
+          ),
+          content: Container(
+              height: 230,
+              child: Column(children: [
+                SizedBox(height: 25),
+                namefield,
+              ])),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text(
+                "Cancel",
+                style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+
+            new FlatButton(
+              child: new Text(
+                "Submit",
+                style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                String name = playerNameController.text;
+                //print('-' + question+ '-');
+                if (name.length <= 2) {
+                  Popup.makePopup(context, 'Whoops!', 'Player nqme is too short');
+                } else{
+                    FirebaseAnalytics().logEvent(name: 'action_performed', parameters: {'action_name': 'addPlayer'});
+
+                    return name;
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   static void togglePlaying(groupData) {
     groupData.setIsPlaying(!groupData.getIsPlaying());
   }
@@ -283,6 +355,7 @@ class Popup {
     );
   }
 }
+
 
 _launchURL() async {
   const url = 'mailto:magnetar.apps@gmail.com?subject=Problem report&body=';
