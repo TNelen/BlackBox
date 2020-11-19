@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:blackbox/DataContainers/UserData.dart';
-import 'package:blackbox/Screens/PartyScreens/passScreen.dart';
+import 'package:blackbox/Screens/PartyScreens/PassScreen.dart';
 import 'package:blackbox/Screens/popups/noMembersScelectedPopup.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
