@@ -1,14 +1,31 @@
 import 'dart:math';
 
 import 'package:blackbox/DataContainers/GroupData.dart';
-import 'package:blackbox/Screens/popups/GroupCodePopup.dart';
+import 'package:blackbox/DataContainers/UserData.dart';
+import 'package:blackbox/Screens/PartyScreens/PartyQuestionScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import '../GameScreen.dart';
 import '../../Interfaces/Database.dart';
 import '../popups/Popup.dart';
 import '../../Constants.dart';
 import 'package:blackbox/Database/QuestionListGetter.dart';
+
+
+Map<UserData, int> convertUserListToUserDataMap(List<String> users, bool canVoteBlank){
+      Map<UserData, int> userMap = new  Map<UserData, int>();
+      int index = 0;
+      while(index < users.length) {
+        UserData tempUser = new UserData((index+1).toString(), users[index]);
+        userMap.addAll({tempUser : 0});
+        index++;
+      }
+
+      if(canVoteBlank){
+        UserData tempUser = new UserData("0", "Blank");
+        userMap.addAll({tempUser : 0});
+      }
+      return userMap;
+}
 
 
 class SetPlayersScreen extends StatefulWidget {
@@ -112,7 +129,12 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
 
     TextEditingController playerNameController = new TextEditingController();
 
-    final namefield = TextField(
+    final namefield = new Theme(
+          data: new ThemeData(
+            primaryColor: Constants.colors[Constants.colorindex],
+            primaryColorDark: Constants.colors[Constants.colorindex],
+          ),
+          child: TextField(
       obscureText: false,
       keyboardType: TextInputType.text,
       autocorrect: false,
@@ -121,13 +143,15 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
       controller: playerNameController,
       style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iWhite),
       decoration: InputDecoration(
+          focusColor: Constants.colors[Constants.colorindex],
+          hoverColor: Constants.colors[Constants.colorindex],
           contentPadding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
           fillColor: Constants.iBlack,
           filled: true,
           hintText: "Start typing here...",
           hintStyle: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iGrey),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
-    );
+    ),);
 
     final addButton = IconButton(
 
@@ -211,6 +235,16 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                 // Create map of members
                 Map<String, String> members = new Map<String, String>();
                 members[Constants.getUserID()] = Constants.getUsername();
+
+                Map<UserData, int> userMap = convertUserListToUserDataMap(players, canVoteBlank);
+                print(userMap);
+
+                //add all players to the group
+                userMap.forEach((user, value) {
+                  members.putIfAbsent(user.getUserID(), () => user.getUsername());
+                });
+
+
                 String _groupName = "default";
                 if (players.length != 0 && selectedCategory.length != 0) {
                   // Generate a unique ID and save the group
@@ -245,6 +279,15 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                     await _database.updateGroup(groupdata);
 
                     print(groupdata.getGroupCode());
+                    
+                    
+                    
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => PartyQuestionScreen(_database, groupdata, code, userMap ),
+                          ));
+                    
 
 // GOTO THE NEXT SCREEN HERE
 
@@ -323,7 +366,8 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
 
                       children: [
-                        
+          Icon(Icons.people_outline, color: Constants.colors[Constants.colorindex], size: 30,),
+                    SizedBox(width: 15,),   
                     Text(
                       'Players',
                       style: new TextStyle(

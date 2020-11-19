@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:blackbox/Constants.dart';
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
@@ -28,8 +30,13 @@ class FirebaseSetters {
       dbData.forEach( (key, value) {
         convertedData[key.toString()] = value.toString();
       } );
+      //generate a random id of the player who voted
+      String randomID = new Random().nextInt(500).toString();
+      while(convertedData.containsKey(randomID)){
+        randomID = new Random().nextInt(500).toString();
+      }
 
-      convertedData[ Constants.getUserID() ] = voteeID;
+      convertedData[randomID] = voteeID;
 
       Map<String, dynamic> upd = new Map<String, dynamic>();
       upd['newVotes'] = convertedData;
