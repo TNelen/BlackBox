@@ -156,7 +156,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: 5.0 * MediaQuery.of(context).devicePixelRatio,
                   ),
-                  //TopIconBar.topIcons(context, database),
                   FancyFab(
                     database: database,
                   ),

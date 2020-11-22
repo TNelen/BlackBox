@@ -37,6 +37,7 @@ dependencies:
   avatar_glow: ^1.2.0         #glow around ready button
   url_launcher: ^5.5.2
   progress_indicators: ^0.1.5
+  slide_to_confirm: ^0.0.7
 
 
   flutter:
