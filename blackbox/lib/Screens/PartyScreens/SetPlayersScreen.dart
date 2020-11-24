@@ -345,7 +345,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) => PartyQuestionScreen(
-                            _database, groupdata, code, userMap),
+                            _database, groupdata, code, userMap, 0),
                       ));
                 });
               } else {

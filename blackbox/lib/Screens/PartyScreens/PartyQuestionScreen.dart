@@ -14,22 +14,24 @@ import '../../Database/FirebaseStream.dart';
 import '../popups/Popup.dart';
 import '../ResultsScreen.dart';
 
-
 class PartyQuestionScreen extends StatefulWidget {
   final Database _database;
   final GroupData groupData;
   final String code;
   //map used to display all the players and votes on the players
   final Map<UserData, int> playerVotes;
+  final int numberOfVotes;
 
   @override
-  PartyQuestionScreen(this._database, this.groupData, this.code, this.playerVotes) {
-  }
+  PartyQuestionScreen(
+      this._database, this.groupData, this.code, this.playerVotes, this.numberOfVotes) {}
 
-  _PartyQuestionScreenState createState() => _PartyQuestionScreenState(_database, groupData, code, playerVotes);
+  _PartyQuestionScreenState createState() =>
+      _PartyQuestionScreenState(_database, groupData, code, playerVotes, numberOfVotes);
 }
 
-class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsBindingObserver {
+class _PartyQuestionScreenState extends State<PartyQuestionScreen>
+    with WidgetsBindingObserver {
   Database _database;
   GroupData groupData;
   String code;
@@ -40,16 +42,19 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
 
   String currentQuestion;
   String currentQuestionString;
+   int numberOfVotes;
 
   FirebaseStream stream;
   TextEditingController questionController = new TextEditingController();
 
-  _PartyQuestionScreenState(Database db, GroupData groupData, String code, Map<UserData, int> playerVotes) {
+  _PartyQuestionScreenState(Database db, GroupData groupData, String code,
+      Map<UserData, int> playerVotes, int numberOfVotes) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
     this.stream = new FirebaseStream(code);
     this.playerVotes = playerVotes;
+    this.numberOfVotes = numberOfVotes;
   }
 
   @override
@@ -101,31 +106,36 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
             minWidth: MediaQuery.of(context).size.width,
             onPressed: () {
               if (clickedmember != null) {
-                
-
                 FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
                   'type': 'PartyVoteCast',
                   'code': groupData.getGroupCode(),
                 });
 
-                FirebaseAnalytics().logEvent(name: 'PartyVoteOnUser', parameters: null);
+                FirebaseAnalytics()
+                    .logEvent(name: 'PartyVoteOnUser', parameters: null);
 
                 groupData.addVote(clickedmember.getUserID());
-                int currentvotes = playerVotes[clickedmember]; 
-                playerVotes.update(clickedmember, (value) => currentvotes+1);
+                int currentvotes = playerVotes[clickedmember];
+                playerVotes.update(clickedmember, (value) => currentvotes + 1);
                 currentQuestion = groupData.getQuestionID();
                 currentQuestionString = groupData.getNextQuestionString();
                 print(playerVotes);
+                numberOfVotes++;
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => PassScreen(_database, groupData, code, playerVotes),
+                      builder: (BuildContext context) =>
+                          PassScreen(_database, groupData, code, playerVotes, numberOfVotes),
                     ));
               } else {
                 NoMemberSelectedPopup.noMemberSelectedPopup(context);
               }
             },
-            child: Text("Vote", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold)),
+            child: Text("Vote",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: Constants.actionbuttonFontSize)
+                    .copyWith(
+                        color: Constants.iBlack, fontWeight: FontWeight.bold)),
           ),
         ),
       ),
@@ -152,45 +162,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                 backgroundColor: Constants.iBlack,
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(children: [
-                      InkWell(
-                        onTap: () => Navigator.of(context).pop(true),
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 1),
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: Constants.colors[Constants.colorindex],
-                          ),
-                        ),
-                      ),
-                      FlatButton(
-                        padding: EdgeInsets.all(10),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Results",
-                          style: TextStyle(fontSize: Constants.actionbuttonFontSize, color: Constants.colors[Constants.colorindex]),
-                        ),
-                      ),
-                    ]),
-                    FlatButton(
-                      onPressed: () {
-                        groupData.removePlayingUser(Constants.getUserData());
-                        _database.updateGroup(groupData);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => GameScreen(_database, code),
-                            ));
-                      },
-                      child: Text(
-                        "Leave",
-                        style: TextStyle(fontSize: Constants.actionbuttonFontSize, color: Constants.colors[Constants.colorindex]),
-                      ),
-                    )
-                  ],
+                  children: [],
                 ),
               ),
               body: Builder(
@@ -209,12 +181,14 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                         ],
                       ),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 3.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 3.0),
                     child: ListView(
                       children: [
                         //submit own question button
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 1.0, vertical: 1.0),
                           color: Colors.transparent,
                           child: Center(
                             child: Column(
@@ -223,7 +197,11 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                                 SizedBox(height: 10),
                                 Text(
                                   'Question',
-                                  style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
+                                  style: new TextStyle(
+                                      color: Constants
+                                          .colors[Constants.colorindex],
+                                      fontSize: Constants.subtitleFontSize,
+                                      fontWeight: FontWeight.w700),
                                 ),
                                 SizedBox(height: 15),
                                 Card(
@@ -233,27 +211,41 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                                   ),
                                   color: Constants.iDarkGrey,
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20.0, vertical: 20.0),
                                     child: Column(
                                       children: <Widget>[
                                         Text(
                                           groupData.getNextQuestionString(),
-                                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                          style: new TextStyle(
+                                              color: Constants.iWhite,
+                                              fontSize:
+                                                  Constants.normalFontSize,
+                                              fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.center,
                                         ),
                                         SizedBox(height: 5),
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: <Widget>[
                                             new Container(
                                               width: 150.0,
                                               child: Text(
-                                                '- ' + groupData.getQuestion().getCategory() + ' -',
-                                                style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                                '- ' +
+                                                    groupData
+                                                        .getQuestion()
+                                                        .getCategory() +
+                                                    ' -',
+                                                style: new TextStyle(
+                                                    color: Constants.iWhite,
+                                                    fontSize:
+                                                        Constants.smallFontSize,
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                                 textAlign: TextAlign.center,
                                               ),
                                             ),
-                                            
                                           ],
                                         ),
                                       ],
@@ -268,7 +260,10 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                         Text(
                           'Select a friend',
                           textAlign: TextAlign.center,
-                          style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
+                          style: new TextStyle(
+                              color: Constants.colors[Constants.colorindex],
+                              fontSize: Constants.normalFontSize,
+                              fontWeight: FontWeight.w700),
                         ),
                         SizedBox(
                           height: 20,
@@ -286,7 +281,8 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                     ));
               }),
               floatingActionButton: voteButton,
-              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat,
             ),
           );
         });
@@ -311,10 +307,16 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
         },
         child: Center(
             child: Padding(
-          padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
+          padding:
+              const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
           child: Text(
             data.getUsername().split(' ')[0],
-            style: new TextStyle(color: data == clickedmember ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+            style: new TextStyle(
+                color: data == clickedmember
+                    ? Constants.iDarkGrey
+                    : Constants.iWhite,
+                fontSize: Constants.smallFontSize,
+                fontWeight: FontWeight.bold),
           ),
         )),
       ),

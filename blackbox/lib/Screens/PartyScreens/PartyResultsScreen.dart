@@ -1,6 +1,7 @@
 import 'package:audioplayers/audio_cache.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:blackbox/DataContainers/UserRankData.dart';
+import 'package:blackbox/Screens/HomeScreen.dart';
 import 'package:blackbox/Screens/PartyScreens/PartyQuestionScreen.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:blackbox/Util/VibrationHandler.dart';
@@ -558,7 +559,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (BuildContext context) => PartyQuestionScreen(_database, groupData, code, playerVotes),
+                              builder: (BuildContext context) => PartyQuestionScreen(_database, groupData, code, playerVotes, 0 ),
                             ));
                       } else {
                         //go to overview
@@ -600,19 +601,16 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                   FlatButton(
                     onPressed: () {
                       FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
-                        'code': groupData.getGroupCode(),
-                        'type': 'GameLeft',
+                        'type': 'PartyGameEnded',
                       });
-                      groupData.removePlayingUser(Constants.getUserData());
-                      _database.updateGroup(groupData);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (BuildContext context) => GameScreen(_database, code),
+                            builder: (BuildContext context) => HomeScreen(_database),
                           ));
                     },
                     child: Text(
-                      "Leave",
+                      "End game",
                       style: TextStyle(fontSize: Constants.actionbuttonFontSize, color: Constants.colors[Constants.colorindex]),
                     ),
                   )
