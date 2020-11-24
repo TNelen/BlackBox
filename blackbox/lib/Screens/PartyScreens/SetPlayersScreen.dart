@@ -10,6 +10,9 @@ import '../popups/Popup.dart';
 import '../../Constants.dart';
 import 'package:blackbox/Database/QuestionListGetter.dart';
 
+
+
+
 Map<UserData, int> convertUserListToUserDataMap(
     List<String> users, bool canVoteBlank) {
   Map<UserData, int> userMap = new Map<UserData, int>();
@@ -222,13 +225,18 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                       if (name.length <= 2) {
                         Popup.makePopup(
                             context, 'Whoops!', 'Player name is too short');
-                      } else {
+                      }
+                       if (players.contains(name[0].toUpperCase() + name.substring(1))) {
+                        Popup.makePopup(
+                            context, 'Whoops!', 'This player already exists');
+                      }  
+                      else {
                         FirebaseAnalytics().logEvent(
                             name: 'action_performed',
                             parameters: {'action_name': 'addPlayer'});
                         Navigator.pop(context);
 
-                        setState(() => players.add(name));
+                        setState(() => players.add(name[0].toUpperCase() + name.substring(1)));
                       }
                     },
                   ),
