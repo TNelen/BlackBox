@@ -456,9 +456,10 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                     SizedBox(
                       height: 20.0,
                     ),
-                    Container(
-                      height: 250,
-                    child: playerlist),
+                    LimitedBox(
+                    maxHeight: 250,
+                    child: playerlist,
+                    ),
                     addPlayerButton,
 
                     //),
