@@ -108,7 +108,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
       builder: (context, projectSnap) {
         if (projectSnap.connectionState == ConnectionState.none && projectSnap.hasData == null || projectSnap.data == null) {
           //print('project snapshot data is: ${projectSnap.data}');
-          return Container();
+          return new Expanded(child: new CircularProgressIndicator());
         }
 
         return ListView.builder(

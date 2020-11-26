@@ -128,7 +128,6 @@ class PartyResultScreenState extends State<PartyResultScreen> {
           print(groupData);
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           if (!snapshot.hasData) {
-            print("nodata");
             return new Center(child: new CircularProgressIndicator());
           }
           if (snapshot.hasData) {
