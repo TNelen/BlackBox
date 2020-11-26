@@ -183,7 +183,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                       Hero(
                         tag: "PartHeader",
                         child: AutoSizeText(
-                        "Create new Party",
+                        "Create a new Party",
                         style: new TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
                         maxLines: 1,
                       ),),
