@@ -54,20 +54,22 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(26.0),
               ),
-              minWidth: MediaQuery.of(context).size.width,
+              minWidth: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
               onPressed: () {
-                if(selectedCategory.length != 0) {
-                   Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => SetPlayersScreen(_database, selectedCategory, _canVoteBlank   ),
-                    ));}
-                else{
-                    Popup.makePopup(context, "Woops!", "Please select one or more categories!");
-
+                if (selectedCategory.length != 0) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => SetPlayersScreen(_database, selectedCategory, _canVoteBlank),
+                      ));
                 }
-                                
+                else {
+                  Popup.makePopup(context, "Woops!", "Please select one or more categories!");
+                }
               },
               child: Text("Create", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
             ),
@@ -96,21 +98,21 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
 
             return Column(children: [
               CategoryCard(
-              selectedCategory.contains(categoryname),
-              categoryname,
-              description,
-              amount,
-              onTap: () {
-                if (!selectedCategory.contains(categoryname)) {
-                  selectedCategory.add(categoryname);
-                } else if (selectedCategory.contains(categoryname)) {
-                  selectedCategory.remove(categoryname);
-                }
-                setState(() {});
-              },
-            ),
+                selectedCategory.contains(categoryname),
+                categoryname,
+                description,
+                amount,
+                onTap: () {
+                  if (!selectedCategory.contains(categoryname)) {
+                    selectedCategory.add(categoryname);
+                  } else if (selectedCategory.contains(categoryname)) {
+                    selectedCategory.remove(categoryname);
+                  }
+                  setState(() {});
+                },
+              ),
               SizedBox(height: 5,)
-                ]);
+            ]);
           },
         );
       },
@@ -153,65 +155,67 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
             ),
           ]),
         ),
-        body:Center(
-              child: Container(
-                //color: Constants.iBlack,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomLeft,
-                    stops: [0.1, 1.0],
-                    colors: [
-                      Constants.gradient1,
-                      Constants.gradient2,
+        body: Center(
+          child: Container(
+            //color: Constants.iBlack,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomLeft,
+                stops: [0.1, 1.0],
+                colors: [
+                  Constants.gradient1,
+                  Constants.gradient2,
 
 
-                    ],
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top:1),
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return ListView(
-                        padding: const EdgeInsets.only(left:50, right:50, top:20, bottom:20),
-
-                        shrinkWrap: true,
-                        children: <Widget>[
-                          AutoSizeText(
-                            "Create new Party",
-                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
-                            maxLines: 1,
-                          ),
-                          SizedBox(height: 30.0),
-                          Text(
-                            'Game settings',
-                            style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
-                          ),
-                          SizedBox(height: 20.0),
-                          ToggleButtonCard(
-                            'Blank vote',
-                            _canVoteBlank,
-                            onToggle: (bool newValue) => _canVoteBlank = newValue,
-                          ),                        
-                          SizedBox(height: 20.0),
-                          Text(
-                            'Choose categories',
-                            style: TextStyle(
-                              color: Constants.colors[Constants.colorindex],
-                              fontSize: Constants.normalFontSize,
-                            ),
-                          ),
-                          SizedBox(height: 20.0),
-                          categoryField,
-                          SizedBox(height: 75.0),
-                        ],
-                      );
-                    },
-                  ),
-                ),
+                ],
               ),
             ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 1),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return ListView(
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 20, bottom: 20),
+
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      Hero(
+                        tag: "PartHeader",
+                        child: AutoSizeText(
+                        "Create new Party",
+                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
+                        maxLines: 1,
+                      ),),
+                      SizedBox(height: 30.0),
+                      Text(
+                        'Game settings',
+                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
+                      ),
+                      SizedBox(height: 20.0),
+                      ToggleButtonCard(
+                        'Blank vote',
+                        _canVoteBlank,
+                        onToggle: (bool newValue) => _canVoteBlank = newValue,
+                      ),
+                      SizedBox(height: 20.0),
+                      Text(
+                        'Choose categories',
+                        style: TextStyle(
+                          color: Constants.colors[Constants.colorindex],
+                          fontSize: Constants.normalFontSize,
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      categoryField,
+                      SizedBox(height: 75.0),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
         floatingActionButton: nextButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),

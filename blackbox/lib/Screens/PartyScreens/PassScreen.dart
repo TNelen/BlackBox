@@ -18,8 +18,7 @@ class PassScreen extends StatefulWidget {
   Map<UserData, int> playerVotes;
   int numberOfVotes;
 
-  PassScreen(Database db, GroupData groupData, String code,
-      Map<UserData, int> playerVotes, int numberOfVotes) {
+  PassScreen(Database db, GroupData groupData, String code, Map<UserData, int> playerVotes, int numberOfVotes) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
@@ -28,8 +27,7 @@ class PassScreen extends StatefulWidget {
   }
 
   @override
-  _PassScreenState createState() => new _PassScreenState(
-      _database, groupData, code, playerVotes, numberOfVotes);
+  _PassScreenState createState() => new _PassScreenState(_database, groupData, code, playerVotes, numberOfVotes);
 }
 
 class _PassScreenState extends State<PassScreen> {
@@ -39,10 +37,8 @@ class _PassScreenState extends State<PassScreen> {
   Map<UserData, int> playerVotes;
   final int numberOfVotes;
 
-  _PassScreenState(this._database, this.groupData, this.code, this.playerVotes,
-      this.numberOfVotes) {
-    FirebaseAnalytics().logEvent(
-        name: 'open_screen', parameters: {'screen_name': 'RulesScreen'});
+  _PassScreenState(this._database, this.groupData, this.code, this.playerVotes, this.numberOfVotes) {
+    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'RulesScreen'});
   }
 
   @override
@@ -50,14 +46,12 @@ class _PassScreenState extends State<PassScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
-        theme: new ThemeData(
-            fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
+        theme: new ThemeData(fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Constants.iBlack,
-            title:
-                Row(mainAxisAlignment: MainAxisAlignment.start, children: []),
+            title: Row(mainAxisAlignment: MainAxisAlignment.start, children: []),
           ),
           body: Container(
             decoration: BoxDecoration(
@@ -72,8 +66,7 @@ class _PassScreenState extends State<PassScreen> {
               ),
             ),
             child: ListView(
-              padding: const EdgeInsets.only(
-                  top: 20.0, bottom: 20, left: 50, right: 50),
+              padding: const EdgeInsets.only(top: 20.0, bottom: 20, left: 50, right: 50),
               children: [
                 SizedBox(height: 10.0),
                 Row(mainAxisAlignment: MainAxisAlignment.center,
@@ -82,10 +75,7 @@ class _PassScreenState extends State<PassScreen> {
                       Text(
                         'pass the phone',
                         textAlign: TextAlign.center,
-                        style: new TextStyle(
-                            color: Constants.colors[Constants.colorindex],
-                            fontSize: Constants.titleFontSize,
-                            fontWeight: FontWeight.w300),
+                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
                       ),
                       JumpingDotsProgressIndicator(
                         numberOfDots: 3,
@@ -95,72 +85,61 @@ class _PassScreenState extends State<PassScreen> {
                     ]),
                 SizedBox(height: 20.0),
                 Text(
-                        numberOfVotes > 1
-                            ? numberOfVotes.toString() + ' players have voted'
-                            : numberOfVotes.toString() + ' player has voted',
-                        textAlign: TextAlign.center,
-                        style: new TextStyle(
-                            color: Constants.iWhite,
-                            fontSize: Constants.normalFontSize,
-                            fontWeight: FontWeight.w300),
-                      ),
+                  numberOfVotes > 1 ? numberOfVotes.toString() + ' players have voted' : numberOfVotes.toString() + ' player has voted',
+                  textAlign: TextAlign.center,
+                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
+                ),
                 SizedBox(height: 40.0),
-                Card(
-                  elevation: 5.0,
-                  color: Constants.iDarkGrey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PartyQuestionScreen(_database, groupData, code,
-                                    playerVotes, numberOfVotes),
-                          ));
-                    },
-                    child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 5, left: 10.0, right: 10, bottom: 5),
-                        child: Stack(children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 35),
-                              Text(
-                                "  Vote!",
-                                style: new TextStyle(
-                                    color: Constants.iWhite,
-                                    fontSize: Constants.normalFontSize,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                "  New vote for this round",
-                                textAlign: TextAlign.start,
-                                style: new TextStyle(
-                                    color: Constants.iLight,
-                                    fontSize: Constants.smallFontSize,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 10),
-                            ],
-                          ),
-                          Positioned(
-                            right: 0.0,
-                            top: 0.0,
-                            child: IconCard(
-                              Icons.edit,
-                              Constants.iLight.withOpacity(0.3),
-                              Constants.colors[Constants.colorindex],
-                              35,
+                Hero(
+                  tag: "newVote",
+                  child: Card(
+                    elevation: 5.0,
+                    color: Constants.iDarkGrey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => PartyQuestionScreen(_database, groupData, code, playerVotes, numberOfVotes),
+                            ));
+                      },
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 5, left: 10.0, right: 10, bottom: 5),
+                          child: Stack(children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 35),
+                                Text(
+                                  "  Vote!",
+                                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  "  New vote for this round",
+                                  textAlign: TextAlign.start,
+                                  style: new TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 10),
+                              ],
                             ),
-                          ),
-                        ]),
+                            Positioned(
+                              right: 0.0,
+                              top: 0.0,
+                              child: IconCard(
+                                Icons.edit,
+                                Constants.iGrey.withOpacity(0.1),
+                                Constants.colors[Constants.colorindex],
+                                35,
+                              ),
+                            ),
+                          ]),
+                        ),
                       ),
                     ),
                   ),
@@ -176,13 +155,11 @@ class _PassScreenState extends State<PassScreen> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      Popup.submitQuestionIngamePopup(
-                          context, _database, groupData);
+                      Popup.submitQuestionIngamePopup(context, _database, groupData);
                     },
                     child: Container(
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 5, left: 10.0, right: 10, bottom: 5),
+                        padding: const EdgeInsets.only(top: 5, left: 10.0, right: 10, bottom: 5),
                         child: Stack(children: [
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -191,19 +168,13 @@ class _PassScreenState extends State<PassScreen> {
                               SizedBox(height: 35),
                               Text(
                                 "  Add question",
-                                style: new TextStyle(
-                                    color: Constants.iWhite,
-                                    fontSize: Constants.normalFontSize,
-                                    fontWeight: FontWeight.bold),
+                                style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(height: 5),
                               Text(
                                 "  Want to ask a question? Submit it here!",
                                 textAlign: TextAlign.start,
-                                style: new TextStyle(
-                                    color: Constants.iLight,
-                                    fontSize: Constants.smallFontSize,
-                                    fontWeight: FontWeight.bold),
+                                style: new TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(height: 10),
                             ],
@@ -213,7 +184,7 @@ class _PassScreenState extends State<PassScreen> {
                             top: 0.0,
                             child: IconCard(
                               Icons.library_add,
-                              Constants.iLight.withOpacity(0.3),
+                              Constants.iGrey.withOpacity(0.1),
                               Constants.colors[Constants.colorindex],
                               35,
                             ),
@@ -232,10 +203,7 @@ class _PassScreenState extends State<PassScreen> {
             backgroundShape: BorderRadius.circular(16.0),
             foregroundShape: BorderRadius.circular(16.0),
             text: "Swipe to go to results",
-            textStyle: TextStyle(
-                color: Constants.iWhite,
-                fontSize: Constants.smallFontSize,
-                fontWeight: FontWeight.bold),
+            textStyle: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
             icon: Icons.chevron_right,
             onConfirmation: () {
               String currentQuestion = groupData.getQuestionID();
@@ -243,18 +211,11 @@ class _PassScreenState extends State<PassScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => PartyResultScreen(
-                        _database,
-                        groupData,
-                        code,
-                        currentQuestion,
-                        currentQuestionString,
-                        playerVotes),
+                    builder: (BuildContext context) => PartyResultScreen(_database, groupData, code, currentQuestion, currentQuestionString, playerVotes),
                   ));
             },
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         ));
   }
 }

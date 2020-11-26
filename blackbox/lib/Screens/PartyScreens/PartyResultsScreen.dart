@@ -50,7 +50,6 @@ class PartyResultScreenState extends State<PartyResultScreen> {
   FirebaseStream stream;
   bool joined = false;
   bool _loadingInProgress;
-  Timer timer;
   bool timeout;
   Map<UserData, int> playerVotes;
 
@@ -94,18 +93,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
 
     BackButtonInterceptor.add(myInterceptor);
 
-    timer = new Timer.periodic(
-      Duration(seconds: 1),
-      (Timer timer) => setState(
-        () {
-          _timeleft = _timeleft - 1;
-          if (_timeleft <= 0) {
-            timer.cancel();
-            timeout = true;
-          }
-        },
-      ),
-    );
+
   }
 
   @override
@@ -113,7 +101,6 @@ class PartyResultScreenState extends State<PartyResultScreen> {
     controller.dispose();
     BackButtonInterceptor.remove(myInterceptor);
     super.dispose();
-    timer.cancel();
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent) {
@@ -132,52 +119,24 @@ class PartyResultScreenState extends State<PartyResultScreen> {
 
   @override
   Widget _buildBody(BuildContext context) {
-    final submitquestionbutton = Card(
-      elevation: 5.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      color: Constants.iDarkGrey,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16.0),
-        onTap: () {
-          Popup.submitQuestionIngamePopup(context, _database, groupData);
-        },
-        child: Container(
-          padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.library_add,
-                color: Constants.iWhite,
-                size: 25,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text("Submit Question",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(
-                    color: Constants.iWhite,
-                  )),
-            ],
-          ),
-        ),
-      ),
-    );
+
 
     return StreamBuilder(
         stream: stream.groupData,
         builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
           groupData = snapshot.data;
+          print(groupData);
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           if (!snapshot.hasData) {
+            print("nodata");
             return new Center(child: new CircularProgressIndicator());
           }
           if (snapshot.hasData) {
+            print(groupData.getLastVotes());
             if (currentQuestion == groupData.getQuestionID()) {
               getRandomNexQuestion();
+              return new Center(child: new CircularProgressIndicator());
+
             }
           }
           List<UserRankData> currentWinners = groupData.getUserRankingList('previous', null);
@@ -579,7 +538,6 @@ class PartyResultScreenState extends State<PartyResultScreen> {
             ),
           );
 
-          timer.cancel();
 
           /// Play audio indicating whether or not the player is in the previous top three
           if (_firstTimeLoaded) {

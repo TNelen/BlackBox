@@ -215,9 +215,14 @@ class Popup {
             ),
 
             new FlatButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+                //side: BorderSide(color: Colors.red)
+              ),
+              color: Constants.colors[Constants.colorindex],
               child: new Text(
                 "Submit",
-                style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily: "atarian", color: Constants.iBlack, fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
               ),
               onPressed: () {
                 String question = questionController.text;
@@ -225,15 +230,12 @@ class Popup {
                 if (question.length == 0) {
                   Popup.makePopup(context, 'Whoops!', 'You cannot submit an empty question');
                 } else if (question.length >= 20) {
-                  if (question.endsWith('?')) {
-                    FirebaseAnalytics().logEvent(name: 'action_performed', parameters: {'action_name': 'AddQuestionIngame'});
+                  FirebaseAnalytics().logEvent(name: 'action_performed', parameters: {'action_name': 'AddQuestionIngame'});
 
-                    List<String> questions = new List<String>();
-                    questions.add(question);
-                    _addQuestions(questions, database, groupData);
-                    Navigator.pop(context);
-                  } else
-                    Popup.makePopup(context, 'Whoops', 'Please end your question with a question mark');
+                  List<String> questions = new List<String>();
+                  questions.add(question);
+                  _addQuestions(questions, database, groupData);
+                  Navigator.pop(context);
                 } else
                   Popup.makePopup(context, 'Whoops!', 'You cannot submit a question shorter than 20 characters');
               },
@@ -244,7 +246,7 @@ class Popup {
     );
   }
 
-  static String addPlayer (BuildContext context, Database database, GroupData groupData) {
+  static String addPlayer(BuildContext context, Database database, GroupData groupData) {
     TextEditingController playerNameController = new TextEditingController();
 
     final namefield = TextField(
@@ -303,10 +305,10 @@ class Popup {
                 //print('-' + question+ '-');
                 if (name.length <= 2) {
                   Popup.makePopup(context, 'Whoops!', 'Player nqme is too short');
-                } else{
-                    FirebaseAnalytics().logEvent(name: 'action_performed', parameters: {'action_name': 'addPlayer'});
+                } else {
+                  FirebaseAnalytics().logEvent(name: 'action_performed', parameters: {'action_name': 'addPlayer'});
 
-                    return name;
+                  return name;
                 }
               },
             ),
@@ -355,7 +357,6 @@ class Popup {
     );
   }
 }
-
 
 _launchURL() async {
   const url = 'mailto:magnetar.apps@gmail.com?subject=Problem report&body=';

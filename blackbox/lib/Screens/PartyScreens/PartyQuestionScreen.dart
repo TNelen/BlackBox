@@ -18,20 +18,18 @@ class PartyQuestionScreen extends StatefulWidget {
   final Database _database;
   final GroupData groupData;
   final String code;
+
   //map used to display all the players and votes on the players
   final Map<UserData, int> playerVotes;
   final int numberOfVotes;
 
   @override
-  PartyQuestionScreen(
-      this._database, this.groupData, this.code, this.playerVotes, this.numberOfVotes) {}
+  PartyQuestionScreen(this._database, this.groupData, this.code, this.playerVotes, this.numberOfVotes) {}
 
-  _PartyQuestionScreenState createState() =>
-      _PartyQuestionScreenState(_database, groupData, code, playerVotes, numberOfVotes);
+  _PartyQuestionScreenState createState() => _PartyQuestionScreenState(_database, groupData, code, playerVotes, numberOfVotes);
 }
 
-class _PartyQuestionScreenState extends State<PartyQuestionScreen>
-    with WidgetsBindingObserver {
+class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsBindingObserver {
   Database _database;
   GroupData groupData;
   String code;
@@ -42,13 +40,12 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
 
   String currentQuestion;
   String currentQuestionString;
-   int numberOfVotes;
+  int numberOfVotes;
 
   FirebaseStream stream;
   TextEditingController questionController = new TextEditingController();
 
-  _PartyQuestionScreenState(Database db, GroupData groupData, String code,
-      Map<UserData, int> playerVotes, int numberOfVotes) {
+  _PartyQuestionScreenState(Database db, GroupData groupData, String code, Map<UserData, int> playerVotes, int numberOfVotes) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
@@ -111,8 +108,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                   'code': groupData.getGroupCode(),
                 });
 
-                FirebaseAnalytics()
-                    .logEvent(name: 'PartyVoteOnUser', parameters: null);
+                FirebaseAnalytics().logEvent(name: 'PartyVoteOnUser', parameters: null);
 
                 groupData.addVote(clickedmember.getUserID());
                 int currentvotes = playerVotes[clickedmember];
@@ -124,18 +120,13 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          PassScreen(_database, groupData, code, playerVotes, numberOfVotes),
+                      builder: (BuildContext context) => PassScreen(_database, groupData, code, playerVotes, numberOfVotes),
                     ));
               } else {
                 NoMemberSelectedPopup.noMemberSelectedPopup(context);
               }
             },
-            child: Text("Vote",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: Constants.actionbuttonFontSize)
-                    .copyWith(
-                        color: Constants.iBlack, fontWeight: FontWeight.bold)),
+            child: Text("Vote", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold)),
           ),
         ),
       ),
@@ -181,14 +172,12 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                         ],
                       ),
                     ),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 3.0),
+                    padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 3.0),
                     child: ListView(
                       children: [
                         //submit own question button
                         Container(
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 1.0, vertical: 1.0),
+                          margin: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
                           color: Colors.transparent,
                           child: Center(
                             child: Column(
@@ -197,58 +186,42 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                                 SizedBox(height: 10),
                                 Text(
                                   'Question',
-                                  style: new TextStyle(
-                                      color: Constants
-                                          .colors[Constants.colorindex],
-                                      fontSize: Constants.subtitleFontSize,
-                                      fontWeight: FontWeight.w700),
+                                  style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
                                 ),
                                 SizedBox(height: 15),
-                                Card(
-                                  elevation: 5.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16.0),
-                                  ),
-                                  color: Constants.iDarkGrey,
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20.0, vertical: 20.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          groupData.getNextQuestionString(),
-                                          style: new TextStyle(
-                                              color: Constants.iWhite,
-                                              fontSize:
-                                                  Constants.normalFontSize,
-                                              fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        SizedBox(height: 5),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            new Container(
-                                              width: 150.0,
-                                              child: Text(
-                                                '- ' +
-                                                    groupData
-                                                        .getQuestion()
-                                                        .getCategory() +
-                                                    ' -',
-                                                style: new TextStyle(
-                                                    color: Constants.iWhite,
-                                                    fontSize:
-                                                        Constants.smallFontSize,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textAlign: TextAlign.center,
+                                Hero(
+                                  tag: "newVote",
+                                  child: Card(
+                                    elevation: 5.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+                                    color: Constants.iDarkGrey,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            groupData.getNextQuestionString(),
+                                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          SizedBox(height: 5),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              new Container(
+                                                width: 150.0,
+                                                child: Text(
+                                                  '- ' + groupData.getQuestion().getCategory() + ' -',
+                                                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                                  textAlign: TextAlign.center,
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -260,10 +233,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                         Text(
                           'Select a friend',
                           textAlign: TextAlign.center,
-                          style: new TextStyle(
-                              color: Constants.colors[Constants.colorindex],
-                              fontSize: Constants.normalFontSize,
-                              fontWeight: FontWeight.w700),
+                          style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
                         ),
                         SizedBox(
                           height: 20,
@@ -281,8 +251,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                     ));
               }),
               floatingActionButton: voteButton,
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerFloat,
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
             ),
           );
         });
@@ -307,16 +276,10 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
         },
         child: Center(
             child: Padding(
-          padding:
-              const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
+          padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
           child: Text(
             data.getUsername().split(' ')[0],
-            style: new TextStyle(
-                color: data == clickedmember
-                    ? Constants.iDarkGrey
-                    : Constants.iWhite,
-                fontSize: Constants.smallFontSize,
-                fontWeight: FontWeight.bold),
+            style: new TextStyle(color: data == clickedmember ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
           ),
         )),
       ),
