@@ -2,7 +2,7 @@ import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:blackbox/Screens/PartyScreens/PartyResultsScreen.dart';
 import 'package:blackbox/Screens/popups/Popup.dart';
-import 'package:blackbox/Screens/widgets/iconCard.dart';
+import 'package:blackbox/Screens/widgets/IconCard.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_indicators/progress_indicators.dart';
