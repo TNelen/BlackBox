@@ -30,13 +30,9 @@ class FirebaseSetters {
       dbData.forEach( (key, value) {
         convertedData[key.toString()] = value.toString();
       } );
-      //generate a random id of the player who voted
-      String randomID = new Random().nextInt(500).toString();
-      while(convertedData.containsKey(randomID)){
-        randomID = new Random().nextInt(500).toString();
-      }
+      
 
-      convertedData[randomID] = voteeID;
+      convertedData[Constants.getUserID()] = voteeID;
 
       Map<String, dynamic> upd = new Map<String, dynamic>();
       upd['newVotes'] = convertedData;
@@ -231,22 +227,23 @@ class FirebaseSetters {
                         && freshData.getQuestion().getQuestionID() == groupData.getLastQuestion().getQuestionID())
                         || (freshData.getQuestion() == null);
 
-       /// Handle last votes 
-      if (freshData.getLastVotes() == null || transfer)
+       /// Handle last votes
+      if (freshData.getLastVotes() == null || transfer || freshData.getLastVoteData() != groupData.getLastVoteData() )
         data['lastVotes'] = groupData.getLastVoteData();
-      else 
+      else
         data['lastVotes'] = freshData.getLastVoteData();
 
       /// Handle new votes
-      if (freshData.getNewVotes() == null || transfer)
+      if (freshData.getNewVotes() == null || transfer  || freshData.getNewVoteData() != groupData.getNewVoteData())
         data['newVotes'] = groupData.getNewVoteData();
-      else 
+      else
         data['newVotes'] = freshData.getNewVoteData();
 
+
       /// Handle total votes
-      if (freshData.getTotalVotes() == null || transfer)
+      if (freshData.getTotalVotes() == null || transfer  || freshData.getTotalVotes() != groupData.getTotalVotes())
         data['totalVotes'] = groupData.getTotalVotes();
-      else 
+      else
         data['totalVotes'] = freshData.getTotalVotes();
 
       data['lastUpdate'] = new DateTime.now().millisecondsSinceEpoch;

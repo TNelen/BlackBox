@@ -208,6 +208,8 @@ class _PassScreenState extends State<PassScreen> {
             onConfirmation: () {
               String currentQuestion = groupData.getQuestionID();
               String currentQuestionString = groupData.getNextQuestionString();
+              print(groupData.getNewVotes());
+              _database.updateGroup(groupData);
               Navigator.push(
                   context,
                   MaterialPageRoute(

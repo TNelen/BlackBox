@@ -697,7 +697,7 @@ class GroupData {
     _performAsyncVote(voteeID);
 
     /// Make change locally
-    _offlineVote(voteeID);
+    offlineVote(voteeID);
   }
 
   /// Perform a vote in the database
@@ -730,8 +730,19 @@ class GroupData {
 
   /// This vote will not be officially registered!
   /// This is only for local votes
-  void _offlineVote(String voteeID) {
+  void offlineVote(String voteeID) {
+
     _newVotes[Constants.getUserID()] = voteeID;
+  }
+
+  //oflineVote for party mode
+  void offlineVoteParty(String voteeID) {
+    String randomID = new Random().nextInt(500).toString();
+    while(_newVotes.containsKey(randomID)){
+      randomID = new Random().nextInt(500).toString();
+    }
+    _newVotes[randomID] = voteeID;
+    print(_newVotes);
   }
 
   /// Get the amount of votes each user has gotten in the previous round

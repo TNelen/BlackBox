@@ -39,7 +39,6 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
   UserData clickedmember;
 
   String currentQuestion;
-  String currentQuestionString;
   int numberOfVotes;
 
   FirebaseStream stream;
@@ -110,12 +109,13 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
 
                 FirebaseAnalytics().logEvent(name: 'PartyVoteOnUser', parameters: null);
 
-                groupData.addVote(clickedmember.getUserID());
+
+                groupData.offlineVoteParty(clickedmember.getUserID());
+                print("-----------");
+                print(groupData.getNewVotes());
                 int currentvotes = playerVotes[clickedmember];
                 playerVotes.update(clickedmember, (value) => currentvotes + 1);
                 currentQuestion = groupData.getQuestionID();
-                currentQuestionString = groupData.getNextQuestionString();
-                print(playerVotes);
                 numberOfVotes++;
                 Navigator.push(
                     context,
@@ -132,14 +132,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
       ),
     );
 
-    return StreamBuilder(
-        stream: stream.groupData,
-        builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
-          groupData = snapshot.data;
-          if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-          if (!snapshot.hasData) {
-            return new Center(child: new CircularProgressIndicator());
-          }
+
 
           return MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -254,7 +247,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
               floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
             ),
           );
-        });
+
   }
 
   Widget buildUserVoteCard(UserData data) {
