@@ -7,64 +7,34 @@ import 'package:blackbox/Constants.dart';
 class RulesColumn extends StatefulWidget {
   
   final List<String> titles = <String>[
-    'New game',
+    'Create Game',
+    'Join Game',
+    'Party Mode',
     'Game settings',
-    'Start game',
-    'Voting',
-    'Collecting results',
-    'Questions',
-    'Leave',
-    'End game'
   ];
 
   final List<String> descriptions = <String>[
     // New game
-    'Create a new game and invite your friends by sharing the group code.' + '\n' + 'Or join a game by entering the group code.',
+    'Create a new game and invite your friends by sharing the group code',
 
-    // Game settings
+    // Join game
+    'Join a game with the 5 character group code',
+
+    // Party Mode
+    'Create a local game.' +
+    '\n' +
+    'All players vote one by one. After you have voted, pass the phone to the next player' +
+    '\n' +
+    'After everyone has voted, go to the results, and a new round starts.',
+
+        // Game settings
     "The game creator can enable or disable 'blanco vote'. This is ability for the player to vote blanco" +
     '\n' +
     "The game creator can enable or disable 'vote on self'. This controls whether the player is able to cast a vote on himself" +
     '\n' +
     'These settings are set in the beginning of the game and cannot be changed during the game',
 
-    // Start game
-    'When you join or create a game you enter the game lobby.' +
-    '\n' +
-    'Press the ready button to ready up.' +
-    '\n' +
-    'When all players are ready, the ready button on the bottom becomes the start button, press start to begin the game.' +
-    '\n' +
-    'Each player name has an indicator, indicating whether the player is ready or not.',
 
-    // Voting
-    'Vote on a group member.' + '\n' + 'Once a vote is submitted, it can not be changed.',
-
-    // Collecting results
-    'After you have voted you will enter a waiting screen.' +
-    '\n' +
-    'It shows the number of people that still have to vote.' +
-    '\n' +
-    'The group creator wil see a countdown timer. It shows the time there is left for the members to vote.' +
-    '\n' +
-    'When this time is elapsed the players go to the results screen, no matter how many people still have to vote.' +
-    '\n' +
-    '',
-
-    // Questions
-    'Questions are generated in a random order.' +
-    '\n' +
-    'You can submit own question ideas ingame. These will be inserted in the queue of questions.' +
-    '\n' +
-    'All players have the ability to rate the questions, giving us feedback about the questions helps us inproving the game.',
-
-    // Leave
-    'Leave a running game by clicking on the leave in the top right corner.' + '\n' + 'Please do not close the app before leaving an active game.',
-
-    // End game
-    'When all questions are played the game ends and a overview of all questions and results is shown.' +
-    '\n' +
-    'The group leader has the ability to end the game prematurely, after the next questions the results are shown.'
   ];
   
   @override

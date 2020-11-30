@@ -19,6 +19,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import '../popups/Popup.dart';
 import '../OverviewScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 class PartyResultScreen extends StatefulWidget {
   Database _database;
@@ -76,7 +77,6 @@ class PartyResultScreenState extends State<PartyResultScreen> {
     viewportFraction: 0.85,
   );
 
-
   @override
   void initState() {
     groupData = null;
@@ -92,8 +92,6 @@ class PartyResultScreenState extends State<PartyResultScreen> {
     }, onError: (error) {});
 
     BackButtonInterceptor.add(myInterceptor);
-
-
   }
 
   @override
@@ -119,8 +117,6 @@ class PartyResultScreenState extends State<PartyResultScreen> {
 
   @override
   Widget _buildBody(BuildContext context) {
-
-
     return StreamBuilder(
         stream: stream.groupData,
         builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
@@ -134,8 +130,23 @@ class PartyResultScreenState extends State<PartyResultScreen> {
             print(groupData.getLastVotes());
             if (currentQuestion == groupData.getQuestionID()) {
               getRandomNexQuestion();
-              return new Center(child: new CircularProgressIndicator());
-
+              return new Center(
+                  child: Container(
+                width: MediaQuery.of(context).size.width / 3,
+                height: MediaQuery.of(context).size.width / 3,
+                child: LiquidCircularProgressIndicator(
+                  value: 0.25,
+                  valueColor: AlwaysStoppedAnimation(Constants.colors[Constants.colorindex]),
+                  backgroundColor: Constants.iBlack,
+                  borderColor: Constants.iWhite,
+                  borderWidth: 2.0,
+                  direction: Axis.vertical,
+                  center: Text(
+                    "Loading...",
+                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ));
             }
           }
           List<UserRankData> currentWinners = groupData.getUserRankingList('previous', null);
@@ -517,7 +528,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (BuildContext context) => PartyQuestionScreen(_database, groupData, code, playerVotes, 0 ),
+                              builder: (BuildContext context) => PartyQuestionScreen(_database, groupData, code, playerVotes, 0),
                             ));
                       } else {
                         //go to overview
@@ -536,7 +547,6 @@ class PartyResultScreenState extends State<PartyResultScreen> {
               ),
             ),
           );
-
 
           /// Play audio indicating whether or not the player is in the previous top three
           if (_firstTimeLoaded) {

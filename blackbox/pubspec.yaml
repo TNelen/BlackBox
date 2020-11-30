@@ -38,6 +38,8 @@ dependencies:
   url_launcher: ^5.5.2
   progress_indicators: ^0.1.5
   slide_to_confirm: ^0.0.7
+  liquid_progress_indicator: ^0.3.2
+
 
 
   flutter:
