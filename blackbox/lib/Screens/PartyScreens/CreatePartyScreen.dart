@@ -83,7 +83,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
       builder: (context, projectSnap) {
         if (projectSnap.connectionState == ConnectionState.none && projectSnap.hasData == null || projectSnap.data == null) {
           //print('project snapshot data is: ${projectSnap.data}');
-          return new Expanded(child: new CircularProgressIndicator());
+          return Container();
         }
 
         return ListView.builder(
