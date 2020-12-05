@@ -21,7 +21,7 @@ class CreateGameScreen extends StatefulWidget {
   }
 
   @override
-  _CreateGameScreenState createState() => new _CreateGameScreenState(_database);
+  _CreateGameScreenState createState() => _CreateGameScreenState(_database);
 }
 
 class _CreateGameScreenState extends State<CreateGameScreen> {
@@ -58,7 +58,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
               onPressed: () {
                 // Create map of members
-                Map<String, String> members = new Map<String, String>();
+                Map<String, String> members = Map<String, String>();
                 members[Constants.getUserID()] = Constants.getUsername();
                 _groupName = "default";
                 if (_groupName.length != 0 && selectedCategory.length != 0) {
@@ -90,7 +90,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     // Only logged here
                     FirebaseAnalytics().logEvent(name: 'game_created', parameters: map);
 
-                    GroupData groupdata = new GroupData(_groupName, description, _canVoteBlank, _canVoteOnSelf, code, Constants.getUserID(), members, questionIDs);
+                    GroupData groupdata = GroupData(_groupName, description, _canVoteBlank, _canVoteOnSelf, code, Constants.getUserID(), members, questionIDs);
                     await groupdata.setNextQuestion(await _database.getNextQuestion(groupdata), Constants.getUserData(), doDatabaseUpdate: false);
                     await _database.updateGroup(groupdata);
                     GroupCodePopup.groupCodePopup(code, context, _database);
@@ -123,21 +123,23 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
 
             return Column(children: [
               CategoryCard(
-              selectedCategory.contains(categoryname),
-              categoryname,
-              description,
-              amount,
-              onTap: () {
-                if (!selectedCategory.contains(categoryname)) {
-                  selectedCategory.add(categoryname);
-                } else if (selectedCategory.contains(categoryname)) {
-                  selectedCategory.remove(categoryname);
-                }
-                setState(() {});
-              },
-            ),
-              SizedBox(height: 5,)
-                ]);
+                selectedCategory.contains(categoryname),
+                categoryname,
+                description,
+                amount,
+                onTap: () {
+                  if (!selectedCategory.contains(categoryname)) {
+                    selectedCategory.add(categoryname);
+                  } else if (selectedCategory.contains(categoryname)) {
+                    selectedCategory.remove(categoryname);
+                  }
+                  setState(() {});
+                },
+              ),
+              SizedBox(
+                height: 5,
+              )
+            ]);
           },
         );
       },
@@ -146,7 +148,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: new ThemeData(
+      theme: ThemeData(
         fontFamily: "atarian",
         scaffoldBackgroundColor: Constants.iBlack,
       ),
@@ -154,7 +156,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           elevation: 0,
-
           backgroundColor: Colors.transparent,
           title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
             InkWell(
@@ -180,71 +181,68 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             ),
           ]),
         ),
-        body:Center(
-              child: Container(
-                //color: Constants.iBlack,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomLeft,
-                    stops: [0.1, 1.0],
-                    colors: [
-                      Constants.gradient1,
-                      Constants.gradient2,
-
-
-                    ],
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top:1),
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return ListView(
-                        padding: const EdgeInsets.only(left:50, right:50, top:20, bottom:20),
-
-                        shrinkWrap: true,
-                        children: <Widget>[
-                          AutoSizeText(
-                            "Create new Game",
-                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
-                            maxLines: 1,
-                          ),
-                          SizedBox(height: 30.0),
-                          Text(
-                            'Game settings',
-                            style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
-                          ),
-                          SizedBox(height: 20.0),
-                          ToggleButtonCard(
-                            'Blank vote',
-                            _canVoteBlank,
-                            onToggle: (bool newValue) => _canVoteBlank = newValue,
-                          ),
-                          SizedBox(height: 5.0),
-                          ToggleButtonCard(
-                            'Vote on yourself',
-                            _canVoteOnSelf,
-                            onToggle: (bool newValue) => _canVoteOnSelf = newValue,
-                          ),
-                          SizedBox(height: 20.0),
-                          Text(
-                            'Choose categories',
-                            style: TextStyle(
-                              color: Constants.colors[Constants.colorindex],
-                              fontSize: Constants.normalFontSize,
-                            ),
-                          ),
-                          SizedBox(height: 20.0),
-                          categoryField,
-                          SizedBox(height: 75.0),
-                        ],
-                      );
-                    },
-                  ),
-                ),
+        body: Center(
+          child: Container(
+            //color: Constants.iBlack,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomLeft,
+                stops: [0.1, 1.0],
+                colors: [
+                  Constants.gradient1,
+                  Constants.gradient2,
+                ],
               ),
             ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 1),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return ListView(
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 20, bottom: 20),
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      AutoSizeText(
+                        "Create new Game",
+                        style: TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
+                        maxLines: 1,
+                      ),
+                      SizedBox(height: 30.0),
+                      Text(
+                        'Game settings',
+                        style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
+                      ),
+                      SizedBox(height: 20.0),
+                      ToggleButtonCard(
+                        'Blank vote',
+                        _canVoteBlank,
+                        onToggle: (bool newValue) => _canVoteBlank = newValue,
+                      ),
+                      SizedBox(height: 5.0),
+                      ToggleButtonCard(
+                        'Vote on yourself',
+                        _canVoteOnSelf,
+                        onToggle: (bool newValue) => _canVoteOnSelf = newValue,
+                      ),
+                      SizedBox(height: 20.0),
+                      Text(
+                        'Choose categories',
+                        style: TextStyle(
+                          color: Constants.colors[Constants.colorindex],
+                          fontSize: Constants.normalFontSize,
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      categoryField,
+                      SizedBox(height: 75.0),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
         floatingActionButton: createButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),

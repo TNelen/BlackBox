@@ -13,12 +13,12 @@ class JoinGameScreen extends StatefulWidget {
   }
 
   @override
-  _JoinGameScreenState createState() => new _JoinGameScreenState(_database);
+  _JoinGameScreenState createState() => _JoinGameScreenState(_database);
 }
 
 class _JoinGameScreenState extends State<JoinGameScreen> {
   Database _database;
-  TextEditingController codeController = new TextEditingController();
+  TextEditingController codeController = TextEditingController();
 
   _JoinGameScreenState(Database db) {
     this._database = db;
@@ -28,9 +28,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
 
   void joinGame(String groupID) async {
     bool exists = false;
-    print(exists);
     exists = await _database.doesGroupExist(groupID);
-    print(exists);
     if (groupID.length == Constants.groupCodeLength) {
       if (exists) {
         FirebaseAnalytics().logEvent(name: 'game_action', parameters: {'type': 'GameJoined', 'code': codeController.text.toUpperCase()});
@@ -140,7 +138,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                   children: <Widget>[
                     Text(
                       'Join Group',
-                      style: new TextStyle(
+                      style: TextStyle(
                         color: Constants.iWhite,
                         fontSize: Constants.titleFontSize,
                         fontWeight: FontWeight.w300,
@@ -152,7 +150,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                     ),
                     Text(
                       'Enter group code below',
-                      style: new TextStyle(
+                      style: TextStyle(
                         color: Constants.colors[Constants.colorindex],
                         fontSize: Constants.normalFontSize,
                         fontFamily: "atarian",

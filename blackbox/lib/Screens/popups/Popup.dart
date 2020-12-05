@@ -17,18 +17,18 @@ class Popup {
         return AlertDialog(
           backgroundColor: Constants.iBlack,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
-          title: new Text(
+          title: Text(
             title,
             style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
           ),
-          content: new Text(
+          content: Text(
             message,
             style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.smallFontSize),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text(
+            FlatButton(
+              child: Text(
                 "Close",
                 style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
               ),
@@ -51,14 +51,14 @@ class Popup {
         return AlertDialog(
           backgroundColor: Constants.iBlack,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
-          title: new Text(
+          title: Text(
             title,
             style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
           ),
           content: Container(
               height: 120,
               child: Column(children: [
-                new Text(
+                Text(
                   message,
                   style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.smallFontSize),
                 ),
@@ -73,8 +73,8 @@ class Popup {
               ])),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text(
+            FlatButton(
+              child: Text(
                 "Close",
                 style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
               ),
@@ -89,7 +89,7 @@ class Popup {
   }
 
   static void makeChangeUsernamePopup(BuildContext context, Database database) {
-    TextEditingController usernameController = new TextEditingController();
+    TextEditingController usernameController = TextEditingController();
 
     final usernameField = TextField(
       obscureText: false,
@@ -159,15 +159,16 @@ class Popup {
 
   static void _addQuestions(List<String> questions, Database database, GroupData groupData) async {
     for (String q in questions) {
-      String id = await database.updateQuestion(new Question.addFromUser(q, Constants.userData));
+      String id = await database.updateQuestion(Question.addFromUser(q, Constants.userData));
       groupData.addQuestionToList(id);
-      database.updateGroup(groupData);
+      await database.updateGroup(groupData);
     }
   }
 
   static void submitQuestionIngamePopup(BuildContext context, Database database, GroupData groupData) {
     TextEditingController questionController = TextEditingController();
 
+    // ignore: unnecessary_final
     final questionfield = TextField(
       obscureText: false,
       keyboardType: TextInputType.multiline,
@@ -246,8 +247,6 @@ class Popup {
     );
   }
 
-
-
   static void togglePlaying(groupData) {
     // ignore: invariant_booleans
     groupData.setIsPlaying(!groupData.getIsPlaying());
@@ -261,7 +260,7 @@ class Popup {
         return AlertDialog(
           backgroundColor: Constants.iDarkGrey,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
-          title: new Text(
+          title: Text(
             'End game?',
             style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize),
           ),
@@ -271,8 +270,8 @@ class Popup {
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text(
+            FlatButton(
+              child: Text(
                 "Yes I'm sure",
                 style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
               ),
@@ -289,7 +288,7 @@ class Popup {
   }
 }
 
-_launchURL() async {
+void _launchURL() async {
   const url = 'mailto:magnetar.apps@gmail.com?subject=Problem report&body=';
   if (await canLaunch(url)) {
     await launch(url);

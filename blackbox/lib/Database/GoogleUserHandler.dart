@@ -29,7 +29,7 @@ class GoogleUserHandler {
 
     loggedIn = true;
 
-    UserData userData = new UserData(user.uid, user.displayName);
+    UserData userData = UserData(user.uid, user.displayName);
     
     return userData;
   }

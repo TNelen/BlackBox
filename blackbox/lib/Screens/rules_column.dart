@@ -1,5 +1,4 @@
 import 'package:blackbox/Screens/widgets/better_expansion_tile.dart';
-import 'package:blackbox/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:blackbox/Constants.dart';
@@ -87,7 +86,7 @@ class _RulesColumnState extends State<RulesColumn> {
           },
           title: Text(
             widget.titles[i],
-            style: new TextStyle(
+            style: TextStyle(
               color: Constants.colors[Constants.colorindex],
               fontSize: Constants.normalFontSize,
             ),
@@ -98,7 +97,7 @@ class _RulesColumnState extends State<RulesColumn> {
               children: [
                 Text(
                   widget.descriptions[i],
-                  style: new TextStyle(
+                  style: TextStyle(
                     color: Constants.iWhite,
                     fontSize: Constants.smallFontSize,
                   ),

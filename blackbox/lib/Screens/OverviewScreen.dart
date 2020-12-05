@@ -15,7 +15,7 @@ class OverviewScreen extends StatefulWidget {
   }
 
   @override
-  _OverviewScreenState createState() => new _OverviewScreenState(_database, groupData);
+  _OverviewScreenState createState() => _OverviewScreenState(_database, groupData);
 }
 
 class _OverviewScreenState extends State<OverviewScreen> {
@@ -30,12 +30,11 @@ class _OverviewScreenState extends State<OverviewScreen> {
   @override
   Widget build(BuildContext context) {
     Map<String, Map<String, int>> history = groupData.getHistory();
-    print(history);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BlackBox',
-      theme: new ThemeData(
+      theme: ThemeData(
         fontFamily: "atarian",
         scaffoldBackgroundColor: Colors.transparent,
       ),
@@ -45,12 +44,12 @@ class _OverviewScreenState extends State<OverviewScreen> {
           backgroundColor: Constants.iBlack,
           title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
             InkWell(
-              onTap: () => {
+              onTap: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) => HomeScreen(_database),
-                    ))
+                    ));
               },
               child: Row(
                 children: [
@@ -107,13 +106,13 @@ class _OverviewScreenState extends State<OverviewScreen> {
                             Text(
                               key,
                               textAlign: TextAlign.center,
-                              style: new TextStyle(color: Constants.iWhite, fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Constants.iWhite, fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
                               height: 5,
                             ),
                             ListView.separated(
-                              physics: new NeverScrollableScrollPhysics(),
+                              physics: NeverScrollableScrollPhysics(),
                               separatorBuilder: (context, index2) => Divider(
                                 color: Constants.iBlack,
                                 height: 0.5,
@@ -138,7 +137,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                                 ),
                                                 Text(
                                                   (index2 + 1).toString() + (index2 == 0 ? 'st' : index2 == 1 ? 'nd' : index2 == 2 ? 'rd' : 'th'),
-                                                  style: new TextStyle(
+                                                  style: TextStyle(
                                                       color: index2 == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                                   textAlign: TextAlign.start,
                                                 ),
@@ -147,14 +146,14 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                                 ),
                                                 Text(
                                                   results[index2].getId().split(' ')[0],
-                                                  style: new TextStyle(
+                                                  style: TextStyle(
                                                       color: index2 == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                                                   textAlign: TextAlign.start,
                                                 ),
                                               ]),
                                               Text(
                                                 results[index2].getNumVotes().toString(),
-                                                style: new TextStyle(
+                                                style: TextStyle(
                                                     color: index2 == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                                 textAlign: TextAlign.start,
                                               ),

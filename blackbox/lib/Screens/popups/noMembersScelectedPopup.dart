@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../Constants.dart';
 
-
 class NoMemberSelectedPopup {
   static void noMemberSelectedPopup(BuildContext context) {
     // flutter defined function
@@ -12,18 +11,18 @@ class NoMemberSelectedPopup {
         return AlertDialog(
           backgroundColor: Constants.iBlack,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
-          title: new Text(
+          title: Text(
             "No members selected",
             style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
           ),
-          content: new Text(
+          content: Text(
             "Please make a valid choice",
             style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.smallFontSize),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text(
+            FlatButton(
+              child: Text(
                 "Close",
                 style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
               ),

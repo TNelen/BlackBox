@@ -6,8 +6,10 @@ analyzer:
   errors:
     invalid_assignment: warning
     missing_return: error
+    unused_import: error
     dead_code: info
     todo: ignore
+    avoid_print: ignore
 
 
 linter:

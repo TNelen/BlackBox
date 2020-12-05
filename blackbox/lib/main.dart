@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       ///check if user isn't loged in via google already when returning to homescreen
       try {
         GoogleUserHandler guh = GoogleUserHandler();
-        guh.handleSignIn().then((user) async {
+        await guh.handleSignIn().then((user) async {
           /// Log the retreived user in and update the data in the database
           UserData saved = await database.getUserByID(user.getUserID());
           loggedIn = true;
@@ -104,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     super.initState();
 
     _progress = 0;
-    new Timer.periodic(Duration(seconds: 1), (Timer t) {
+    Timer.periodic(Duration(seconds: 1), (Timer t) {
       setState(() {
         if (!wifiPopup) {
           checkWifi().then((connected) {

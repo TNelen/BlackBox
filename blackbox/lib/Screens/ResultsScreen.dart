@@ -83,7 +83,7 @@ class ResultScreenState extends State<ResultScreen> {
     }
 
     if (currentQuestion == newgroupdata.getQuestionID()) {
-      _database.voteOnUser(groupData, clickedmember);
+      await _database.voteOnUser(groupData, clickedmember);
     }
   }
 
@@ -103,7 +103,7 @@ class ResultScreenState extends State<ResultScreen> {
 
     BackButtonInterceptor.add(myInterceptor);
 
-    timer = new Timer.periodic(
+    timer = Timer.periodic(
       Duration(seconds: 1),
       (Timer timer) => setState(
         () {
@@ -132,10 +132,10 @@ class ResultScreenState extends State<ResultScreen> {
   void getRandomNexQuestion() async {
     Question question = await _database.getNextQuestion(groupData);
     if (question.getQuestionID() == "END") {
-      groupData.setNextQuestion(question, Constants.getUserData());
+      await groupData.setNextQuestion(question, Constants.getUserData());
       groupData.setIsPlaying(false);
     } else {
-      groupData.setNextQuestion(question, Constants.getUserData());
+      await groupData.setNextQuestion(question, Constants.getUserData());
     }
   }
 
@@ -182,7 +182,7 @@ class ResultScreenState extends State<ResultScreen> {
           groupData = snapshot.data;
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           if (!snapshot.hasData) {
-            return new Center(child: new CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasData) {
             _performConcurrencyFix();
@@ -209,11 +209,11 @@ class ResultScreenState extends State<ResultScreen> {
               }
               remainingQuestionsText += ' remaining';
 
-              return new WillPopScope(
+              return WillPopScope(
                   onWillPop: () async => false,
                   child: MaterialApp(
                     debugShowCheckedModeBanner: false,
-                    theme: new ThemeData(
+                    theme: ThemeData(
                       fontFamily: "atarian",
                       scaffoldBackgroundColor: Colors.transparent,
                     ),
@@ -243,7 +243,6 @@ class ResultScreenState extends State<ResultScreen> {
                                     style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w300),
                                   ),
                                 ),
-
                                 JumpingDotsProgressIndicator(
                                   numberOfDots: 3,
                                   fontSize: Constants.subtitleFontSize,
@@ -272,7 +271,7 @@ class ResultScreenState extends State<ResultScreen> {
                                 borderRadius: BorderRadius.circular(16),
                                 child: LinearProgressIndicator(
                                   backgroundColor: Constants.iWhite,
-                                  valueColor: new AlwaysStoppedAnimation<Color>(Constants.colors[Constants.colorindex]),
+                                  valueColor: AlwaysStoppedAnimation<Color>(Constants.colors[Constants.colorindex]),
                                   value: (groupData.getHistory().length + 1) / (groupData.getHistory().length + groupData.getQuestionList().length),
                                 ),
                               ),
@@ -338,13 +337,13 @@ class ResultScreenState extends State<ResultScreen> {
               child: Column(children: <Widget>[
                 Text(
                   'Alltime leaderboard',
-                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 ListView.separated(
-                  physics: new NeverScrollableScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
                   separatorBuilder: (context, index) => Divider(
                     color: Colors.white,
                   ),
@@ -369,8 +368,7 @@ class ResultScreenState extends State<ResultScreen> {
                                     ),
                                     Text(
                                       (index + 1).toString() + (index == 0 ? 'st' : index == 1 ? 'nd' : index == 2 ? 'rd' : 'th'),
-                                      style:
-                                          new TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                      style: TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                       textAlign: TextAlign.start,
                                     ),
                                     SizedBox(
@@ -378,14 +376,13 @@ class ResultScreenState extends State<ResultScreen> {
                                     ),
                                     Text(
                                       alltimeWinners[index].getUserName().split(' ')[0],
-                                      style:
-                                          new TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
+                                      style: TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                                       textAlign: TextAlign.start,
                                     ),
                                   ]),
                                   Text(
                                     alltimeWinners[index].getNumVotes().toString(),
-                                    style: new TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
+                                    style: TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                     textAlign: TextAlign.start,
                                   ),
                                 ],
@@ -421,7 +418,7 @@ class ResultScreenState extends State<ResultScreen> {
               child: Column(children: <Widget>[
                 Text(
                   'Results',
-                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 5,
@@ -455,13 +452,13 @@ class ResultScreenState extends State<ResultScreen> {
                                               children: <Widget>[
                                                 AutoSizeText(
                                                   currentWinners[1].getUserName().split(' ')[0],
-                                                  style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
+                                                  style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                                   textAlign: TextAlign.center,
                                                   maxLines: 1,
                                                 ),
                                                 Text(
                                                   currentWinners[1].getNumVotes().toString() + (currentWinners[1].getNumVotes().toString() == '1' ? ' vote' : ' votes'),
-                                                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.w400),
+                                                  style: TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.w400),
                                                   textAlign: TextAlign.center,
                                                 ),
                                                 SizedBox(
@@ -510,13 +507,13 @@ class ResultScreenState extends State<ResultScreen> {
                                         children: <Widget>[
                                           AutoSizeText(
                                             currentWinners.length == 0 ? "" : currentWinners[0].getUserName().split(' ')[0],
-                                            style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w600),
+                                            style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w600),
                                             textAlign: TextAlign.center,
                                             maxLines: 1,
                                           ),
                                           Text(
                                             currentWinners.length == 0 ? "" : currentWinners[0].getNumVotes().toString() + (currentWinners[0].getNumVotes().toString() == '1' ? ' vote' : ' votes'),
-                                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                            style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                             textAlign: TextAlign.center,
                                           ),
                                           SizedBox(
@@ -563,13 +560,13 @@ class ResultScreenState extends State<ResultScreen> {
                                               children: <Widget>[
                                                 AutoSizeText(
                                                   currentWinners[2].getUserName().split(' ')[0],
-                                                  style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
+                                                  style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                                   textAlign: TextAlign.center,
                                                   maxLines: 1,
                                                 ),
                                                 Text(
                                                   currentWinners[2].getNumVotes().toString() + (currentWinners[2].getNumVotes().toString() == '1' ? ' vote' : ' votes'),
-                                                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.w400),
+                                                  style: TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.w400),
                                                   textAlign: TextAlign.center,
                                                 ),
                                                 SizedBox(
@@ -593,7 +590,7 @@ class ResultScreenState extends State<ResultScreen> {
                 ),
                 currentWinners.length > 3
                     ? ListView.separated(
-                        physics: new NeverScrollableScrollPhysics(),
+                        physics: NeverScrollableScrollPhysics(),
                         separatorBuilder: (context, index) => Divider(
                           color: Colors.white,
                         ),
@@ -618,7 +615,7 @@ class ResultScreenState extends State<ResultScreen> {
                                           ),
                                           Text(
                                             (index + 4).toString() + 'th',
-                                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                            style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                             textAlign: TextAlign.start,
                                           ),
                                           SizedBox(
@@ -626,13 +623,13 @@ class ResultScreenState extends State<ResultScreen> {
                                           ),
                                           Text(
                                             currentWinners[index + 3].getUserName().split(' ')[0],
-                                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
+                                            style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                                             textAlign: TextAlign.start,
                                           ),
                                         ]),
                                         Text(
                                           currentWinners[index + 3].getNumVotes().toString(),
-                                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
+                                          style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                           textAlign: TextAlign.start,
                                         ),
                                       ],
@@ -714,7 +711,7 @@ class ResultScreenState extends State<ResultScreen> {
 
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: new ThemeData(
+            theme: ThemeData(
               fontFamily: "atarian",
               scaffoldBackgroundColor: Colors.transparent,
             ),
@@ -784,7 +781,7 @@ class ResultScreenState extends State<ResultScreen> {
                       child: Text(
                         currentQuestionString,
                         textAlign: TextAlign.center,
-                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                       ),
                     ),
 
@@ -812,7 +809,7 @@ class ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: new ThemeData(
+        theme: ThemeData(
           scaffoldBackgroundColor: Colors.transparent,
         ),
         home: Scaffold(

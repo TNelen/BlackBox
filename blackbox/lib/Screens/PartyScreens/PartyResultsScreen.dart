@@ -3,20 +3,15 @@ import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:blackbox/DataContainers/UserRankData.dart';
 import 'package:blackbox/Screens/HomeScreen.dart';
 import 'package:blackbox/Screens/PartyScreens/PartyQuestionScreen.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:blackbox/Util/VibrationHandler.dart';
 import 'package:flutter/material.dart';
 import '../../DataContainers/GroupData.dart';
 import '../../DataContainers/Question.dart';
 import '../../Constants.dart';
-import '../QuestionScreen.dart';
 import '../../Interfaces/Database.dart';
 import '../../Database/FirebaseStream.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import '../GameScreen.dart';
-import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
-import '../popups/Popup.dart';
 import '../OverviewScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
@@ -108,10 +103,10 @@ class PartyResultScreenState extends State<PartyResultScreen> {
   void getRandomNexQuestion() async {
     Question question = await _database.getNextQuestion(groupData);
     if (question.getQuestionID() == "END") {
-      groupData.setNextQuestion(question, Constants.getUserData());
+      await groupData.setNextQuestion(question, Constants.getUserData());
       groupData.setIsPlaying(false);
     } else {
-      groupData.setNextQuestion(question, Constants.getUserData());
+      await groupData.setNextQuestion(question, Constants.getUserData());
     }
   }
 
@@ -121,16 +116,14 @@ class PartyResultScreenState extends State<PartyResultScreen> {
         stream: stream.groupData,
         builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
           groupData = snapshot.data;
-          print(groupData);
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           if (!snapshot.hasData) {
-            return new Center(child: new CircularProgressIndicator());
+            return Center(child: new CircularProgressIndicator());
           }
           if (snapshot.hasData) {
-            print(groupData.getLastVotes());
             if (currentQuestion == groupData.getQuestionID()) {
               getRandomNexQuestion();
-              return new Center(
+              return Center(
                   child: Container(
                 width: MediaQuery.of(context).size.width / 3,
                 height: MediaQuery.of(context).size.width / 3,
@@ -143,7 +136,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                   direction: Axis.vertical,
                   center: Text(
                     "Loading...",
-                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.bold),
+                    style: TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.bold),
                   ),
                 ),
               ));
@@ -182,13 +175,13 @@ class PartyResultScreenState extends State<PartyResultScreen> {
               child: Column(children: <Widget>[
                 Text(
                   'Alltime leaderboard',
-                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 ListView.separated(
-                  physics: new NeverScrollableScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
                   separatorBuilder: (context, index) => Divider(
                     color: Colors.white,
                   ),
@@ -213,8 +206,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                     ),
                                     Text(
                                       (index + 1).toString() + (index == 0 ? 'st' : index == 1 ? 'nd' : index == 2 ? 'rd' : 'th'),
-                                      style:
-                                          new TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                      style: TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                       textAlign: TextAlign.start,
                                     ),
                                     SizedBox(
@@ -222,14 +214,13 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                     ),
                                     Text(
                                       alltimeWinners[index].getUserName().split(' ')[0],
-                                      style:
-                                          new TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
+                                      style: TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                                       textAlign: TextAlign.start,
                                     ),
                                   ]),
                                   Text(
                                     alltimeWinners[index].getNumVotes().toString(),
-                                    style: new TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
+                                    style: TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                     textAlign: TextAlign.start,
                                   ),
                                 ],
@@ -265,7 +256,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
               child: Column(children: <Widget>[
                 Text(
                   'Results',
-                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 5,
@@ -299,13 +290,13 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                               children: <Widget>[
                                                 AutoSizeText(
                                                   currentWinners[1].getUserName().split(' ')[0],
-                                                  style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
+                                                  style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                                   textAlign: TextAlign.center,
                                                   maxLines: 1,
                                                 ),
                                                 Text(
                                                   currentWinners[1].getNumVotes().toString() + (currentWinners[1].getNumVotes().toString() == '1' ? ' vote' : ' votes'),
-                                                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.w400),
+                                                  style: TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.w400),
                                                   textAlign: TextAlign.center,
                                                 ),
                                                 SizedBox(
@@ -354,13 +345,13 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                         children: <Widget>[
                                           AutoSizeText(
                                             currentWinners.length == 0 ? "" : currentWinners[0].getUserName().split(' ')[0],
-                                            style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w600),
+                                            style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w600),
                                             textAlign: TextAlign.center,
                                             maxLines: 1,
                                           ),
                                           Text(
                                             currentWinners.length == 0 ? "" : currentWinners[0].getNumVotes().toString() + (currentWinners[0].getNumVotes().toString() == '1' ? ' vote' : ' votes'),
-                                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                            style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                             textAlign: TextAlign.center,
                                           ),
                                           SizedBox(
@@ -407,13 +398,13 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                               children: <Widget>[
                                                 AutoSizeText(
                                                   currentWinners[2].getUserName().split(' ')[0],
-                                                  style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
+                                                  style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                                   textAlign: TextAlign.center,
                                                   maxLines: 1,
                                                 ),
                                                 Text(
                                                   currentWinners[2].getNumVotes().toString() + (currentWinners[2].getNumVotes().toString() == '1' ? ' vote' : ' votes'),
-                                                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.w400),
+                                                  style: TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.w400),
                                                   textAlign: TextAlign.center,
                                                 ),
                                                 SizedBox(
@@ -437,7 +428,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                 ),
                 currentWinners.length > 3
                     ? ListView.separated(
-                        physics: new NeverScrollableScrollPhysics(),
+                        physics: NeverScrollableScrollPhysics(),
                         separatorBuilder: (context, index) => Divider(
                           color: Colors.white,
                         ),
@@ -462,7 +453,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                           ),
                                           Text(
                                             (index + 4).toString() + 'th',
-                                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                            style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                             textAlign: TextAlign.start,
                                           ),
                                           SizedBox(
@@ -470,13 +461,13 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                           ),
                                           Text(
                                             currentWinners[index + 3].getUserName().split(' ')[0],
-                                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
+                                            style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                                             textAlign: TextAlign.start,
                                           ),
                                         ]),
                                         Text(
                                           currentWinners[index + 3].getNumVotes().toString(),
-                                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
+                                          style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                           textAlign: TextAlign.start,
                                         ),
                                       ],
@@ -553,7 +544,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
 
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: new ThemeData(
+            theme: ThemeData(
               fontFamily: "atarian",
               scaffoldBackgroundColor: Colors.transparent,
             ),
@@ -620,7 +611,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                       child: Text(
                         currentQuestionString,
                         textAlign: TextAlign.center,
-                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                       ),
                     ),
 
@@ -648,7 +639,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: new ThemeData(
+        theme: ThemeData(
           scaffoldBackgroundColor: Colors.transparent,
         ),
         home: Scaffold(

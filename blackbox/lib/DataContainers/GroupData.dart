@@ -42,16 +42,16 @@ class GroupData {
   int _adminVoteTimestamp;
 
   /// A list of unique IDs of all members in this group
-  Map<String, String> _members = new Map<String, String>();
+  Map<String, String> _members = Map<String, String>();
 
   /// A list of available question id's
   List<String> _questionlist;
 
   /// Data container for the current/next question
-  Question _nextQuestion = new Question.empty();
+  Question _nextQuestion = Question.empty();
 
   /// Data container for the previous question
-  Question _lastQuestion = new Question.empty();
+  Question _lastQuestion = Question.empty();
 
   /// Mapping the voter to the votee (previous round)
   Map<String, String> _lastVotes;
@@ -68,49 +68,25 @@ class GroupData {
   /// A map that combines each question (not ID) with another Map that links each username to amount of votes
   Map<String, Map<String, int>> _history;
 
-
   /// ---------------------- \\\
   /// GroupData constructors \\\
   /// ---------------------- \\\
 
   /// Create a group with the given data fields
-  GroupData(
-      this._groupName,
-      this._groupDescription,
-      this.canVoteBlank,
-      this.canVoteOnSelf,
-      this._groupID,
-      this._adminID,
-      this._members,
-      this._questionlist) {
+  GroupData(this._groupName, this._groupDescription, this.canVoteBlank, this.canVoteOnSelf, this._groupID, this._adminID, this._members, this._questionlist) {
     _isPlaying = true;
-    _nextQuestion = new Question.empty();
-    _lastVotes = new Map<String, String>();
-    _newVotes = new Map<String, String>();
-    _totalVotes = new Map<String, int>();
-    _playing = new List<String>();
-    _history = new Map<String, Map<String, int>>();
-    _adminVoteTimestamp = new DateTime.now().millisecondsSinceEpoch;
+    _nextQuestion = Question.empty();
+    _lastVotes = Map<String, String>();
+    _newVotes = Map<String, String>();
+    _totalVotes = Map<String, int>();
+    _playing = List<String>();
+    _history = Map<String, Map<String, int>>();
+    _adminVoteTimestamp = DateTime.now().millisecondsSinceEpoch;
   }
 
   /// Create a group with the given data fields AND status fields
-  GroupData.extended(
-      this._groupName,
-      this._groupDescription,
-      this.canVoteBlank,
-      this.canVoteOnSelf,
-      this._groupID,
-      this._adminID,
-      this._isPlaying,
-      this._members,
-      this._nextQuestion,
-      this._lastVotes,
-      this._newVotes,
-      this._totalVotes,
-      this._playing,
-      this._questionlist,
-      this._adminVoteTimestamp,
-      this._history);
+  GroupData.extended(this._groupName, this._groupDescription, this.canVoteBlank, this.canVoteOnSelf, this._groupID, this._adminID, this._isPlaying, this._members, this._nextQuestion, this._lastVotes,
+      this._newVotes, this._totalVotes, this._playing, this._questionlist, this._adminVoteTimestamp, this._history);
 
   /// ---------------- \\\
   /// Firebase Utility \\\
@@ -121,7 +97,7 @@ class GroupData {
       :
 
         /// Get basic data
-        _groupName = snap.data['name'] as String?? "Nameless group",
+        _groupName = snap.data['name'] as String ?? "Nameless group",
         _groupDescription = snap.data['description'] as String ?? "No description",
         _groupID = snap.documentID.toString(),
         _adminID = snap.data['admin'] as String,
@@ -131,20 +107,12 @@ class GroupData {
         _adminVoteTimestamp = snap.data['adminVoteTimestamp'] as int,
 
         /// Get status data
-        _nextQuestion = Question(
-                snap.data['nextQuestionID'] as String,
-                snap.data['nextQuestion'] as String,
-                QuestionCategory(snap.data['nextQuestionCategory'] as String, '', ['']),
-                snap.data['nextQuestionCreatorID'] as String,
-                snap.data['nextQuestionCreatorName'] as String) ??
+        _nextQuestion = Question(snap.data['nextQuestionID'] as String, snap.data['nextQuestion'] as String, QuestionCategory(snap.data['nextQuestionCategory'] as String, '', ['']),
+                snap.data['nextQuestionCreatorID'] as String, snap.data['nextQuestionCreatorName'] as String) ??
             Question.addDefault(snap.data['nextQuestion'] as String) ??
             Question.empty(),
-        _lastQuestion = Question(
-                snap.data['lastQuestionID'] as String,
-                snap.data['lastQuestion'] as String,
-                QuestionCategory(snap.data['lastQuestionCategory'] as String, '', ['']),
-                snap.data['lastQuestionCreatorID'] as String,
-                snap.data['lastQuestionCreatorName'] as String) ??
+        _lastQuestion = Question(snap.data['lastQuestionID'] as String, snap.data['lastQuestion'] as String, QuestionCategory(snap.data['lastQuestionCategory'] as String, '', ['']),
+                snap.data['lastQuestionCreatorID'] as String, snap.data['lastQuestionCreatorName'] as String) ??
             Question.addDefault(snap.data['nextQuestion'] as String) ??
             Question.empty(),
         _members = _convertFirebaseMapString(snap.data['members']),
@@ -171,12 +139,12 @@ class GroupData {
   /// NO checks are done! Provided parameter MUST be correct
   static Map<String, int> _convertFirebaseMapInt(dynamic data) {
     /// Initialize lists
-    Map<dynamic, dynamic> dbData = data;
-    Map<String, int> convertedData = new Map<String, int>();
+    Map<dynamic, dynamic> dbData = data as Map<dynamic, dynamic>;
+    Map<String, int> convertedData = Map<String, int>();
 
     /// Loop the database Map and add values as Strings to the data Map
     dbData.forEach((key, value) {
-      convertedData[key.toString()] = value;
+      convertedData[key.toString()] = value as int;
     });
 
     return convertedData;
@@ -186,8 +154,8 @@ class GroupData {
   /// NO checks are done! Provided parameter MUST be correct
   static Map<String, String> _convertFirebaseMapString(dynamic data) {
     /// Initialize lists
-    Map<dynamic, dynamic> dbData = data;
-    Map<String, String> convertedData = new Map<String, String>();
+    Map<dynamic, dynamic> dbData = data as Map<dynamic, dynamic>;
+    Map<String, String> convertedData = Map<String, String>();
 
     /// Loop the database Map and add values as Strings to the data Map
     dbData.forEach((key, value) {
@@ -201,19 +169,18 @@ class GroupData {
   /// NO checks are done! Provided parameter MUST be correct
   static Map<String, Map<String, int>> _convertFirebaseHistory(dynamic data) {
     /// Initialize lists
-    Map<dynamic, dynamic> dbData = data;
-    Map<String, Map<String, int>> convertedData =
-        new Map<String, Map<String, int>>();
+    Map<dynamic, dynamic> dbData = data as Map<dynamic, dynamic>;
+    Map<String, Map<String, int>> convertedData = Map<String, Map<String, int>>();
 
     // Loop all earlier questions
     if (dbData != null) {
       dbData.forEach((key, value) {
-        Map<String, int> votes = new Map<String, int>();
-        Map<dynamic, dynamic> dbVotes = value;
+        Map<String, int> votes = Map<String, int>();
+        Map<dynamic, dynamic> dbVotes = value as Map<dynamic, dynamic>;
 
         // Loop each user with their votes for this question and save them under the question
         dbVotes.forEach((username, numVotes) {
-          votes[username.toString()] = numVotes;
+          votes[username.toString()] = numVotes as int;
         });
 
         convertedData[key.toString()] = votes;
@@ -246,14 +213,13 @@ class GroupData {
     return _isPlaying;
   }
 
-
   ///Get all availbalbe question
   List<String> getQuestionList() {
     return _questionlist;
   }
 
   void addQuestionToList(String id) {
-    Random random = new Random(1);
+    Random random = Random(1);
     int min = _questionlist.length - 3;
     int max = _questionlist.length;
     int randomNumber = min + (random.nextInt(max - min));
@@ -290,9 +256,7 @@ class GroupData {
   /// will return 'Blank User' when ID =blank_vote
   String getUserName(String ID) {
     String name = _members[ID];
-    return name != null
-        ? name
-        : ID == "blank_vote" ? "Blank User" : "User left";
+    return name != null ? name : ID == "blank_vote" ? "Blank User" : "User left";
   }
 
   /// Get the UserData of all users in this group
@@ -359,7 +323,7 @@ class GroupData {
     if (_history != null) {
       return _history;
     } else {
-      return new Map<String, Map<String, int>>();
+      return Map<String, Map<String, int>>();
     }
   }
 
@@ -385,18 +349,10 @@ class GroupData {
   /// The database is updated automatically if doDatabaseUpdate is not provided or is set to true
   Future<void> setNextQuestion(Question newQuestion, UserData admin, {bool doDatabaseUpdate: true}) async {
     if (admin.getUserID() == _adminID) {
-
-      FirebaseAnalytics().logEvent(name: 'next_question', parameters: {
-        'id': _groupID
-      });
+      FirebaseAnalytics().logEvent(name: 'next_question', parameters: {'id': _groupID});
 
       /// Move the questions
-      _lastQuestion = new Question(
-          _nextQuestion.getQuestionID(),
-          _nextQuestion.getQuestion(),
-          _nextQuestion.getCategoryAsCategory(),
-          _nextQuestion.getCreatorID(),
-          _nextQuestion.getCreatorName());
+      _lastQuestion = Question(_nextQuestion.getQuestionID(), _nextQuestion.getQuestion(), _nextQuestion.getCategoryAsCategory(), _nextQuestion.getCreatorID(), _nextQuestion.getCreatorName());
 
       _nextQuestion = newQuestion;
 
@@ -405,8 +361,7 @@ class GroupData {
 
       _adminVoteTimestamp = null;
 
-      if (doDatabaseUpdate)
-        Constants.database.updateGroup(this);
+      if (doDatabaseUpdate) await Constants.database.updateGroup(this);
     }
   }
 
@@ -475,10 +430,10 @@ class GroupData {
 
   /// Get the current list of playing members (their IDs)
   List<UserData> getPlayingUserdata() {
-    List<UserData> users = new List<UserData>();
+    List<UserData> users = List<UserData>();
 
     _playing.forEach((ID) {
-      users.add(new UserData(ID, getUserName(ID)));
+      users.add(UserData(ID, getUserName(ID)));
     });
 
     return users;
@@ -537,13 +492,13 @@ class GroupData {
 
       /// Get the all time vote counts
       default:
-        voteCounts = new Map<String, int>();
+        voteCounts = Map<String, int>();
         break;
 
       /// Invalid parameter: empty map to prevent nullpointer exceptions
     }
 
-    Map<String, int> topThree = new Map<String, int>();
+    Map<String, int> topThree = Map<String, int>();
 
     /// List to store the user IDs
 
@@ -602,9 +557,9 @@ class GroupData {
     }
 
     /// Convert the vote map to a list
-    List<UserRankData> userRanking = new List<UserRankData>();
+    List<UserRankData> userRanking = List<UserRankData>();
     voteCounts.forEach((id, numVotes) {
-      userRanking.add(new UserRankData(id, getUserName(id), numVotes));
+      userRanking.add(UserRankData(id, getUserName(id), numVotes));
     });
 
     /// Sort the list in descending order (highest # votes first)
@@ -622,7 +577,7 @@ class GroupData {
     Map<String, int> topThree = getTopThreeIDs(kind);
 
     ///first three elements return the player name, last three return the number of votes
-    List<String> top = new List(6);
+    List<String> top = List(6);
     top[0] = '';
     top[1] = '';
     top[2] = '';
@@ -631,7 +586,7 @@ class GroupData {
     top[5] = '';
 
     /// Get the top three in # votes and sort them
-    List<int> currentTop = new List(3);
+    List<int> currentTop = List(3);
 
     /// Initialize list
     currentTop[0] = 0;
@@ -650,30 +605,27 @@ class GroupData {
     /// Sort the top in reverse order (biggest first)
 
     /// Fill the list that will indicate the winners
-    List<String> currentTopIDs = new List(3);
+    List<String> currentTopIDs = List(3);
     for (int i = 0; i < 3; i++) {
       int topVotes = currentTop[i];
-      Map<String, int> topThreeCopy = new Map<String, int>.from(topThree);
+      Map<String, int> topThreeCopy = Map<String, int>.from(topThree);
       for (String id in topThreeCopy.keys) {
         if (topVotes == topThreeCopy[id])
 
-        /// Match
-        {
+          /// Match {
           currentTopIDs[i] = id;
 
-          /// Set the winner's ID
-          topThree.remove(id);
+        /// Set the winner's ID
+        topThree.remove(id);
 
-          /// Prevent duplicate IDs
-          break;
-        }
+        /// Prevent duplicate IDs
+        break;
       }
     }
 
     /// Update the top values
     for (int i = 0; i < 3; i++) {
-      top[i] =
-          currentTop[i] > 0 ? getUserName(currentTopIDs[i]).split(' ')[0] : ' ';
+      top[i] = currentTop[i] > 0 ? getUserName(currentTopIDs[i]).split(' ')[0] : ' ';
 
       /// Add each user's name
       top[i + 3] = currentTop[i] > 0 ? currentTop[i].toString() : ' ';
@@ -691,7 +643,7 @@ class GroupData {
   void addVote(String voteeID) {
     /// Update the timestamp if the admin is voting
     if (_adminID == Constants.getUserID()) {
-      _adminVoteTimestamp = new DateTime.now().millisecondsSinceEpoch;
+      _adminVoteTimestamp = DateTime.now().millisecondsSinceEpoch;
     }
 
     /// Make change in database
@@ -705,15 +657,13 @@ class GroupData {
   /// Automatically retries after a random amount of time
   void _performAsyncVote(String voteeID) async {
     int retryLimit = 10, i = 0; // Limit the retries
-    bool isSuccess = await Constants.database
-        .voteOnUser(this, voteeID); // Perform the database update
+    bool isSuccess = await Constants.database.voteOnUser(this, voteeID); // Perform the database update
 
-    while (!(isSuccess) &&
-        i < retryLimit) // While the transaction fails and the retry limit has NOT been reached
+    while (!(isSuccess) && i < retryLimit) // While the transaction fails and the retry limit has NOT been reached
     {
-      Random rand = new Random();
+      Random rand = Random();
       int ms = 1 + rand.nextInt(26);
-      Duration delay = new Duration(milliseconds: ms); // Create a random delay
+      Duration delay = Duration(milliseconds: ms); // Create a random delay
 
       try {
         sleep(delay); // Try to sleep for the random delay
@@ -722,8 +672,7 @@ class GroupData {
         print(e);
       }
 
-      isSuccess = await Constants.database
-          .voteOnUser(this, voteeID); // Retry the database update and wait
+      isSuccess = await Constants.database.voteOnUser(this, voteeID); // Retry the database update and wait
 
       i++;
     }
@@ -732,15 +681,14 @@ class GroupData {
   /// This vote will not be officially registered!
   /// This is only for local votes
   void offlineVote(String voteeID) {
-
     _newVotes[Constants.getUserID()] = voteeID;
   }
 
   //oflineVote for party mode
   void offlineVoteParty(String voteeID) {
-    String randomID = new Random().nextInt(500).toString();
-    while(_newVotes.containsKey(randomID)){
-      randomID = new Random().nextInt(500).toString();
+    String randomID = Random().nextInt(500).toString();
+    while (_newVotes.containsKey(randomID)) {
+      randomID = Random().nextInt(500).toString();
     }
     _newVotes[randomID] = voteeID;
     print(_newVotes);
@@ -749,7 +697,7 @@ class GroupData {
   /// Get the amount of votes each user has gotten in the previous round
   /// Members without votes will also be added to this map (with 0 votes)
   Map<String, int> _getLastVoteCounts() {
-    Map<String, int> voteCount = new Map<String, int>();
+    Map<String, int> voteCount = Map<String, int>();
 
     _lastVotes.forEach((voter, votee) {
       if (voteCount.containsKey(votee)) {
@@ -760,9 +708,8 @@ class GroupData {
     });
 
     // Add users that did not get any votes
-    _playing.forEach(( id ) { 
-      if ( ! voteCount.containsKey( id ))
-      {
+    _playing.forEach((id) {
+      if (!voteCount.containsKey(id)) {
         voteCount[id] = 0;
       }
     });
@@ -773,7 +720,7 @@ class GroupData {
   /// Get the amount of votes each user has gotten in the current round
   /// Users without votes will not be in this list
   Map<String, int> _getNewVoteCounts() {
-    Map<String, int> voteCount = new Map<String, int>();
+    Map<String, int> voteCount = Map<String, int>();
 
     _newVotes.forEach((voter, votee) {
       if (voteCount.containsKey(votee)) {
@@ -798,7 +745,7 @@ class GroupData {
       if (_lastQuestion != null) {
         currentQuestion = _lastQuestion.getQuestion();
       }
-      Map<String, int> currentVotes = new Map<String, int>();
+      Map<String, int> currentVotes = Map<String, int>();
 
       /// Add votes to total count
       _getNewVoteCounts().forEach((userID, numVotes) {
@@ -812,7 +759,7 @@ class GroupData {
 
       if (currentQuestion != null && currentQuestion != "") {
         if (_history == null) {
-          _history = new Map<String, Map<String, int>>();
+          _history = Map<String, Map<String, int>>();
         }
         _history[currentQuestion] = currentVotes;
       }
@@ -821,7 +768,7 @@ class GroupData {
       _lastVotes = _newVotes;
 
       /// Reset new votes
-      _newVotes = new Map<String, String>();
+      _newVotes = Map<String, String>();
     }
   }
 
@@ -853,12 +800,10 @@ class GroupData {
   /// Unique user IDs are mapped to the amount of votes
   /// Get the name of a user with: GroupData#getUserName( String ID )
   Map<String, int> getTotalVotes() {
-    
     Map<String, int> votes = _totalVotes;
 
-    _playing.forEach(( userID ) {
-      if ( ! votes.containsKey( userID ))
-      {
+    _playing.forEach((userID) {
+      if (!votes.containsKey(userID)) {
         votes[userID] = 0;
       }
     });
@@ -880,20 +825,8 @@ class GroupData {
 
     print("-----");
     print("GroupTileData debug message");
-    print("Name: " +
-        _groupName +
-        "\nGroupID: " +
-        _groupID +
-        "\nadminID: " +
-        _adminID +
-        "\nmembers:" +
-        membersString +
-        "\nPlaying:" +
-        playingString);
-    print("Question: " +
-        _nextQuestion.getQuestionID() +
-        "\nNext Question: " +
-        _lastQuestion.getQuestionID());
+    print("Name: " + _groupName + "\nGroupID: " + _groupID + "\nadminID: " + _adminID + "\nmembers:" + membersString + "\nPlaying:" + playingString);
+    print("Question: " + _nextQuestion.getQuestionID() + "\nNext Question: " + _lastQuestion.getQuestionID());
     _totalVotes.forEach((key, value) {
       print("ID: " + key);
       print("Votes: " + value.toString());

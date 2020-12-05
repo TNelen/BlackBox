@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:blackbox/Screens/PartyScreens/PassScreen.dart';
 import 'package:blackbox/Screens/popups/noMembersScelectedPopup.dart';
@@ -9,10 +7,7 @@ import '../../DataContainers/GroupData.dart';
 import '../../Constants.dart';
 import '../../Interfaces/Database.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import '../GameScreen.dart';
 import '../../Database/FirebaseStream.dart';
-import '../popups/Popup.dart';
-import '../ResultsScreen.dart';
 
 class PartyQuestionScreen extends StatefulWidget {
   final Database _database;
@@ -42,13 +37,13 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
   int numberOfVotes;
 
   FirebaseStream stream;
-  TextEditingController questionController = new TextEditingController();
+  TextEditingController questionController = TextEditingController();
 
   _PartyQuestionScreenState(Database db, GroupData groupData, String code, Map<UserData, int> playerVotes, int numberOfVotes) {
     this._database = db;
     this.groupData = groupData;
     this.code = code;
-    this.stream = new FirebaseStream(code);
+    this.stream = FirebaseStream(code);
     this.playerVotes = playerVotes;
     this.numberOfVotes = numberOfVotes;
   }
@@ -130,7 +125,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: new ThemeData(
+      theme: ThemeData(
         fontFamily: "atarian",
         scaffoldBackgroundColor: Constants.iBlack,
       ),
@@ -173,7 +168,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                           SizedBox(height: 10),
                           Text(
                             'Question',
-                            style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
+                            style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
                           ),
                           SizedBox(height: 15),
                           Card(
@@ -188,18 +183,18 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                                 children: <Widget>[
                                   Text(
                                     groupData.getNextQuestionString(),
-                                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                    style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                                     textAlign: TextAlign.center,
                                   ),
                                   SizedBox(height: 5),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      new Container(
+                                      Container(
                                         width: 150.0,
                                         child: Text(
                                           '- ' + groupData.getQuestion().getCategory() + ' -',
-                                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                          style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.center,
                                         ),
                                       ),
@@ -217,7 +212,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                   Text(
                     'Select a friend',
                     textAlign: TextAlign.center,
-                    style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
+                    style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
                   ),
                   SizedBox(
                     height: 20,
@@ -262,7 +257,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
           padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
           child: Text(
             data.getUsername().split(' ')[0],
-            style: new TextStyle(color: data == clickedmember ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+            style: TextStyle(color: data == clickedmember ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
           ),
         )),
       ),

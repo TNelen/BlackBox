@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:blackbox/DataContainers/UserData.dart';
 import 'package:blackbox/Screens/popups/noMembersScelectedPopup.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -13,7 +11,7 @@ import '../Database/FirebaseStream.dart';
 import 'popups/Popup.dart';
 import 'ResultsScreen.dart';
 
-Map<ReportType, bool> reportMap = new Map<ReportType, bool>();
+Map<ReportType, bool> reportMap = Map<ReportType, bool>();
 
 class QuestionScreen extends StatefulWidget {
   final Database _database;
@@ -40,7 +38,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
   String currentQuestionString;
 
   FirebaseStream stream;
-  TextEditingController questionController = new TextEditingController();
+  TextEditingController questionController = TextEditingController();
 
   _QuestionScreenState(Database db, GroupData groupData, String code) {
     this._database = db;
@@ -82,7 +80,6 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-
 
     final submitquestionbutton = FlatButton(
       onPressed: () {
@@ -141,10 +138,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
             onPressed: () {
               if (clickedmember != null) {
                 if (reportMap.containsValue(true)) {
-                  FirebaseAnalytics().logEvent(name: 'action_performed', parameters: {
-                    'action_name': 'RateQuestion',
-                    'love': reportMap[ReportType.LOVE]
-                  });
+                  FirebaseAnalytics().logEvent(name: 'action_performed', parameters: {'action_name': 'RateQuestion', 'love': reportMap[ReportType.LOVE]});
                   _database.voteOnQuestion(groupData.getQuestion());
                 }
 
@@ -180,12 +174,12 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
           groupData = snapshot.data;
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           if (!snapshot.hasData) {
-            return new Center(child: new CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
 
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: new ThemeData(
+            theme: ThemeData(
               fontFamily: "atarian",
               scaffoldBackgroundColor: Constants.iBlack,
             ),
@@ -266,7 +260,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                                 SizedBox(height: 10),
                                 Text(
                                   'Question',
-                                  style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
+                                  style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
                                 ),
                                 SizedBox(height: 15),
                                 Card(
@@ -281,23 +275,23 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                                       children: <Widget>[
                                         Text(
                                           groupData.getNextQuestionString(),
-                                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                          style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.center,
                                         ),
                                         SizedBox(height: 5),
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
-                                            new Container(width: 50.0, child: SizedBox()),
-                                            new Container(
+                                            Container(width: 50.0, child: SizedBox()),
+                                            Container(
                                               width: 150.0,
                                               child: Text(
                                                 '- ' + groupData.getQuestion().getCategory() + ' -',
-                                                style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                                style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
                                                 textAlign: TextAlign.center,
                                               ),
                                             ),
-                                            new Container(
+                                            Container(
                                               width: 50.0,
                                               child: IconButton(
                                                 icon: Icon(
@@ -310,7 +304,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                                                     Scaffold.of(context).showSnackBar(SnackBar(
                                                       content: Text(
                                                         'You like this question! Thank you for your feedback!',
-                                                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.bold),
+                                                        style: TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.bold),
                                                         textAlign: TextAlign.center,
                                                       ),
                                                       duration: Duration(seconds: 3),
@@ -340,7 +334,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                         Text(
                           'Select a friend',
                           textAlign: TextAlign.center,
-                          style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
+                          style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
                         ),
                         SizedBox(
                           height: 20,
@@ -387,7 +381,7 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
           padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
           child: Text(
             data.getUsername().split(' ')[0],
-            style: new TextStyle(color: data.getUserID() == clickedmember ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+            style: TextStyle(color: data.getUserID() == clickedmember ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
           ),
         )),
       ),

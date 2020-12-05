@@ -68,7 +68,7 @@ class FirebaseGetters {
         if (document.exists) {
           groupData = GroupData.fromDocumentSnapshot(document);
         } else {
-          throw new GroupNotFoundException(code);
+          throw GroupNotFoundException(code);
         }
       });
     } catch (exception) {

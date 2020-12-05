@@ -7,7 +7,7 @@ class VibrationHandler {
   static vibrate({List<int> vibratePattern = defaultPattern}) async {
     if (await Vibration.hasVibrator() as bool) {
       /// Check for vibration support
-      Vibration.vibrate(pattern: vibratePattern);
+      await Vibration.vibrate(pattern: vibratePattern);
     }
   }
 }

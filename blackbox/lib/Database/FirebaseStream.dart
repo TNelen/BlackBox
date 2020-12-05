@@ -11,7 +11,7 @@ class FirebaseStream {
 
 
   /// Singleton pattern
-  static final FirebaseStream _firebaseStream = new FirebaseStream._internal();
+  static final FirebaseStream _firebaseStream =  FirebaseStream._internal();
 
   /// Singleton constructor
   factory FirebaseStream( String groupID ) {
@@ -21,7 +21,7 @@ class FirebaseStream {
     closeController();
 
     if (_groupController == null)
-      _groupController = new StreamController<GroupData>.broadcast();
+      _groupController =  StreamController<GroupData>.broadcast();
 
     
     FirebaseStream._internal();
@@ -36,7 +36,7 @@ class FirebaseStream {
 
     if ( _groupController == null || _groupController.isClosed )
     {
-      _groupController = new StreamController<GroupData>.broadcast();
+      _groupController =  StreamController<GroupData>.broadcast();
     }
 
     /// Subscribe to group changes and update the variable
@@ -80,7 +80,7 @@ class FirebaseStream {
       if ( ds.exists)
         _groupController.add( GroupData.fromDocumentSnapshot( ds ) );
       else
-        _groupController.addError(new GroupNotFoundException( _groupID ).getCause());
+        _groupController.addError( GroupNotFoundException( _groupID ).getCause());
     } catch(e) {
       print(e);
     }

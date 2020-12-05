@@ -56,7 +56,7 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void getRandomNexQuestion() async {
-    groupdata.setNextQuestion(await _database.getNextQuestion(groupdata), Constants.getUserData());
+    await groupdata.setNextQuestion(await _database.getNextQuestion(groupdata), Constants.getUserData());
   }
 
   @override
@@ -74,7 +74,7 @@ class _GameScreenState extends State<GameScreen> {
                 groupdata = snapshot.data;
                 if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                 if (!snapshot.hasData) {
-                  return new Center(child: new CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator());
                 }
                 if (!joined) {
                   groupdata.addMember(Constants.getUserData());
@@ -82,7 +82,7 @@ class _GameScreenState extends State<GameScreen> {
                   joined = true;
                 }
 
-                return new Scaffold(
+                return Scaffold(
                   body: DefaultTabController(
                     length: 2,
                     child: Scaffold(
@@ -147,7 +147,7 @@ class _GameScreenState extends State<GameScreen> {
                                       children: <Widget>[
                                         AutoSizeText(
                                           "Game Lobby",
-                                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
+                                          style: TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
                                           maxLines: 1,
                                         ),
                                         SizedBox(
@@ -166,7 +166,7 @@ class _GameScreenState extends State<GameScreen> {
                                       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                                         Expanded(
                                           child: Text('Press the check mark to get ready!',
-                                              style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                              style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                               textAlign: TextAlign.center),
                                         ),
                                       ]),
@@ -176,7 +176,7 @@ class _GameScreenState extends State<GameScreen> {
                                       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                                         Expanded(
                                           child: Text('You can start the game if all players are ready!',
-                                              style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                              style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                               textAlign: TextAlign.center),
                                         ),
                                       ]),
@@ -235,7 +235,7 @@ class _GameScreenState extends State<GameScreen> {
                                                               children: <Widget>[
                                                                 Text(
                                                                   data.getUsername().split(' ')[0],
-                                                                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                                                  style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                                                 ),
                                                                 groupdata.isUserPlaying(data)
                                                                     ? Icon(
@@ -276,13 +276,13 @@ class _GameScreenState extends State<GameScreen> {
                                               child: FloatingActionButton(
                                                   heroTag: 'invite',
                                                   elevation: 5.0,
-                                                  child: new Icon(
+                                                  child: Icon(
                                                     Icons.group_add,
                                                     color: Constants.iBlack,
                                                   ),
                                                   backgroundColor: Constants.colors[Constants.colorindex],
                                                   onPressed: () {
-                                                    final RenderBox box = context.findRenderObject();
+                                                    final RenderBox box = context.findRenderObject() as RenderBox;
                                                     String shareText = "Join a game with this code:\n\n"  + code + "\n\n\nDownload BlackBox on Google Play \nhttps://play.google.com/store/apps/details?id=be.dezijwegel.blackbox ";
                                                     Share.share(shareText, sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
                                                   }),

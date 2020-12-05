@@ -11,16 +11,16 @@ import '../../Constants.dart';
 import 'package:blackbox/Database/QuestionListGetter.dart';
 
 Map<UserData, int> convertUserListToUserDataMap(List<String> users, bool canVoteBlank) {
-  Map<UserData, int> userMap = new Map<UserData, int>();
+  Map<UserData, int> userMap = Map<UserData, int>();
   int index = 0;
   while (index < users.length) {
-    UserData tempUser = new UserData((index + 1).toString(), users[index]);
+    UserData tempUser = UserData((index + 1).toString(), users[index]);
     userMap.addAll({tempUser: 0});
     index++;
   }
 
   if (canVoteBlank) {
-    UserData tempUser = new UserData("0", "Blank");
+    UserData tempUser = UserData("0", "Blank");
     userMap.addAll({tempUser: 0});
   }
   return userMap;
@@ -38,7 +38,7 @@ class SetPlayersScreen extends StatefulWidget {
   }
 
   @override
-  _SetPlayersScreenState createState() => new _SetPlayersScreenState(_database, selectedCategory, canVoteBlank);
+  _SetPlayersScreenState createState() => _SetPlayersScreenState(_database, selectedCategory, canVoteBlank);
 }
 
 class _SetPlayersScreenState extends State<SetPlayersScreen> {
@@ -46,7 +46,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
   List<String> selectedCategory;
   List<String> players = [Constants.getUsername().split(" ")[0]];
   bool canVoteBlank;
-  TextEditingController codeController = new TextEditingController();
+  TextEditingController codeController = TextEditingController();
 
   _SetPlayersScreenState(Database db, List<String> selectedCategory, bool canVoteBlank) {
     this._database = db;
@@ -88,7 +88,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                 child: Center(
                   child: Text(
                     players[index],
-                    style: new TextStyle(
+                    style: TextStyle(
                       color: Constants.iWhite,
                       fontSize: Constants.normalFontSize,
                       fontWeight: FontWeight.w300,
@@ -101,7 +101,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                   Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text(
                       'Player deleted.',
-                      style: new TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,
                     ),
                     duration: Duration(seconds: 3),
@@ -122,10 +122,10 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                   });
                 })));
 
-    TextEditingController playerNameController = new TextEditingController();
+    TextEditingController playerNameController = TextEditingController();
 
-    final namefield = new Theme(
-      data: new ThemeData(
+    final namefield = Theme(
+      data: ThemeData(
         primaryColor: Constants.colors[Constants.colorindex],
         primaryColorDark: Constants.colors[Constants.colorindex],
       ),
@@ -149,7 +149,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
       ),
     );
 
-    final addPlayerButton = new FlatButton(
+    final addPlayerButton = FlatButton(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(26.0),
       ),
@@ -162,7 +162,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
               return AlertDialog(
                 backgroundColor: Constants.iBlack,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
-                title: new Text(
+                title: Text(
                   'Player Name',
                   style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize),
                 ),
@@ -174,8 +174,8 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                     ])),
                 actions: <Widget>[
                   // usually buttons at the bottom of the dialog
-                  new FlatButton(
-                    child: new Text(
+                  FlatButton(
+                    child: Text(
                       "Cancel",
                       style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
                     ),
@@ -184,8 +184,8 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                     },
                   ),
 
-                  new FlatButton(
-                    child: new Text(
+                  FlatButton(
+                    child: Text(
                       "Add",
                       style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
                     ),
@@ -212,7 +212,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text(
           "Add player",
-          style: new TextStyle(
+          style: TextStyle(
             color: Constants.colors[Constants.colorindex],
             fontSize: Constants.smallFontSize,
             fontWeight: FontWeight.w300,
@@ -239,7 +239,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
             padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
             onPressed: () {
               // Create map of members
-              Map<String, String> members = new Map<String, String>();
+              Map<String, String> members = Map<String, String>();
               members[Constants.getUserID()] = Constants.getUsername();
 
               Map<UserData, int> userMap = convertUserListToUserDataMap(players, canVoteBlank);
@@ -279,13 +279,13 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                   // Only logged here
                   FirebaseAnalytics().logEvent(name: 'party_created', parameters: map);
 
-                  GroupData groupdata = new GroupData(_groupName, description, canVoteBlank, false, code, Constants.getUserID(), members, questionIDs);
+                  GroupData groupdata = GroupData(_groupName, description, canVoteBlank, false, code, Constants.getUserID(), members, questionIDs);
                   await groupdata.setNextQuestion(await _database.getNextQuestion(groupdata), Constants.getUserData(), doDatabaseUpdate: false);
                   await _database.updateGroup(groupdata);
 
-                  print(groupdata.getGroupCode());
+                  print("Party group code: " + groupdata.getGroupCode());
 
-                  Navigator.push(
+                  await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) => PartyQuestionScreen(_database, groupdata, code, userMap, 0),
@@ -305,7 +305,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
-        theme: new ThemeData(scaffoldBackgroundColor: Constants.iBlack),
+        theme: ThemeData(scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
           appBar: AppBar(
             elevation: 0,
@@ -355,7 +355,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                     tag: "PartHeader",
                     child: Text(
                       'who\'s playing?',
-                      style: new TextStyle(
+                      style: TextStyle(
                         color: Constants.iWhite,
                         fontSize: Constants.titleFontSize,
                         fontWeight: FontWeight.w300,
@@ -379,7 +379,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                       ),
                       Text(
                         'Players',
-                        style: new TextStyle(
+                        style: TextStyle(
                           color: Constants.colors[Constants.colorindex],
                           fontSize: Constants.normalFontSize,
                           fontFamily: "atarian",
@@ -390,7 +390,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                       ),
                       Text(
                         '(' + players.length.toString() + ')',
-                        style: new TextStyle(
+                        style: TextStyle(
                           color: Constants.colors[Constants.colorindex],
                           fontSize: Constants.smallFontSize,
                           fontFamily: "atarian",
@@ -416,7 +416,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                   ),
                   Text(
                     'swipe to remove player',
-                    style: new TextStyle(
+                    style: TextStyle(
                       color: Constants.colors[Constants.colorindex],
                       fontSize: Constants.miniFontSize,
                       fontFamily: "atarian",

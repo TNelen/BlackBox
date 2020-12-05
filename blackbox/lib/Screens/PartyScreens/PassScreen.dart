@@ -27,7 +27,7 @@ class PassScreen extends StatefulWidget {
   }
 
   @override
-  _PassScreenState createState() => new _PassScreenState(_database, groupData, code, playerVotes, numberOfVotes);
+  _PassScreenState createState() => _PassScreenState(_database, groupData, code, playerVotes, numberOfVotes);
 }
 
 class _PassScreenState extends State<PassScreen> {
@@ -50,7 +50,7 @@ class _PassScreenState extends State<PassScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
-        theme: new ThemeData(fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
+        theme: ThemeData(fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
           appBar: AppBar(
             elevation: 0,
@@ -79,7 +79,7 @@ class _PassScreenState extends State<PassScreen> {
                       Text(
                         'pass the phone',
                         textAlign: TextAlign.center,
-                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
+                        style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
                       ),
                       JumpingDotsProgressIndicator(
                         numberOfDots: 3,
@@ -93,7 +93,7 @@ class _PassScreenState extends State<PassScreen> {
                       ? numberOfVotes.toString() + '/' + (playerVotes.length - 1).toString() + ' players have voted'
                       : numberOfVotes.toString() + '/' + (playerVotes.length).toString() + ' players have voted',
                   textAlign: TextAlign.center,
-                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
+                  style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
                 ),
                 SizedBox(height: 40.0),
                 Card(
@@ -123,19 +123,19 @@ class _PassScreenState extends State<PassScreen> {
                               SizedBox(height: 35),
                               Text(
                                 "  Vote!",
-                                style: new TextStyle(color: allPlayersVoted() ? Constants.iLight : Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                style: TextStyle(color: allPlayersVoted() ? Constants.iLight : Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(height: 5),
                               allPlayersVoted()
                                   ? Text(
                                       "  All players voted",
                                       textAlign: TextAlign.start,
-                                      style: new TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                      style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
                                     )
                                   : Text(
                                       "  New vote for this round",
                                       textAlign: TextAlign.start,
-                                      style: new TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                      style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
                                     ),
                               SizedBox(height: 10),
                             ],
@@ -186,13 +186,13 @@ class _PassScreenState extends State<PassScreen> {
                               SizedBox(height: 35),
                               Text(
                                 "  Add question",
-                                style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(height: 5),
                               Text(
                                 "  Want to ask a question? Submit it here!",
                                 textAlign: TextAlign.start,
-                                style: new TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(height: 10),
                             ],
@@ -226,7 +226,6 @@ class _PassScreenState extends State<PassScreen> {
             onConfirmation: () {
               String currentQuestion = groupData.getQuestionID();
               String currentQuestionString = groupData.getNextQuestionString();
-              print(groupData.getNewVotes());
               _database.updateGroup(groupData);
               Navigator.push(
                   context,

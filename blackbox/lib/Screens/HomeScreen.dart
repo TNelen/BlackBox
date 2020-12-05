@@ -1,5 +1,4 @@
 import 'package:blackbox/Database/FirebaseManagement.dart';
-import 'package:blackbox/Screens/widgets/RateAppButton.dart';
 import 'package:blackbox/Screens/CreateGameScreen.dart';
 import 'package:blackbox/Screens/JoinGameScreen.dart';
 import 'package:blackbox/Screens/widgets/animatedIconBar.dart';
@@ -127,9 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
         onWillPop: () async {
           return false;
         },
-        child: new MaterialApp(
+        child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: new ThemeData(
+          theme: ThemeData(
             fontFamily: "atarian",
             scaffoldBackgroundColor: Colors.transparent,
           ),
@@ -196,7 +195,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-
                                 'Start playing...',
                                 style: TextStyle(fontSize: Constants.subtitleFontSize, color: Constants.iWhite, fontWeight: FontWeight.w300),
                               ),
@@ -241,7 +239,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(
                             height: 20,
                           ),
-
                         ],
                       )),
                 ],

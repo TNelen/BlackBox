@@ -13,12 +13,12 @@ class ProfileScreen extends StatefulWidget {
   }
 
   @override
-  _ProfileScreenState createState() => new _ProfileScreenState(_database);
+  _ProfileScreenState createState() => _ProfileScreenState(_database);
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
   Database _database;
-  TextEditingController codeController = new TextEditingController();
+  TextEditingController codeController = TextEditingController();
 
   _ProfileScreenState(Database db) {
     this._database = db;
@@ -31,7 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
-        theme: new ThemeData(fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
+        theme: ThemeData(fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
             appBar: AppBar(
               elevation: 0,
@@ -86,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Text(
                       'Your Profile',
                       textAlign: TextAlign.center,
-                      style: new TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
+                      style: TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
                     ),
                     SizedBox(height: 20.0),
                     Container(
@@ -107,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Text(
                         Constants.getUsername(),
                         textAlign: TextAlign.center,
-                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
+                        style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
                       ),
                       InkWell(
                         splashColor: Constants.colors[Constants.colorindex],

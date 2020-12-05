@@ -29,8 +29,7 @@ class _RuleScreenState extends State<RuleScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BlackBox',
-      theme:
-          new ThemeData(accentColor: Constants.colors[Constants.colorindex], disabledColor: Constants.colors[Constants.colorindex], fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
+      theme: ThemeData(accentColor: Constants.colors[Constants.colorindex], disabledColor: Constants.colors[Constants.colorindex], fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
       home: Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -90,7 +89,7 @@ class _RuleScreenState extends State<RuleScreen> {
                   Text(
                     'Game rules',
                     textAlign: TextAlign.center,
-                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
+                    style: TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
                   ),
                   SizedBox(width: 20.0),
                   Hero(

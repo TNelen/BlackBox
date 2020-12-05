@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import '../DataContainers/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Constants.dart';
@@ -170,7 +169,7 @@ class FirebaseUtility {
   /// Contains A-Z and 2-9. One and Zero are excluded to prevent confusion with 1-I and 0-O
   static String getRandomID(int length)
   {
-      var random = new Random();
+      var random =  Random();
       String result = "";
 
       // Generate 'length' characters to be added to the code
@@ -261,7 +260,7 @@ class FirebaseUtility {
   static void backupDatabase() async
   {
     /// Get all questions
-    Map<String, Map<String, dynamic>> questions = new Map<String, Map<String, dynamic>>();  // Mapping document ID to its contents
+    Map<String, Map<String, dynamic>> questions = Map<String, Map<String, dynamic>>();  // Mapping document ID to its contents
 
     await Firestore.instance.collection("questionsv2").getDocuments().then( (docs) {          // Get ALL questions and add them to the Map
       for (DocumentSnapshot document in docs.documents)
@@ -283,7 +282,7 @@ class FirebaseUtility {
           await transaction.set(reference, data);                             // Update the document
         });
 
-        Duration delay = new Duration(milliseconds: 10);
+        Duration delay = Duration(milliseconds: 10);
         sleep(delay);
 
       });

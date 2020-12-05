@@ -28,7 +28,7 @@ class FileHandler {
   /// Will throw an exception if the file has not been fetched yet
   Future<List<String>> readFile() async {
     if (!isReady) {
-      throw new Exception("The file " + filePath + " is not ready yet! Please try again later!");
+      throw Exception("The file " + filePath + " is not ready yet! Please try again later!");
     }
 
     try {
@@ -45,7 +45,7 @@ class FileHandler {
   /// Will return true upon completion
   Future<bool> write(List<String> lines) async {
     if (!isReady) {
-      throw new Exception("The file " + filePath + " is not ready yet! Please try again later!");
+      throw Exception("The file " + filePath + " is not ready yet! Please try again later!");
     }
 
     if (lines.length == 0) return true;

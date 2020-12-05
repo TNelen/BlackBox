@@ -1,13 +1,9 @@
-import 'dart:math';
-
 import 'package:blackbox/DataContainers/QuestionCategory.dart';
 import 'package:blackbox/Database/QuestionListGetter.dart';
-import 'package:blackbox/Screens/popups/GroupCodePopup.dart';
 import 'package:blackbox/Screens/widgets/CategoryCard.dart';
 import 'package:blackbox/Screens/widgets/toggle_button_card.dart';
 import 'package:flutter/material.dart';
 import '../../Constants.dart';
-import '../../DataContainers/GroupData.dart';
 import '../../Interfaces/Database.dart';
 import '../popups/Popup.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -23,7 +19,7 @@ class CreatePartyScreen extends StatefulWidget {
   }
 
   @override
-  _CreatePartyScreenState createState() => new _CreatePartyScreenState(_database);
+  _CreatePartyScreenState createState() => _CreatePartyScreenState(_database);
 }
 
 class _CreatePartyScreenState extends State<CreatePartyScreen> {
@@ -54,10 +50,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(26.0),
               ),
-              minWidth: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+              minWidth: MediaQuery.of(context).size.width,
               padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
               onPressed: () {
                 if (selectedCategory.length != 0) {
@@ -66,8 +59,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                       MaterialPageRoute(
                         builder: (BuildContext context) => SetPlayersScreen(_database, selectedCategory, _canVoteBlank),
                       ));
-                }
-                else {
+                } else {
                   Popup.makePopup(context, "Woops!", "Please select one or more categories!");
                 }
               },
@@ -77,7 +69,6 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
         ));
 
     final QuestionListGetter questionListGetter = QuestionListGetter.instance;
-
 
     final categoryField = FutureBuilder<List<QuestionCategory>>(
       builder: (context, projectSnap) {
@@ -111,7 +102,9 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                   setState(() {});
                 },
               ),
-              SizedBox(height: 5,)
+              SizedBox(
+                height: 5,
+              )
             ]);
           },
         );
@@ -121,7 +114,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: new ThemeData(
+      theme: ThemeData(
         fontFamily: "atarian",
         scaffoldBackgroundColor: Constants.iBlack,
       ),
@@ -129,7 +122,6 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           elevation: 0,
-
           backgroundColor: Colors.transparent,
           title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
             InkWell(
@@ -166,8 +158,6 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                 colors: [
                   Constants.gradient1,
                   Constants.gradient2,
-
-
                 ],
               ),
             ),
@@ -177,20 +167,20 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                 builder: (context, constraints) {
                   return ListView(
                     padding: const EdgeInsets.only(left: 50, right: 50, top: 20, bottom: 20),
-
                     shrinkWrap: true,
                     children: <Widget>[
                       Hero(
                         tag: "PartHeader",
                         child: AutoSizeText(
-                        "Create a new Party",
-                        style: new TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
-                        maxLines: 1,
-                      ),),
+                          "Create a new Party",
+                          style: TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
+                          maxLines: 1,
+                        ),
+                      ),
                       SizedBox(height: 30.0),
                       Text(
                         'Game settings',
-                        style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
+                        style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
                       ),
                       SizedBox(height: 20.0),
                       ToggleButtonCard(
