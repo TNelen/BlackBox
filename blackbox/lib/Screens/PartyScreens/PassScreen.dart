@@ -96,71 +96,68 @@ class _PassScreenState extends State<PassScreen> {
                   style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
                 ),
                 SizedBox(height: 40.0),
-                Hero(
-                  tag: "newVote",
-                  child: Card(
-                    elevation: 5.0,
-                    color: Constants.iDarkGrey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        allPlayersVoted()
-                            ? null
-                            : Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) => PartyQuestionScreen(_database, groupData, code, playerVotes, numberOfVotes),
-                                ));
-                      },
-                      child: Container(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 5, left: 10.0, right: 10, bottom: 5),
-                          child: Stack(children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 35),
-                                Text(
-                                  "  Vote!",
-                                  style: new TextStyle(color: allPlayersVoted() ? Constants.iLight : Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(height: 5),
-                                allPlayersVoted()
-                                    ? Text(
-                                        "  All players voted",
-                                        textAlign: TextAlign.start,
-                                        style: new TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
-                                      )
-                                    : Text(
-                                        "  New vote for this round",
-                                        textAlign: TextAlign.start,
-                                        style: new TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
-                                      ),
-                                SizedBox(height: 10),
-                              ],
-                            ),
-                            Positioned(
-                              right: 0.0,
-                              top: 0.0,
-                              child: allPlayersVoted()
-                                  ? IconCard(
-                                      Icons.edit,
-                                      Constants.iGrey.withOpacity(0.1),
-                                      Constants.iLight.withOpacity(0.5),
-                                      35,
+                Card(
+                  elevation: 5.0,
+                  color: Constants.iDarkGrey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      allPlayersVoted()
+                          ? null
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) => PartyQuestionScreen(_database, groupData, code, playerVotes, numberOfVotes),
+                              ));
+                    },
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 5, left: 10.0, right: 10, bottom: 5),
+                        child: Stack(children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 35),
+                              Text(
+                                "  Vote!",
+                                style: new TextStyle(color: allPlayersVoted() ? Constants.iLight : Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 5),
+                              allPlayersVoted()
+                                  ? Text(
+                                      "  All players voted",
+                                      textAlign: TextAlign.start,
+                                      style: new TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
                                     )
-                                  : IconCard(
-                                      Icons.edit,
-                                      Constants.iGrey.withOpacity(0.1),
-                                      Constants.colors[Constants.colorindex],
-                                      35,
+                                  : Text(
+                                      "  New vote for this round",
+                                      textAlign: TextAlign.start,
+                                      style: new TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
                                     ),
-                            ),
-                          ]),
-                        ),
+                              SizedBox(height: 10),
+                            ],
+                          ),
+                          Positioned(
+                            right: 0.0,
+                            top: 0.0,
+                            child: allPlayersVoted()
+                                ? IconCard(
+                                    Icons.edit,
+                                    Constants.iGrey.withOpacity(0.1),
+                                    Constants.iLight.withOpacity(0.5),
+                                    35,
+                                  )
+                                : IconCard(
+                                    Icons.edit,
+                                    Constants.iGrey.withOpacity(0.1),
+                                    Constants.colors[Constants.colorindex],
+                                    35,
+                                  ),
+                          ),
+                        ]),
                       ),
                     ),
                   ),

@@ -87,167 +87,157 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
       children: userData.map((data) => buildUserVoteCard(data)).toList(),
     );
 
-    final voteButton = Hero(
-      tag: 'submit',
-      child: Padding(
-        padding: const EdgeInsets.only(left: 35, right: 35),
-        child: Material(
-          elevation: 5.0,
-          borderRadius: BorderRadius.circular(28.0),
-          color: Constants.colors[Constants.colorindex],
-          child: MaterialButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(28.0),
-            ),
-            minWidth: MediaQuery.of(context).size.width,
-            onPressed: () {
-              if (clickedmember != null) {
-                FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
-                  'type': 'PartyVoteCast',
-                  'code': groupData.getGroupCode(),
-                });
-
-                FirebaseAnalytics().logEvent(name: 'PartyVoteOnUser', parameters: null);
-
-
-                groupData.offlineVoteParty(clickedmember.getUserID());
-                print("-----------");
-                print(groupData.getNewVotes());
-                int currentvotes = playerVotes[clickedmember];
-                playerVotes.update(clickedmember, (value) => currentvotes + 1);
-                currentQuestion = groupData.getQuestionID();
-                numberOfVotes++;
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => PassScreen(_database, groupData, code, playerVotes, numberOfVotes),
-                    ));
-              } else {
-                NoMemberSelectedPopup.noMemberSelectedPopup(context);
-              }
-            },
-            child: Text("Vote", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold)),
+    final voteButton = Padding(
+      padding: const EdgeInsets.only(left: 35, right: 35),
+      child: Material(
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(28.0),
+        color: Constants.colors[Constants.colorindex],
+        child: MaterialButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(28.0),
           ),
+          minWidth: MediaQuery.of(context).size.width,
+          onPressed: () {
+            if (clickedmember != null) {
+              FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
+                'type': 'PartyVoteCast',
+                'code': groupData.getGroupCode(),
+              });
+
+              FirebaseAnalytics().logEvent(name: 'PartyVoteOnUser', parameters: null);
+
+              groupData.offlineVoteParty(clickedmember.getUserID());
+              print("-----------");
+              print(groupData.getNewVotes());
+              int currentvotes = playerVotes[clickedmember];
+              playerVotes.update(clickedmember, (value) => currentvotes + 1);
+              currentQuestion = groupData.getQuestionID();
+              numberOfVotes++;
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => PassScreen(_database, groupData, code, playerVotes, numberOfVotes),
+                  ));
+            } else {
+              NoMemberSelectedPopup.noMemberSelectedPopup(context);
+            }
+          },
+          child: Text("Vote", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold)),
         ),
       ),
     );
 
-
-
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: new ThemeData(
-              fontFamily: "atarian",
-              scaffoldBackgroundColor: Constants.iBlack,
-            ),
-            home: Scaffold(
-              appBar: AppBar(
-                elevation: 0,
-                backgroundColor: Constants.iBlack,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [],
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: new ThemeData(
+        fontFamily: "atarian",
+        scaffoldBackgroundColor: Constants.iBlack,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Constants.iBlack,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [],
+          ),
+        ),
+        body: Builder(
+            // Create an inner BuildContext so that the onPressed methods
+            // can refer to the Scaffold with Scaffold.of().
+            builder: (BuildContext context) {
+          return Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  stops: [0.1, 0.9],
+                  colors: [
+                    Constants.gradient1,
+                    Constants.gradient2,
+                  ],
                 ),
               ),
-              body: Builder(
-                  // Create an inner BuildContext so that the onPressed methods
-                  // can refer to the Scaffold with Scaffold.of().
-                  builder: (BuildContext context) {
-                return Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        stops: [0.1, 0.9],
-                        colors: [
-                          Constants.gradient1,
-                          Constants.gradient2,
+              padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 3.0),
+              child: ListView(
+                children: [
+                  //submit own question button
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
+                    color: Colors.transparent,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(height: 10),
+                          Text(
+                            'Question',
+                            style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
+                          ),
+                          SizedBox(height: 15),
+                          Card(
+                            elevation: 5.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
+                            color: Constants.iDarkGrey,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    groupData.getNextQuestionString(),
+                                    style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(height: 5),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Container(
+                                        width: 150.0,
+                                        child: Text(
+                                          '- ' + groupData.getQuestion().getCategory() + ' -',
+                                          style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 3.0),
-                    child: ListView(
-                      children: [
-                        //submit own question button
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
-                          color: Colors.transparent,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                SizedBox(height: 10),
-                                Text(
-                                  'Question',
-                                  style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
-                                ),
-                                SizedBox(height: 15),
-                                Hero(
-                                  tag: "newVote",
-                                  child: Card(
-                                    elevation: 5.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                    ),
-                                    color: Constants.iDarkGrey,
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Text(
-                                            groupData.getNextQuestionString(),
-                                            style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          SizedBox(height: 5),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              new Container(
-                                                width: 150.0,
-                                                child: Text(
-                                                  '- ' + groupData.getQuestion().getCategory() + ' -',
-                                                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          'Select a friend',
-                          textAlign: TextAlign.center,
-                          style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Select a friend',
+                    textAlign: TextAlign.center,
+                    style: new TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
 
-                        membersList,
-                        SizedBox(
-                          height: 5,
-                        ),
+                  membersList,
+                  SizedBox(
+                    height: 5,
+                  ),
 
-                        SizedBox(
-                          height: 75,
-                        ),
-                      ],
-                    ));
-              }),
-              floatingActionButton: voteButton,
-              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-            ),
-          );
-
+                  SizedBox(
+                    height: 75,
+                  ),
+                ],
+              ));
+        }),
+        floatingActionButton: voteButton,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      ),
+    );
   }
 
   Widget buildUserVoteCard(UserData data) {

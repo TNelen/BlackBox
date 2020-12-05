@@ -510,41 +510,38 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                       )
               ]));
 
-          final nextButton = Hero(
-            tag: 'button',
-            child: Padding(
-              padding: const EdgeInsets.only(left: 35, right: 35),
-              child: Material(
-                elevation: 5.0,
-                borderRadius: BorderRadius.circular(28.0),
-                color: Constants.colors[Constants.colorindex],
-                child: MaterialButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28.0),
-                    ),
-                    minWidth: MediaQuery.of(context).size.width,
-                    onPressed: () {
-                      if (groupData.getIsPlaying()) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => PartyQuestionScreen(_database, groupData, code, playerVotes, 0),
-                            ));
-                      } else {
-                        //go to overview
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => OverviewScreen(_database, groupData),
-                            ));
-                      }
-                    },
-                    //change isplaying field in database for this group to TRUE
-                    child: groupData.getIsPlaying()
-                        ? Text("Next Question", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold))
-                        : Text("The games has ended. \n Show overview",
-                            textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold))),
-              ),
+          final nextButton = Padding(
+            padding: const EdgeInsets.only(left: 35, right: 35),
+            child: Material(
+              elevation: 5.0,
+              borderRadius: BorderRadius.circular(28.0),
+              color: Constants.colors[Constants.colorindex],
+              child: MaterialButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28.0),
+                  ),
+                  minWidth: MediaQuery.of(context).size.width,
+                  onPressed: () {
+                    if (groupData.getIsPlaying()) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => PartyQuestionScreen(_database, groupData, code, playerVotes, 0),
+                          ));
+                    } else {
+                      //go to overview
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => OverviewScreen(_database, groupData),
+                          ));
+                    }
+                  },
+                  //change isplaying field in database for this group to TRUE
+                  child: groupData.getIsPlaying()
+                      ? Text("Next Question", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold))
+                      : Text("The games has ended. \n Show overview",
+                          textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold))),
             ),
           );
 
