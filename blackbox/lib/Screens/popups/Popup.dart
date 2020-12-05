@@ -229,7 +229,7 @@ class Popup {
                 //print('-' + question+ '-');
                 if (question.length == 0) {
                   Popup.makePopup(context, 'Whoops!', 'You cannot submit an empty question');
-                } else if (question.length >= 20) {
+                } else if (question.length >= 5) {
                   FirebaseAnalytics().logEvent(name: 'action_performed', parameters: {'action_name': 'AddQuestionIngame'});
 
                   List<String> questions = new List<String>();
@@ -237,7 +237,7 @@ class Popup {
                   _addQuestions(questions, database, groupData);
                   Navigator.pop(context);
                 } else
-                  Popup.makePopup(context, 'Whoops!', 'You cannot submit a question shorter than 20 characters');
+                  Popup.makePopup(context, 'Whoops!', 'You cannot submit a question shorter than 5 characters');
               },
             ),
           ],
