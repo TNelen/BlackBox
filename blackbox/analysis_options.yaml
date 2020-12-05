@@ -1,0 +1,29 @@
+
+analyzer:
+  exclude: [build/**]
+  strong-mode:
+    implicit-casts: false
+  errors:
+    invalid_assignment: warning
+    missing_return: error
+    dead_code: info
+    todo: ignore
+
+
+linter:
+  rules:
+    - camel_case_types
+    - empty_statements
+    - await_only_futures
+    - invariant_booleans
+    - avoid_print
+    - avoid_empty_else
+    - unawaited_futures
+    - unnecessary_const
+    - unnecessary_final
+    - unnecessary_new
+    - unnecessary_this
+    - always_declare_return_types
+
+dev_dependencies:
+  effective_dart: ^1.0.0

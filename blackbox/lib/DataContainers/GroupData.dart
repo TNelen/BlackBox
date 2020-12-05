@@ -121,32 +121,32 @@ class GroupData {
       :
 
         /// Get basic data
-        _groupName = snap.data['name'] ?? "Nameless group",
-        _groupDescription = snap.data['description'] ?? "No description",
+        _groupName = snap.data['name'] as String?? "Nameless group",
+        _groupDescription = snap.data['description'] as String ?? "No description",
         _groupID = snap.documentID.toString(),
-        _adminID = snap.data['admin'],
-        _isPlaying = snap.data['isPlaying'],
-        canVoteBlank = snap.data['canVoteBlank'],
-        canVoteOnSelf = snap.data['canVoteOnSelf'],
-        _adminVoteTimestamp = snap.data['adminVoteTimestamp'],
+        _adminID = snap.data['admin'] as String,
+        _isPlaying = snap.data['isPlaying'] as bool,
+        canVoteBlank = snap.data['canVoteBlank'] as bool,
+        canVoteOnSelf = snap.data['canVoteOnSelf'] as bool,
+        _adminVoteTimestamp = snap.data['adminVoteTimestamp'] as int,
 
         /// Get status data
-        _nextQuestion = new Question(
-                snap.data['nextQuestionID'],
-                snap.data['nextQuestion'],
-                QuestionCategory(snap.data['nextQuestionCategory'], '', ['']),
-                snap.data['nextQuestionCreatorID'],
-                snap.data['nextQuestionCreatorName']) ??
-            new Question.addDefault(snap.data['nextQuestion']) ??
-            new Question.empty(),
-        _lastQuestion = new Question(
-                snap.data['lastQuestionID'],
-                snap.data['lastQuestion'],
-                QuestionCategory(snap.data['lastQuestionCategory'], '', ['']),
-                snap.data['lastQuestionCreatorID'],
-                snap.data['lastQuestionCreatorName']) ??
-            new Question.addDefault(snap.data['nextQuestion']) ??
-            new Question.empty(),
+        _nextQuestion = Question(
+                snap.data['nextQuestionID'] as String,
+                snap.data['nextQuestion'] as String,
+                QuestionCategory(snap.data['nextQuestionCategory'] as String, '', ['']),
+                snap.data['nextQuestionCreatorID'] as String,
+                snap.data['nextQuestionCreatorName'] as String) ??
+            Question.addDefault(snap.data['nextQuestion'] as String) ??
+            Question.empty(),
+        _lastQuestion = Question(
+                snap.data['lastQuestionID'] as String,
+                snap.data['lastQuestion'] as String,
+                QuestionCategory(snap.data['lastQuestionCategory'] as String, '', ['']),
+                snap.data['lastQuestionCreatorID'] as String,
+                snap.data['lastQuestionCreatorName'] as String) ??
+            Question.addDefault(snap.data['nextQuestion'] as String) ??
+            Question.empty(),
         _members = _convertFirebaseMapString(snap.data['members']),
         _lastVotes = _convertFirebaseMapString(snap.data['lastVotes']),
         _newVotes = _convertFirebaseMapString(snap.data['newVotes']),
@@ -158,10 +158,10 @@ class GroupData {
   /// Convert a list from a DocumentSnapshot to a List<String>
   /// NO checks are done! Provided parameter MUST be correct
   static List<String> _convertFirebaseList(dynamic data) {
-    List<String> list = new List<String>();
+    List<String> list = List<String>();
 
     for (dynamic element in data) {
-      list.add(element);
+      list.add(element as String);
     }
 
     return list;
@@ -246,6 +246,7 @@ class GroupData {
     return _isPlaying;
   }
 
+
   ///Get all availbalbe question
   List<String> getQuestionList() {
     return _questionlist;
@@ -296,10 +297,10 @@ class GroupData {
 
   /// Get the UserData of all users in this group
   List<UserData> getMembers() {
-    List<UserData> users = new List<UserData>();
+    List<UserData> users = List<UserData>();
 
     _members.forEach((id, username) {
-      users.add(new UserData(id, username));
+      users.add(UserData(id, username));
     });
 
     return users;

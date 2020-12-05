@@ -22,19 +22,19 @@ class FirebaseGetters {
           if (doc.data['name'] != null) {
             bool vibration = true;
             if (doc.data['vibration'] != null) {
-              vibration = doc.data['vibration'];
+              vibration = doc.data['vibration'] as bool;
             }
 
             bool sounds = true;
             if (doc.data['sounds'] != null) {
-              sounds = doc.data['sounds'];
+              sounds = doc.data['sounds'] as bool;
             }
 
             if (doc.data['accent'] != null) {
-              user = new UserData.full(doc.documentID, doc.data['name'],
-                  doc.data['accent'], vibration, sounds);
+              user = UserData.full(doc.documentID, doc.data['name'] as String,
+                  doc.data['accent'] as int, vibration, sounds);
             } else {
-              user = new UserData.full(doc.documentID, doc.data['name'],
+              user = UserData.full(doc.documentID, doc.data['name'] as String,
                   Constants.defaultColor, vibration, sounds);
             }
           }
@@ -88,7 +88,7 @@ class FirebaseGetters {
         .get()
         .then((document) {
       /// Convert List<dynamic> to List<String>
-      List<dynamic> existing = document.data[category];
+      List<dynamic> existing = document.data[category] as List;
       questionlist = existing.cast<String>().toList();
       if (questionlist.length > 1)
       {
@@ -124,17 +124,17 @@ class FirebaseGetters {
           if (cat.name == document.data['category'])
             category = cat;
 
-        randomQuestion = new Question(
+        randomQuestion = Question(
             document.documentID,
-            document.data['question'],
+            document.data['question'] as String,
             category,
-            document.data['creatorID'],
-            document.data['creatorName']);
+            document.data['creatorID'] as String,
+            document.data['creatorName'] as String);
       });
 
       return randomQuestion;
     } else
-      return new Question(
+      return Question(
           "END",
           "The game has ended, please start a new game, or submit your own questions!",
           QuestionCategory.community(),
@@ -155,10 +155,10 @@ class FirebaseGetters {
           String msg = "";
           if (snap.data['login_message'] != null &&
               snap.data['login_message'] != "") {
-            msg = snap.data['login_message'];
+            msg = snap.data['login_message'] as String;
           }
 
-          appinfo = new Appinfo(snap.data['current_version'], msg);
+          appinfo = Appinfo(snap.data['current_version'] as String, msg);
         }
       } else {
         print("snap does not exists");

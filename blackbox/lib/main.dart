@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
       ///check if user isn't loged in via google already when returning to homescreen
       try {
-        GoogleUserHandler guh = new GoogleUserHandler();
+        GoogleUserHandler guh = GoogleUserHandler();
         guh.handleSignIn().then((user) async {
           /// Log the retreived user in and update the data in the database
           UserData saved = await database.getUserByID(user.getUserID());
@@ -87,14 +87,16 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 
   Future<bool> checkWifi() async {
+    bool on;
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        return true;
+        on = true;
       }
     } on SocketException catch (_) {
-      return false;
+      on = false;
     }
+    return on;
   }
 
   @override

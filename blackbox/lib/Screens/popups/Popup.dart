@@ -115,7 +115,7 @@ class Popup {
         return AlertDialog(
           backgroundColor: Constants.iBlack,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
-          title: new Text(
+          title: Text(
             'Change username',
             style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
           ),
@@ -131,8 +131,8 @@ class Popup {
               ])),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text(
+            FlatButton(
+              child: Text(
                 "Update",
                 style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
               ),
@@ -166,7 +166,7 @@ class Popup {
   }
 
   static void submitQuestionIngamePopup(BuildContext context, Database database, GroupData groupData) {
-    TextEditingController questionController = new TextEditingController();
+    TextEditingController questionController = TextEditingController();
 
     final questionfield = TextField(
       obscureText: false,
@@ -192,7 +192,7 @@ class Popup {
         return AlertDialog(
           backgroundColor: Constants.iBlack,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
-          title: new Text(
+          title: Text(
             'Ask a question...',
             style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize),
           ),
@@ -204,8 +204,8 @@ class Popup {
               ])),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text(
+            FlatButton(
+              child: Text(
                 "Cancel",
                 style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
               ),
@@ -214,13 +214,13 @@ class Popup {
               },
             ),
 
-            new FlatButton(
+            FlatButton(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
                 //side: BorderSide(color: Colors.red)
               ),
               color: Constants.colors[Constants.colorindex],
-              child: new Text(
+              child: Text(
                 "Submit",
                 style: TextStyle(fontFamily: "atarian", color: Constants.iBlack, fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
               ),
@@ -232,7 +232,7 @@ class Popup {
                 } else if (question.length >= 5) {
                   FirebaseAnalytics().logEvent(name: 'action_performed', parameters: {'action_name': 'AddQuestionIngame'});
 
-                  List<String> questions = new List<String>();
+                  List<String> questions = List<String>();
                   questions.add(question);
                   _addQuestions(questions, database, groupData);
                   Navigator.pop(context);
@@ -246,79 +246,10 @@ class Popup {
     );
   }
 
-  static String addPlayer(BuildContext context, Database database, GroupData groupData) {
-    TextEditingController playerNameController = new TextEditingController();
 
-    final namefield = TextField(
-      obscureText: false,
-      keyboardType: TextInputType.text,
-      autocorrect: false,
-      maxLength: 15,
-      maxLines: 1,
-      controller: playerNameController,
-      style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iWhite),
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
-          fillColor: Constants.iBlack,
-          filled: true,
-          hintText: "Start typing here...",
-          hintStyle: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iGrey),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
-    );
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          backgroundColor: Constants.iBlack,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
-          title: new Text(
-            'Player Name',
-            style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize),
-          ),
-          content: Container(
-              height: 230,
-              child: Column(children: [
-                SizedBox(height: 25),
-                namefield,
-              ])),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text(
-                "Cancel",
-                style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-
-            new FlatButton(
-              child: new Text(
-                "Submit",
-                style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
-              ),
-              onPressed: () {
-                String name = playerNameController.text;
-                //print('-' + question+ '-');
-                if (name.length <= 2) {
-                  Popup.makePopup(context, 'Whoops!', 'Player nqme is too short');
-                } else {
-                  FirebaseAnalytics().logEvent(name: 'action_performed', parameters: {'action_name': 'addPlayer'});
-
-                  return name;
-                }
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   static void togglePlaying(groupData) {
+    // ignore: invariant_booleans
     groupData.setIsPlaying(!groupData.getIsPlaying());
   }
 
