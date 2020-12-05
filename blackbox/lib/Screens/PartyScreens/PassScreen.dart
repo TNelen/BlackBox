@@ -41,6 +41,10 @@ class _PassScreenState extends State<PassScreen> {
     FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'RulesScreen'});
   }
 
+  bool allPlayersVoted() {
+    return groupData.canVoteBlank ? ((this.playerVotes.length - 1) == this.numberOfVotes) : ((this.playerVotes.length) == this.numberOfVotes);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -85,7 +89,9 @@ class _PassScreenState extends State<PassScreen> {
                     ]),
                 SizedBox(height: 20.0),
                 Text(
-                  numberOfVotes > 1 ? numberOfVotes.toString() + ' players have voted' : numberOfVotes.toString() + ' player has voted',
+                  groupData.canVoteBlank
+                      ? numberOfVotes.toString() + '/' + (playerVotes.length - 1).toString() + ' players have voted'
+                      : numberOfVotes.toString() + '/' + (playerVotes.length).toString() + ' players have voted',
                   textAlign: TextAlign.center,
                   style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
                 ),
@@ -100,11 +106,13 @@ class _PassScreenState extends State<PassScreen> {
                     ),
                     child: InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => PartyQuestionScreen(_database, groupData, code, playerVotes, numberOfVotes),
-                            ));
+                        allPlayersVoted()
+                            ? null
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) => PartyQuestionScreen(_database, groupData, code, playerVotes, numberOfVotes),
+                                ));
                       },
                       child: Container(
                         child: Padding(
@@ -117,26 +125,39 @@ class _PassScreenState extends State<PassScreen> {
                                 SizedBox(height: 35),
                                 Text(
                                   "  Vote!",
-                                  style: new TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                  style: new TextStyle(color: allPlayersVoted() ? Constants.iLight : Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                                 ),
                                 SizedBox(height: 5),
-                                Text(
-                                  "  New vote for this round",
-                                  textAlign: TextAlign.start,
-                                  style: new TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
-                                ),
+                                allPlayersVoted()
+                                    ? Text(
+                                        "  All players voted",
+                                        textAlign: TextAlign.start,
+                                        style: new TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                      )
+                                    : Text(
+                                        "  New vote for this round",
+                                        textAlign: TextAlign.start,
+                                        style: new TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                      ),
                                 SizedBox(height: 10),
                               ],
                             ),
                             Positioned(
                               right: 0.0,
                               top: 0.0,
-                              child: IconCard(
-                                Icons.edit,
-                                Constants.iGrey.withOpacity(0.1),
-                                Constants.colors[Constants.colorindex],
-                                35,
-                              ),
+                              child: allPlayersVoted()
+                                  ? IconCard(
+                                      Icons.edit,
+                                      Constants.iGrey.withOpacity(0.1),
+                                      Constants.iLight.withOpacity(0.5),
+                                      35,
+                                    )
+                                  : IconCard(
+                                      Icons.edit,
+                                      Constants.iGrey.withOpacity(0.1),
+                                      Constants.colors[Constants.colorindex],
+                                      35,
+                                    ),
                             ),
                           ]),
                         ),
