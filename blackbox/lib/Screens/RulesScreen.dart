@@ -14,7 +14,7 @@ class RuleScreen extends StatefulWidget {
   }
 
   @override
-  _RuleScreenState createState() => new _RuleScreenState(_database);
+  _RuleScreenState createState() => _RuleScreenState(_database);
 }
 
 class _RuleScreenState extends State<RuleScreen> {

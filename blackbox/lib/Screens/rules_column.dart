@@ -55,7 +55,7 @@ class _RulesColumnState extends State<RulesColumn> {
     int i = 0;
     while(i < widget.titles.length && i < widget.descriptions.length)
     {
-      _expansionKeys.add( new GlobalKey() );
+      _expansionKeys.add( GlobalKey() );
       i++;
     }
   }

@@ -34,7 +34,7 @@ class FileHandler {
     try {
       return await file.readAsLines(encoding: utf8);
     } catch (e) {
-      return new List<String>();
+      return List<String>();
 
       /// If an error occurs: return an empty list
     }
