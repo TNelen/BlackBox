@@ -5,10 +5,9 @@ class CategoryCard extends StatefulWidget {
   final bool defaultValue;
   final String categoryname;
   final String description;
-  final int amount;
   final Function() onTap;
 
-  CategoryCard(this.defaultValue, this.categoryname, this.description, this.amount, {this.onTap, Key key}) : super(key: key);
+  CategoryCard(this.defaultValue, this.categoryname, this.description, {this.onTap, Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

@@ -1,68 +1,35 @@
 import 'package:audioplayers/audio_cache.dart';
-import 'package:blackbox/DataContainers/UserData.dart';
-import 'package:blackbox/DataContainers/UserRankData.dart';
+import 'package:blackbox/DataContainers/OfflineGroupData.dart';
 import 'package:blackbox/Screens/HomeScreen.dart';
 import 'package:blackbox/Screens/PartyScreens/PartyQuestionScreen.dart';
 import 'package:blackbox/Util/VibrationHandler.dart';
 import 'package:flutter/material.dart';
 import '../../DataContainers/GroupData.dart';
-import '../../DataContainers/Question.dart';
 import '../../Constants.dart';
-import '../../Interfaces/Database.dart';
-import '../../Database/FirebaseStream.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import '../OverviewScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 class PartyResultScreen extends StatefulWidget {
-  Database _database;
-  GroupData groupData;
-  String code;
-  String currentQuestion;
-  String currentQuestionString;
-  Map<UserData, int> playerVotes;
+  OfflineGroupData offlineGroupData;
 
-  PartyResultScreen(Database db, GroupData groupData, String code, String currentQuestion, String currentQuestionString, Map<UserData, int> playerVotes) {
-    this._database = db;
-    this.groupData = groupData;
-    this.code = code;
-    this.currentQuestion = currentQuestion;
-    this.currentQuestionString = currentQuestionString;
-    this.playerVotes = playerVotes;
+  PartyResultScreen(OfflineGroupData offlineGroupData) {
+    this.offlineGroupData = offlineGroupData;
   }
 
   @override
-  PartyResultScreenState createState() => PartyResultScreenState(_database, groupData, code, currentQuestion, currentQuestionString, playerVotes);
+  PartyResultScreenState createState() => PartyResultScreenState(offlineGroupData);
 }
 
 class PartyResultScreenState extends State<PartyResultScreen> {
-  Database _database;
-  GroupData groupData;
-  String code;
-  String currentQuestion;
-  String currentQuestionString;
-  FirebaseStream stream;
-  bool joined = false;
-  bool _loadingInProgress;
-  bool timeout;
-  Map<UserData, int> playerVotes;
+  OfflineGroupData offlineGroupData;
 
-  bool _firstTimeLoaded = true;
 
-  PartyResultScreenState(Database db, GroupData groupData, String code, String currentQuestion, String currentQuestionString, Map<UserData, int> playerVotes) {
-    this._database = db;
-    this.groupData = groupData;
-    this.code = code;
-    this.currentQuestion = currentQuestion;
-    this.currentQuestionString = currentQuestionString;
-    this.stream = new FirebaseStream(code);
-    this.playerVotes = playerVotes;
+
+  PartyResultScreenState(OfflineGroupData offlineGroupData) {
+    this.offlineGroupData = offlineGroupData;
   }
 
-  int _timeleft = 119;
-  int pageIndex = 0;
   bool showMoreCurrent;
   bool showMoreAll;
 
@@ -74,17 +41,9 @@ class PartyResultScreenState extends State<PartyResultScreen> {
 
   @override
   void initState() {
-    groupData = null;
 
-    //bools used at showmore at results display
     showMoreCurrent = false;
     showMoreAll = false;
-
-    super.initState();
-    _loadingInProgress = true;
-    FirebaseStream(code).groupData.listen((_onGroupDataUpdate) {}, onDone: () {
-      _loadingInProgress = false;
-    }, onError: (error) {});
 
     BackButtonInterceptor.add(myInterceptor);
   }
@@ -100,67 +59,15 @@ class PartyResultScreenState extends State<PartyResultScreen> {
     return true;
   }
 
-  void getRandomNexQuestion() async {
-    Question question = await _database.getNextQuestion(groupData);
-    if (question.getQuestionID() == "END") {
-      await groupData.setNextQuestion(question, Constants.getUserData());
-      groupData.setIsPlaying(false);
-    } else {
-      await groupData.setNextQuestion(question, Constants.getUserData());
-    }
-  }
 
   @override
   Widget _buildBody(BuildContext context) {
-    return StreamBuilder(
-        stream: stream.groupData,
-        builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
-          groupData = snapshot.data;
-          if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-          if (!snapshot.hasData) {
-            return Center(child: new CircularProgressIndicator());
-          }
-          if (snapshot.hasData) {
-            if (currentQuestion == groupData.getQuestionID()) {
-              getRandomNexQuestion();
-              return Center(
-                  child: Container(
-                width: MediaQuery.of(context).size.width / 3,
-                height: MediaQuery.of(context).size.width / 3,
-                child: LiquidCircularProgressIndicator(
-                  value: 0.25,
-                  valueColor: AlwaysStoppedAnimation(Constants.colors[Constants.colorindex]),
-                  backgroundColor: Constants.iBlack,
-                  borderColor: Constants.iWhite,
-                  borderWidth: 2.0,
-                  direction: Axis.vertical,
-                  center: Text(
-                    "Loading...",
-                    style: TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ));
-            }
-          }
-          List<UserRankData> currentWinners = groupData.getUserRankingList('previous', null);
-          List<UserRankData> alltimeWinners = groupData.getUserRankingList('alltime', null);
 
-          // Get alltime blank data and remove from users
-          UserRankData alltimeBlankData;
-          int deleteID;
-          int i = 0;
-          for (UserRankData userRankData in alltimeWinners) {
-            if (userRankData.id == GroupData.blankUser.getUserID()) {
-              alltimeBlankData = userRankData;
-              deleteID = i;
-            }
-            i++;
-          }
+          List<String> alltimeWinners = offlineGroupData.getAlltimeRanking();
+          Map<String, int> allTimeVotes = offlineGroupData.getTotalVotes();
+          List<String> currentWinners = offlineGroupData.getCurrentRanking();
+          Map<String, int> currentVotes = offlineGroupData.getCurrentVotes();
 
-          if (deleteID != null) alltimeWinners.removeAt(deleteID);
-
-          // currentWinners.removeWhere((element) => element.id == GroupData.blankUser.getUserID());
-          // alltimeWinners.removeWhere((element) => element.id == GroupData.blankUser.getUserID());
 
           void toggleAlltime() {
             showMoreAll = !showMoreAll;
@@ -188,6 +95,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                   shrinkWrap: true,
                   itemCount: !showMoreAll ? (alltimeWinners.length >= 3 ? 3 : alltimeWinners.length) : alltimeWinners.length,
                   itemBuilder: (context, index) {
+                    String playerName = alltimeWinners[index];
                     return Card(
                         elevation: 0.0,
                         shape: RoundedRectangleBorder(
@@ -213,13 +121,13 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                       width: 12,
                                     ),
                                     Text(
-                                      alltimeWinners[index].getUserName().split(' ')[0],
+                                      playerName,
                                       style: TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                                       textAlign: TextAlign.start,
                                     ),
                                   ]),
                                   Text(
-                                    alltimeWinners[index].getNumVotes().toString(),
+                                    allTimeVotes[playerName].toString(),
                                     style: TextStyle(color: index == 0 ? Constants.colors[Constants.colorindex] : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                     textAlign: TextAlign.start,
                                   ),
@@ -289,13 +197,13 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                             child: Column(
                                               children: <Widget>[
                                                 AutoSizeText(
-                                                  currentWinners[1].getUserName().split(' ')[0],
+                                                  currentWinners[1],
                                                   style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                                   textAlign: TextAlign.center,
                                                   maxLines: 1,
                                                 ),
                                                 Text(
-                                                  currentWinners[1].getNumVotes().toString() + (currentWinners[1].getNumVotes().toString() == '1' ? ' vote' : ' votes'),
+                                                  currentVotes[currentWinners[1]].toString() + ( currentVotes[currentWinners[1]].toString() == '1' ? ' vote' : ' votes'),
                                                   style: TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.w400),
                                                   textAlign: TextAlign.center,
                                                 ),
@@ -344,13 +252,13 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                       child: Column(
                                         children: <Widget>[
                                           AutoSizeText(
-                                            currentWinners.length == 0 ? "" : currentWinners[0].getUserName().split(' ')[0],
+                                            currentWinners.length == 0 ? "" :  currentWinners[0].toString(),
                                             style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w600),
                                             textAlign: TextAlign.center,
                                             maxLines: 1,
                                           ),
                                           Text(
-                                            currentWinners.length == 0 ? "" : currentWinners[0].getNumVotes().toString() + (currentWinners[0].getNumVotes().toString() == '1' ? ' vote' : ' votes'),
+                                            currentWinners.length == 0 ? "" :  currentVotes[currentWinners[0]].toString() + ( currentVotes[currentWinners[0]].toString() == '1' ? ' vote' : ' votes'),
                                             style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                             textAlign: TextAlign.center,
                                           ),
@@ -397,13 +305,13 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                             child: Column(
                                               children: <Widget>[
                                                 AutoSizeText(
-                                                  currentWinners[2].getUserName().split(' ')[0],
+                                                  currentWinners[2].toString(),
                                                   style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                                   textAlign: TextAlign.center,
                                                   maxLines: 1,
                                                 ),
                                                 Text(
-                                                  currentWinners[2].getNumVotes().toString() + (currentWinners[2].getNumVotes().toString() == '1' ? ' vote' : ' votes'),
+                                                  currentVotes[currentWinners[2]].toString() + ( currentVotes[currentWinners[2]].toString() == '1' ? ' vote' : ' votes'),
                                                   style: TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.w400),
                                                   textAlign: TextAlign.center,
                                                 ),
@@ -460,13 +368,13 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                             width: 12,
                                           ),
                                           Text(
-                                            currentWinners[index + 3].getUserName().split(' ')[0],
+                                            currentWinners[index + 3],
                                             style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
                                             textAlign: TextAlign.start,
                                           ),
                                         ]),
                                         Text(
-                                          currentWinners[index + 3].getNumVotes().toString(),
+                                            currentVotes[currentWinners[index+3]].toString(),
                                           style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w600),
                                           textAlign: TextAlign.start,
                                         ),
@@ -513,34 +421,31 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                   ),
                   minWidth: MediaQuery.of(context).size.width,
                   onPressed: () {
-                    if (groupData.getIsPlaying()) {
+                    if (!offlineGroupData.isGameEnded()) {
+                      offlineGroupData.nextRound();
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (BuildContext context) => PartyQuestionScreen(_database, groupData, code, playerVotes, 0),
+                            builder: (BuildContext context) => PartyQuestionScreen(offlineGroupData),
                           ));
                     } else {
                       //go to overview
                       Navigator.push(
+                        //TODO : create endScreen
                           context,
                           MaterialPageRoute(
-                            builder: (BuildContext context) => OverviewScreen(_database, groupData),
+                            builder: (BuildContext context) => HomeScreen(null),
                           ));
                     }
                   },
                   //change isplaying field in database for this group to TRUE
-                  child: groupData.getIsPlaying()
+                  child: !offlineGroupData.isGameEnded()
                       ? Text("Next Question", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold))
                       : Text("The games has ended. \n Show overview",
                           textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold))),
             ),
           );
-
-          /// Play audio indicating whether or not the player is in the previous top three
-          if (_firstTimeLoaded) {
-            handleWinnerFeedback(groupData);
-            _firstTimeLoaded = false;
-          }
 
           return MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -561,7 +466,8 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (BuildContext context) => HomeScreen(_database),
+                            //TODO : create endScreen
+                            builder: (BuildContext context) => HomeScreen(null),
                           ));
                     },
                     child: Text(
@@ -609,7 +515,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                     Padding(
                       padding: EdgeInsets.only(left: 35, right: 35),
                       child: Text(
-                        currentQuestionString,
+                        offlineGroupData.getCurrentQuestion().getQuestion(),
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                       ),
@@ -633,8 +539,8 @@ class PartyResultScreenState extends State<PartyResultScreen> {
               floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
             ),
           );
-        });
-  }
+        }
+
 
   @override
   Widget build(BuildContext context) {

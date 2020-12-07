@@ -1,51 +1,32 @@
-import 'package:blackbox/DataContainers/UserData.dart';
+import 'package:blackbox/DataContainers/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PartyScreens/PassScreen.dart';
 import 'package:blackbox/Screens/popups/noMembersScelectedPopup.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import '../../DataContainers/GroupData.dart';
 import '../../Constants.dart';
-import '../../Interfaces/Database.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import '../../Database/FirebaseStream.dart';
 
 class PartyQuestionScreen extends StatefulWidget {
-  final Database _database;
-  final GroupData groupData;
-  final String code;
-
-  //map used to display all the players and votes on the players
-  final Map<UserData, int> playerVotes;
-  final int numberOfVotes;
+  final OfflineGroupData offlineGroupData;
 
   @override
-  PartyQuestionScreen(this._database, this.groupData, this.code, this.playerVotes, this.numberOfVotes) {}
+  PartyQuestionScreen(this.offlineGroupData) {}
 
-  _PartyQuestionScreenState createState() => _PartyQuestionScreenState(_database, groupData, code, playerVotes, numberOfVotes);
+  _PartyQuestionScreenState createState() => _PartyQuestionScreenState(offlineGroupData);
 }
 
 class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsBindingObserver {
-  Database _database;
-  GroupData groupData;
-  String code;
-  Map<UserData, int> playerVotes;
 
   Color color;
-  UserData clickedmember;
-
-  String currentQuestion;
-  int numberOfVotes;
+  String selectedPlayer;
+  OfflineGroupData offlineGroupData;
 
   FirebaseStream stream;
   TextEditingController questionController = TextEditingController();
 
-  _PartyQuestionScreenState(Database db, GroupData groupData, String code, Map<UserData, int> playerVotes, int numberOfVotes) {
-    this._database = db;
-    this.groupData = groupData;
-    this.code = code;
-    this.stream = FirebaseStream(code);
-    this.playerVotes = playerVotes;
-    this.numberOfVotes = numberOfVotes;
+  _PartyQuestionScreenState(OfflineGroupData offlineGroupData) {
+    this.offlineGroupData = offlineGroupData;
   }
 
   @override
@@ -72,14 +53,14 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    final List<UserData> userData = playerVotes.keys.toList();
+    final List<String> players = offlineGroupData.getPlayers();
 
     final membersList = GridView.count(
       crossAxisCount: 2,
       shrinkWrap: true,
       childAspectRatio: (3 / 1),
       padding: EdgeInsets.symmetric(horizontal: 8.0),
-      children: userData.map((data) => buildUserVoteCard(data)).toList(),
+      children: players.map((playerName) => buildUserVoteCard(playerName)).toList(),
     );
 
     final voteButton = Padding(
@@ -94,25 +75,17 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
           ),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
-            if (clickedmember != null) {
+            if (selectedPlayer != null) {
               FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
                 'type': 'PartyVoteCast',
-                'code': groupData.getGroupCode(),
               });
 
               FirebaseAnalytics().logEvent(name: 'PartyVoteOnUser', parameters: null);
-
-              groupData.offlineVoteParty(clickedmember.getUserID());
-              print("-----------");
-              print(groupData.getNewVotes());
-              int currentvotes = playerVotes[clickedmember];
-              playerVotes.update(clickedmember, (value) => currentvotes + 1);
-              currentQuestion = groupData.getQuestionID();
-              numberOfVotes++;
+              offlineGroupData.vote(selectedPlayer);
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => PassScreen(_database, groupData, code, playerVotes, numberOfVotes),
+                    builder: (BuildContext context) => PassScreen(offlineGroupData),
                   ));
             } else {
               NoMemberSelectedPopup.noMemberSelectedPopup(context);
@@ -182,7 +155,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                               child: Column(
                                 children: <Widget>[
                                   Text(
-                                    groupData.getNextQuestionString(),
+                                offlineGroupData.getCurrentQuestion().getQuestion(),
                                     style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
                                     textAlign: TextAlign.center,
                                   ),
@@ -193,7 +166,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                                       Container(
                                         width: 150.0,
                                         child: Text(
-                                          '- ' + groupData.getQuestion().getCategory() + ' -',
+                                          '- ' + offlineGroupData.getCurrentQuestion().getCategory()+ ' -',
                                           style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.center,
                                         ),
@@ -235,11 +208,11 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
     );
   }
 
-  Widget buildUserVoteCard(UserData data) {
+  Widget buildUserVoteCard(String playerName) {
     return Container(
         child: Card(
       elevation: 5.0,
-      color: data == clickedmember ? Constants.iLight : Constants.iDarkGrey,
+      color: playerName == selectedPlayer ? Constants.iLight : Constants.iDarkGrey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
@@ -249,15 +222,15 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
         onTap: () {
           setState(() {
             color = Constants.colors[Constants.colorindex];
-            clickedmember = data;
+            selectedPlayer = playerName;
           });
         },
         child: Center(
             child: Padding(
           padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
           child: Text(
-            data.getUsername().split(' ')[0],
-            style: TextStyle(color: data == clickedmember ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+            playerName,
+            style: TextStyle(color: playerName == selectedPlayer ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
           ),
         )),
       ),

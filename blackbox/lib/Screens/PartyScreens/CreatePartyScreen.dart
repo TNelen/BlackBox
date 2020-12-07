@@ -1,10 +1,8 @@
-import 'package:blackbox/DataContainers/QuestionCategory.dart';
-import 'package:blackbox/Database/QuestionListGetter.dart';
+import 'package:blackbox/Assets/questions.dart';
 import 'package:blackbox/Screens/widgets/CategoryCard.dart';
 import 'package:blackbox/Screens/widgets/toggle_button_card.dart';
 import 'package:flutter/material.dart';
 import '../../Constants.dart';
-import '../../Interfaces/Database.dart';
 import '../popups/Popup.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -12,27 +10,22 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'SetPlayersScreen.dart';
 
 class CreatePartyScreen extends StatefulWidget {
-  Database _database;
 
-  CreatePartyScreen(Database db) {
-    this._database = db;
+  CreatePartyScreen() {
   }
 
   @override
-  _CreatePartyScreenState createState() => _CreatePartyScreenState(_database);
+  _CreatePartyScreenState createState() => _CreatePartyScreenState();
 }
 
 class _CreatePartyScreenState extends State<CreatePartyScreen> {
-  Database _database;
 
-  _CreatePartyScreenState(Database db) {
-    this._database = db;
+  _CreatePartyScreenState() {
 
     FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'CreatePartyScreen'});
   }
 
-  List<String> selectedCategory = [];
-  String _groupName;
+  List<Category> selectedCategory = [];
   bool _canVoteBlank = false;
   Color color = Constants.iDarkGrey;
 
@@ -57,7 +50,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => SetPlayersScreen(_database, selectedCategory, _canVoteBlank),
+                        builder: (BuildContext context) => SetPlayersScreen(selectedCategory, _canVoteBlank),
                       ));
                 } else {
                   Popup.makePopup(context, "Woops!", "Please select one or more categories!");
@@ -68,36 +61,25 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
           ),
         ));
 
-    final QuestionListGetter questionListGetter = QuestionListGetter.instance;
-
-    final categoryField = FutureBuilder<List<QuestionCategory>>(
-      builder: (context, projectSnap) {
-        if (projectSnap.connectionState == ConnectionState.none && projectSnap.hasData == null || projectSnap.data == null) {
-          //print('project snapshot data is: ${projectSnap.data}');
-          return Container();
-        }
-
-        return ListView.builder(
+    final categoryField = ListView.builder(
           shrinkWrap: true,
           // physics: ClampingScrollPhysics(),
           physics: NeverScrollableScrollPhysics(),
-          itemCount: projectSnap.data.length,
+          itemCount: categories.length,
           itemBuilder: (context, index) {
-            int amount = projectSnap.data[index].amount;
-            String description = projectSnap.data[index].description;
-            String categoryname = projectSnap.data[index].name;
-
+            String description = categories[index].getDescription();
+            String categoryname =  categories[index].getCategoryName();
             return Column(children: [
               CategoryCard(
-                selectedCategory.contains(categoryname),
+                selectedCategory.contains(categories[index]),
                 categoryname,
                 description,
-                amount,
                 onTap: () {
-                  if (!selectedCategory.contains(categoryname)) {
-                    selectedCategory.add(categoryname);
-                  } else if (selectedCategory.contains(categoryname)) {
-                    selectedCategory.remove(categoryname);
+                  if (!selectedCategory.contains(categories[index])) {
+                    selectedCategory.add(categories[index]);
+                  } else if (selectedCategory.contains(categories[index])) {
+                    selectedCategory.remove(categories[index]);
+
                   }
                   setState(() {});
                 },
@@ -108,9 +90,6 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
             ]);
           },
         );
-      },
-      future: questionListGetter.getCategories(),
-    );
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

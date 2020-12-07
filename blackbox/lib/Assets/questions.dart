@@ -1,3 +1,4 @@
+import 'dart:math';
 
 class Category {
   String categoryName;
@@ -14,7 +15,7 @@ class Category {
     return categoryName;
   }
 
-  List<String> getQuestions(){
+  List<String> getQuestions() {
     return questions;
   }
 }
@@ -25,11 +26,11 @@ class Question {
 
   Question(this.question, this.categoryName);
 
-  String getQuestion(){
+  String getQuestion() {
     return question;
   }
 
-  String getCategory(){
+  String getCategory() {
     return categoryName;
   }
 
@@ -39,25 +40,62 @@ class Question {
 class QuestionList {
 
   //Categoryname, question
-  Map<String, String> questionsList;
+  Map<String, String> questionsList = Map();
 
-  QuestionList(List<Category> categories){
-    for (Category cat in categories){
-      for(String question in cat.getQuestions()){
+  QuestionList(List<Category> categories) {
+    for (Category cat in categories) {
+      for (String question in cat.getQuestions()) {
         questionsList.putIfAbsent(question, () => cat.getCategoryName());
       }
     }
   }
 
   ///returns a random next question qnd removes it from the list of questions
-  Question getRandomNextQuestion(){
-      var questions = questionsList.keys.toList()..shuffle;
-      var questionString = questions[0]; 
+  /// Have 1/2 chance that it is a user submitted question if there are any.
+  Question getRandomNextQuestion() {
+    bool playerQuestionPresent = questionsList.containsValue("A player's question");
+    //1/2  chance that the player's question is returned
+    if (playerQuestionPresent) {
+      var takePlayerQuest = Random().nextBool();
+      if (takePlayerQuest) {
+        print('taking player question');
+        var questionString = questionsList.keys.firstWhere((element) => questionsList[element] == "A player's question");
+        //remove from list
+        print(questionString);
+        print(questionsList[questionString]);
+
+        Question returning = Question(questionString, questionsList[questionString]);
+        questionsList.remove(questionString);
+
+        return returning;
+      }
+      else {
+        var questions = questionsList.keys.toList()
+          ..shuffle;
+        var questionString = questions[0];
+        var question = Question(questionString, questionsList[questionString]);
+        //remove from list
+        questionsList.remove(questionString);
+        return question;
+      }
+    }
+    else {
+      var questions = questionsList.keys.toList()
+        ..shuffle;
+      var questionString = questions[0];
       var question = Question(questionString, questionsList[questionString]);
       //remove from list
       questionsList.remove(questionString);
       return question;
+    }
+  }
 
+  void addQuestion(String question) {
+    questionsList.putIfAbsent(question, () => "A player's question");
+  }
+
+  int getRemainingQuestions() {
+    return questionsList.length;
   }
 }
 
@@ -238,8 +276,8 @@ List<String> FriendshipKillers = [
 List<Category> categories = [
   Category("Beer o'clock", "Questions related to drinking, partying and nightlife", BeerOClock),
   Category("+18", "Spicy questions, aimed at adults", EighteenPlus),
-  Category("Character traits", "Questions about your friends’ character traits", CharacterTraits);
-  Category("Friendship killers","The biggest friendship test, your friendship can handle everything if it survives this category", FriendshipKillers),
-  Category("Superstar","Admire your friends’ actions or abilities", SuperStar),
-  Category("Casual","General black box questions, a rather soft category. Great to get started", Casual),
+  Category("Character traits", "Questions about your friends’ character traits", CharacterTraits),
+  Category("Friendship killers", "The biggest friendship test, your friendship can handle everything if it survives this category", FriendshipKillers),
+  Category("Superstar", "Admire your friends’ actions or abilities", SuperStar),
+  Category("Casual", "General black box questions, a rather soft category. Great to get started", Casual),
 ];

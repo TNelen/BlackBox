@@ -1,55 +1,33 @@
-import 'dart:math';
-
-import 'package:blackbox/DataContainers/GroupData.dart';
-import 'package:blackbox/DataContainers/UserData.dart';
+import 'package:blackbox/Assets/questions.dart';
+import 'package:blackbox/DataContainers/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PartyScreens/PartyQuestionScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import '../../Interfaces/Database.dart';
 import '../popups/Popup.dart';
 import '../../Constants.dart';
 import 'package:blackbox/Database/QuestionListGetter.dart';
 
-Map<UserData, int> convertUserListToUserDataMap(List<String> users, bool canVoteBlank) {
-  Map<UserData, int> userMap = Map<UserData, int>();
-  int index = 0;
-  while (index < users.length) {
-    UserData tempUser = UserData((index + 1).toString(), users[index]);
-    userMap.addAll({tempUser: 0});
-    index++;
-  }
-
-  if (canVoteBlank) {
-    UserData tempUser = UserData("0", "Blank");
-    userMap.addAll({tempUser: 0});
-  }
-  return userMap;
-}
-
 class SetPlayersScreen extends StatefulWidget {
-  Database _database;
-  List<String> selectedCategory = [];
+  List<Category> selectedCategory = [];
   bool canVoteBlank;
 
-  SetPlayersScreen(Database db, List<String> selectedCategory, bool canVoteBlank) {
-    this._database = db;
+  SetPlayersScreen(List<Category> selectedCategory, bool canVoteBlank) {
     this.selectedCategory = selectedCategory;
     this.canVoteBlank = canVoteBlank;
   }
 
   @override
-  _SetPlayersScreenState createState() => _SetPlayersScreenState(_database, selectedCategory, canVoteBlank);
+  _SetPlayersScreenState createState() => _SetPlayersScreenState(selectedCategory, canVoteBlank);
 }
 
 class _SetPlayersScreenState extends State<SetPlayersScreen> {
-  Database _database;
-  List<String> selectedCategory;
+  List<Category> selectedCategory;
   List<String> players = [Constants.getUsername().split(" ")[0]];
   bool canVoteBlank;
+  QuestionList questionList;
   TextEditingController codeController = TextEditingController();
 
-  _SetPlayersScreenState(Database db, List<String> selectedCategory, bool canVoteBlank) {
-    this._database = db;
+  _SetPlayersScreenState(List<Category> selectedCategory, bool canVoteBlank) {
     this.selectedCategory = selectedCategory;
     this.canVoteBlank = canVoteBlank;
 
@@ -238,59 +216,31 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
             onPressed: () {
-              // Create map of members
-              Map<String, String> members = Map<String, String>();
-              members[Constants.getUserID()] = Constants.getUsername();
-
-              Map<UserData, int> userMap = convertUserListToUserDataMap(players, canVoteBlank);
-              print(userMap);
-
-              //add all players to the group
-              userMap.forEach((user, value) {
-                members.putIfAbsent(user.getUserID(), () => user.getUsername());
-              });
-
-              String _groupName = "default";
               if (players.length != 0 && selectedCategory.length != 0) {
-                // Generate a unique ID and save the group
-                _database.generateUniqueGroupCode().then((code) async {
-                  List<String> questionIDs = List<String>();
-                  String description = "PartyGame";
+                canVoteBlank ? players.add("Blank") : null;
+                questionList = QuestionList(selectedCategory);
 
-                  for (String groupCategory in selectedCategory) {
-                    questionIDs.addAll(questionListGetter.mappings[groupCategory] ?? []);
-                    description += groupCategory + " ";
-                  }
 
-                  questionIDs.shuffle(Random.secure());
+                Map<String, dynamic> map = {
+                  'code': 'New group',
+                  'type': 'PartyCreated',
+                  'can_vote_blank': canVoteBlank,
+                };
 
-                  Map<String, dynamic> map = {
-                    'code': 'New group',
-                    'type': 'PartyCreated',
-                    'can_vote_blank': canVoteBlank,
-                  };
 
-                  List<String> allCategories = await QuestionListGetter.instance.getCategoryNames();
-                  for (String category in allCategories) map[category.replaceAll(' ', '_').replaceAll("'", '').replaceAll('+', 'P')] = selectedCategory.contains(category);
+                // General game action log
+                FirebaseAnalytics().logEvent(name: 'game_action', parameters: map);
 
-                  // General game action log
-                  FirebaseAnalytics().logEvent(name: 'game_action', parameters: map);
+                // Only logged here
+                FirebaseAnalytics().logEvent(name: 'party_created', parameters: map);
 
-                  // Only logged here
-                  FirebaseAnalytics().logEvent(name: 'party_created', parameters: map);
+                OfflineGroupData offlineGroupData = OfflineGroupData(players, questionList, canVoteBlank);
 
-                  GroupData groupdata = GroupData(_groupName, description, canVoteBlank, false, code, Constants.getUserID(), members, questionIDs);
-                  await groupdata.setNextQuestion(await _database.getNextQuestion(groupdata), Constants.getUserData(), doDatabaseUpdate: false);
-                  await _database.updateGroup(groupdata);
-
-                  print("Party group code: " + groupdata.getGroupCode());
-
-                  await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => PartyQuestionScreen(_database, groupdata, code, userMap, 0),
-                      ));
-                });
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => PartyQuestionScreen(offlineGroupData),
+                    ));
               } else {
                 Popup.makePopup(context, "Woops!", "There should be at least one player!");
               }

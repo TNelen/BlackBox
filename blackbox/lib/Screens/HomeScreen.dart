@@ -232,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (BuildContext context) => CreatePartyScreen(database),
+                                    builder: (BuildContext context) => CreatePartyScreen(),
                                   ));
                             }),
                           ),

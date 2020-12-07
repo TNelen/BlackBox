@@ -1,5 +1,4 @@
-import 'package:blackbox/DataContainers/GroupData.dart';
-import 'package:blackbox/DataContainers/UserData.dart';
+import 'package:blackbox/DataContainers/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PartyScreens/PartyResultsScreen.dart';
 import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:blackbox/Screens/widgets/IconCard.dart';
@@ -7,42 +6,29 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import '../../Constants.dart';
-import '../../Interfaces/Database.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 import 'PartyQuestionScreen.dart';
 
 class PassScreen extends StatefulWidget {
-  Database _database;
-  GroupData groupData;
-  String code;
-  Map<UserData, int> playerVotes;
-  int numberOfVotes;
+  OfflineGroupData offlineGroupData;
 
-  PassScreen(Database db, GroupData groupData, String code, Map<UserData, int> playerVotes, int numberOfVotes) {
-    this._database = db;
-    this.groupData = groupData;
-    this.code = code;
-    this.playerVotes = playerVotes;
-    this.numberOfVotes = numberOfVotes;
+  PassScreen(OfflineGroupData offlineGroupData) {
+    this.offlineGroupData = offlineGroupData;
   }
 
   @override
-  _PassScreenState createState() => _PassScreenState(_database, groupData, code, playerVotes, numberOfVotes);
+  _PassScreenState createState() => _PassScreenState(offlineGroupData);
 }
 
 class _PassScreenState extends State<PassScreen> {
-  Database _database;
-  GroupData groupData;
-  String code;
-  Map<UserData, int> playerVotes;
-  final int numberOfVotes;
+  OfflineGroupData offlineGroupData;
 
-  _PassScreenState(this._database, this.groupData, this.code, this.playerVotes, this.numberOfVotes) {
-    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'RulesScreen'});
+  _PassScreenState(this.offlineGroupData) {
+    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'PassScreen'});
   }
 
   bool allPlayersVoted() {
-    return groupData.canVoteBlank ? ((this.playerVotes.length - 1) == this.numberOfVotes) : ((this.playerVotes.length) == this.numberOfVotes);
+    return offlineGroupData.canVoteBlank ? ((offlineGroupData.getPlayers().length - 1) == offlineGroupData.getAmountOfCurrentVotes()) : (offlineGroupData.getPlayers().length == offlineGroupData.getAmountOfCurrentVotes());
   }
 
   @override
@@ -89,9 +75,9 @@ class _PassScreenState extends State<PassScreen> {
                     ]),
                 SizedBox(height: 20.0),
                 Text(
-                  groupData.canVoteBlank
-                      ? numberOfVotes.toString() + '/' + (playerVotes.length - 1).toString() + ' players have voted'
-                      : numberOfVotes.toString() + '/' + (playerVotes.length).toString() + ' players have voted',
+                  offlineGroupData.canVoteBlank
+                      ? offlineGroupData.getAmountOfCurrentVotes().toString() + '/' + (offlineGroupData.getPlayers().length - 1).toString() + ' players have voted'
+                      : offlineGroupData.getAmountOfCurrentVotes().toString() + '/' + offlineGroupData.getPlayers().length.toString() + ' players have voted',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
                 ),
@@ -109,7 +95,7 @@ class _PassScreenState extends State<PassScreen> {
                           : Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (BuildContext context) => PartyQuestionScreen(_database, groupData, code, playerVotes, numberOfVotes),
+                                builder: (BuildContext context) => PartyQuestionScreen(offlineGroupData),
                               ));
                     },
                     child: Container(
@@ -173,7 +159,7 @@ class _PassScreenState extends State<PassScreen> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      Popup.submitQuestionIngamePopup(context, _database, groupData);
+                      Popup.submitQuestionOfflinePopup(context, offlineGroupData);
                     },
                     child: Container(
                       child: Padding(
@@ -224,13 +210,10 @@ class _PassScreenState extends State<PassScreen> {
             textStyle: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
             icon: Icons.chevron_right,
             onConfirmation: () {
-              String currentQuestion = groupData.getQuestionID();
-              String currentQuestionString = groupData.getNextQuestionString();
-              _database.updateGroup(groupData);
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => PartyResultScreen(_database, groupData, code, currentQuestion, currentQuestionString, playerVotes),
+                    builder: (BuildContext context) => PartyResultScreen(offlineGroupData),
                   ));
             },
           ),

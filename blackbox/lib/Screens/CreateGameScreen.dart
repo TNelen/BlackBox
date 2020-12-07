@@ -117,7 +117,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
           physics: NeverScrollableScrollPhysics(),
           itemCount: projectSnap.data.length,
           itemBuilder: (context, index) {
-            int amount = projectSnap.data[index].amount;
             String description = projectSnap.data[index].description;
             String categoryname = projectSnap.data[index].name;
 
@@ -126,7 +125,6 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                 selectedCategory.contains(categoryname),
                 categoryname,
                 description,
-                amount,
                 onTap: () {
                   if (!selectedCategory.contains(categoryname)) {
                     selectedCategory.add(categoryname);
