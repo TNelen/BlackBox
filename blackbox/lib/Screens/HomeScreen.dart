@@ -1,4 +1,5 @@
-import 'package:blackbox/Database/FirebaseManagement.dart';
+import 'package:blackbox/Database/Firebase.dart';
+//import 'package:blackbox/Database/FirebaseManagement.dart';
 import 'package:blackbox/Screens/CreateGameScreen.dart';
 import 'package:blackbox/Screens/JoinGameScreen.dart';
 import 'package:blackbox/Screens/widgets/animatedIconBar.dart';
@@ -6,7 +7,7 @@ import 'package:blackbox/Screens/widgets/home_screen_button.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
+//import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
 import '../Constants.dart';
 import '../Interfaces/Database.dart';
@@ -16,15 +17,16 @@ import '../DataContainers/Appinfo.dart';
 import 'popups/Popup.dart';
 
 class HomeScreen extends StatefulWidget {
-  final Database database;
+  static Database database = Firebase();
+  bool enableOnlineMode = database.getAppInfo() != null ? true : false;
 
-  HomeScreen(Database db) : database = db {
+  HomeScreen() {
     // Add firebase management logic here
     // FirebaseManagement dbManagement = FirebaseManagement();
     // handleAddQuestionsFromFile( dbManagement );
   }
 
-  void handleAddQuestionsFromFile(FirebaseManagement management) async {
+  /*void handleAddQuestionsFromFile(FirebaseManagement management) async {
     // Read file
     String data = await rootBundle.loadString('assets/questions.txt');
     List<String> lines = data.split('\n');
@@ -35,29 +37,40 @@ class HomeScreen extends StatefulWidget {
     }
 
     List<String> validQuestions = List<String>();
-    for (String q in lines) if (q != null && q != '' && q != lines[0] && q != lines[0].substring(0, lines[0].length - 1)) validQuestions.add(q);
-    management.addQuestions(lines[0].substring(0, lines[0].length - 1), validQuestions);
-  }
+    for (String q in lines)
+      if (q != null &&
+          q != '' &&
+          q != lines[0] &&
+          q != lines[0].substring(0, lines[0].length - 1))
+        validQuestions.add(q);
+    management.addQuestions(
+        lines[0].substring(0, lines[0].length - 1), validQuestions);
+  }*/
 
   @override
-  _HomeScreenState createState() => _HomeScreenState(database);
+  _HomeScreenState createState() =>
+      _HomeScreenState(database, enableOnlineMode);
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   Database database;
+  bool enableOnlineMode;
   int pageIndex = 0;
 
-  _HomeScreenState(Database db) {
+  _HomeScreenState(Database db, bool enableOnlineMode) {
     this.database = db;
+    this.enableOnlineMode = enableOnlineMode;
 
-    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'HomeScreen'});
+    FirebaseAnalytics().logEvent(
+        name: 'open_screen', parameters: {'screen_name': 'HomeScreen'});
+    if (enableOnlineMode) {
+      isAppUpToDate();
 
-    isAppUpToDate();
+      /// Show an update reminder when needed
+      isWelcomeMSG();
 
-    /// Show an update reminder when needed
-    isWelcomeMSG();
-
-    /// Show a message if one is set in the database
+      /// Show a message if one is set in the database
+    }
   }
 
   ScrollController _controller = ScrollController();
@@ -89,7 +102,9 @@ class _HomeScreenState extends State<HomeScreen> {
       List<String> versionParts = appinfo.getVersion().toString().split('+');
 
       // Build numbers must exist and may not be null (see int.tryParse docs)
-      if (buildNumberString == null || versionParts.length < 2 || versionParts[1] == null) return;
+      if (buildNumberString == null ||
+          versionParts.length < 2 ||
+          versionParts[1] == null) return;
 
       // Convert the versions in String to int
       int currentBuid = int.tryParse(buildNumberString);
@@ -98,12 +113,14 @@ class _HomeScreenState extends State<HomeScreen> {
       // int.tryParse returns null on error, return if this happened
       if (currentBuid == null || latestBuild == null) return;
 
-      print('Current build number: $currentBuid - Latest build number: $latestBuild');
+      print(
+          'Current build number: $currentBuid - Latest build number: $latestBuild');
 
       // Simple version comparison
       if (currentBuid < latestBuild) {
         Constants.enableVersionMSG = 1;
-        Popup.makePopup(context, 'Whooohooo!', 'A new app version is available! \n\nUpdate your app to get the best experience.');
+        Popup.makePopup(context, 'Whooohooo!',
+            'A new app version is available! \n\nUpdate your app to get the best experience.');
       }
     }
   }
@@ -150,7 +167,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ListView(
                 //shrinkWrap: true,
                 controller: _controller,
-                physics: setScrollable ? AlwaysScrollableScrollPhysics() : NeverScrollableScrollPhysics(),
+                physics: setScrollable
+                    ? AlwaysScrollableScrollPhysics()
+                    : NeverScrollableScrollPhysics(),
                 children: [
                   SizedBox(
                     height: 5.0 * MediaQuery.of(context).devicePixelRatio,
@@ -158,31 +177,44 @@ class _HomeScreenState extends State<HomeScreen> {
                   FancyFab(
                     database: database,
                   ),
-                  Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 15 * MediaQuery.of(context).devicePixelRatio, left: 10, right: 10),
-                      child: AutoSizeText(
-                        'Hi, ' + Constants.getUsername().split(" ")[0] + '!',
-                        style: TextStyle(fontSize: Constants.titleFontSize, color: Constants.iWhite, fontWeight: FontWeight.w300),
-                        maxLines: 1,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Container(
-                        padding: EdgeInsets.only(left: 10, right: 10),
-                        child: Text(
-                          ' Welcome to BlackBox! ',
-                          style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
-                        )),
-                    SizedBox(
-                      height: 25,
-                    ),
-                  ]),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                              top: 15 * MediaQuery.of(context).devicePixelRatio,
+                              left: 10,
+                              right: 10),
+                          child: AutoSizeText(
+                            'Hi, ' +
+                                Constants.getUsername().split(" ")[0] +
+                                '!',
+                            style: TextStyle(
+                                fontSize: Constants.titleFontSize,
+                                color: Constants.iWhite,
+                                fontWeight: FontWeight.w300),
+                            maxLines: 1,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        Container(
+                            padding: EdgeInsets.only(left: 10, right: 10),
+                            child: Text(
+                              ' Welcome to BlackBox! ',
+                              style: TextStyle(
+                                  color: Constants.colors[Constants.colorindex],
+                                  fontSize: Constants.normalFontSize,
+                                  fontWeight: FontWeight.w300),
+                            )),
+                        SizedBox(
+                          height: 25,
+                        ),
+                      ]),
                   SizedBox(
                     height: 25 * MediaQuery.of(context).devicePixelRatio,
                   ),
@@ -191,22 +223,33 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: <Widget>[
                           Container(
-                            padding: EdgeInsets.only(left: 10, bottom: 10 * MediaQuery.of(context).devicePixelRatio),
+                            padding: EdgeInsets.only(
+                                left: 10,
+                                bottom: 10 *
+                                    MediaQuery.of(context).devicePixelRatio),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 'Start playing...',
-                                style: TextStyle(fontSize: Constants.subtitleFontSize, color: Constants.iWhite, fontWeight: FontWeight.w300),
+                                style: TextStyle(
+                                    fontSize: Constants.subtitleFontSize,
+                                    color: Constants.iWhite,
+                                    fontWeight: FontWeight.w300),
                               ),
                             ),
                           ),
                           Hero(
                             tag: 'newgame',
-                            child: HomeScreenButton('Create Game', 'Invite friends to a new game', icon: Icons.edit, onTap: () {
+                            child: HomeScreenButton(
+                                'Create Game',
+                                'Invite friends to a new game',
+                                enableOnlineMode,
+                                icon: Icons.edit, onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (BuildContext context) => CreateGameScreen(database),
+                                    builder: (BuildContext context) =>
+                                        CreateGameScreen(database),
                                   ));
                             }),
                           ),
@@ -215,11 +258,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Hero(
                             tag: 'joingame',
-                            child: HomeScreenButton('Join Game', 'Join with the group code', icon: Icons.search, onTap: () {
+                            child: HomeScreenButton('Join Game',
+                                'Join with the group code', enableOnlineMode,
+                                icon: Icons.search, onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (BuildContext context) => JoinGameScreen(database),
+                                    builder: (BuildContext context) =>
+                                        JoinGameScreen(database),
                                   ));
                             }),
                           ),
@@ -228,11 +274,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Hero(
                             tag: 'partymode',
-                            child: HomeScreenButton('Party Mode', 'Play with all your friends on one single device', icon: Icons.people, onTap: () {
+                            child: HomeScreenButton(
+                                'Party Mode',
+                                'Play with all your friends on one single device',
+                                true,
+                                icon: Icons.people, onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (BuildContext context) => CreatePartyScreen(),
+                                    builder: (BuildContext context) =>
+                                        CreatePartyScreen(),
                                   ));
                             }),
                           ),

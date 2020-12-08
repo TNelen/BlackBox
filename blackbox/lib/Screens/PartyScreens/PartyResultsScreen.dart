@@ -549,7 +549,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                     //TODO : create endScreen
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => HomeScreen(null),
+                      builder: (BuildContext context) => HomeScreen(),
                     ));
               }
             },
@@ -590,7 +590,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                     context,
                     MaterialPageRoute(
                       //TODO : create endScreen
-                      builder: (BuildContext context) => HomeScreen(null),
+                      builder: (BuildContext context) => HomeScreen(),
                     ));
               },
               child: Text(

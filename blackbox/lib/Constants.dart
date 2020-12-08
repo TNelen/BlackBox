@@ -23,8 +23,12 @@ class Constants {
   /// The default color that a new user will get
 
   //accent color list
-  static const colors = [Color(0xFF92dff3), Color(0xFFffe082), Color(0xFFcd5c5c), Color(0xFF1DB854)];
-
+  static const colors = [
+    Color(0xFF92dff3),
+    Color(0xFFffe082),
+    Color(0xFFcd5c5c),
+    Color(0xFF1DB854)
+  ];
 
   //fontsizes
   static const titleFontSize = 50.0;
@@ -35,29 +39,9 @@ class Constants {
 
   static const actionbuttonFontSize = 25.0;
 
-
-
   static int enableVersionMSG = 0;
   static int enableWelcomeMSG = 0;
   static const enableMSG = [true, false];
-
-  static int enableGrammar = 0;
-  static int enableDisturbing = 0;
-  static int enableLove = 0;
-
-  static void setGrammar(int bool) {
-    enableGrammar = bool;
-  }
-
-  static void setDisturbing(int bool) {
-    enableDisturbing = bool;
-  }
-
-  static void setLove(int bool) {
-    enableLove = bool;
-  }
-
-  static const enable = [true, false];
 
   static UserData userData = UserData("Some ID", "Player");
   static final Database database = Firebase();

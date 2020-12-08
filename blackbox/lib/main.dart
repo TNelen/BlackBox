@@ -26,7 +26,9 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MaterialApp(debugShowCheckedModeBanner: false, home: SplashScreen(Constants.database));
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: SplashScreen(Constants.database));
     //home: HomeScreen( Constants.database ));
   }
 }
@@ -47,7 +49,8 @@ class SplashScreen extends StatefulWidget {
   }
 }
 
-class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
   Database database;
   double _progress;
   bool loggedIn = false;
@@ -111,7 +114,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
             if (connected) {
               wifiPopup = true;
             } else {
-              Popup.makePopup(context, "Woops!", "Please turn on your internet connectivity!");
+              Popup.makePopup(context, "Woops!",
+                  "Please turn on your internet connectivity!");
               wifiPopup = true;
             }
           });
@@ -150,12 +154,15 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => HomeScreen(Constants.database),
+                    builder: (BuildContext context) => HomeScreen(),
                   ));
             },
             child: Text("Start game",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontFamily: "atarian", fontSize: Constants.actionbuttonFontSize).copyWith(
+                style: TextStyle(
+                        fontFamily: "atarian",
+                        fontSize: Constants.actionbuttonFontSize)
+                    .copyWith(
                   color: Constants.iWhite,
                 )),
           ),
@@ -193,14 +200,22 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                         ),
                         Text(
                           "BlackBox",
-                          style: TextStyle(fontFamily: "atarian", color: Colors.white, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w300),
+                          style: TextStyle(
+                              fontFamily: "atarian",
+                              color: Colors.white,
+                              fontSize: Constants.subtitleFontSize,
+                              fontWeight: FontWeight.w300),
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         Text(
                           "A MAGNETAR Game",
-                          style: TextStyle(fontFamily: "atarian", color: Colors.white, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
+                          style: TextStyle(
+                              fontFamily: "atarian",
+                              color: Colors.white,
+                              fontSize: Constants.smallFontSize,
+                              fontWeight: FontWeight.w300),
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 5,
@@ -211,8 +226,32 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                                 height: 80,
                                 child: FadingText(
                                   "Logging you in...",
-                                  style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
+                                  style: TextStyle(
+                                      fontFamily: "atarian",
+                                      color: Constants.iWhite,
+                                      fontSize: Constants.smallFontSize,
+                                      fontWeight: FontWeight.w300),
                                 )),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        FlatButton(
+                            child: Text(
+                              "Continue Offline",
+                              style: TextStyle(
+                                  fontFamily: "atarian",
+                                  color: Constants.iWhite,
+                                  fontSize: Constants.smallFontSize,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        HomeScreen(),
+                                  ));
+                            })
                       ],
                     ))
                   ],

@@ -21,7 +21,8 @@ class _RuleScreenState extends State<RuleScreen> {
   Database _database;
 
   _RuleScreenState(this._database) {
-    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'RulesScreen'});
+    FirebaseAnalytics().logEvent(
+        name: 'open_screen', parameters: {'screen_name': 'RulesScreen'});
   }
 
   @override
@@ -29,7 +30,11 @@ class _RuleScreenState extends State<RuleScreen> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BlackBox',
-      theme: ThemeData(accentColor: Constants.colors[Constants.colorindex], disabledColor: Constants.colors[Constants.colorindex], fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
+      theme: ThemeData(
+          accentColor: Constants.colors[Constants.colorindex],
+          disabledColor: Constants.colors[Constants.colorindex],
+          fontFamily: "atarian",
+          scaffoldBackgroundColor: Constants.iBlack),
       home: Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -42,7 +47,7 @@ class _RuleScreenState extends State<RuleScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => HomeScreen(_database),
+                        builder: (BuildContext context) => HomeScreen(),
                       ));
                 },
                 child: Row(
@@ -81,7 +86,8 @@ class _RuleScreenState extends State<RuleScreen> {
           ),
           child: ListView(
             //shrinkWrap: true,
-            padding: const EdgeInsets.only(top: 20.0, bottom: 20, left: 50, right: 50),
+            padding: const EdgeInsets.only(
+                top: 20.0, bottom: 20, left: 50, right: 50),
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -89,7 +95,10 @@ class _RuleScreenState extends State<RuleScreen> {
                   Text(
                     'Game rules',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
+                    style: TextStyle(
+                        color: Constants.iWhite,
+                        fontSize: Constants.titleFontSize,
+                        fontWeight: FontWeight.w300),
                   ),
                   SizedBox(width: 20.0),
                   Hero(

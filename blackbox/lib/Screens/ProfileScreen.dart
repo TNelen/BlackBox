@@ -23,7 +23,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   _ProfileScreenState(Database db) {
     this._database = db;
 
-    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'Profile'});
+    FirebaseAnalytics()
+        .logEvent(name: 'open_screen', parameters: {'screen_name': 'Profile'});
   }
 
   @override
@@ -31,7 +32,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
-        theme: ThemeData(fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
+        theme: ThemeData(
+            fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
         home: Scaffold(
             appBar: AppBar(
               elevation: 0,
@@ -42,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) => HomeScreen(_database),
+                          builder: (BuildContext context) => HomeScreen(),
                         ));
                   },
                   child: Row(
@@ -80,13 +82,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 child: ListView(
-                  padding: const EdgeInsets.only(top: 20.0, bottom: 20, left: 50, right: 50),
+                  padding: const EdgeInsets.only(
+                      top: 20.0, bottom: 20, left: 50, right: 50),
                   children: [
                     SizedBox(height: 40.0),
                     Text(
                       'Your Profile',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
+                      style: TextStyle(
+                          color: Constants.iWhite,
+                          fontSize: Constants.titleFontSize,
+                          fontWeight: FontWeight.w300),
                     ),
                     SizedBox(height: 20.0),
                     Container(
@@ -103,20 +109,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         )),
                     SizedBox(height: 20.0),
                     SizedBox(height: 20.0),
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text(
-                        Constants.getUsername(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
-                      ),
-                      InkWell(
-                        splashColor: Constants.colors[Constants.colorindex],
-                        onTap: () {
-                          Popup.makeChangeUsernamePopup(context, _database);
-                        },
-                        child: Icon(Icons.create, color: Constants.colors[Constants.colorindex], size: 30),
-                      )
-                    ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            Constants.getUsername(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Constants.iWhite,
+                                fontSize: Constants.normalFontSize,
+                                fontWeight: FontWeight.w300),
+                          ),
+                          InkWell(
+                            splashColor: Constants.colors[Constants.colorindex],
+                            onTap: () {
+                              Popup.makeChangeUsernamePopup(context, _database);
+                            },
+                            child: Icon(Icons.create,
+                                color: Constants.colors[Constants.colorindex],
+                                size: 30),
+                          )
+                        ]),
                     SizedBox(height: 15.0),
                   ],
                 ),

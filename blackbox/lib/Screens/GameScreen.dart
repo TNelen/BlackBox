@@ -49,14 +49,16 @@ class _GameScreenState extends State<GameScreen> {
   void initState() {
     groupdata = null;
     super.initState();
-    FirebaseStream(code).groupData.listen((_onGroupDataUpdate) {}, onDone: () {
-    }, onError: (error) {
+    FirebaseStream(code)
+        .groupData
+        .listen((_onGroupDataUpdate) {}, onDone: () {}, onError: (error) {
       //nothing;
     });
   }
 
   void getRandomNexQuestion() async {
-    await groupdata.setNextQuestion(await _database.getNextQuestion(groupdata), Constants.getUserData());
+    await groupdata.setNextQuestion(
+        await _database.getNextQuestion(groupdata), Constants.getUserData());
   }
 
   @override
@@ -70,7 +72,8 @@ class _GameScreenState extends State<GameScreen> {
         home: Scaffold(
           body: StreamBuilder(
               stream: stream.groupData,
-              builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
+              builder:
+                  (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
                 groupdata = snapshot.data;
                 if (snapshot.hasError) return Text('Error: ${snapshot.error}');
                 if (!snapshot.hasData) {
@@ -95,7 +98,8 @@ class _GameScreenState extends State<GameScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (BuildContext context) => HomeScreen(_database),
+                                    builder: (BuildContext context) =>
+                                        HomeScreen(),
                                   ));
                               groupdata.removeMember(Constants.getUserData());
                               _database.updateGroup(groupdata);
@@ -106,13 +110,16 @@ class _GameScreenState extends State<GameScreen> {
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(right: 20),
-                                  child: Icon(Icons.arrow_back, color: Constants.colors[Constants.colorindex]),
+                                  child: Icon(Icons.arrow_back,
+                                      color: Constants
+                                          .colors[Constants.colorindex]),
                                 ),
                                 Text(
                                   'Back',
                                   style: TextStyle(
                                     fontSize: Constants.actionbuttonFontSize,
-                                    color: Constants.colors[Constants.colorindex],
+                                    color:
+                                        Constants.colors[Constants.colorindex],
                                   ),
                                 ),
                               ],
@@ -133,7 +140,6 @@ class _GameScreenState extends State<GameScreen> {
                                     colors: [
                                       Constants.gradient1,
                                       Constants.gradient2,
-
                                     ],
                                   ),
                                 ),
@@ -143,11 +149,15 @@ class _GameScreenState extends State<GameScreen> {
                                   children: <Widget>[
                                     SizedBox(height: 40),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
                                         AutoSizeText(
                                           "Game Lobby",
-                                          style: TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
+                                          style: TextStyle(
+                                              color: Constants.iWhite,
+                                              fontSize: Constants.titleFontSize,
+                                              fontWeight: FontWeight.w300),
                                           maxLines: 1,
                                         ),
                                         SizedBox(
@@ -162,56 +172,101 @@ class _GameScreenState extends State<GameScreen> {
                                     ),
                                     SizedBox(height: 40),
                                     Container(
-                                      padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                        Expanded(
-                                          child: Text('Press the check mark to get ready!',
-                                              style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
-                                              textAlign: TextAlign.center),
-                                        ),
-                                      ]),
+                                      padding:
+                                          EdgeInsets.fromLTRB(15, 10, 15, 5),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                  'Press the check mark to get ready!',
+                                                  style: TextStyle(
+                                                      color: Constants.colors[
+                                                          Constants.colorindex],
+                                                      fontSize: Constants
+                                                          .smallFontSize,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                  textAlign: TextAlign.center),
+                                            ),
+                                          ]),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                        Expanded(
-                                          child: Text('You can start the game if all players are ready!',
-                                              style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
-                                              textAlign: TextAlign.center),
-                                        ),
-                                      ]),
+                                      padding:
+                                          EdgeInsets.fromLTRB(15, 10, 15, 5),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                  'You can start the game if all players are ready!',
+                                                  style: TextStyle(
+                                                      color: Constants.colors[
+                                                          Constants.colorindex],
+                                                      fontSize: Constants
+                                                          .smallFontSize,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                  textAlign: TextAlign.center),
+                                            ),
+                                          ]),
                                     ),
                                     SizedBox(height: 15),
                                     Container(
-                                      padding: EdgeInsets.fromLTRB(15, 5, 15, 3),
+                                      padding:
+                                          EdgeInsets.fromLTRB(15, 5, 15, 3),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Text(
                                             "Players ready:  ",
-                                            style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
+                                            style: TextStyle(
+                                                fontSize:
+                                                    Constants.smallFontSize,
+                                                color: Constants.iWhite),
                                           ),
                                           Text(
-                                            snapshot.data.getNumPlaying().toString() + ' / ' + snapshot.data.getNumMembers().toString(),
-                                            style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
+                                            snapshot.data
+                                                    .getNumPlaying()
+                                                    .toString() +
+                                                ' / ' +
+                                                snapshot.data
+                                                    .getNumMembers()
+                                                    .toString(),
+                                            style: TextStyle(
+                                                fontSize:
+                                                    Constants.smallFontSize,
+                                                color: Constants.iWhite),
                                           ),
                                         ],
                                       ),
                                     ),
                                     SizedBox(height: 15),
                                     Container(
-                                      padding: EdgeInsets.fromLTRB(15, 20, 15, 5),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                        Text(
-                                          "Players",
-                                          style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.iWhite, fontWeight: FontWeight.w500),
-                                        ),
-                                        JumpingDotsProgressIndicator(
-                                          numberOfDots: 3,
-                                          fontSize: Constants.normalFontSize,
-                                          color: Constants.iWhite,
-                                        ),
-                                      ]),
+                                      padding:
+                                          EdgeInsets.fromLTRB(15, 20, 15, 5),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Players",
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      Constants.normalFontSize,
+                                                  color: Constants.iWhite,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            JumpingDotsProgressIndicator(
+                                              numberOfDots: 3,
+                                              fontSize:
+                                                  Constants.normalFontSize,
+                                              color: Constants.iWhite,
+                                            ),
+                                          ]),
                                     ),
                                     Flexible(
                                       child: GridView.count(
@@ -223,30 +278,62 @@ class _GameScreenState extends State<GameScreen> {
                                             .getMembers()
                                             .map((data) => Card(
                                                   shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(10.0),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
                                                   ),
-                                                  color: groupdata.isUserPlaying(data) ? Constants.iDarkGrey : Constants.iDarkGrey,
+                                                  color: groupdata
+                                                          .isUserPlaying(data)
+                                                      ? Constants.iDarkGrey
+                                                      : Constants.iDarkGrey,
                                                   child: Center(
                                                       child: Padding(
-                                                          padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  top: 1.0,
+                                                                  bottom: 1,
+                                                                  left: 7,
+                                                                  right: 7),
                                                           child: Center(
                                                             child: Row(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                              children: <Widget>[
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: <
+                                                                  Widget>[
                                                                 Text(
-                                                                  data.getUsername().split(' ')[0],
-                                                                  style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                                                  data
+                                                                      .getUsername()
+                                                                      .split(
+                                                                          ' ')[0],
+                                                                  style: TextStyle(
+                                                                      color: Constants
+                                                                          .iWhite,
+                                                                      fontSize:
+                                                                          Constants
+                                                                              .smallFontSize,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400),
                                                                 ),
-                                                                groupdata.isUserPlaying(data)
+                                                                groupdata.isUserPlaying(
+                                                                        data)
                                                                     ? Icon(
-                                                                        Icons.check_box,
-                                                                        size: 25,
-                                                                        color: Constants.colors[Constants.colorindex],
+                                                                        Icons
+                                                                            .check_box,
+                                                                        size:
+                                                                            25,
+                                                                        color: Constants
+                                                                            .colors[Constants.colorindex],
                                                                       )
                                                                     : Icon(
-                                                                        Icons.check_box_outline_blank,
-                                                                        size: 25,
-                                                                        color: Constants.iWhite,
+                                                                        Icons
+                                                                            .check_box_outline_blank,
+                                                                        size:
+                                                                            25,
+                                                                        color: Constants
+                                                                            .iWhite,
                                                                       )
                                                               ],
                                                             ),
@@ -265,8 +352,12 @@ class _GameScreenState extends State<GameScreen> {
                               padding: EdgeInsets.only(bottom: 25.0),
                               child: Container(
                                 padding: EdgeInsets.fromLTRB(3, 3, 3, 3),
-                                child: groupdata.getPlaying().length != groupdata.getMembers().length || groupdata.getNextQuestionString() == ""
-                                    ? GridView.count(crossAxisCount: 7, shrinkWrap: true,
+                                child: groupdata.getPlaying().length !=
+                                            groupdata.getMembers().length ||
+                                        groupdata.getNextQuestionString() == ""
+                                    ? GridView.count(
+                                        crossAxisCount: 7,
+                                        shrinkWrap: true,
                                         // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: <Widget>[
                                             SizedBox(),
@@ -280,11 +371,23 @@ class _GameScreenState extends State<GameScreen> {
                                                     Icons.group_add,
                                                     color: Constants.iBlack,
                                                   ),
-                                                  backgroundColor: Constants.colors[Constants.colorindex],
+                                                  backgroundColor:
+                                                      Constants.colors[
+                                                          Constants.colorindex],
                                                   onPressed: () {
-                                                    final RenderBox box = context.findRenderObject() as RenderBox;
-                                                    String shareText = "Join a game with this code:\n\n"  + code + "\n\n\nDownload BlackBox on Google Play \nhttps://play.google.com/store/apps/details?id=be.dezijwegel.blackbox ";
-                                                    Share.share(shareText, sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+                                                    final RenderBox box = context
+                                                            .findRenderObject()
+                                                        as RenderBox;
+                                                    String shareText =
+                                                        "Join a game with this code:\n\n" +
+                                                            code +
+                                                            "\n\n\nDownload BlackBox on Google Play \nhttps://play.google.com/store/apps/details?id=be.dezijwegel.blackbox ";
+                                                    Share.share(shareText,
+                                                        sharePositionOrigin:
+                                                            box.localToGlobal(
+                                                                    Offset
+                                                                        .zero) &
+                                                                box.size);
                                                   }),
                                             ),
                                             SizedBox(),
@@ -294,57 +397,94 @@ class _GameScreenState extends State<GameScreen> {
                                                   heroTag: 'ready',
                                                   elevation: 0.0,
                                                   child: AvatarGlow(
-                                                      startDelay: Duration(milliseconds: 1),
-                                                      glowColor: Constants.iGrey,
+                                                      startDelay: Duration(
+                                                          milliseconds: 1),
+                                                      glowColor:
+                                                          Constants.iGrey,
                                                       endRadius: 40.0,
-                                                      duration: Duration(milliseconds: 1250),
+                                                      duration: Duration(
+                                                          milliseconds: 1250),
                                                       shape: BoxShape.circle,
                                                       animate: true,
                                                       curve: Curves.easeOut,
                                                       repeat: true,
                                                       showTwoGlows: true,
                                                       //repeatPauseDuration: Duration(milliseconds: 1),
-                                                      child: new Icon(Icons.check, color: Constants.iBlack)),
-                                                  backgroundColor: Constants.colors[Constants.colorindex],
+                                                      child: new Icon(
+                                                          Icons.check,
+                                                          color: Constants
+                                                              .iBlack)),
+                                                  backgroundColor:
+                                                      Constants.colors[
+                                                          Constants.colorindex],
                                                   onPressed: () {
-                                                    if (groupdata.isUserPlaying(Constants.getUserData())) {
-                                                      groupdata.removePlayingUser(Constants.getUserData());
-                                                      _database.updateGroup(groupdata);
+                                                    if (groupdata.isUserPlaying(
+                                                        Constants
+                                                            .getUserData())) {
+                                                      groupdata.removePlayingUser(
+                                                          Constants
+                                                              .getUserData());
+                                                      _database.updateGroup(
+                                                          groupdata);
                                                     } else {
-                                                      groupdata.setPlayingUser(Constants.getUserData());
-                                                      if (groupdata.getNextQuestionString() == "") getRandomNexQuestion();
+                                                      groupdata.setPlayingUser(
+                                                          Constants
+                                                              .getUserData());
+                                                      if (groupdata
+                                                              .getNextQuestionString() ==
+                                                          "")
+                                                        getRandomNexQuestion();
 
-                                                      _database.updateGroup(groupdata);
+                                                      _database.updateGroup(
+                                                          groupdata);
                                                     }
                                                   },
                                                 )),
                                           ])
-                                    : Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
-                                        FlatButton(
-                                          padding: EdgeInsets.fromLTRB(50.0, 15.0, 50.0, 15.0),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(28.0),
-                                          ),
-                                          color: Constants.colors[Constants.colorindex],
-                                          onPressed: () {
-                                            FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
-                                              'code': groupdata.getGroupCode(),
-                                              'type': 'GameStarted',
-                                            });
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                            FlatButton(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  50.0, 15.0, 50.0, 15.0),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(28.0),
+                                              ),
+                                              color: Constants
+                                                  .colors[Constants.colorindex],
+                                              onPressed: () {
+                                                FirebaseAnalytics().logEvent(
+                                                    name: 'game_action',
+                                                    parameters: {
+                                                      'code': groupdata
+                                                          .getGroupCode(),
+                                                      'type': 'GameStarted',
+                                                    });
 
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (BuildContext context) => QuestionScreen(_database, groupdata, code),
-                                                ));
-                                          },
-                                          splashColor: Constants.colors[Constants.colorindex],
-                                          child: Text(
-                                            "Start Game",
-                                            style: TextStyle(color: Constants.iBlack, fontSize: Constants.actionbuttonFontSize),
-                                          ),
-                                        )
-                                      ]),
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          QuestionScreen(
+                                                              _database,
+                                                              groupdata,
+                                                              code),
+                                                    ));
+                                              },
+                                              splashColor: Constants
+                                                  .colors[Constants.colorindex],
+                                              child: Text(
+                                                "Start Game",
+                                                style: TextStyle(
+                                                    color: Constants.iBlack,
+                                                    fontSize: Constants
+                                                        .actionbuttonFontSize),
+                                              ),
+                                            )
+                                          ]),
                               ),
                             ),
                           ),
@@ -356,7 +496,4 @@ class _GameScreenState extends State<GameScreen> {
               }),
         ));
   }
-
-
-
 }
