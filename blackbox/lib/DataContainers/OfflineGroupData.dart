@@ -100,4 +100,8 @@ class OfflineGroupData {
     });
     return amount;
   }
+
+  int questionsLeft() {
+    return questionList.getRemainingQuestions();
+  }
 }
