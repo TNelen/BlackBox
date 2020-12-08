@@ -13,11 +13,12 @@ class PartyQuestionScreen extends StatefulWidget {
   @override
   PartyQuestionScreen(this.offlineGroupData) {}
 
-  _PartyQuestionScreenState createState() => _PartyQuestionScreenState(offlineGroupData);
+  _PartyQuestionScreenState createState() =>
+      _PartyQuestionScreenState(offlineGroupData);
 }
 
-class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsBindingObserver {
-
+class _PartyQuestionScreenState extends State<PartyQuestionScreen>
+    with WidgetsBindingObserver {
   Color color;
   String selectedPlayer;
   OfflineGroupData offlineGroupData;
@@ -60,7 +61,8 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
       shrinkWrap: true,
       childAspectRatio: (3 / 1),
       padding: EdgeInsets.symmetric(horizontal: 8.0),
-      children: players.map((playerName) => buildUserVoteCard(playerName)).toList(),
+      children:
+          players.map((playerName) => buildUserVoteCard(playerName)).toList(),
     );
 
     final voteButton = Padding(
@@ -80,18 +82,24 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                 'type': 'PartyVoteCast',
               });
 
-              FirebaseAnalytics().logEvent(name: 'PartyVoteOnUser', parameters: null);
+              FirebaseAnalytics()
+                  .logEvent(name: 'PartyVoteOnUser', parameters: null);
               offlineGroupData.vote(selectedPlayer);
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => PassScreen(offlineGroupData),
+                    builder: (BuildContext context) =>
+                        PassScreen(offlineGroupData),
                   ));
             } else {
               NoMemberSelectedPopup.noMemberSelectedPopup(context);
             }
           },
-          child: Text("Vote", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold)),
+          child: Text("Vote",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: Constants.actionbuttonFontSize)
+                  .copyWith(
+                      color: Constants.iBlack, fontWeight: FontWeight.bold)),
         ),
       ),
     );
@@ -132,7 +140,8 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                 children: [
                   //submit own question button
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
                     color: Colors.transparent,
                     child: Center(
                       child: Column(
@@ -141,7 +150,10 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                           SizedBox(height: 10),
                           Text(
                             'Question',
-                            style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
+                            style: TextStyle(
+                                color: Constants.colors[Constants.colorindex],
+                                fontSize: Constants.subtitleFontSize,
+                                fontWeight: FontWeight.w700),
                           ),
                           SizedBox(height: 15),
                           Card(
@@ -151,12 +163,18 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                             ),
                             color: Constants.iDarkGrey,
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 20.0),
                               child: Column(
                                 children: <Widget>[
                                   Text(
-                                offlineGroupData.getCurrentQuestion().getQuestion(),
-                                    style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                    offlineGroupData
+                                        .getCurrentQuestion()
+                                        .getQuestion(),
+                                    style: TextStyle(
+                                        color: Constants.iWhite,
+                                        fontSize: Constants.normalFontSize,
+                                        fontWeight: FontWeight.bold),
                                     textAlign: TextAlign.center,
                                   ),
                                   SizedBox(height: 5),
@@ -166,8 +184,15 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                                       Container(
                                         width: 150.0,
                                         child: Text(
-                                          '- ' + offlineGroupData.getCurrentQuestion().getCategory()+ ' -',
-                                          style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                          '- ' +
+                                              offlineGroupData
+                                                  .getCurrentQuestion()
+                                                  .getCategory() +
+                                              ' -',
+                                          style: TextStyle(
+                                              color: Constants.iWhite,
+                                              fontSize: Constants.smallFontSize,
+                                              fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.center,
                                         ),
                                       ),
@@ -185,17 +210,18 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
                   Text(
                     'Select a friend',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
+                    style: TextStyle(
+                        color: Constants.colors[Constants.colorindex],
+                        fontSize: Constants.normalFontSize,
+                        fontWeight: FontWeight.w700),
                   ),
                   SizedBox(
                     height: 20,
                   ),
-
                   membersList,
                   SizedBox(
                     height: 5,
                   ),
-
                   SizedBox(
                     height: 75,
                   ),
@@ -212,7 +238,8 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
     return Container(
         child: Card(
       elevation: 5.0,
-      color: playerName == selectedPlayer ? Constants.iLight : Constants.iDarkGrey,
+      color:
+          playerName == selectedPlayer ? Constants.iLight : Constants.iDarkGrey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
@@ -227,10 +254,16 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
         },
         child: Center(
             child: Padding(
-          padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
+          padding:
+              const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
           child: Text(
             playerName,
-            style: TextStyle(color: playerName == selectedPlayer ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: playerName == selectedPlayer
+                    ? Constants.iDarkGrey
+                    : Constants.iWhite,
+                fontSize: Constants.smallFontSize,
+                fontWeight: FontWeight.bold),
           ),
         )),
       ),

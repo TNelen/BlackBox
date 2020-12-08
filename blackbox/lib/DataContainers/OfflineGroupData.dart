@@ -7,7 +7,7 @@ class OfflineGroupData {
 
   Map<String, int> totalVotes = Map();
 
-  Map<String, int> currentVotes= Map();
+  Map<String, int> currentVotes = Map();
 
   Question currentQuestion;
 
@@ -15,7 +15,8 @@ class OfflineGroupData {
 
   bool ended = false;
 
-  OfflineGroupData(List<String> players, QuestionList questionList, bool canVoteBlank) {
+  OfflineGroupData(
+      List<String> players, QuestionList questionList, bool canVoteBlank) {
     this.questionList = questionList;
     this.players = players;
     this.canVoteBlank = canVoteBlank;
@@ -29,67 +30,73 @@ class OfflineGroupData {
     currentQuestion = questionList.getRandomNextQuestion();
   }
 
-  //clear current votes and add votes to totalVotes
+  //clear current votes
   void nextRound() {
     currentVotes.forEach((name, votes) {
-      totalVotes[name] = totalVotes[name] + votes;
       currentVotes[name] = 0;
     });
 
     currentQuestion = questionList.getRandomNextQuestion();
 
-    if(questionList.getRemainingQuestions() == 0 ){
+    if (questionList.getRemainingQuestions() == 0) {
       ended = true;
     }
   }
 
-  bool isGameEnded(){
+  bool isGameEnded() {
     return ended;
   }
 
-  Map<String, int> getCurrentVotes(){
+  Map<String, int> getCurrentVotes() {
     return currentVotes;
   }
 
-
-  Map<String, int> getTotalVotes(){
+  Map<String, int> getTotalVotes() {
     return totalVotes;
   }
 
-  List<String> getCurrentRanking(){
+  List<String> getCurrentRanking() {
     List<String> playerList = currentVotes.keys.toList();
-    playerList.sort((a,b,) => a.compareTo(b));
+    playerList.sort((
+      a,
+      b,
+    ) =>
+        currentVotes[b].compareTo(currentVotes[a]));
     return playerList;
   }
 
-  List<String> getAlltimeRanking(){
+  List<String> getAlltimeRanking() {
     List<String> playerList = totalVotes.keys.toList();
-    playerList.sort((a,b,) => a.compareTo(b));
+    playerList.sort((
+      a,
+      b,
+    ) =>
+        totalVotes[b].compareTo(totalVotes[a]));
 
-        return playerList;
+    return playerList;
   }
 
-  Question getCurrentQuestion(){
+  Question getCurrentQuestion() {
     return currentQuestion;
   }
 
-  QuestionList getQuestionList(){
+  QuestionList getQuestionList() {
     return questionList;
   }
 
   void vote(String playerName) {
     currentVotes[playerName]++;
+    totalVotes[playerName]++;
   }
 
-  List<String> getPlayers(){
+  List<String> getPlayers() {
     return players;
   }
 
-
-  int getAmountOfCurrentVotes(){
+  int getAmountOfCurrentVotes() {
     int amount = 0;
     currentVotes.forEach((name, votes) {
-     amount  += votes;
+      amount += votes;
     });
     return amount;
   }
