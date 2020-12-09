@@ -55,6 +55,8 @@ class _SplashScreenState extends State<SplashScreen>
   double _progress;
   bool loggedIn = false;
   bool wifiPopup = false;
+  bool connected = false;
+
 
   Future<void> login() async {
     if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
@@ -110,9 +112,10 @@ class _SplashScreenState extends State<SplashScreen>
     Timer.periodic(Duration(seconds: 1), (Timer t) {
       setState(() {
         if (!wifiPopup) {
-          checkWifi().then((connected) {
-            if (connected) {
+          checkWifi().then((result) {
+            if (result) {
               wifiPopup = true;
+              connected = true;
             } else {
               Popup.makePopup(context, "Woops!",
                   "Please turn on your internet connectivity!");
@@ -120,7 +123,7 @@ class _SplashScreenState extends State<SplashScreen>
             }
           });
         }
-        if (wifiPopup) {
+        if (connected) {
           login();
         }
         if (_progress < 1.0) {
