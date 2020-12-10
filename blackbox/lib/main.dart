@@ -10,7 +10,6 @@ import './Database/GoogleUserHandler.dart';
 import './DataContainers/UserData.dart';
 import './Interfaces/Database.dart';
 import 'dart:io';
-import './Screens/popups/Popup.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 void main() {
@@ -28,6 +27,10 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: "atarian",
+          scaffoldBackgroundColor: Constants.iBlack,
+        ),
         home: SplashScreen(Constants.database));
     //home: HomeScreen( Constants.database ));
   }
@@ -54,9 +57,8 @@ class _SplashScreenState extends State<SplashScreen>
   Database database;
   double _progress;
   bool loggedIn = false;
-  bool wifiPopup = false;
   bool connected = false;
-
+  Timer loginTimer;
 
   Future<void> login() async {
     if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
@@ -73,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen>
             /// Put user in the database and load the info into UserData @Constants
             user.setAccent(Constants.defaultColor);
             Constants.setUserData(user);
-            database.updateUser(user);
+            await database.updateUser(user);
           } else {
             /// Load database info into UserData @Constants
             Constants.setUserData(saved);
@@ -87,8 +89,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   _SplashScreenState(Database db) {
     this.database = db;
-
-    login();
   }
 
   Future<bool> checkWifi() async {
@@ -109,31 +109,18 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
 
     _progress = 0;
-    Timer.periodic(Duration(seconds: 1), (Timer t) {
+    loginTimer = Timer.periodic(Duration(seconds: 1), (Timer t) {
       setState(() {
-        if (!wifiPopup) {
-          checkWifi().then((result) {
-            if (result) {
-              wifiPopup = true;
-              connected = true;
-            } else {
-              Popup.makePopup(context, "Woops!",
-                  "Please turn on your internet connectivity!");
-              wifiPopup = true;
-            }
-          });
-        }
+        checkWifi().then((result) {
+          connected = result;
+        });
+
         if (connected) {
           login();
         }
-        if (_progress < 1.0) {
-          _progress += 0.5;
-          if (_progress >= 1.0) {
-            _progress = 0.99;
-          }
-        }
+
         // we "finish" downloading here
-        if (_progress.toStringAsFixed(2) == '0.99' && loggedIn) {
+        if (loggedIn) {
           t.cancel();
         }
       });
@@ -154,6 +141,8 @@ class _SplashScreenState extends State<SplashScreen>
             ),
             minWidth: MediaQuery.of(context).size.width,
             onPressed: () {
+              loginTimer.cancel();
+
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -161,6 +150,36 @@ class _SplashScreenState extends State<SplashScreen>
                   ));
             },
             child: Text("Start game",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                        fontFamily: "atarian",
+                        fontSize: Constants.actionbuttonFontSize)
+                    .copyWith(
+                  color: Constants.iWhite,
+                )),
+          ),
+        ));
+
+    final continueOfflineButton = Padding(
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 80),
+        child: Material(
+          elevation: 1.0,
+          borderRadius: BorderRadius.circular(28.0),
+          color: Constants.iDarkGrey,
+          child: MaterialButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(28.0),
+            ),
+            minWidth: MediaQuery.of(context).size.width,
+            onPressed: () {
+              loginTimer.cancel();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => HomeScreen(),
+                  ));
+            },
+            child: Text("Continue offline",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                         fontFamily: "atarian",
@@ -187,7 +206,7 @@ class _SplashScreenState extends State<SplashScreen>
                     child: Stack(
                   children: <Widget>[
                     Align(
-                        alignment: const Alignment(0, -0.5),
+                        alignment: const Alignment(0, -0.7),
                         child: GlowingProgressIndicator(
                             child: CircleAvatar(
                           backgroundColor: Constants.iBlack,
@@ -223,38 +242,46 @@ class _SplashScreenState extends State<SplashScreen>
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 5,
                         ),
-                        loggedIn
+                        (loggedIn)
                             ? Container(height: 80, child: startButton)
-                            : Container(
-                                height: 80,
-                                child: FadingText(
-                                  "Logging you in...",
-                                  style: TextStyle(
-                                      fontFamily: "atarian",
-                                      color: Constants.iWhite,
-                                      fontSize: Constants.smallFontSize,
-                                      fontWeight: FontWeight.w300),
-                                )),
+                            : (connected
+                                ? Container(
+                                    height: 80,
+                                    child: FadingText(
+                                      "Logging you in...",
+                                      style: TextStyle(
+                                          fontFamily: "atarian",
+                                          color: Constants.iWhite,
+                                          fontSize: Constants.smallFontSize,
+                                          fontWeight: FontWeight.w300),
+                                    ))
+                                : SizedBox(
+                                    height: 80,
+                                  )),
                         SizedBox(
                           height: 15,
                         ),
-                        FlatButton(
-                            child: Text(
-                              "Continue Offline",
-                              style: TextStyle(
-                                  fontFamily: "atarian",
-                                  color: Constants.iWhite,
-                                  fontSize: Constants.smallFontSize,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        HomeScreen(),
-                                  ));
-                            })
+                        !connected
+                            ? Column(children: [
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "You are not connected to internet",
+                                        style: TextStyle(
+                                            fontSize: Constants.smallFontSize,
+                                            color: Constants.iWhite,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      JumpingDotsProgressIndicator(
+                                        numberOfDots: 3,
+                                        fontSize: Constants.smallFontSize,
+                                        color: Constants.iWhite,
+                                      ),
+                                    ]),
+                                continueOfflineButton
+                              ])
+                            : SizedBox(),
                       ],
                     ))
                   ],

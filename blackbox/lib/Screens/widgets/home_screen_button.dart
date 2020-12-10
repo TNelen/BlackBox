@@ -8,9 +8,10 @@ class HomeScreenButton extends StatelessWidget {
   final String _description;
   final IconData icon;
   final VoidCallback onTap;
-  final bool enable;
+  final bool wifi;
+  final bool loggedIn;
 
-  HomeScreenButton(this._title, this._description, this.enable,
+  HomeScreenButton(this._title, this._description, this.wifi, this.loggedIn,
       {this.icon, this.onTap});
 
   @override
@@ -34,7 +35,7 @@ class HomeScreenButton extends StatelessWidget {
             children: [
               Icon(
                 this.icon,
-                color: enable
+                color: (wifi && loggedIn)
                     ? Constants.colors[Constants.colorindex]
                     : Constants.iLight,
                 size: 35,
@@ -53,8 +54,9 @@ class HomeScreenButton extends StatelessWidget {
                           this._title,
                           style: TextStyle(
                               fontSize: Constants.normalFontSize,
-                              color:
-                                  enable ? Constants.iWhite : Constants.iLight,
+                              color: (wifi && loggedIn)
+                                  ? Constants.iWhite
+                                  : Constants.iLight,
                               fontWeight: FontWeight.w400),
                         ),
                         this._title == "Party Mode"
@@ -80,7 +82,9 @@ class HomeScreenButton extends StatelessWidget {
                   Container(
                     width: 230,
                     child: AutoSizeText(
-                      enable ? this._description : "Login to enable",
+                      wifi
+                          ? (loggedIn ? this._description : "Login to enable")
+                          : "Internet required",
                       style: TextStyle(
                           fontSize: Constants.smallFontSize,
                           color: Constants.iLight,
