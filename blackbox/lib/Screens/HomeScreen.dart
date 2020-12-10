@@ -115,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           enableOnlineMode = connected;
         });
+        database.openConnection();
       }
     });
 
@@ -124,6 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             enableOnlineMode = connected;
           });
+          database.openConnection();
         }
       });
     });
