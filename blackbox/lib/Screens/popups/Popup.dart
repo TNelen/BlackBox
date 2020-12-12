@@ -1,6 +1,7 @@
 import 'package:blackbox/Assets/questions.dart' as offlineQuestions;
 import 'package:blackbox/DataContainers/GroupData.dart';
 import 'package:blackbox/DataContainers/OfflineGroupData.dart';
+import 'package:blackbox/Screens/SettingsScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../../Constants.dart';
@@ -192,7 +193,8 @@ class Popup {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => HomeScreen(),
+                        builder: (BuildContext context) =>
+                            SettingsScreen(database),
                       ));
                 }
               },

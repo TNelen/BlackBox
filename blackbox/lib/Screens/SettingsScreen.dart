@@ -1,4 +1,5 @@
 import 'package:blackbox/Screens/HomeScreen.dart';
+import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:blackbox/Screens/widgets/toggle_button_card.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -114,25 +115,66 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     left: 50, right: 50, top: 20, bottom: 20),
                 children: [
                   SizedBox(height: 20.0),
-                  Hero(
-                      tag: 'topicon2',
-                      child: Icon(
-                        OMIcons.settings,
-                        size: 75,
-                        color: Constants.colors[Constants.colorindex],
-                      )),
-                  SizedBox(height: 20.0),
-                  Container(
-                    height: 1.5,
-                    color: Constants.iWhite,
-                  ),
-                  SizedBox(height: 40.0),
                   Text(
                     'Settings',
                     style: TextStyle(
-                        color: Constants.colors[Constants.colorindex],
+                        color: Constants.iWhite,
                         fontSize: Constants.subtitleFontSize,
                         fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 30.0),
+                  Text(
+                    'Change username',
+                    style: TextStyle(
+                        color: Constants.colors[Constants.colorindex],
+                        fontSize: Constants.normalFontSize,
+                        fontWeight: FontWeight.w300),
+                  ),
+                  SizedBox(height: 5),
+                  Card(
+                    elevation: 5.0,
+                    color: Constants.iDarkGrey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    child: InkWell(
+                      splashColor: Constants.colors[Constants.colorindex],
+                      onTap: () {
+                        Popup.makeChangeUsernamePopup(context, _database);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 15.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(children: <Widget>[
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                Constants.getUsername(),
+                                style: TextStyle(
+                                    color: Constants.iWhite,
+                                    fontSize: Constants.actionbuttonFontSize,
+                                    fontWeight: FontWeight.w300),
+                              ),
+                            ]),
+                            Container(
+                              width: 40,
+                              child: Icon(
+                                OMIcons.edit,
+                                size: 25,
+                                color: Constants.colors[Constants.colorindex],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                   SizedBox(height: 40.0),
                   Text(
