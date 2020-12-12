@@ -12,6 +12,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/painting.dart';
+import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:package_info/package_info.dart';
 import '../Constants.dart';
 import '../Interfaces/Database.dart';
@@ -256,7 +257,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(width: MediaQuery.of(context).size.width*0.75, child:IconBar(database)),
+                        Container(
+                            width: MediaQuery.of(context).size.width * 0.75,
+                            child: IconBar(database)),
                         (!loggedIn && enableOnlineMode)
                             ? FlatButton(
                                 child: Text(
@@ -341,7 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'Invite friends to a new game',
                                 enableOnlineMode,
                                 loggedIn,
-                                icon: Icons.edit, onTap: () {
+                                icon: OMIcons.edit, onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -360,7 +363,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'Join with the group code',
                                 enableOnlineMode,
                                 loggedIn,
-                                icon: Icons.search, onTap: () {
+                                icon: OMIcons.search, onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -379,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'Play with all your friends on one single device',
                                 true,
                                 true,
-                                icon: Icons.people, onTap: () {
+                                icon: OMIcons.peopleOutline, onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

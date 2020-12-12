@@ -15,10 +15,10 @@ class Constants {
   static const gradient2 = Color(0xFF21272C);
   //static const gradient3 = Color(0xFF0c4d4d);
 
-  static int colorindex = 1;
+  static int colorindex = 0;
 
   /// The standard color in the app, before a user is loaded
-  static int defaultColor = 1;
+  static int defaultColor = 0;
 
   /// The default color that a new user will get
 
