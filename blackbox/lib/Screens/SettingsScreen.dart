@@ -4,6 +4,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
 import '../Constants.dart';
+import 'package:outline_material_icons/outline_material_icons.dart';
 
 class SettingsScreen extends StatefulWidget {
   Database _database;
@@ -116,7 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Hero(
                       tag: 'topicon2',
                       child: Icon(
-                        Icons.settings,
+                        OMIcons.settings,
                         size: 75,
                         color: Constants.colors[Constants.colorindex],
                       )),

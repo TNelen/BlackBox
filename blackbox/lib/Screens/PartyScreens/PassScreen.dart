@@ -8,6 +8,7 @@ import 'package:progress_indicators/progress_indicators.dart';
 import '../../Constants.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 import 'PartyQuestionScreen.dart';
+import 'package:outline_material_icons/outline_material_icons.dart';
 
 class PassScreen extends StatefulWidget {
   OfflineGroupData offlineGroupData;
@@ -166,13 +167,13 @@ class _PassScreenState extends State<PassScreen> {
                             top: 0.0,
                             child: allPlayersVoted()
                                 ? IconCard(
-                                    Icons.edit,
+                                    OMIcons.edit,
                                     Constants.iGrey.withOpacity(0.1),
                                     Constants.iLight.withOpacity(0.5),
                                     35,
                                   )
                                 : IconCard(
-                                    Icons.edit,
+                                    OMIcons.edit,
                                     Constants.iGrey.withOpacity(0.1),
                                     Constants.colors[Constants.colorindex],
                                     35,
@@ -231,7 +232,7 @@ class _PassScreenState extends State<PassScreen> {
                             right: 0.0,
                             top: 0.0,
                             child: IconCard(
-                              Icons.library_add,
+                              OMIcons.libraryAdd,
                               Constants.iGrey.withOpacity(0.1),
                               Constants.colors[Constants.colorindex],
                               35,
@@ -267,7 +268,7 @@ class _PassScreenState extends State<PassScreen> {
                 color: Constants.iWhite,
                 fontSize: Constants.smallFontSize,
                 fontWeight: FontWeight.bold),
-            icon: Icons.chevron_right,
+            icon: OMIcons.chevronRight,
             onConfirmation: () {
               Navigator.push(
                   context,
