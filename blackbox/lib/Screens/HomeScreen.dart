@@ -6,7 +6,7 @@ import 'package:blackbox/Database/Firebase.dart';
 import 'package:blackbox/Database/GoogleUserHandler.dart';
 import 'package:blackbox/Screens/CreateGameScreen.dart';
 import 'package:blackbox/Screens/JoinGameScreen.dart';
-import 'package:blackbox/Screens/widgets/animatedIconBar.dart';
+import 'package:blackbox/Screens/widgets/HomeScreenTopIcons.dart';
 import 'package:blackbox/Screens/widgets/home_screen_button.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -218,7 +218,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(loggedIn);
     return WillPopScope(
         onWillPop: () async {
           return false;
@@ -257,9 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        FancyFab(
-                          database: database,
-                        ),
+                        Container(width: MediaQuery.of(context).size.width*0.75, child:IconBar(database)),
                         (!loggedIn && enableOnlineMode)
                             ? FlatButton(
                                 child: Text(

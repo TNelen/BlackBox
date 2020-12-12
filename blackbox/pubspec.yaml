@@ -39,6 +39,7 @@ dependencies:
   progress_indicators: ^0.1.5
   slide_to_confirm: ^0.0.7
   liquid_progress_indicator: ^0.3.2
+  outline_material_icons: ^0.1.1
 
 
 

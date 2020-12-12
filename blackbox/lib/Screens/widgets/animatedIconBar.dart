@@ -16,10 +16,10 @@ class FancyFab extends StatefulWidget {
   FancyFab({this.onPressed, this.tooltip, this.icon, this.database});
 
   @override
-  _FancyFabState createState() => _FancyFabState(database);
+  FancyFabState createState() => FancyFabState(database);
 }
 
-class _FancyFabState extends State<FancyFab> with SingleTickerProviderStateMixin {
+class FancyFabState extends State<FancyFab> with SingleTickerProviderStateMixin {
   Database database;
   bool isOpened = false;
   AnimationController _animationController;
@@ -29,7 +29,7 @@ class _FancyFabState extends State<FancyFab> with SingleTickerProviderStateMixin
   Curve _curve = Curves.easeOut;
   double _fabHeight = 0.0;
 
-  _FancyFabState(Database db) {
+  FancyFabState(Database db) {
     this.database = db;
   }
 
