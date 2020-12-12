@@ -110,6 +110,7 @@ class _PassScreenState extends State<PassScreen> {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: InkWell(
+                    borderRadius: BorderRadius.circular(16.0),
                     onTap: () {
                       allPlayersVoted()
                           ? null
@@ -192,6 +193,7 @@ class _PassScreenState extends State<PassScreen> {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: InkWell(
+                    borderRadius: BorderRadius.circular(16.0),
                     onTap: () {
                       Popup.submitQuestionOfflinePopup(
                           context, offlineGroupData);
