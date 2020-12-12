@@ -26,7 +26,9 @@ class HomeScreenButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.0),
         splashColor: Constants.colors[Constants.colorindex],
         onTap: () {
-          if (onTap != null) onTap();
+          if(wifi && loggedIn) {
+            if (onTap != null) onTap();
+          }
         },
         child: Container(
           padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
