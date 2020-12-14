@@ -1,4 +1,3 @@
-import 'package:blackbox/Screens/widgets/better_expansion_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:blackbox/Constants.dart';
@@ -46,55 +45,27 @@ class _RulesColumnState extends State<RulesColumn> {
 
   int _openIndex = -1;  // Keeps track of the opened tile. Will be -1 when all are closed
 
-  List<GlobalKey<BetterExpansionTileState>> _expansionKeys = List<GlobalKey<BetterExpansionTileState>>();
-
-  @override
-  void initState()
-  {
-    super.initState();
-    int i = 0;
-    while(i < widget.titles.length && i < widget.descriptions.length)
-    {
-      _expansionKeys.add( GlobalKey() );
-      i++;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> infoTiles = List<Widget>();
     int i = 0;
-    while(i < widget.titles.length && i < widget.descriptions.length && i < _expansionKeys.length)
+    while(i < widget.titles.length && i < widget.descriptions.length)
     {
       int index = i;
-      infoTiles.add(
-        BetterExpansionTile(
-          key: _expansionKeys[i],
-          onTap: () {
-            
-            setState(() {
-              // Close when opened, open when closed
-              _openIndex = _openIndex == index ? -1 : index;
-            });
-
-            int tileIndex = 0;
-            for (GlobalKey<BetterExpansionTileState> key in _expansionKeys)
-            {
-              key.currentState.setIsExpanded( tileIndex == _openIndex );
-              tileIndex++;
-            }
-          },
-          title: Text(
+      infoTiles.add(Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children:[
+        Text(
             widget.titles[i],
+            textAlign: TextAlign.start,
             style: TextStyle(
               color: Constants.colors[Constants.colorindex],
-              fontSize: Constants.normalFontSize,
+              fontSize: Constants.actionbuttonFontSize,
             ),
           ),
-          backgroundColor: Colors.transparent,
-          children: [
-            Column(
-              children: [
+
                 Text(
                   widget.descriptions[i],
                   style: TextStyle(
@@ -102,16 +73,16 @@ class _RulesColumnState extends State<RulesColumn> {
                     fontSize: Constants.smallFontSize,
                   ),
                 ),
-                SizedBox(height: 10),
-              ],
-            ),
-          ],
-        ),
-      );
+                SizedBox(height: 15),
+              ])
+            );
+
       i++;
     }
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: infoTiles,
     );
   }

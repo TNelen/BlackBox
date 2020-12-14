@@ -1,6 +1,7 @@
 import 'package:blackbox/Screens/rules_column.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:outline_material_icons/outline_material_icons.dart';
 import '../Constants.dart';
 import '../Interfaces/Database.dart';
 
@@ -104,9 +105,9 @@ class _RuleScreenState extends State<RuleScreen> {
                   Hero(
                       tag: 'topicon1',
                       child: Icon(
-                        Icons.help,
+                        OMIcons.helpOutline,
                         size: 50,
-                        color: Constants.colors[Constants.colorindex],
+                        color: Constants.iWhite,
                       )),
                 ],
               ),
