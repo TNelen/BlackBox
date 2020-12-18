@@ -26,7 +26,7 @@ class HomeScreenButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.0),
         splashColor: Constants.colors[Constants.colorindex],
         onTap: () {
-          if(wifi && loggedIn) {
+          if (wifi && loggedIn) {
             if (onTap != null) onTap();
           }
         },
@@ -82,7 +82,7 @@ class HomeScreenButton extends StatelessWidget {
                       ]),
                   SizedBox(height: 5),
                   Container(
-                    width: 230,
+                    width: 210,
                     child: AutoSizeText(
                       wifi
                           ? (loggedIn ? this._description : "Login to enable")
