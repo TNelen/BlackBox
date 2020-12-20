@@ -1,13 +1,13 @@
 import 'dart:math';
 
-import 'package:blackbox/DataContainers/QuestionCategory.dart';
+import 'package:blackbox/models/QuestionCategory.dart';
 import 'package:blackbox/Database/QuestionListGetter.dart';
 import 'package:blackbox/Screens/popups/GroupCodePopup.dart';
 import 'package:blackbox/Screens/widgets/CategoryCard.dart';
 import 'package:blackbox/Screens/widgets/toggle_button_card.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
-import '../DataContainers/GroupData.dart';
+import '../models/GroupData.dart';
 import '../Interfaces/Database.dart';
 import 'popups/Popup.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -30,7 +30,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
   _CreateGameScreenState(Database db) {
     this._database = db;
 
-    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'CreateGameScreen'});
+    FirebaseAnalytics().logEvent(
+        name: 'open_screen', parameters: {'screen_name': 'CreateGameScreen'});
   }
 
   final QuestionListGetter questionListGetter = QuestionListGetter.instance;
@@ -68,7 +69,8 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     String description = "";
 
                     for (String groupCategory in selectedCategory) {
-                      questionIDs.addAll(questionListGetter.mappings[groupCategory] ?? []);
+                      questionIDs.addAll(
+                          questionListGetter.mappings[groupCategory] ?? []);
                       description += groupCategory + " ";
                     }
 
@@ -81,32 +83,59 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                       'can_vote_on_self': _canVoteOnSelf,
                     };
 
-                    List<String> allCategories = await QuestionListGetter.instance.getCategoryNames();
-                    for (String category in allCategories) map[category.replaceAll(' ', '_').replaceAll("'", '').replaceAll('+', 'P')] = selectedCategory.contains(category);
+                    List<String> allCategories =
+                        await QuestionListGetter.instance.getCategoryNames();
+                    for (String category in allCategories)
+                      map[category
+                              .replaceAll(' ', '_')
+                              .replaceAll("'", '')
+                              .replaceAll('+', 'P')] =
+                          selectedCategory.contains(category);
 
                     // General game action log
-                    FirebaseAnalytics().logEvent(name: 'game_action', parameters: map);
+                    FirebaseAnalytics()
+                        .logEvent(name: 'game_action', parameters: map);
 
                     // Only logged here
-                    FirebaseAnalytics().logEvent(name: 'game_created', parameters: map);
+                    FirebaseAnalytics()
+                        .logEvent(name: 'game_created', parameters: map);
 
-                    GroupData groupdata = GroupData(_groupName, description, _canVoteBlank, _canVoteOnSelf, code, Constants.getUserID(), members, questionIDs);
-                    await groupdata.setNextQuestion(await _database.getNextQuestion(groupdata), Constants.getUserData(), doDatabaseUpdate: false);
+                    GroupData groupdata = GroupData(
+                        _groupName,
+                        description,
+                        _canVoteBlank,
+                        _canVoteOnSelf,
+                        code,
+                        Constants.getUserID(),
+                        members,
+                        questionIDs);
+                    await groupdata.setNextQuestion(
+                        await _database.getNextQuestion(groupdata),
+                        Constants.getUserData(),
+                        doDatabaseUpdate: false);
                     await _database.updateGroup(groupdata);
                     GroupCodePopup.groupCodePopup(code, context, _database);
                   });
                 } else {
-                  Popup.makePopup(context, "Woops!", "Please fill in all fields!");
+                  Popup.makePopup(
+                      context, "Woops!", "Please fill in all fields!");
                 }
               },
-              child: Text("Create", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
+              child: Text("Create",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: Constants.actionbuttonFontSize)
+                      .copyWith(
+                          color: Constants.iDarkGrey,
+                          fontWeight: FontWeight.bold)),
             ),
           ),
         ));
 
     final categoryField = FutureBuilder<List<QuestionCategory>>(
       builder: (context, projectSnap) {
-        if (projectSnap.connectionState == ConnectionState.none && projectSnap.hasData == null || projectSnap.data == null) {
+        if (projectSnap.connectionState == ConnectionState.none &&
+                projectSnap.hasData == null ||
+            projectSnap.data == null) {
           //print('project snapshot data is: ${projectSnap.data}');
           return Container();
         }
@@ -198,18 +227,24 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   return ListView(
-                    padding: const EdgeInsets.only(left: 50, right: 50, top: 20, bottom: 20),
+                    padding: const EdgeInsets.only(
+                        left: 50, right: 50, top: 20, bottom: 20),
                     shrinkWrap: true,
                     children: <Widget>[
                       AutoSizeText(
                         "Create new Game",
-                        style: TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
+                        style: TextStyle(
+                            color: Constants.iWhite,
+                            fontSize: Constants.titleFontSize,
+                            fontWeight: FontWeight.w300),
                         maxLines: 1,
                       ),
                       SizedBox(height: 30.0),
                       Text(
                         'Game settings',
-                        style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
+                        style: TextStyle(
+                            color: Constants.colors[Constants.colorindex],
+                            fontSize: Constants.normalFontSize),
                       ),
                       SizedBox(height: 20.0),
                       ToggleButtonCard(

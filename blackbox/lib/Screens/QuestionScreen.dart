@@ -1,8 +1,8 @@
-import 'package:blackbox/DataContainers/UserData.dart';
+import 'package:blackbox/models/UserData.dart';
 import 'package:blackbox/Screens/popups/noMembersScelectedPopup.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import '../DataContainers/GroupData.dart';
+import '../models/GroupData.dart';
 import '../Constants.dart';
 import '../Interfaces/Database.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
@@ -23,10 +23,12 @@ class QuestionScreen extends StatefulWidget {
     reportMap[ReportType.LOVE] = false;
   }
 
-  _QuestionScreenState createState() => _QuestionScreenState(_database, groupData, code);
+  _QuestionScreenState createState() =>
+      _QuestionScreenState(_database, groupData, code);
 }
 
-class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObserver {
+class _QuestionScreenState extends State<QuestionScreen>
+    with WidgetsBindingObserver {
   Database _database;
   GroupData groupData;
   String code;
@@ -109,7 +111,8 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
     if (groupData.canVoteBlank) userData.add(GroupData.blankUser);
     if (!groupData.canVoteOnSelf) {
       int deleteIndex;
-      for (int i = 0; i < userData.length; i++) if (Constants.getUserID() == userData[i].getUserID()) deleteIndex = i;
+      for (int i = 0; i < userData.length; i++)
+        if (Constants.getUserID() == userData[i].getUserID()) deleteIndex = i;
 
       if (deleteIndex != null) userData.removeAt(deleteIndex);
     }
@@ -138,7 +141,12 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
             onPressed: () {
               if (clickedmember != null) {
                 if (reportMap.containsValue(true)) {
-                  FirebaseAnalytics().logEvent(name: 'action_performed', parameters: {'action_name': 'RateQuestion', 'love': reportMap[ReportType.LOVE]});
+                  FirebaseAnalytics().logEvent(
+                      name: 'action_performed',
+                      parameters: {
+                        'action_name': 'RateQuestion',
+                        'love': reportMap[ReportType.LOVE]
+                      });
                   _database.voteOnQuestion(groupData.getQuestion());
                 }
 
@@ -147,22 +155,34 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                   'code': groupData.getGroupCode(),
                 });
 
-                FirebaseAnalytics().logEvent(name: 'VoteOnUser', parameters: null);
+                FirebaseAnalytics()
+                    .logEvent(name: 'VoteOnUser', parameters: null);
 
-                groupData.addVote(clickedmember); // GroupData#addVote automatically updates the database. This is preferred because random retries are built in
+                groupData.addVote(
+                    clickedmember); // GroupData#addVote automatically updates the database. This is preferred because random retries are built in
                 currentQuestion = groupData.getQuestionID();
                 currentQuestionString = groupData.getNextQuestionString();
 
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => ResultScreen(_database, groupData, code, currentQuestion, currentQuestionString, clickedmember),
+                      builder: (BuildContext context) => ResultScreen(
+                          _database,
+                          groupData,
+                          code,
+                          currentQuestion,
+                          currentQuestionString,
+                          clickedmember),
                     ));
               } else {
                 NoMemberSelectedPopup.noMemberSelectedPopup(context);
               }
             },
-            child: Text("Vote", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iBlack, fontWeight: FontWeight.bold)),
+            child: Text("Vote",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: Constants.actionbuttonFontSize)
+                    .copyWith(
+                        color: Constants.iBlack, fontWeight: FontWeight.bold)),
           ),
         ),
       ),
@@ -208,7 +228,9 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                         },
                         child: Text(
                           "Results",
-                          style: TextStyle(fontSize: Constants.actionbuttonFontSize, color: Constants.colors[Constants.colorindex]),
+                          style: TextStyle(
+                              fontSize: Constants.actionbuttonFontSize,
+                              color: Constants.colors[Constants.colorindex]),
                         ),
                       ),
                     ]),
@@ -219,12 +241,15 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (BuildContext context) => GameScreen(_database, code),
+                              builder: (BuildContext context) =>
+                                  GameScreen(_database, code),
                             ));
                       },
                       child: Text(
                         "Leave",
-                        style: TextStyle(fontSize: Constants.actionbuttonFontSize, color: Constants.colors[Constants.colorindex]),
+                        style: TextStyle(
+                            fontSize: Constants.actionbuttonFontSize,
+                            color: Constants.colors[Constants.colorindex]),
                       ),
                     )
                   ],
@@ -246,12 +271,14 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                         ],
                       ),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 3.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 3.0),
                     child: ListView(
                       children: [
                         //submit own question button
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 1.0, vertical: 1.0),
                           color: Colors.transparent,
                           child: Center(
                             child: Column(
@@ -260,7 +287,11 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                                 SizedBox(height: 10),
                                 Text(
                                   'Question',
-                                  style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w700),
+                                  style: TextStyle(
+                                      color: Constants
+                                          .colors[Constants.colorindex],
+                                      fontSize: Constants.subtitleFontSize,
+                                      fontWeight: FontWeight.w700),
                                 ),
                                 SizedBox(height: 15),
                                 Card(
@@ -270,24 +301,40 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                                   ),
                                   color: Constants.iDarkGrey,
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20.0, vertical: 20.0),
                                     child: Column(
                                       children: <Widget>[
                                         Text(
                                           groupData.getNextQuestionString(),
-                                          style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.bold),
+                                          style: TextStyle(
+                                              color: Constants.iWhite,
+                                              fontSize:
+                                                  Constants.normalFontSize,
+                                              fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.center,
                                         ),
                                         SizedBox(height: 5),
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
-                                            Container(width: 50.0, child: SizedBox()),
+                                            Container(
+                                                width: 50.0, child: SizedBox()),
                                             Container(
                                               width: 150.0,
                                               child: Text(
-                                                '- ' + groupData.getQuestion().getCategory() + ' -',
-                                                style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+                                                '- ' +
+                                                    groupData
+                                                        .getQuestion()
+                                                        .getCategory() +
+                                                    ' -',
+                                                style: TextStyle(
+                                                    color: Constants.iWhite,
+                                                    fontSize:
+                                                        Constants.smallFontSize,
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                                 textAlign: TextAlign.center,
                                               ),
                                             ),
@@ -295,24 +342,50 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                                               width: 50.0,
                                               child: IconButton(
                                                 icon: Icon(
-                                                  reportMap[ReportType.LOVE] ? Icons.favorite : Icons.favorite_border,
+                                                  reportMap[ReportType.LOVE]
+                                                      ? Icons.favorite
+                                                      : Icons.favorite_border,
                                                   color: Constants.iWhite,
                                                 ),
                                                 onPressed: () {
-                                                  setState(() => reportMap[ReportType.LOVE] = !reportMap[ReportType.LOVE]);
-                                                  if (reportMap[ReportType.LOVE]) {
-                                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                                  setState(() => reportMap[
+                                                          ReportType.LOVE] =
+                                                      !reportMap[
+                                                          ReportType.LOVE]);
+                                                  if (reportMap[
+                                                      ReportType.LOVE]) {
+                                                    Scaffold.of(context)
+                                                        .showSnackBar(SnackBar(
                                                       content: Text(
                                                         'You like this question! Thank you for your feedback!',
-                                                        style: TextStyle(color: Constants.iWhite, fontSize: Constants.miniFontSize, fontWeight: FontWeight.bold),
-                                                        textAlign: TextAlign.center,
+                                                        style: TextStyle(
+                                                            color: Constants
+                                                                .iWhite,
+                                                            fontSize: Constants
+                                                                .miniFontSize,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                        textAlign:
+                                                            TextAlign.center,
                                                       ),
-                                                      duration: Duration(seconds: 3),
-                                                      backgroundColor: Constants.iDarkGrey,
+                                                      duration:
+                                                          Duration(seconds: 3),
+                                                      backgroundColor:
+                                                          Constants.iDarkGrey,
                                                       action: SnackBarAction(
-                                                        label: 'Undo', textColor: Constants.colors[Constants.colorindex], // or some operation you would like
+                                                        label: 'Undo',
+                                                        textColor: Constants
+                                                                .colors[
+                                                            Constants
+                                                                .colorindex], // or some operation you would like
                                                         onPressed: () {
-                                                          setState(() => reportMap[ReportType.LOVE] = !reportMap[ReportType.LOVE]);
+                                                          setState(() => reportMap[
+                                                                  ReportType
+                                                                      .LOVE] =
+                                                              !reportMap[
+                                                                  ReportType
+                                                                      .LOVE]);
                                                         },
                                                       ),
                                                     ));
@@ -334,7 +407,10 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                         Text(
                           'Select a friend',
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize, fontWeight: FontWeight.w700),
+                          style: TextStyle(
+                              color: Constants.colors[Constants.colorindex],
+                              fontSize: Constants.normalFontSize,
+                              fontWeight: FontWeight.w700),
                         ),
                         SizedBox(
                           height: 20,
@@ -353,7 +429,8 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
                     ));
               }),
               floatingActionButton: voteButton,
-              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat,
             ),
           );
         });
@@ -363,7 +440,9 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
     return Container(
         child: Card(
       elevation: 5.0,
-      color: data.getUserID() == clickedmember ? Constants.iLight : Constants.iDarkGrey,
+      color: data.getUserID() == clickedmember
+          ? Constants.iLight
+          : Constants.iDarkGrey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
@@ -378,10 +457,16 @@ class _QuestionScreenState extends State<QuestionScreen> with WidgetsBindingObse
         },
         child: Center(
             child: Padding(
-          padding: const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
+          padding:
+              const EdgeInsets.only(top: 1.0, bottom: 1, left: 7, right: 7),
           child: Text(
             data.getUsername().split(' ')[0],
-            style: TextStyle(color: data.getUserID() == clickedmember ? Constants.iDarkGrey : Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: data.getUserID() == clickedmember
+                    ? Constants.iDarkGrey
+                    : Constants.iWhite,
+                fontSize: Constants.smallFontSize,
+                fontWeight: FontWeight.bold),
           ),
         )),
       ),

@@ -1,5 +1,5 @@
 import 'package:blackbox/Assets/questions.dart';
-import 'package:blackbox/DataContainers/OfflineGroupData.dart';
+import 'package:blackbox/models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PartyScreens/PartyQuestionScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';

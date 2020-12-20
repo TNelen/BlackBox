@@ -1,9 +1,9 @@
 import 'package:blackbox/Constants.dart';
-import 'package:blackbox/DataContainers/GroupData.dart';
-import 'package:blackbox/DataContainers/UserData.dart';
-import 'package:blackbox/DataContainers/Issue.dart';
+import 'package:blackbox/models/GroupData.dart';
+import 'package:blackbox/models/UserData.dart';
+import 'package:blackbox/models/Issue.dart';
 import 'package:blackbox/Database/QuestionListGetter.dart';
-import '../DataContainers/Question.dart';
+import '../models/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'FirebaseUtility.dart';
@@ -11,12 +11,15 @@ import 'FirebaseUtility.dart';
 class FirebaseSetters {
   static Future<bool> voteOnUser(GroupData groupData, String voteeID) async {
     await Firestore.instance.runTransaction((Transaction transaction) async {
-      DocumentReference groupRef = Firestore.instance.collection("groups").document(groupData.getGroupCode());
+      DocumentReference groupRef = Firestore.instance
+          .collection("groups")
+          .document(groupData.getGroupCode());
 
       DocumentSnapshot ds = await transaction.get(groupRef);
 
       /// Initialize lists
-      Map<dynamic, dynamic> dbData = ds.data['newVotes'] as Map<dynamic, dynamic>;
+      Map<dynamic, dynamic> dbData =
+          ds.data['newVotes'] as Map<dynamic, dynamic>;
       Map<String, String> convertedData = Map<String, String>();
 
       /// Loop the database Map and add values as Strings to the data Map
@@ -41,7 +44,9 @@ class FirebaseSetters {
     bool isSuccess;
 
     await Firestore.instance.runTransaction((Transaction transaction) async {
-      DocumentReference qRef = Firestore.instance.collection("questionsv2").document(q.getQuestionID());
+      DocumentReference qRef = Firestore.instance
+          .collection("questionsv2")
+          .document(q.getQuestionID());
 
       DocumentSnapshot ds = await transaction.get(qRef);
 
@@ -78,7 +83,8 @@ class FirebaseSetters {
     await Firestore.instance.runTransaction((Transaction transaction) async {
       /// Get up-to-date data
       GroupData freshData;
-      DocumentReference docRef = Firestore.instance.collection("groups").document(code);
+      DocumentReference docRef =
+          Firestore.instance.collection("groups").document(code);
       DocumentSnapshot snap = await transaction.get(docRef);
 
       if (snap.exists)
@@ -133,7 +139,8 @@ class FirebaseSetters {
       else
         newList = groupData.getPlaying();
 
-      if (groupData.getPlaying().contains(userID) && !(newList.contains(userID))) {
+      if (groupData.getPlaying().contains(userID) &&
+          !(newList.contains(userID))) {
         newList.add(userID);
       } else if (!groupData.getPlaying().contains(userID)) {
         newList.remove(userID);
@@ -147,7 +154,8 @@ class FirebaseSetters {
       ///
 
       Map<String, Map<String, int>> history;
-      if (groupData.getHistory() == null || groupData.getHistory().length == 0) {
+      if (groupData.getHistory() == null ||
+          groupData.getHistory().length == 0) {
         history = null;
       } else {
         history = groupData.getHistory();
@@ -156,7 +164,8 @@ class FirebaseSetters {
       data['questionlist'] = groupData.getQuestionList() ?? List<String>();
 
       /// If user is admin -> Overwrite permissions!
-      if (freshData.getAdminID() == Constants.getUserID() || freshData.getQuestion() == null) {
+      if (freshData.getAdminID() == Constants.getUserID() ||
+          freshData.getQuestion() == null) {
         data['name'] = groupData.getName();
         data['description'] = groupData.getDescription();
         data['isPlaying'] = groupData.getIsPlaying();
@@ -165,13 +174,18 @@ class FirebaseSetters {
         data['nextQuestionID'] = groupData.getQuestion().getQuestionID();
         data['nextQuestionCategory'] = groupData.getQuestion().getCategory();
         data['nextQuestionCreatorID'] = groupData.getQuestion().getCreatorID();
-        data['nextQuestionCreatorName'] = groupData.getQuestion().getCreatorName();
+        data['nextQuestionCreatorName'] =
+            groupData.getQuestion().getCreatorName();
 
         data['lastQuestion'] = groupData.getLastQuestion().getQuestion() ?? "";
-        data['lastQuestionID'] = groupData.getLastQuestion().getQuestionID() ?? "";
-        data['lastQuestionCategory'] = groupData.getLastQuestion().getCategory() ?? "Default";
-        data['lastQuestionCreatorID'] = groupData.getLastQuestion().getCreatorID() ?? "";
-        data['lastQuestionCreatorName'] = groupData.getLastQuestion().getCreatorName() ?? "";
+        data['lastQuestionID'] =
+            groupData.getLastQuestion().getQuestionID() ?? "";
+        data['lastQuestionCategory'] =
+            groupData.getLastQuestion().getCategory() ?? "Default";
+        data['lastQuestionCreatorID'] =
+            groupData.getLastQuestion().getCreatorID() ?? "";
+        data['lastQuestionCreatorName'] =
+            groupData.getLastQuestion().getCreatorName() ?? "";
 
         data['adminVoteTimestamp'] = groupData.getAdminVoteTimestamp() ?? null;
         data['history'] = history;
@@ -185,35 +199,49 @@ class FirebaseSetters {
         data['nextQuestionID'] = freshData.getQuestion().getQuestionID();
         data['nextQuestionCategory'] = freshData.getQuestion().getCategory();
         data['nextQuestionCreatorID'] = freshData.getQuestion().getCreatorID();
-        data['nextQuestionCreatorName'] = freshData.getQuestion().getCreatorName();
+        data['nextQuestionCreatorName'] =
+            freshData.getQuestion().getCreatorName();
 
         data['lastQuestion'] = freshData.getLastQuestion().getQuestion() ?? "";
-        data['lastQuestionID'] = freshData.getLastQuestion().getQuestionID() ?? "";
-        data['lastQuestionCategory'] = freshData.getLastQuestion().getCategory() ?? "Default";
-        data['lastQuestionCreatorID'] = freshData.getLastQuestion().getCreatorID() ?? "";
-        data['lastQuestionCreatorName'] = freshData.getLastQuestion().getCreatorName() ?? "";
+        data['lastQuestionID'] =
+            freshData.getLastQuestion().getQuestionID() ?? "";
+        data['lastQuestionCategory'] =
+            freshData.getLastQuestion().getCategory() ?? "Default";
+        data['lastQuestionCreatorID'] =
+            freshData.getLastQuestion().getCreatorID() ?? "";
+        data['lastQuestionCreatorName'] =
+            freshData.getLastQuestion().getCreatorName() ?? "";
 
         data['adminVoteTimestamp'] = freshData.getAdminVoteTimestamp() ?? null;
         data['history'] = freshData.getHistory();
       }
 
-      bool transfer = (Constants.getUserID() == groupData.getAdminID() && freshData.getQuestion() != null && freshData.getQuestion().getQuestionID() == groupData.getLastQuestion().getQuestionID()) ||
+      bool transfer = (Constants.getUserID() == groupData.getAdminID() &&
+              freshData.getQuestion() != null &&
+              freshData.getQuestion().getQuestionID() ==
+                  groupData.getLastQuestion().getQuestionID()) ||
           (freshData.getQuestion() == null);
 
       /// Handle last votes
-      if (freshData.getLastVotes() == null || transfer || freshData.getLastVoteData() != groupData.getLastVoteData())
+      if (freshData.getLastVotes() == null ||
+          transfer ||
+          freshData.getLastVoteData() != groupData.getLastVoteData())
         data['lastVotes'] = groupData.getLastVoteData();
       else
         data['lastVotes'] = freshData.getLastVoteData();
 
       /// Handle new votes
-      if (freshData.getNewVotes() == null || transfer || freshData.getNewVoteData() != groupData.getNewVoteData())
+      if (freshData.getNewVotes() == null ||
+          transfer ||
+          freshData.getNewVoteData() != groupData.getNewVoteData())
         data['newVotes'] = groupData.getNewVoteData();
       else
         data['newVotes'] = freshData.getNewVoteData();
 
       /// Handle total votes
-      if (freshData.getTotalVotes() == null || transfer || freshData.getTotalVotes() != groupData.getTotalVotes())
+      if (freshData.getTotalVotes() == null ||
+          transfer ||
+          freshData.getTotalVotes() != groupData.getTotalVotes())
         data['totalVotes'] = groupData.getTotalVotes();
       else
         data['totalVotes'] = freshData.getTotalVotes();
@@ -235,7 +263,8 @@ class FirebaseSetters {
     data['accent'] = userData.getAccent();
 
     await Firestore.instance.runTransaction((Transaction transaction) async {
-      DocumentReference docRef = Firestore.instance.collection("users").document(uniqueID);
+      DocumentReference docRef =
+          Firestore.instance.collection("users").document(uniqueID);
       await transaction.set(docRef, data);
     });
 
@@ -266,31 +295,43 @@ class FirebaseSetters {
       uniqueID = await FirebaseUtility.generateUniqueQuestionCode();
     }
 
-    bool doesQuestionIDExist = await FirebaseUtility.doesQuestionIDExist(question);
+    bool doesQuestionIDExist =
+        await FirebaseUtility.doesQuestionIDExist(question);
 
     /// Update the question document
     await Firestore.instance.runTransaction((Transaction transaction) async {
       if (doesQuestionIDExist) {
         /// get current reports
-        DocumentReference reportRef = Firestore.instance.collection("questionsv2").document(uniqueID);
+        DocumentReference reportRef =
+            Firestore.instance.collection("questionsv2").document(uniqueID);
 
         DocumentSnapshot reports = await transaction.get(reportRef);
 
         /// Add them to the data map
-        if (reports.data['categoryReports'] != null) data['categoryReports'] = reports.data['categoryReports'];
-        if (reports.data['disturbingReports'] != null) data['disturbingReports'] = reports.data['disturbingReports'];
-        if (reports.data['grammarReports'] != null) data['grammarReports'] = reports.data['grammarReports'];
-        if (reports.data['votes'] != null) data['votes'] = reports.data['votes'];
+        if (reports.data['categoryReports'] != null)
+          data['categoryReports'] = reports.data['categoryReports'];
+        if (reports.data['disturbingReports'] != null)
+          data['disturbingReports'] = reports.data['disturbingReports'];
+        if (reports.data['grammarReports'] != null)
+          data['grammarReports'] = reports.data['grammarReports'];
+        if (reports.data['votes'] != null)
+          data['votes'] = reports.data['votes'];
       }
 
       /// Save question
-      DocumentReference qRef = Firestore.instance.collection("questionsv2").document(uniqueID);
+      DocumentReference qRef =
+          Firestore.instance.collection("questionsv2").document(uniqueID);
 
       await transaction.set(qRef, data);
     });
 
     /// Save question to the lists
-    Question q = Question(uniqueID, question.getQuestion(), question.getCategoryAsCategory(), question.getCreatorID(), question.getCreatorName());
+    Question q = Question(
+        uniqueID,
+        question.getQuestion(),
+        question.getCategoryAsCategory(),
+        question.getCreatorID(),
+        question.getCreatorName());
     List<String> categories = List<String>();
     categories.add(question.getCategoryAsCategory().name);
 
@@ -302,18 +343,21 @@ class FirebaseSetters {
   /// Saves a question to the lists of the given categories
   /// The question will be removed from other arrays it is listed in.
   /// Will create a list if none exists yet
-  static Future<void> _saveQuestionToList(Question question, List<String> categories) async {
+  static Future<void> _saveQuestionToList(
+      Question question, List<String> categories) async {
     /// Update the question list
     await Firestore.instance.runTransaction((Transaction transaction) async {
       /// Update question list
-      DocumentReference listRef = Firestore.instance.collection("questionsv2").document("questionList");
+      DocumentReference listRef =
+          Firestore.instance.collection("questionsv2").document("questionList");
 
       DocumentSnapshot doc = await transaction.get(listRef);
 
       Map<String, dynamic> newData = Map<String, dynamic>();
 
       /// Update every relevant category list
-      for (String category in await QuestionListGetter.instance.getCategoryNames()) {
+      for (String category
+          in await QuestionListGetter.instance.getCategoryNames()) {
         /// Get the current List or create a new one
         List<String> questions;
         if (doc.data[category] != null) {

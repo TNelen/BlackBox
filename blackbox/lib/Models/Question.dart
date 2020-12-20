@@ -1,11 +1,10 @@
-import 'package:blackbox/DataContainers/QuestionCategory.dart';
+import 'package:blackbox/models/QuestionCategory.dart';
 
 import '../Constants.dart';
 
 import 'UserData.dart';
 
 class Question {
-
   String _questionID = "";
   String _question = "";
   QuestionCategory _category = QuestionCategory.community();

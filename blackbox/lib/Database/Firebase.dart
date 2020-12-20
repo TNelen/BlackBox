@@ -1,11 +1,11 @@
-import 'package:blackbox/DataContainers/Appinfo.dart';
-import 'package:blackbox/DataContainers/GroupData.dart';
-import 'package:blackbox/DataContainers/UserData.dart';
-import 'package:blackbox/DataContainers/Issue.dart';
+import 'package:blackbox/models/Appinfo.dart';
+import 'package:blackbox/models/GroupData.dart';
+import 'package:blackbox/models/UserData.dart';
+import 'package:blackbox/models/Issue.dart';
 import 'package:blackbox/Database/FirebaseDeleters.dart';
 import 'package:blackbox/Database/FirebaseGetters.dart';
 import 'package:blackbox/Database/FirebaseUtility.dart';
-import '../DataContainers/Question.dart';
+import '../models/Question.dart';
 import '../Interfaces/Database.dart';
 
 import 'FirebaseSetters.dart';
@@ -131,7 +131,8 @@ class Firebase implements Database {
       return value;
     }).catchError((error) {
       print(error);
-      return GroupData("Default", "Default group", false, true, "00000", "None", Map<String, String>(), List<String>());
+      return GroupData("Default", "Default group", false, true, "00000", "None",
+          Map<String, String>(), List<String>());
     });
   }
 

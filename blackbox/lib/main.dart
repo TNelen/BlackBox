@@ -7,7 +7,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'Constants.dart';
 import './Database/GoogleUserHandler.dart';
-import './DataContainers/UserData.dart';
+import './models/UserData.dart';
 import './Interfaces/Database.dart';
 import 'dart:io';
 import 'package:progress_indicators/progress_indicators.dart';

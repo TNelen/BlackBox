@@ -1,10 +1,10 @@
-import 'package:blackbox/DataContainers/Appinfo.dart';
-import 'package:blackbox/DataContainers/GroupData.dart';
-import 'package:blackbox/DataContainers/QuestionCategory.dart';
-import 'package:blackbox/DataContainers/UserData.dart';
+import 'package:blackbox/models/Appinfo.dart';
+import 'package:blackbox/models/GroupData.dart';
+import 'package:blackbox/models/QuestionCategory.dart';
+import 'package:blackbox/models/UserData.dart';
 import 'package:blackbox/Database/QuestionListGetter.dart';
 import 'package:blackbox/Exceptions/GroupNotFoundException.dart';
-import '../DataContainers/Question.dart';
+import '../models/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blackbox/Constants.dart';
 
@@ -90,14 +90,11 @@ class FirebaseGetters {
       /// Convert List<dynamic> to List<String>
       List<dynamic> existing = document.data[category] as List;
       questionlist = existing.cast<String>().toList();
-      if (questionlist.length > 1)
-      {
+      if (questionlist.length > 1) {
         questionlist.removeAt(0);
         return questionlist;
         // questionlist.shuffle(Random.secure());
-      } 
-      else
-      {
+      } else {
         return [];
       }
     });
@@ -105,7 +102,6 @@ class FirebaseGetters {
   }
 
   static Future<Question> getNextQuestion(GroupData groupData) async {
-    
     QuestionListGetter getter = QuestionListGetter.instance;
     List<QuestionCategory> categories = await getter.getCategories();
 
@@ -118,11 +114,9 @@ class FirebaseGetters {
           .document(questionId)
           .get()
           .then((document) {
-
         QuestionCategory category = QuestionCategory.community();
         for (QuestionCategory cat in categories)
-          if (cat.name == document.data['category'])
-            category = cat;
+          if (cat.name == document.data['category']) category = cat;
 
         randomQuestion = Question(
             document.documentID,
@@ -180,15 +174,20 @@ class FirebaseGetters {
         for (MapEntry e in data.entries) {
           if (e.value is List<dynamic>) {
             List<String> list = List<String>();
-            for (dynamic element in e.value)
-            {
+            for (dynamic element in e.value) {
               list.add(element.toString());
             }
 
             String description = list.removeAt(0);
-            QuestionCategory qc = QuestionCategory(e.key.toString(), description, list);
-            print('Category: ' + qc.name + ", description: " + qc.description + ", size: " + qc.amount.toString());
-            categories.add( qc );
+            QuestionCategory qc =
+                QuestionCategory(e.key.toString(), description, list);
+            print('Category: ' +
+                qc.name +
+                ", description: " +
+                qc.description +
+                ", size: " +
+                qc.amount.toString());
+            categories.add(qc);
           }
         }
       }

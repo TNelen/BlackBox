@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:blackbox/DataContainers/QuestionCategory.dart';
+import 'package:blackbox/models/QuestionCategory.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blackbox/Constants.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import '../DataContainers/UserData.dart';
-import '../DataContainers/Question.dart';
+import '../models/UserData.dart';
+import '../models/Question.dart';
 import 'dart:math';
 
 import 'UserRankData.dart';
@@ -73,7 +73,15 @@ class GroupData {
   /// ---------------------- \\\
 
   /// Create a group with the given data fields
-  GroupData(this._groupName, this._groupDescription, this.canVoteBlank, this.canVoteOnSelf, this._groupID, this._adminID, this._members, this._questionlist) {
+  GroupData(
+      this._groupName,
+      this._groupDescription,
+      this.canVoteBlank,
+      this.canVoteOnSelf,
+      this._groupID,
+      this._adminID,
+      this._members,
+      this._questionlist) {
     _isPlaying = true;
     _nextQuestion = Question.empty();
     _lastVotes = Map<String, String>();
@@ -85,8 +93,23 @@ class GroupData {
   }
 
   /// Create a group with the given data fields AND status fields
-  GroupData.extended(this._groupName, this._groupDescription, this.canVoteBlank, this.canVoteOnSelf, this._groupID, this._adminID, this._isPlaying, this._members, this._nextQuestion, this._lastVotes,
-      this._newVotes, this._totalVotes, this._playing, this._questionlist, this._adminVoteTimestamp, this._history);
+  GroupData.extended(
+      this._groupName,
+      this._groupDescription,
+      this.canVoteBlank,
+      this.canVoteOnSelf,
+      this._groupID,
+      this._adminID,
+      this._isPlaying,
+      this._members,
+      this._nextQuestion,
+      this._lastVotes,
+      this._newVotes,
+      this._totalVotes,
+      this._playing,
+      this._questionlist,
+      this._adminVoteTimestamp,
+      this._history);
 
   /// ---------------- \\\
   /// Firebase Utility \\\
@@ -98,7 +121,8 @@ class GroupData {
 
         /// Get basic data
         _groupName = snap.data['name'] as String ?? "Nameless group",
-        _groupDescription = snap.data['description'] as String ?? "No description",
+        _groupDescription =
+            snap.data['description'] as String ?? "No description",
         _groupID = snap.documentID.toString(),
         _adminID = snap.data['admin'] as String,
         _isPlaying = snap.data['isPlaying'] as bool,
@@ -107,12 +131,22 @@ class GroupData {
         _adminVoteTimestamp = snap.data['adminVoteTimestamp'] as int,
 
         /// Get status data
-        _nextQuestion = Question(snap.data['nextQuestionID'] as String, snap.data['nextQuestion'] as String, QuestionCategory(snap.data['nextQuestionCategory'] as String, '', ['']),
-                snap.data['nextQuestionCreatorID'] as String, snap.data['nextQuestionCreatorName'] as String) ??
+        _nextQuestion = Question(
+                snap.data['nextQuestionID'] as String,
+                snap.data['nextQuestion'] as String,
+                QuestionCategory(
+                    snap.data['nextQuestionCategory'] as String, '', ['']),
+                snap.data['nextQuestionCreatorID'] as String,
+                snap.data['nextQuestionCreatorName'] as String) ??
             Question.addDefault(snap.data['nextQuestion'] as String) ??
             Question.empty(),
-        _lastQuestion = Question(snap.data['lastQuestionID'] as String, snap.data['lastQuestion'] as String, QuestionCategory(snap.data['lastQuestionCategory'] as String, '', ['']),
-                snap.data['lastQuestionCreatorID'] as String, snap.data['lastQuestionCreatorName'] as String) ??
+        _lastQuestion = Question(
+                snap.data['lastQuestionID'] as String,
+                snap.data['lastQuestion'] as String,
+                QuestionCategory(
+                    snap.data['lastQuestionCategory'] as String, '', ['']),
+                snap.data['lastQuestionCreatorID'] as String,
+                snap.data['lastQuestionCreatorName'] as String) ??
             Question.addDefault(snap.data['nextQuestion'] as String) ??
             Question.empty(),
         _members = _convertFirebaseMapString(snap.data['members']),
@@ -170,7 +204,8 @@ class GroupData {
   static Map<String, Map<String, int>> _convertFirebaseHistory(dynamic data) {
     /// Initialize lists
     Map<dynamic, dynamic> dbData = data as Map<dynamic, dynamic>;
-    Map<String, Map<String, int>> convertedData = Map<String, Map<String, int>>();
+    Map<String, Map<String, int>> convertedData =
+        Map<String, Map<String, int>>();
 
     // Loop all earlier questions
     if (dbData != null) {
@@ -256,7 +291,9 @@ class GroupData {
   /// will return 'Blank User' when ID =blank_vote
   String getUserName(String ID) {
     String name = _members[ID];
-    return name != null ? name : ID == "blank_vote" ? "Blank User" : "User left";
+    return name != null
+        ? name
+        : ID == "blank_vote" ? "Blank User" : "User left";
   }
 
   /// Get the UserData of all users in this group
@@ -347,12 +384,19 @@ class GroupData {
   /// Non-admins will cause this function to fail silently
   /// The admin's vote timestamp will be reset to null
   /// The database is updated automatically if doDatabaseUpdate is not provided or is set to true
-  Future<void> setNextQuestion(Question newQuestion, UserData admin, {bool doDatabaseUpdate: true}) async {
+  Future<void> setNextQuestion(Question newQuestion, UserData admin,
+      {bool doDatabaseUpdate: true}) async {
     if (admin.getUserID() == _adminID) {
-      FirebaseAnalytics().logEvent(name: 'next_question', parameters: {'id': _groupID});
+      FirebaseAnalytics()
+          .logEvent(name: 'next_question', parameters: {'id': _groupID});
 
       /// Move the questions
-      _lastQuestion = Question(_nextQuestion.getQuestionID(), _nextQuestion.getQuestion(), _nextQuestion.getCategoryAsCategory(), _nextQuestion.getCreatorID(), _nextQuestion.getCreatorName());
+      _lastQuestion = Question(
+          _nextQuestion.getQuestionID(),
+          _nextQuestion.getQuestion(),
+          _nextQuestion.getCategoryAsCategory(),
+          _nextQuestion.getCreatorID(),
+          _nextQuestion.getCreatorName());
 
       _nextQuestion = newQuestion;
 
@@ -625,7 +669,8 @@ class GroupData {
 
     /// Update the top values
     for (int i = 0; i < 3; i++) {
-      top[i] = currentTop[i] > 0 ? getUserName(currentTopIDs[i]).split(' ')[0] : ' ';
+      top[i] =
+          currentTop[i] > 0 ? getUserName(currentTopIDs[i]).split(' ')[0] : ' ';
 
       /// Add each user's name
       top[i + 3] = currentTop[i] > 0 ? currentTop[i].toString() : ' ';
@@ -657,9 +702,11 @@ class GroupData {
   /// Automatically retries after a random amount of time
   void _performAsyncVote(String voteeID) async {
     int retryLimit = 10, i = 0; // Limit the retries
-    bool isSuccess = await Constants.database.voteOnUser(this, voteeID); // Perform the database update
+    bool isSuccess = await Constants.database
+        .voteOnUser(this, voteeID); // Perform the database update
 
-    while (!(isSuccess) && i < retryLimit) // While the transaction fails and the retry limit has NOT been reached
+    while (!(isSuccess) &&
+        i < retryLimit) // While the transaction fails and the retry limit has NOT been reached
     {
       Random rand = Random();
       int ms = 1 + rand.nextInt(26);
@@ -672,7 +719,8 @@ class GroupData {
         print(e);
       }
 
-      isSuccess = await Constants.database.voteOnUser(this, voteeID); // Retry the database update and wait
+      isSuccess = await Constants.database
+          .voteOnUser(this, voteeID); // Retry the database update and wait
 
       i++;
     }
@@ -825,8 +873,20 @@ class GroupData {
 
     print("-----");
     print("GroupTileData debug message");
-    print("Name: " + _groupName + "\nGroupID: " + _groupID + "\nadminID: " + _adminID + "\nmembers:" + membersString + "\nPlaying:" + playingString);
-    print("Question: " + _nextQuestion.getQuestionID() + "\nNext Question: " + _lastQuestion.getQuestionID());
+    print("Name: " +
+        _groupName +
+        "\nGroupID: " +
+        _groupID +
+        "\nadminID: " +
+        _adminID +
+        "\nmembers:" +
+        membersString +
+        "\nPlaying:" +
+        playingString);
+    print("Question: " +
+        _nextQuestion.getQuestionID() +
+        "\nNext Question: " +
+        _lastQuestion.getQuestionID());
     _totalVotes.forEach((key, value) {
       print("ID: " + key);
       print("Votes: " + value.toString());

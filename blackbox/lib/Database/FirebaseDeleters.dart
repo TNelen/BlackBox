@@ -1,5 +1,5 @@
-import 'package:blackbox/DataContainers/GroupData.dart';
-import 'package:blackbox/DataContainers/UserData.dart';
+import 'package:blackbox/models/GroupData.dart';
+import 'package:blackbox/models/UserData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'FirebaseUtility.dart';
@@ -10,7 +10,10 @@ class FirebaseDeleters {
       return false;
     }
 
-    await Firestore.instance.collection('groups').document(group.getGroupCode()).delete();
+    await Firestore.instance
+        .collection('groups')
+        .document(group.getGroupCode())
+        .delete();
 
     return true;
   }
@@ -20,7 +23,10 @@ class FirebaseDeleters {
       return false;
     }
 
-    await Firestore.instance.collection('users').document(user.getUserID()).delete();
+    await Firestore.instance
+        .collection('users')
+        .document(user.getUserID())
+        .delete();
 
     return true;
   }
@@ -58,7 +64,14 @@ class FirebaseDeleters {
     queries.add(nameDebug);
 
     // For logging purposes
-    List<String> queryTypes = ['membersEmpty', 'memberDieter', 'memberTimo', 'groupNameDebug', 'memberTe', 'nameDebug'];
+    List<String> queryTypes = [
+      'membersEmpty',
+      'memberDieter',
+      'memberTimo',
+      'groupNameDebug',
+      'memberTe',
+      'nameDebug'
+    ];
 
     /// A list of the query names: for debugging purposes
 
@@ -75,7 +88,8 @@ class FirebaseDeleters {
             GroupData groupData = GroupData.fromDocumentSnapshot(group);
             //if (groupData.getNumMembers() < 2)
             //{
-            if (groupData.getName() != "S1REQ" && groupData.getName() != "ORVFA") {
+            if (groupData.getName() != "S1REQ" &&
+                groupData.getName() != "ORVFA") {
               await deleteGroup(groupData);
             } else {
               numDeleted--;
@@ -85,7 +99,10 @@ class FirebaseDeleters {
             //}
           } catch (exception) {
             String groupID = group.documentID.toString();
-            print("Something went wrong when reading groupdata from or deleting group " + groupID + "! Trying again later.");
+            print(
+                "Something went wrong when reading groupdata from or deleting group " +
+                    groupID +
+                    "! Trying again later.");
             failedGroups.add(groupID);
 
             /// Add to failed groups to try again later
@@ -99,20 +116,29 @@ class FirebaseDeleters {
         for (String id in failedGroups) {
           if (id != "S1REQ" && id != "ORVFA") {
             try {
-              GroupData groupData = GroupData("", "", false, true, id, "", Map<String, String>(), List<String>());
+              GroupData groupData = GroupData("", "", false, true, id, "",
+                  Map<String, String>(), List<String>());
 
               /// Create empty group with the right ID
               await deleteGroup(groupData); // Delete the group
-              print("The group with ID " + id + " has now been deleted!"); // Print info
+              print("The group with ID " +
+                  id +
+                  " has now been deleted!"); // Print info
               numDeleted++;
             } catch (exc) {
-              print("The group with ID " + id + " could NOT be deleted! Cancelling...");
+              print("The group with ID " +
+                  id +
+                  " could NOT be deleted! Cancelling...");
             }
           }
         }
 
         if (numDeleted > 0) {
-          print("Deleting groups based on: " + queryTypes[i] + " ... " + numDeleted.toString() + " groups have been deleted!");
+          print("Deleting groups based on: " +
+              queryTypes[i] +
+              " ... " +
+              numDeleted.toString() +
+              " groups have been deleted!");
         }
       });
 
