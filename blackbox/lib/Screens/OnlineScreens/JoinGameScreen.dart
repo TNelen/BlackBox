@@ -1,9 +1,9 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'GameScreen.dart';
-import '../Interfaces/Database.dart';
-import 'popups/Popup.dart';
-import '../Constants.dart';
+import '../../Interfaces/Database.dart';
+import '../popups/Popup.dart';
+import '../../Constants.dart';
 
 class JoinGameScreen extends StatefulWidget {
   Database _database;
@@ -23,7 +23,8 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
   _JoinGameScreenState(Database db) {
     this._database = db;
 
-    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'JoinGameScreen'});
+    FirebaseAnalytics().logEvent(
+        name: 'open_screen', parameters: {'screen_name': 'JoinGameScreen'});
   }
 
   void joinGame(String groupID) async {
@@ -31,18 +32,28 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
     exists = await _database.doesGroupExist(groupID);
     if (groupID.length == Constants.groupCodeLength) {
       if (exists) {
-        FirebaseAnalytics().logEvent(name: 'game_action', parameters: {'type': 'GameJoined', 'code': codeController.text.toUpperCase()});
+        FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
+          'type': 'GameJoined',
+          'code': codeController.text.toUpperCase()
+        });
 
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (BuildContext context) => GameScreen(_database, codeController.text.toUpperCase()),
+              builder: (BuildContext context) =>
+                  GameScreen(_database, codeController.text.toUpperCase()),
             ));
       } else {
-        Popup.makePopup(context, "Invalid code", "Please check you code and try again!");
+        Popup.makePopup(
+            context, "Invalid code", "Please check you code and try again!");
       }
     } else {
-      Popup.makePopup(context, "Please check your code", "A code should contain " + Constants.groupCodeLength.toString() + " symbols!");
+      Popup.makePopup(
+          context,
+          "Please check your code",
+          "A code should contain " +
+              Constants.groupCodeLength.toString() +
+              " symbols!");
     }
   }
 
@@ -62,11 +73,19 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           onPressed: () {
             // Replace 1 by I and 0 by O to prevent confusion (group codes do not contain 1's and 0's for this reason)
-            String groupCode = codeController.text.toUpperCase().replaceAll('0', 'O').replaceAll('1', 'I');
+            String groupCode = codeController.text
+                .toUpperCase()
+                .replaceAll('0', 'O')
+                .replaceAll('1', 'I');
             joinGame(groupCode);
           },
           child: Text("Join",
-              textAlign: TextAlign.center, style: TextStyle(fontFamily: "atarian", fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                      fontFamily: "atarian",
+                      fontSize: Constants.actionbuttonFontSize)
+                  .copyWith(
+                      color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
         ),
       ),
     );
@@ -75,13 +94,17 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
       maxLength: 5,
       obscureText: false,
       controller: codeController,
-      style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Colors.black),
+      style: TextStyle(
+          fontFamily: "atarian",
+          fontSize: Constants.smallFontSize,
+          color: Colors.black),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           fillColor: Constants.iWhite,
           filled: true,
           hintText: "Game code",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
 
     return MaterialApp(
@@ -131,7 +154,8 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(top: 36.0, bottom: 36, left: 63, right: 63),
+                padding: const EdgeInsets.only(
+                    top: 36.0, bottom: 36, left: 63, right: 63),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,

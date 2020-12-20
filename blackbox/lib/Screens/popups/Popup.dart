@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import '../../Constants.dart';
 import '../../Interfaces/Database.dart';
 import '../../models/Question.dart';
-import '../HomeScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Popup {

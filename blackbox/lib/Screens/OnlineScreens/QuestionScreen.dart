@@ -2,13 +2,13 @@ import 'package:blackbox/models/UserData.dart';
 import 'package:blackbox/Screens/popups/noMembersScelectedPopup.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import '../models/GroupData.dart';
-import '../Constants.dart';
-import '../Interfaces/Database.dart';
+import '../../models/GroupData.dart';
+import '../../Constants.dart';
+import '../../Interfaces/Database.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'GameScreen.dart';
-import '../Database/FirebaseStream.dart';
-import 'popups/Popup.dart';
+import '../../Database/FirebaseStream.dart';
+import '../popups/Popup.dart';
 import 'ResultsScreen.dart';
 
 Map<ReportType, bool> reportMap = Map<ReportType, bool>();

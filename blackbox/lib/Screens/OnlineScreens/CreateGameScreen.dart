@@ -6,10 +6,10 @@ import 'package:blackbox/Screens/popups/GroupCodePopup.dart';
 import 'package:blackbox/Screens/widgets/CategoryCard.dart';
 import 'package:blackbox/Screens/widgets/toggle_button_card.dart';
 import 'package:flutter/material.dart';
-import '../Constants.dart';
-import '../models/GroupData.dart';
-import '../Interfaces/Database.dart';
-import 'popups/Popup.dart';
+import '../../Constants.dart';
+import '../../models/GroupData.dart';
+import '../../Interfaces/Database.dart';
+import '../popups/Popup.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
