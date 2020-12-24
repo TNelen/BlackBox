@@ -11,7 +11,7 @@ description: A fun game for friends that will bring you closer together
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 3.0.7+38
+version: 3.0.8+39
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -30,7 +30,7 @@ dependencies:
   package_info: ^0.4.1        # Used to grab (among other things) the version and build number
   path_provider: ^1.3.0       # Used for file handling
   shared_preferences: 0.5.7+2 # Used for config file handling
-  audioplayers: ^0.14.0       # Used to play sounds
+  audioplayers: ^0.17.0       # Used to play sounds
   vibration: 1.2.2            # Can make the mobile device vibrate
   store_redirect: ^1.0.2
   firebase_analytics: ^5.0.11 # Used to gather more detailed usage statistics
