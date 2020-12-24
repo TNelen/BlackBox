@@ -199,8 +199,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                       if (name.length < 2) {
                         Popup.makePopup(
                             context, 'Whoops!', 'Player name is too short');
-                      }
-                      if (players.contains(
+                      } else if (players.contains(
                           name[0].toUpperCase() + name.substring(1))) {
                         Popup.makePopup(
                             context, 'Whoops!', 'This player already exists');
