@@ -90,33 +90,15 @@ class _RuleScreenState extends State<RuleScreen> {
             padding: const EdgeInsets.only(
                 top: 20.0, bottom: 20, left: 50, right: 50),
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Game rules',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Constants.iWhite,
-                        fontSize: Constants.titleFontSize,
-                        fontWeight: FontWeight.w300),
-                  ),
-                  SizedBox(width: 20.0),
-                  Hero(
-                      tag: 'topicon1',
-                      child: Icon(
-                        OMIcons.helpOutline,
-                        size: 50,
-                        color: Constants.iWhite,
-                      )),
-                ],
-              ),
               SizedBox(height: 20.0),
-              Container(
-                height: 1.5,
-                color: Constants.iWhite,
+              Text(
+                'Settings',
+                style: TextStyle(
+                    color: Constants.iWhite,
+                    fontSize: Constants.subtitleFontSize,
+                    fontWeight: FontWeight.w500),
               ),
-              SizedBox(height: 20.0),
+              SizedBox(height: 30.0),
               RulesColumn(),
               SizedBox(height: 20.0),
             ],
