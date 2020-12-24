@@ -13,28 +13,28 @@ class FirebaseGetters {
     UserData user;
 
     try {
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection("users")
-          .document(uniqueID)
+          .doc(uniqueID)
           .get()
           .then((doc) {
         if (doc.exists) {
-          if (doc.data['name'] != null) {
+          if (doc.data()['name'] != null) {
             bool vibration = true;
-            if (doc.data['vibration'] != null) {
-              vibration = doc.data['vibration'] as bool;
+            if (doc.data()['vibration'] != null) {
+              vibration = doc.data()['vibration'] as bool;
             }
 
             bool sounds = true;
-            if (doc.data['sounds'] != null) {
-              sounds = doc.data['sounds'] as bool;
+            if (doc.data()['sounds'] != null) {
+              sounds = doc.data()['sounds'] as bool;
             }
 
-            if (doc.data['accent'] != null) {
-              user = UserData.full(doc.documentID, doc.data['name'] as String,
-                  doc.data['accent'] as int, vibration, sounds);
+            if (doc.data()['accent'] != null) {
+              user = UserData.full(doc.id, doc.data()['name'] as String,
+                  doc.data()['accent'] as int, vibration, sounds);
             } else {
-              user = UserData.full(doc.documentID, doc.data['name'] as String,
+              user = UserData.full(doc.id, doc.data()['name'] as String,
                   Constants.defaultColor, vibration, sounds);
             }
           }
@@ -60,9 +60,9 @@ class FirebaseGetters {
     GroupData groupData;
 
     try {
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection("groups")
-          .document(code)
+          .doc(code)
           .get()
           .then((document) {
         if (document.exists) {
@@ -82,13 +82,13 @@ class FirebaseGetters {
   ///Get all the questions form the selected category and return it as a list
   static Future<List<String>> createQuestionList(String category) async {
     List<String> questionlist;
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection("questionsv2")
-        .document("questionList")
+        .doc("questionList")
         .get()
         .then((document) {
       /// Convert List<dynamic> to List<String>
-      List<dynamic> existing = document.data[category] as List;
+      List<dynamic> existing = document.data()[category] as List;
       questionlist = existing.cast<String>().toList();
       if (questionlist.length > 1) {
         questionlist.removeAt(0);
@@ -109,21 +109,21 @@ class FirebaseGetters {
     Question randomQuestion;
     if (groupData.getQuestionList().length != 0) {
       String questionId = groupData.getQuestionList().removeLast();
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection("questionsv2")
-          .document(questionId)
+          .doc(questionId)
           .get()
           .then((document) {
         QuestionCategory category = QuestionCategory.community();
         for (QuestionCategory cat in categories)
-          if (cat.name == document.data['category']) category = cat;
+          if (cat.name == document.data()['category']) category = cat;
 
         randomQuestion = Question(
-            document.documentID,
-            document.data['question'] as String,
+            document.id,
+            document.data()['question'] as String,
             category,
-            document.data['creatorID'] as String,
-            document.data['creatorName'] as String);
+            document.data()['creatorID'] as String,
+            document.data()['creatorName'] as String);
       });
 
       return randomQuestion;
@@ -138,21 +138,21 @@ class FirebaseGetters {
 
   static Future<Appinfo> getAppInfo() async {
     Appinfo appinfo;
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection("appinfo")
-        .document("appinfo")
+        .doc("appinfo")
         .get()
         .then((DocumentSnapshot snap) {
       if (snap.exists) {
-        if (snap.data['current_version'] != null &&
-            snap.data['current_version'] != "") {
+        if (snap.data()['current_version'] != null &&
+            snap.data()['current_version'] != "") {
           String msg = "";
-          if (snap.data['login_message'] != null &&
-              snap.data['login_message'] != "") {
-            msg = snap.data['login_message'] as String;
+          if (snap.data()['login_message'] != null &&
+              snap.data()['login_message'] != "") {
+            msg = snap.data()['login_message'] as String;
           }
 
-          appinfo = Appinfo(snap.data['current_version'] as String, msg);
+          appinfo = Appinfo(snap.data()['current_version'] as String, msg);
         }
       } else {
         print("snap does not exists");
@@ -164,13 +164,13 @@ class FirebaseGetters {
   static Future<List<QuestionCategory>> getQuestionCategories() async {
     List<QuestionCategory> categories = List<QuestionCategory>();
 
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection("questionsv2")
-        .document("questionList")
+        .doc("questionList")
         .get()
         .then((document) {
       if (document.exists) {
-        Map<String, dynamic> data = document.data;
+        Map<String, dynamic> data = document.data();
         for (MapEntry e in data.entries) {
           if (e.value is List<dynamic>) {
             List<String> list = List<String>();

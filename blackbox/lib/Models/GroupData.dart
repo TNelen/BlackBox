@@ -120,42 +120,42 @@ class GroupData {
       :
 
         /// Get basic data
-        _groupName = snap.data['name'] as String ?? "Nameless group",
+        _groupName = snap.data()['name'] as String ?? "Nameless group",
         _groupDescription =
-            snap.data['description'] as String ?? "No description",
-        _groupID = snap.documentID.toString(),
-        _adminID = snap.data['admin'] as String,
-        _isPlaying = snap.data['isPlaying'] as bool,
-        canVoteBlank = snap.data['canVoteBlank'] as bool,
-        canVoteOnSelf = snap.data['canVoteOnSelf'] as bool,
-        _adminVoteTimestamp = snap.data['adminVoteTimestamp'] as int,
+            snap.data()['description'] as String ?? "No description",
+        _groupID = snap.id.toString(),
+        _adminID = snap.data()['admin'] as String,
+        _isPlaying = snap.data()['isPlaying'] as bool,
+        canVoteBlank = snap.data()['canVoteBlank'] as bool,
+        canVoteOnSelf = snap.data()['canVoteOnSelf'] as bool,
+        _adminVoteTimestamp = snap.data()['adminVoteTimestamp'] as int,
 
         /// Get status data
         _nextQuestion = Question(
-                snap.data['nextQuestionID'] as String,
-                snap.data['nextQuestion'] as String,
+                snap.data()['nextQuestionID'] as String,
+                snap.data()['nextQuestion'] as String,
                 QuestionCategory(
-                    snap.data['nextQuestionCategory'] as String, '', ['']),
-                snap.data['nextQuestionCreatorID'] as String,
-                snap.data['nextQuestionCreatorName'] as String) ??
-            Question.addDefault(snap.data['nextQuestion'] as String) ??
+                    snap.data()['nextQuestionCategory'] as String, '', ['']),
+                snap.data()['nextQuestionCreatorID'] as String,
+                snap.data()['nextQuestionCreatorName'] as String) ??
+            Question.addDefault(snap.data()['nextQuestion'] as String) ??
             Question.empty(),
         _lastQuestion = Question(
-                snap.data['lastQuestionID'] as String,
-                snap.data['lastQuestion'] as String,
+                snap.data()['lastQuestionID'] as String,
+                snap.data()['lastQuestion'] as String,
                 QuestionCategory(
-                    snap.data['lastQuestionCategory'] as String, '', ['']),
-                snap.data['lastQuestionCreatorID'] as String,
-                snap.data['lastQuestionCreatorName'] as String) ??
-            Question.addDefault(snap.data['nextQuestion'] as String) ??
+                    snap.data()['lastQuestionCategory'] as String, '', ['']),
+                snap.data()['lastQuestionCreatorID'] as String,
+                snap.data()['lastQuestionCreatorName'] as String) ??
+            Question.addDefault(snap.data()['nextQuestion'] as String) ??
             Question.empty(),
-        _members = _convertFirebaseMapString(snap.data['members']),
-        _lastVotes = _convertFirebaseMapString(snap.data['lastVotes']),
-        _newVotes = _convertFirebaseMapString(snap.data['newVotes']),
-        _totalVotes = _convertFirebaseMapInt(snap.data['totalVotes']),
-        _playing = _convertFirebaseList(snap.data['playing']),
-        _questionlist = _convertFirebaseList(snap.data['questionlist']),
-        _history = _convertFirebaseHistory(snap.data['history']);
+        _members = _convertFirebaseMapString(snap.data()['members']),
+        _lastVotes = _convertFirebaseMapString(snap.data()['lastVotes']),
+        _newVotes = _convertFirebaseMapString(snap.data()['newVotes']),
+        _totalVotes = _convertFirebaseMapInt(snap.data()['totalVotes']),
+        _playing = _convertFirebaseList(snap.data()['playing']),
+        _questionlist = _convertFirebaseList(snap.data()['questionlist']),
+        _history = _convertFirebaseHistory(snap.data()['history']);
 
   /// Convert a list from a DocumentSnapshot to a List<String>
   /// NO checks are done! Provided parameter MUST be correct

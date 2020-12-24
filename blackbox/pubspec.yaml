@@ -18,9 +18,9 @@ environment:
 
 dependencies:
 
-  cloud_firestore: 0.12.10+2   # Used to allow cloud firestore functionality
+  cloud_firestore: 0.14.4   # Used to allow cloud firestore functionality
   google_sign_in: 4.0.4     # Used for signing in with Google
-  firebase_auth: 0.16.0
+  firebase_auth: 0.18.4+1
   flutter_speed_dial: ^1.2.1
   unicorndial: ^1.1.5
   flutter_launcher_icons: 0.7.2+1 # Used for app icon support
@@ -40,6 +40,7 @@ dependencies:
   slide_to_confirm: ^0.0.7
   liquid_progress_indicator: ^0.3.2
   outline_material_icons: ^0.1.1
+  firebase_messaging: ^7.0.3
 
 
 

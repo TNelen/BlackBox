@@ -9,6 +9,8 @@ import 'package:blackbox/Screens/OnlineScreens/JoinGameScreen.dart';
 import 'package:blackbox/Screens/widgets/HomeScreenTopIcons.dart';
 import 'package:blackbox/Screens/widgets/home_screen_button.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart' as core;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/painting.dart';
@@ -189,6 +191,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> login() async {
+    await core.Firebase.initializeApp();
+
     if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
       ///check if user isn't loged in via google already when returning to homescreen
       try {

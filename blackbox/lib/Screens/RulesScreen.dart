@@ -1,7 +1,6 @@
 import 'package:blackbox/Screens/rules_column.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
 import '../Constants.dart';
 import '../Interfaces/Database.dart';
 

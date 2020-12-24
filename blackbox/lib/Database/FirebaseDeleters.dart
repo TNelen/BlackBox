@@ -10,9 +10,9 @@ class FirebaseDeleters {
       return false;
     }
 
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection('groups')
-        .document(group.getGroupCode())
+        .doc(group.getGroupCode())
         .delete();
 
     return true;
@@ -23,9 +23,9 @@ class FirebaseDeleters {
       return false;
     }
 
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection('users')
-        .document(user.getUserID())
+        .doc(user.getUserID())
         .delete();
 
     return true;
@@ -39,7 +39,8 @@ class FirebaseDeleters {
 
     /// These are groups that are probably no longer compatible
 
-    CollectionReference groupsRef = Firestore.instance.collection('groups');
+    CollectionReference groupsRef =
+        FirebaseFirestore.instance.collection('groups');
 
     /// Create a reference to the groups collection
 
@@ -80,10 +81,10 @@ class FirebaseDeleters {
     /// To keep track of which query type to log
     /// Loop through all queries and delete groups that satisfy all requirements
     for (Query query in queries) {
-      await query.getDocuments().then((groups) async {
-        int numDeleted = groups.documents.length;
+      await query.get().then((groups) async {
+        int numDeleted = groups.docs.length;
 
-        for (DocumentSnapshot group in groups.documents) {
+        for (DocumentSnapshot group in groups.docs) {
           try {
             GroupData groupData = GroupData.fromDocumentSnapshot(group);
             //if (groupData.getNumMembers() < 2)
@@ -98,7 +99,7 @@ class FirebaseDeleters {
             //  numDeleted--;
             //}
           } catch (exception) {
-            String groupID = group.documentID.toString();
+            String groupID = group.id.toString();
             print(
                 "Something went wrong when reading groupdata from or deleting group " +
                     groupID +

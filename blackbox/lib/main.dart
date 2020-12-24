@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:blackbox/Database/GoogleUserHandler.dart';
+import 'package:blackbox/push_nofitications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:blackbox/Screens/HomeScreen.dart';
@@ -11,6 +12,7 @@ import './models/UserData.dart';
 import './Interfaces/Database.dart';
 import 'dart:io';
 import 'package:progress_indicators/progress_indicators.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
   try {
@@ -61,6 +63,7 @@ class _SplashScreenState extends State<SplashScreen>
   Timer loginTimer;
 
   Future<void> login() async {
+    await Firebase.initializeApp();
     if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
       ///check if user isn't loged in via google already when returning to homescreen
       try {
@@ -107,6 +110,8 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
+    PushNotificationsManager manager = PushNotificationsManager();
+    manager.init();
 
     _progress = 0;
     loginTimer = Timer.periodic(Duration(seconds: 1), (Timer t) {

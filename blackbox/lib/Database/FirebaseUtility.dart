@@ -9,9 +9,9 @@ class FirebaseUtility {
     bool exists = false;
 
     /// Get group with ID
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection("groups")
-        .document(groupID)
+        .doc(groupID)
         .get()
         .then((document) {
       // Group exists!
@@ -25,9 +25,9 @@ class FirebaseUtility {
     bool exists = false;
 
     /// Get group with ID
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection("groups")
-        .document(userID)
+        .doc(userID)
         .get()
         .then((document) {
       // Group exists!
@@ -41,9 +41,9 @@ class FirebaseUtility {
     bool exists = false;
 
     /// Get group with ID
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection("questionsv2")
-        .document(questionID)
+        .doc(questionID)
         .get()
         .then((document) {
       // Group exists!
@@ -61,9 +61,9 @@ class FirebaseUtility {
     }
 
     /// Get group with ID
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection("questionsv2")
-        .document(question.getQuestionID())
+        .doc(question.getQuestionID())
         .get()
         .then((document) {
       /// Group with the same ID exists!
@@ -80,14 +80,14 @@ class FirebaseUtility {
     bool exists = false;
 
     /// Get group with ID
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection("questionsv2")
         .where("question", isEqualTo: question.getQuestion())
-        .getDocuments()
+        .get()
         .then((documents) {
-      documents.documents.forEach((document) {
+      documents.docs.forEach((document) {
         /// Group exists!
-        if (document.exists && document.documentID != question.getQuestionID())
+        if (document.exists && document.id != question.getQuestionID())
           exists = true;
       });
     });
@@ -105,9 +105,9 @@ class FirebaseUtility {
       newRandom = getRandomID(6);
 
       // Check whether or not the generated ID exists
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection("questionsv2")
-          .document(newRandom)
+          .doc(newRandom)
           .get()
           .then((document) {
         // ID does not exist, unique code found!
@@ -128,9 +128,9 @@ class FirebaseUtility {
       newRandom = FirebaseUtility.getRandomID(Constants.groupCodeLength);
 
       // Check whether or not the generated ID exists
-      await Firestore.instance
+      await FirebaseFirestore.instance
           .collection("groups")
-          .document(newRandom)
+          .doc(newRandom)
           .get()
           .then((document) {
         // ID does not exist, unique code found!
@@ -234,24 +234,25 @@ class FirebaseUtility {
     Map<String, Map<String, dynamic>> questions = Map<String,
         Map<String, dynamic>>(); // Mapping document ID to its contents
 
-    await Firestore.instance
+    await FirebaseFirestore.instance
         .collection("questionsv2")
-        .getDocuments()
+        .get()
         .then((docs) {
       // Get ALL questions and add them to the Map
-      for (DocumentSnapshot document in docs.documents) {
-        questions[document.documentID] = document.data;
+      for (DocumentSnapshot document in docs.docs) {
+        questions[document.id] = document.data();
       }
     });
 
     try {
       /// Make a backup of each question
-      var collection = Firestore.instance.collection("questionsBackup");
+      var collection = FirebaseFirestore.instance.collection("questionsBackup");
       questions.forEach((id, data) {
         DocumentReference reference =
-            collection.document(id); // Reference to the document
+            collection.doc(id); // Reference to the document
 
-        Firestore.instance.runTransaction((Transaction transaction) async {
+        FirebaseFirestore.instance
+            .runTransaction((Transaction transaction) async {
           // Perform the transaction
           await transaction.set(reference, data); // Update the document
         });

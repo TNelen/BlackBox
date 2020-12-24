@@ -10,16 +10,17 @@ import 'FirebaseUtility.dart';
 
 class FirebaseSetters {
   static Future<bool> voteOnUser(GroupData groupData, String voteeID) async {
-    await Firestore.instance.runTransaction((Transaction transaction) async {
-      DocumentReference groupRef = Firestore.instance
+    await FirebaseFirestore.instance
+        .runTransaction((Transaction transaction) async {
+      DocumentReference groupRef = FirebaseFirestore.instance
           .collection("groups")
-          .document(groupData.getGroupCode());
+          .doc(groupData.getGroupCode());
 
       DocumentSnapshot ds = await transaction.get(groupRef);
 
       /// Initialize lists
       Map<dynamic, dynamic> dbData =
-          ds.data['newVotes'] as Map<dynamic, dynamic>;
+          ds.data()['newVotes'] as Map<dynamic, dynamic>;
       Map<String, String> convertedData = Map<String, String>();
 
       /// Loop the database Map and add values as Strings to the data Map
@@ -43,16 +44,17 @@ class FirebaseSetters {
 
     bool isSuccess;
 
-    await Firestore.instance.runTransaction((Transaction transaction) async {
-      DocumentReference qRef = Firestore.instance
+    await FirebaseFirestore.instance
+        .runTransaction((Transaction transaction) async {
+      DocumentReference qRef = FirebaseFirestore.instance
           .collection("questionsv2")
-          .document(q.getQuestionID());
+          .doc(q.getQuestionID());
 
       DocumentSnapshot ds = await transaction.get(qRef);
 
       if (ds.exists) {
         /// Get current document votes and update
-        int currentVotes = ds.data['votes'] as int;
+        int currentVotes = ds.data()['votes'] as int;
         int newVotes;
 
         if (currentVotes != null) {
@@ -80,11 +82,12 @@ class FirebaseSetters {
     String code = groupData.getGroupCode();
     String userID = Constants.getUserID();
 
-    await Firestore.instance.runTransaction((Transaction transaction) async {
+    await FirebaseFirestore.instance
+        .runTransaction((Transaction transaction) async {
       /// Get up-to-date data
       GroupData freshData;
       DocumentReference docRef =
-          Firestore.instance.collection("groups").document(code);
+          FirebaseFirestore.instance.collection("groups").doc(code);
       DocumentSnapshot snap = await transaction.get(docRef);
 
       if (snap.exists)
@@ -262,9 +265,10 @@ class FirebaseSetters {
     data['name'] = userData.getUsername();
     data['accent'] = userData.getAccent();
 
-    await Firestore.instance.runTransaction((Transaction transaction) async {
+    await FirebaseFirestore.instance
+        .runTransaction((Transaction transaction) async {
       DocumentReference docRef =
-          Firestore.instance.collection("users").document(uniqueID);
+          FirebaseFirestore.instance.collection("users").doc(uniqueID);
       await transaction.set(docRef, data);
     });
 
@@ -299,28 +303,29 @@ class FirebaseSetters {
         await FirebaseUtility.doesQuestionIDExist(question);
 
     /// Update the question document
-    await Firestore.instance.runTransaction((Transaction transaction) async {
+    await FirebaseFirestore.instance
+        .runTransaction((Transaction transaction) async {
       if (doesQuestionIDExist) {
         /// get current reports
         DocumentReference reportRef =
-            Firestore.instance.collection("questionsv2").document(uniqueID);
+            FirebaseFirestore.instance.collection("questionsv2").doc(uniqueID);
 
         DocumentSnapshot reports = await transaction.get(reportRef);
 
         /// Add them to the data map
-        if (reports.data['categoryReports'] != null)
-          data['categoryReports'] = reports.data['categoryReports'];
-        if (reports.data['disturbingReports'] != null)
-          data['disturbingReports'] = reports.data['disturbingReports'];
-        if (reports.data['grammarReports'] != null)
-          data['grammarReports'] = reports.data['grammarReports'];
-        if (reports.data['votes'] != null)
-          data['votes'] = reports.data['votes'];
+        if (reports.data()['categoryReports'] != null)
+          data['categoryReports'] = reports.data()['categoryReports'];
+        if (reports.data()['disturbingReports'] != null)
+          data['disturbingReports'] = reports.data()['disturbingReports'];
+        if (reports.data()['grammarReports'] != null)
+          data['grammarReports'] = reports.data()['grammarReports'];
+        if (reports.data()['votes'] != null)
+          data['votes'] = reports.data()['votes'];
       }
 
       /// Save question
       DocumentReference qRef =
-          Firestore.instance.collection("questionsv2").document(uniqueID);
+          FirebaseFirestore.instance.collection("questionsv2").doc(uniqueID);
 
       await transaction.set(qRef, data);
     });
@@ -346,10 +351,12 @@ class FirebaseSetters {
   static Future<void> _saveQuestionToList(
       Question question, List<String> categories) async {
     /// Update the question list
-    await Firestore.instance.runTransaction((Transaction transaction) async {
+    await FirebaseFirestore.instance
+        .runTransaction((Transaction transaction) async {
       /// Update question list
-      DocumentReference listRef =
-          Firestore.instance.collection("questionsv2").document("questionList");
+      DocumentReference listRef = FirebaseFirestore.instance
+          .collection("questionsv2")
+          .doc("questionList");
 
       DocumentSnapshot doc = await transaction.get(listRef);
 
@@ -360,8 +367,8 @@ class FirebaseSetters {
           in await QuestionListGetter.instance.getCategoryNames()) {
         /// Get the current List or create a new one
         List<String> questions;
-        if (doc.data[category] != null) {
-          List<dynamic> current = doc.data[category] as List;
+        if (doc.data()[category] != null) {
+          List<dynamic> current = doc.data()[category] as List;
           questions = current.cast<String>().toList();
         } else {
           questions = List<String>();
@@ -399,7 +406,7 @@ class FirebaseSetters {
     data['description'] = issue.description;
     data['submitter'] = Constants.getUserID();
 
-    await Firestore.instance.collection("issues").add(data);
+    await FirebaseFirestore.instance.collection("issues").add(data);
     return true;
   }
 }

@@ -33,9 +33,9 @@ class FirebaseStream {
     }
 
     /// Subscribe to group changes and update the variable
-    _subscription = Firestore.instance
+    _subscription = FirebaseFirestore.instance
         .collection('groups')
-        .document(_groupID)
+        .doc(_groupID)
         .snapshots()
         .asBroadcastStream()
         .listen(_groupDataUpdated);
