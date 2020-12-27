@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import '../models/UserData.dart';
+import '../Models/UserData.dart';
 import '../Database/Firebase.dart';
 import '../Database/GoogleUserHandler.dart';
 import 'OnlineScreens/CreateGameScreen.dart';
@@ -20,7 +20,7 @@ import '../Constants.dart';
 import '../Interfaces/Database.dart';
 import 'PartyScreens/CreatePartyScreen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import '../models/Appinfo.dart';
+import '../Models/Appinfo.dart';
 import 'popups/Popup.dart';
 
 Future<bool> checkWifi() async {

@@ -1,10 +1,10 @@
 import 'package:audioplayers/audio_cache.dart';
-import 'package:blackbox/models/UserRankData.dart';
+import 'package:blackbox/Models/UserRankData.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:blackbox/Util/VibrationHandler.dart';
 import 'package:flutter/material.dart';
-import '../../models/GroupData.dart';
-import '../../models/Question.dart';
+import '../../Models/GroupData.dart';
+import '../../Models/Question.dart';
 import '../../Constants.dart';
 import 'QuestionScreen.dart';
 import '../../Interfaces/Database.dart';

@@ -1,4 +1,4 @@
-import 'package:blackbox/models/GroupData.dart';
+import 'package:blackbox/Models/GroupData.dart';
 import 'package:blackbox/Exceptions/GroupNotFoundException.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';

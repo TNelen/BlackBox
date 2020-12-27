@@ -1,10 +1,10 @@
 import 'package:audioplayers/audio_cache.dart';
-import 'package:blackbox/models/OfflineGroupData.dart';
+import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/HomeScreen.dart';
 import 'package:blackbox/Screens/PartyScreens/PartyQuestionScreen.dart';
 import 'package:blackbox/Util/VibrationHandler.dart';
 import 'package:flutter/material.dart';
-import '../../models/GroupData.dart';
+import '../../Models/GroupData.dart';
 import '../../Constants.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:auto_size_text/auto_size_text.dart';

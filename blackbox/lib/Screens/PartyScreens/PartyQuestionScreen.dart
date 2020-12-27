@@ -1,4 +1,4 @@
-import 'package:blackbox/models/OfflineGroupData.dart';
+import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PartyScreens/PassScreen.dart';
 import 'package:blackbox/Screens/popups/noMembersScelectedPopup.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';

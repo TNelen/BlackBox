@@ -1,4 +1,4 @@
-import 'package:blackbox/models/UserData.dart';
+import 'package:blackbox/Models/UserData.dart';
 import 'Database/Firebase.dart';
 import 'Interfaces/Database.dart';
 import 'package:flutter/material.dart';

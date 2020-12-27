@@ -1,10 +1,10 @@
-import 'package:blackbox/models/Appinfo.dart';
-import 'package:blackbox/models/GroupData.dart';
-import 'package:blackbox/models/QuestionCategory.dart';
-import 'package:blackbox/models/UserData.dart';
+import 'package:blackbox/Models/Appinfo.dart';
+import 'package:blackbox/Models/GroupData.dart';
+import 'package:blackbox/Models/QuestionCategory.dart';
+import 'package:blackbox/Models/UserData.dart';
 import 'package:blackbox/Database/QuestionListGetter.dart';
 import 'package:blackbox/Exceptions/GroupNotFoundException.dart';
-import '../models/Question.dart';
+import '../Models/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blackbox/Constants.dart';
 

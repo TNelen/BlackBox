@@ -1,8 +1,8 @@
-import 'package:blackbox/models/UserData.dart';
+import 'package:blackbox/Models/UserData.dart';
 import 'package:blackbox/Screens/popups/noMembersScelectedPopup.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import '../../models/GroupData.dart';
+import '../../Models/GroupData.dart';
 import '../../Constants.dart';
 import '../../Interfaces/Database.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';

@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import '../../Interfaces/Database.dart';
 import '../../Database/FirebaseStream.dart';
-import '../../models/GroupData.dart';
+import '../../Models/GroupData.dart';
 import '../../Constants.dart';
 import 'QuestionScreen.dart';
 import '../HomeScreen.dart';

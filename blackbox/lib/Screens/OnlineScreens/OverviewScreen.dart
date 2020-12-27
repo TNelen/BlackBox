@@ -1,9 +1,9 @@
-import 'package:blackbox/models/GroupData.dart';
+import 'package:blackbox/Models/GroupData.dart';
 import 'package:blackbox/Screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import '../../Interfaces/Database.dart';
 import '../../Constants.dart';
-import '../../models/UserRankData.dart';
+import '../../Models/UserRankData.dart';
 
 class OverviewScreen extends StatefulWidget {
   Database _database;

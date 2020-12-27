@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:blackbox/models/QuestionCategory.dart';
+import 'package:blackbox/Models/QuestionCategory.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blackbox/Constants.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import '../models/UserData.dart';
-import '../models/Question.dart';
+import '../Models/UserData.dart';
+import '../Models/Question.dart';
 import 'dart:math';
 
 import 'UserRankData.dart';

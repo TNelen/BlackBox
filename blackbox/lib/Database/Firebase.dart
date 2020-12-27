@@ -1,11 +1,11 @@
-import 'package:blackbox/models/Appinfo.dart';
-import 'package:blackbox/models/GroupData.dart';
-import 'package:blackbox/models/UserData.dart';
-import 'package:blackbox/models/Issue.dart';
+import 'package:blackbox/Models/Appinfo.dart';
+import 'package:blackbox/Models/GroupData.dart';
+import 'package:blackbox/Models/UserData.dart';
+import 'package:blackbox/Models/Issue.dart';
 import 'package:blackbox/Database/FirebaseDeleters.dart';
 import 'package:blackbox/Database/FirebaseGetters.dart';
 import 'package:blackbox/Database/FirebaseUtility.dart';
-import '../models/Question.dart';
+import '../Models/Question.dart';
 import '../Interfaces/Database.dart';
 
 import 'FirebaseSetters.dart';

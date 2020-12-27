@@ -1,4 +1,4 @@
-import 'package:blackbox/models/QuestionCategory.dart';
+import 'package:blackbox/Models/QuestionCategory.dart';
 import 'package:blackbox/Database/FirebaseGetters.dart';
 
 class QuestionListGetter {

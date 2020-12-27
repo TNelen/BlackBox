@@ -1,9 +1,9 @@
-import 'package:blackbox/models/Appinfo.dart';
+import 'package:blackbox/Models/Appinfo.dart';
 
-import '../models/GroupData.dart';
-import '../models/UserData.dart';
-import '../models/Question.dart';
-import '../models/Issue.dart';
+import '../Models/GroupData.dart';
+import '../Models/UserData.dart';
+import '../Models/Question.dart';
+import '../Models/Issue.dart';
 
 /// An enum, designated to reporting a question
 enum ReportType { CATEGORY, GRAMMAR, DISTURBING, LOVE }

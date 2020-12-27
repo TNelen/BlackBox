@@ -1,12 +1,12 @@
 import 'package:blackbox/Assets/questions.dart' as offlineQuestions;
-import 'package:blackbox/models/GroupData.dart';
-import 'package:blackbox/models/OfflineGroupData.dart';
+import 'package:blackbox/Models/GroupData.dart';
+import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/SettingsScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../../Constants.dart';
 import '../../Interfaces/Database.dart';
-import '../../models/Question.dart';
+import '../../Models/Question.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Popup {

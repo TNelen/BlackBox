@@ -1,4 +1,4 @@
-import 'package:blackbox/models/OfflineGroupData.dart';
+import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PartyScreens/PartyResultsScreen.dart';
 import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:blackbox/Screens/widgets/IconCard.dart';

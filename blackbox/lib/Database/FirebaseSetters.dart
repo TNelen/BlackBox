@@ -1,9 +1,9 @@
 import 'package:blackbox/Constants.dart';
-import 'package:blackbox/models/GroupData.dart';
-import 'package:blackbox/models/UserData.dart';
-import 'package:blackbox/models/Issue.dart';
+import 'package:blackbox/Models/GroupData.dart';
+import 'package:blackbox/Models/UserData.dart';
+import 'package:blackbox/Models/Issue.dart';
 import 'package:blackbox/Database/QuestionListGetter.dart';
-import '../models/Question.dart';
+import '../Models/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'FirebaseUtility.dart';

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' as fbauth;
 import 'package:google_sign_in/google_sign_in.dart';
 
-import 'package:blackbox/models/UserData.dart';
+import 'package:blackbox/Models/UserData.dart';
 
 class GoogleUserHandler {
   static bool loggedIn = false;
