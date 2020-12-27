@@ -387,7 +387,7 @@ class GroupData {
   Future<void> setNextQuestion(Question newQuestion, UserData admin,
       {bool doDatabaseUpdate: true}) async {
     if (admin.getUserID() == _adminID) {
-      FirebaseAnalytics()
+      await FirebaseAnalytics()
           .logEvent(name: 'next_question', parameters: {'id': _groupID});
 
       /// Move the questions

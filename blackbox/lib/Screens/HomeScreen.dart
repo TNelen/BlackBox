@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:blackbox/models/UserData.dart';
-import 'package:blackbox/Database/Firebase.dart';
-import 'package:blackbox/Database/GoogleUserHandler.dart';
-import 'package:blackbox/Screens/OnlineScreens/CreateGameScreen.dart';
-import 'package:blackbox/Screens/OnlineScreens/JoinGameScreen.dart';
-import 'package:blackbox/Screens/widgets/HomeScreenTopIcons.dart';
-import 'package:blackbox/Screens/widgets/home_screen_button.dart';
+import '../models/UserData.dart';
+import '../Database/Firebase.dart';
+import '../Database/GoogleUserHandler.dart';
+import 'OnlineScreens/CreateGameScreen.dart';
+import 'OnlineScreens/JoinGameScreen.dart';
+import 'widgets/HomeScreenTopIcons.dart';
+import 'widgets/home_screen_button.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart' as core;
 
