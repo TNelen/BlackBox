@@ -6,7 +6,6 @@ import 'package:blackbox/Models/UserData.dart';
 class GoogleUserHandler {
   static bool loggedIn = false;
   static final GoogleSignIn _googleSignIn = GoogleSignIn();
-  static final fbauth.FirebaseAuth _auth = fbauth.FirebaseAuth.instance;
 
   static bool isLoggedIn() {
     return loggedIn;

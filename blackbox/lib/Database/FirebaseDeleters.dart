@@ -44,8 +44,6 @@ class FirebaseDeleters {
 
     /// Create a reference to the groups collection
 
-    String dieterPath = 'members.BCQ9i6Z3qBZCNxhlzuhjsNnwRIs2';
-    String timoPath = 'members.GPY2pK6fqsdU0AU5IlGXhJpK8ej1';
 
     // Set up queries
     Query membersEmpty = groupsRef.where('members', isNull: true);

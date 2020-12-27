@@ -19,7 +19,7 @@ class FirebaseManagement {
     QuerySnapshot snap = await FirebaseFirestore.instance
         .collection('groups')
         .where('lastUpdate', isLessThan: threshold)
-        .getDocuments();
+        .get();
     print('Deleting ' + snap.docs.length.toString() + ' documents');
     for (DocumentSnapshot doc in snap.docs) {
       await FirebaseFirestore.instance.doc(doc.id).delete();
