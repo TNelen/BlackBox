@@ -15,12 +15,12 @@ class SettingsScreen extends StatefulWidget {
   }
 
   @override
-  _SettingsScreenState createState() => new _SettingsScreenState(_database);
+  _SettingsScreenState createState() => _SettingsScreenState(_database);
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
   Database _database;
-  TextEditingController codeController = new TextEditingController();
+  TextEditingController codeController = TextEditingController();
 
   _SettingsScreenState(Database db) {
     this._database = db;

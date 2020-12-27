@@ -72,7 +72,7 @@ class ResultScreenState extends State<ResultScreen> {
     this.code = code;
     this.currentQuestion = currentQuestion;
     this.currentQuestionString = currentQuestionString;
-    this.stream = new FirebaseStream(code);
+    this.stream = FirebaseStream(code);
     this.clickedmember = clickedmember;
   }
 

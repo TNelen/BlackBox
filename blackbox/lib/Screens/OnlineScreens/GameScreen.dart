@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,13 +35,11 @@ class _GameScreenState extends State<GameScreen> {
 
   GroupData groupdata;
 
-  // Used to rebuild this screen each second
-  Timer _rebuildTimer;
 
   _GameScreenState(Database db, String code) {
     this._database = db;
     this.code = code;
-    this.stream = new FirebaseStream(code);
+    this.stream = FirebaseStream(code);
   }
 
   @override
@@ -65,7 +62,7 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: new ThemeData(
+        theme: ThemeData(
           fontFamily: "atarian",
           scaffoldBackgroundColor: Constants.iBlack,
         ),
@@ -410,7 +407,7 @@ class _GameScreenState extends State<GameScreen> {
                                                       repeat: true,
                                                       showTwoGlows: true,
                                                       //repeatPauseDuration: Duration(milliseconds: 1),
-                                                      child: new Icon(
+                                                      child: Icon(
                                                           Icons.check,
                                                           color: Constants
                                                               .iBlack)),

@@ -46,7 +46,7 @@ class _QuestionScreenState extends State<QuestionScreen>
     this._database = db;
     this.groupData = groupData;
     this.code = code;
-    this.stream = new FirebaseStream(code);
+    this.stream = FirebaseStream(code);
   }
 
   @override
@@ -55,7 +55,7 @@ class _QuestionScreenState extends State<QuestionScreen>
     WidgetsBinding.instance.addObserver(this);
     BackButtonInterceptor.add(myInterceptor);
     //reset reports
-    reportMap = new Map<ReportType, bool>();
+    reportMap = Map<ReportType, bool>();
     reportMap[ReportType.LOVE] = false;
   }
 
@@ -80,8 +80,7 @@ class _QuestionScreenState extends State<QuestionScreen>
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+
 
     final submitquestionbutton = FlatButton(
       onPressed: () {
