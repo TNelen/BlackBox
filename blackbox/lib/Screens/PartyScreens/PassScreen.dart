@@ -2,6 +2,8 @@ import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PartyScreens/PartyResultsScreen.dart';
 import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:blackbox/Screens/widgets/IconCard.dart';
+import 'package:blackbox/ad_manager.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -35,6 +37,63 @@ class _PassScreenState extends State<PassScreen> {
             offlineGroupData.getAmountOfCurrentVotes())
         : (offlineGroupData.getPlayers().length ==
             offlineGroupData.getAmountOfCurrentVotes());
+  }
+
+  InterstitialAd _interstitialAd;
+
+  bool _isInterstitialAdReady;
+
+  bool showAd;
+
+  void _moveToResults() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) =>
+              PartyResultScreen(offlineGroupData),
+        ));
+  }
+
+  void _loadInterstitialAd() {
+    _interstitialAd.load();
+  }
+
+  void _onInterstitialAdEvent(MobileAdEvent event) {
+    switch (event) {
+      case MobileAdEvent.loaded:
+        _isInterstitialAdReady = true;
+        break;
+      case MobileAdEvent.failedToLoad:
+        _isInterstitialAdReady = false;
+        print('Failed to load an interstitial ad');
+        break;
+      case MobileAdEvent.closed:
+        _moveToResults();
+        break;
+      default:
+      // do nothing
+    }
+  }
+
+  @override
+  void initState() {
+    _isInterstitialAdReady = false;
+    showAd = offlineGroupData.questionsLeft() % 5 == 0;
+
+    _interstitialAd = InterstitialAd(
+      adUnitId: AdManager.interstitialAdUnitId,
+      listener: _onInterstitialAdEvent,
+    );
+
+    if (showAd && !_isInterstitialAdReady) {
+      _loadInterstitialAd();
+    }
+  }
+
+  @override
+  void dispose() {
+    _interstitialAd?.dispose();
+    super.dispose();
   }
 
   @override
@@ -270,12 +329,13 @@ class _PassScreenState extends State<PassScreen> {
                 fontWeight: FontWeight.bold),
             icon: OMIcons.chevronRight,
             onConfirmation: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        PartyResultScreen(offlineGroupData),
-                  ));
+              print(showAd);
+              print(_isInterstitialAdReady);
+              if (showAd && _isInterstitialAdReady) {
+                _interstitialAd.show();
+              }
+
+              _moveToResults();
             },
           ),
           floatingActionButtonLocation:

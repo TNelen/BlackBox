@@ -13,6 +13,9 @@ import './Interfaces/Database.dart';
 import 'dart:io';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_admob/firebase_admob.dart';
+
+import 'ad_manager.dart';
 
 void main() {
   try {
@@ -61,6 +64,11 @@ class _SplashScreenState extends State<SplashScreen>
   bool loggedIn = false;
   bool connected = false;
   Timer loginTimer;
+
+  Future<void> _initAdMob() {
+    // TODO: Initialize AdMob SDK
+    return FirebaseAdMob.instance.initialize(appId: AdManager.appId);
+  }
 
   Future<void> login() async {
     await Firebase.initializeApp();
@@ -121,6 +129,7 @@ class _SplashScreenState extends State<SplashScreen>
         });
 
         if (connected) {
+          _initAdMob();
           login();
         }
 
