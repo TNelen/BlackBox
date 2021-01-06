@@ -15,6 +15,7 @@
         <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
                 android:value="ca-app-pub-7249563995197214~6874711564" />
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
