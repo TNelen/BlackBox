@@ -330,6 +330,8 @@ class _PassScreenState extends State<PassScreen> {
                 fontWeight: FontWeight.bold),
             icon: OMIcons.chevronRight,
             onConfirmation: () {
+              print(showAd);
+              print(_isInterstitialAdReady);
               if (showAd && _isInterstitialAdReady) {
                 _interstitialAd.show();
               }

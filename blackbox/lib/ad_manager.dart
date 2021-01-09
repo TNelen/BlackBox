@@ -12,7 +12,6 @@ class AdManager {
   static String get interstitialAdUnitId {
     return "ca-app-pub-7249563995197214/2281694587";
 
-
     //test id below
     //return "ca-app-pub-3940256099942544/1033173712";
   }
