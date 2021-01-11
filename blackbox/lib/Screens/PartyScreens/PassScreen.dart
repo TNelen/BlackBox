@@ -78,8 +78,8 @@ class _PassScreenState extends State<PassScreen> {
   @override
   void initState() {
     _isInterstitialAdReady = false;
-    //showAd = offlineGroupData.questionsLeft() % 5 == 0;
-    showAd = true;
+
+    showAd = offlineGroupData.getAmountOfCurrentVotes() == offlineGroupData.getCurrentVotes().length;
 
     _interstitialAd = InterstitialAd(
       adUnitId: AdManager.interstitialAdUnitId,
@@ -330,8 +330,6 @@ class _PassScreenState extends State<PassScreen> {
                 fontWeight: FontWeight.bold),
             icon: OMIcons.chevronRight,
             onConfirmation: () {
-              print(showAd);
-              print(_isInterstitialAdReady);
               if (showAd && _isInterstitialAdReady) {
                 _interstitialAd.show();
               }

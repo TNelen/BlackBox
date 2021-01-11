@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:audioplayers/audio_cache.dart';
 import 'package:blackbox/Models/UserRankData.dart';
+import 'package:blackbox/ad_manager.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:blackbox/Util/VibrationHandler.dart';
 import 'package:flutter/material.dart';
@@ -101,13 +105,55 @@ class ResultScreenState extends State<ResultScreen> {
     }
   }
 
+  InterstitialAd _interstitialAd;
+
+  bool _isInterstitialAdReady;
+
+  bool showAd;
+
+  void _loadInterstitialAd() {
+    _interstitialAd.load();
+  }
+
+  void _onInterstitialAdEvent(MobileAdEvent event) {
+    switch (event) {
+      case MobileAdEvent.loaded:
+        _isInterstitialAdReady = true;
+        setState(() {
+
+        });
+        break;
+      case MobileAdEvent.failedToLoad:
+        _isInterstitialAdReady = false;
+        print('Failed to load an interstitial ad');
+        break;
+      case MobileAdEvent.closed:
+        break;
+      default:
+      // do nothing
+    }
+  }
+
   @override
   void initState() {
+    _isInterstitialAdReady = false;
     groupData = null;
 
     //bools used at showmore at results display
     showMoreCurrent = false;
     showMoreAll = false;
+
+    showAd = Random().nextInt(3)==2;
+    print(showAd);
+
+    _interstitialAd = InterstitialAd(
+      adUnitId: AdManager.interstitialAdUnitId,
+      listener: _onInterstitialAdEvent,
+    );
+
+    if (showAd && !_isInterstitialAdReady) {
+      _loadInterstitialAd();
+    }
 
     super.initState();
     _loadingInProgress = true;
@@ -155,6 +201,11 @@ class ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget _buildBody(BuildContext context) {
+
+    if (showAd && _isInterstitialAdReady) {
+      _interstitialAd.show();
+    }
+
     final submitquestionbutton = Card(
       elevation: 5.0,
       shape: RoundedRectangleBorder(

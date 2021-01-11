@@ -108,7 +108,7 @@ List<String> EighteenPlus = [
   "Who has the most exes?",
   "Who would send nudes?",
   "Who is the first to get kids?",
-  "Who is most likely to get an accidential kid?",
+  "Who is most likely to get an accidental kid?",
   "Who needs the most abortion pills?",
   "Who is most likely to be gay?",
   "Who has kissed the most different people?",
@@ -123,7 +123,7 @@ List<String> EighteenPlus = [
 ];
 
 List<String> BeerOClock = [
-  "Who does the most embarrasing things when drunk?",
+  "Who does the most embarrassing things when drunk?",
   "Who would pass out first when drinking tequila?",
   "You need to empty 3 bottles of tequila, who's definitely in your squad?",
   "Who is most likely to kiss someone on a drunk night?",
@@ -142,7 +142,7 @@ List<String> BeerOClock = [
   "Who can drink the most beer in an hour?",
   "Who wants to fly like a bird when drunk?",
   "Who tried the most different beers?",
-  "Who is most likely to drink him/herself unconsious?",
+  "Who is most likely to drink him/herself unconscious?",
 ];
 
 List<String> CharacterTraits = [
@@ -197,8 +197,6 @@ List<String> SuperStar = [
 ];
 
 List<String> Casual = [
-  "Who is most likely to get abducted by aliens?",
-  "Who has the nicest bicycle bell?",
   "Who would die first in a horror movie?",
   "Who has never peed in a pool?",
   "Who sucks at skiing?",
@@ -208,13 +206,11 @@ List<String> Casual = [
   "Who is most likely to spend a whole day watching netflix?",
   "Who needs most sleep?",
   "Who is most addicted to gaming?",
-  "Who is the biggest oompa-loompa?",
   "Who will live in the biggest house?",
   "Who drives like a maniac?",
   "Who will become a junkie?",
   "Who looks like a gang member?",
   "Who is most likely to give his/her money to a good cause?",
-  "Who took a shit on the most epic location?",
   "Who do you know best?",
   "Who is most likely to survive if war breaks out?",
   "With whom would you rather live on a deserted island?",
@@ -228,7 +224,6 @@ List<String> Casual = [
   "Who will end up broke?",
   "Who is most interested in politics?",
   "Who is most organised?",
-  "Who would eat dog food?",
   "Who is a mom's baby?",
   "Who is most into tech?",
   "Who is most skilled in shooter games?",
@@ -248,9 +243,9 @@ List<String> FriendshipKillers = [
   "For who are you ashamed?",
   "Who is the first to be cheated upon?",
   "If you have to kill one person, who would it be?",
-  "Who is the least successfull in life?",
+  "Who is the least successful in life?",
   "Who pretends to be living a perfect life?",
-  "Who makes hir/her life look better on instagram?",
+  "Who makes hir/her life look better on Instagram?",
   "Who would you kiss?",
   "Who cannot live without social media attention?",
   "Who would you couple up with?",
@@ -274,10 +269,10 @@ List<String> FriendshipKillers = [
 
 
 List<Category> categories = [
+  Category("Casual", "General black box questions, a rather soft category. Great to get started", Casual),
+  Category("Character traits", "Questions about your friends’ character traits", CharacterTraits),
+  Category("Superstar", "Admire your friends’ actions or abilities", SuperStar),
+  Category("Friendship killers", "The biggest friendship test, your friendship can handle everything if it survives this category", FriendshipKillers),
   Category("Beer o'clock", "Questions related to drinking, partying and nightlife", BeerOClock),
   Category("+18", "Spicy questions, aimed at adults", EighteenPlus),
-  Category("Character traits", "Questions about your friends’ character traits", CharacterTraits),
-  Category("Friendship killers", "The biggest friendship test, your friendship can handle everything if it survives this category", FriendshipKillers),
-  Category("Superstar", "Admire your friends’ actions or abilities", SuperStar),
-  Category("Casual", "General black box questions, a rather soft category. Great to get started", Casual),
 ];
