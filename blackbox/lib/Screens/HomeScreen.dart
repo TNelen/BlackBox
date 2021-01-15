@@ -284,7 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         SizedBox(
-                          height: 10,
+                          height: 5,
                         ),
                         Container(
                           padding: EdgeInsets.only(
@@ -319,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ]),
                   SizedBox(
-                    height: 25 * MediaQuery.of(context).devicePixelRatio,
+                    height: 13 * MediaQuery.of(context).devicePixelRatio,
                   ),
                   Container(
                       padding: EdgeInsets.only(left: 45, right: 45),
@@ -340,6 +340,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fontWeight: FontWeight.w300),
                               ),
                             ),
+                          ),
+                          Hero(
+                            tag: 'partymode',
+                            child: HomeScreenButton(
+                                'Party Mode',
+                                'Play with all your friends on one single device',
+                                true,
+                                true,
+                                icon: OMIcons.peopleOutline, onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        CreatePartyScreen(),
+                                  ));
+                            }),
+                          ),
+                          SizedBox(
+                            height: 6,
                           ),
                           Hero(
                             tag: 'newgame',
@@ -376,25 +395,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ));
                             }),
                           ),
-                          SizedBox(
-                            height: 6,
-                          ),
-                          Hero(
-                            tag: 'partymode',
-                            child: HomeScreenButton(
-                                'Party Mode',
-                                'Play with all your friends on one single device',
-                                true,
-                                true,
-                                icon: OMIcons.peopleOutline, onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        CreatePartyScreen(),
-                                  ));
-                            }),
-                          ),
+
                           SizedBox(
                             height: 20,
                           ),

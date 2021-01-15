@@ -5,25 +5,25 @@ import 'package:blackbox/Constants.dart';
 class RulesColumn extends StatefulWidget {
   
   final List<String> titles = <String>[
+    'Party Mode',
     'Create Game',
     'Join Game',
-    'Party Mode',
     'Game settings',
   ];
 
   final List<String> descriptions = <String>[
+    // Party Mode
+    'Create a local game.' +
+        '\n' +
+        'All players vote one by one. After you have voted, pass the phone to the next player' +
+        '\n' +
+        'After everyone has voted, go to the results, and a new round starts.',
+
     // New game
     'Create a new game and invite your friends by sharing the group code',
 
     // Join game
     'Join a game with the 5 character group code',
-
-    // Party Mode
-    'Create a local game.' +
-    '\n' +
-    'All players vote one by one. After you have voted, pass the phone to the next player' +
-    '\n' +
-    'After everyone has voted, go to the results, and a new round starts.',
 
         // Game settings
     "The game creator can enable or disable 'blanco vote'. This is ability for the player to vote blanco" +
