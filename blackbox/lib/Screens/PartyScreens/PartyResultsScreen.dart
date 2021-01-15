@@ -9,6 +9,8 @@ import '../../Constants.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:blackbox/ad_manager.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 
 class PartyResultScreen extends StatefulWidget {
   OfflineGroupData offlineGroupData;
@@ -38,18 +40,64 @@ class PartyResultScreenState extends State<PartyResultScreen> {
     viewportFraction: 0.85,
   );
 
+  InterstitialAd _interstitialAd;
+
+  bool _isInterstitialAdReady;
+
+  void _loadInterstitialAd() {
+    _interstitialAd.load();
+  }
+
+  void _moveToNext() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) =>
+              PartyQuestionScreen(offlineGroupData),
+        ));
+  }
+
+  void _onInterstitialAdEvent(MobileAdEvent event) {
+    switch (event) {
+      case MobileAdEvent.loaded:
+        _isInterstitialAdReady = true;
+        break;
+      case MobileAdEvent.failedToLoad:
+        _isInterstitialAdReady = false;
+        print('Failed to load an interstitial ad');
+        break;
+      case MobileAdEvent.closed:
+        _moveToNext();
+        break;
+      default:
+      // do nothing
+    }
+  }
+
   @override
   void initState() {
     showMoreCurrent = false;
     showMoreAll = false;
 
     BackButtonInterceptor.add(myInterceptor);
+
+    _isInterstitialAdReady = false;
+
+    _interstitialAd = InterstitialAd(
+      adUnitId: AdManager.interstitialAdUnitId,
+      listener: _onInterstitialAdEvent,
+    );
+
+    if(!_isInterstitialAdReady) {
+      _loadInterstitialAd();
+    }
   }
 
   @override
   dispose() {
     controller.dispose();
     BackButtonInterceptor.remove(myInterceptor);
+    _interstitialAd?.dispose();
     super.dispose();
   }
 
@@ -536,14 +584,15 @@ class PartyResultScreenState extends State<PartyResultScreen> {
             onPressed: () {
               if (!offlineGroupData.isGameEnded()) {
                 offlineGroupData.nextRound();
+                if (_isInterstitialAdReady) {
+                  _interstitialAd.show();
+                }
 
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          PartyQuestionScreen(offlineGroupData),
-                    ));
+                _moveToNext();
               } else {
+                if (_isInterstitialAdReady) {
+                  _interstitialAd.show();
+                }
                 //go to overview
                 Navigator.push(
                     //TODO : create endScreen

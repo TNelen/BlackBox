@@ -39,11 +39,6 @@ class _PassScreenState extends State<PassScreen> {
             offlineGroupData.getAmountOfCurrentVotes());
   }
 
-  InterstitialAd _interstitialAd;
-
-  bool _isInterstitialAdReady;
-
-  bool showAd;
 
   void _moveToResults() {
     Navigator.push(
@@ -54,48 +49,6 @@ class _PassScreenState extends State<PassScreen> {
         ));
   }
 
-  void _loadInterstitialAd() {
-    _interstitialAd.load();
-  }
-
-  void _onInterstitialAdEvent(MobileAdEvent event) {
-    switch (event) {
-      case MobileAdEvent.loaded:
-        _isInterstitialAdReady = true;
-        break;
-      case MobileAdEvent.failedToLoad:
-        _isInterstitialAdReady = false;
-        print('Failed to load an interstitial ad');
-        break;
-      case MobileAdEvent.closed:
-        _moveToResults();
-        break;
-      default:
-      // do nothing
-    }
-  }
-
-  @override
-  void initState() {
-    _isInterstitialAdReady = false;
-
-    showAd = offlineGroupData.getAmountOfCurrentVotes() == offlineGroupData.getCurrentVotes().length;
-
-    _interstitialAd = InterstitialAd(
-      adUnitId: AdManager.interstitialAdUnitId,
-      listener: _onInterstitialAdEvent,
-    );
-
-    if (showAd && !_isInterstitialAdReady) {
-      _loadInterstitialAd();
-    }
-  }
-
-  @override
-  void dispose() {
-    _interstitialAd?.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -330,9 +283,6 @@ class _PassScreenState extends State<PassScreen> {
                 fontWeight: FontWeight.bold),
             icon: OMIcons.chevronRight,
             onConfirmation: () {
-              if (showAd && _isInterstitialAdReady) {
-                _interstitialAd.show();
-              }
 
               _moveToResults();
             },
