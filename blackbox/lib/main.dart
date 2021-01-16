@@ -62,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen>
   Database database;
   double _progress;
   bool loggedIn = false;
-  bool connected = false;
+  bool connected = true;
   Timer loginTimer;
 
   Future<void> _initAdMob() {
