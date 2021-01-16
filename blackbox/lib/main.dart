@@ -122,7 +122,7 @@ class _SplashScreenState extends State<SplashScreen>
     manager.init();
 
     _progress = 0;
-    loginTimer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+    loginTimer = Timer.periodic(Duration(milliseconds: 250), (Timer t) {
       setState(() {
         checkWifi().then((result) {
           connected = result;
