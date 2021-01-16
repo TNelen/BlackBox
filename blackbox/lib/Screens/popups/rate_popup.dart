@@ -22,16 +22,33 @@ class _RatePopupState extends State<RatePopup> {
         'Rate this app',
         style: TextStyle(fontFamily: 'atarian', color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
       ),
-      content: PickableRating(
+      content: Container(
+        height: 90,
+        child: Column(
+        children:[
+        Text(
+          'If you like the app, please consider giving it a rating in the play store. ',
+          style: TextStyle(fontFamily: 'atarian', color: Constants.iWhite, fontSize: Constants.smallFontSize),
+        ),
+        PickableRating(
         size: 30.0,
         onTap: (rating) {
           Navigator.pop(context);
 
           FirebaseAnalytics().logEvent(name: 'in_app_rating', parameters: {'score': rating});
 
-          if (rating >= 3) {
+          if (rating > 3) {
             StoreRedirect.redirect();
-          } else {
+          } else if(rating >=2 ) {
+            Popup.makeNotSatisfiedPopup(
+              context,
+              'Hi there!',
+              'We would like to hear how we can improve the app for you! Do not hesitate to contact us! We will do our best to provide the best possible experience for all players. ',
+            );
+          }
+
+
+          else {
             Popup.makeNotSatisfiedPopup(
               context,
               'Woops',
@@ -39,7 +56,7 @@ class _RatePopupState extends State<RatePopup> {
             );
           }
         },
-      ),
+      ),],),),
       actions: [
         FlatButton(
           child: Text(

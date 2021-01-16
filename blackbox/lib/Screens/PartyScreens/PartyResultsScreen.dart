@@ -11,6 +11,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:blackbox/ad_manager.dart';
 import 'package:firebase_admob/firebase_admob.dart';
+import 'package:blackbox/Screens/popups/rate_popup.dart';
 
 class PartyResultScreen extends StatefulWidget {
   OfflineGroupData offlineGroupData;
@@ -55,6 +56,10 @@ class PartyResultScreenState extends State<PartyResultScreen> {
           builder: (BuildContext context) =>
               PartyQuestionScreen(offlineGroupData),
         ));
+  }
+
+  bool _showRatePop() {
+    return offlineGroupData.questionsLeft()==10;
   }
 
   void _onInterstitialAdEvent(MobileAdEvent event) {
@@ -584,11 +589,18 @@ class PartyResultScreenState extends State<PartyResultScreen> {
             onPressed: () {
               if (!offlineGroupData.isGameEnded()) {
                 offlineGroupData.nextRound();
+
                 if (_isInterstitialAdReady) {
                   _interstitialAd.show();
                 }
 
                 _moveToNext();
+                if (_showRatePop()){
+                  showDialog(
+                    context: context,
+                    child: RatePopup(),
+                  );
+                }
               } else {
                 if (_isInterstitialAdReady) {
                   _interstitialAd.show();
@@ -736,6 +748,8 @@ class PartyResultScreenState extends State<PartyResultScreen> {
         home: Scaffold(
           body: _buildBody(context),
         ));
+
+
   }
 
   /// Plays audio and vibrates the phone indicating whether or not the player is in the previous top three
