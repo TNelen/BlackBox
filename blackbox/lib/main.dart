@@ -62,7 +62,8 @@ class _SplashScreenState extends State<SplashScreen>
   Database database;
   double _progress;
   bool loggedIn = false;
-  bool connected = true;
+  bool connected = false;
+  bool wifiChecked = false;
   Timer loginTimer;
 
   Future<void> _initAdMob() {
@@ -79,7 +80,9 @@ class _SplashScreenState extends State<SplashScreen>
         await guh.handleSignIn().then((user) async {
           /// Log the retreived user in and update the data in the database
           UserData saved = await database.getUserByID(user.getUserID());
-          loggedIn = true;
+          setState(() {
+            loggedIn = true;
+          });
 
           /// Save user if the account is new
           if (saved == null) {
@@ -112,6 +115,7 @@ class _SplashScreenState extends State<SplashScreen>
     } on SocketException catch (_) {
       on = false;
     }
+    wifiChecked = true;
     return on;
   }
 
@@ -122,7 +126,7 @@ class _SplashScreenState extends State<SplashScreen>
     manager.init();
 
     _progress = 0;
-    loginTimer = Timer.periodic(Duration(milliseconds: 250), (Timer t) {
+    loginTimer = Timer.periodic(Duration(seconds: 1), (Timer t) {
       setState(() {
         checkWifi().then((result) {
           connected = result;
@@ -275,7 +279,7 @@ class _SplashScreenState extends State<SplashScreen>
                         SizedBox(
                           height: 15,
                         ),
-                        !connected
+                        (!connected && wifiChecked)
                             ? Column(children: [
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
