@@ -32,4 +32,8 @@ task clean(type: Delete) {
 apply plugin: 'com.google.gms.google-services'
 
 
+android.buildTypes.release.ndk.debugSymbolLevel = { FULL }
+
+
+
 
