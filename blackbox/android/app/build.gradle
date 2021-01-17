@@ -50,7 +50,6 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
-
     }
 
    signingConfigs {
@@ -67,6 +66,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
            minifyEnabled true
            shrinkResources false
            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
        }
    }
 }
@@ -87,3 +87,4 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
