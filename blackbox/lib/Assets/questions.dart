@@ -143,6 +143,7 @@ List<String> BeerOClock = [
   "Who wants to fly like a bird when drunk?",
   "Who tried the most different beers?",
   "Who is most likely to drink him/herself unconscious?",
+  "Who would have sex in public",
 ];
 
 List<String> CharacterTraits = [
@@ -265,6 +266,7 @@ List<String> FriendshipKillers = [
   "Who has the ugliest nose?",
   "Who's the first to become incontinent?",
   "Who is the last person you miss at an event?",
+  "Who has the ugliest girlfriend/boyfriend",
 ];
 
 
