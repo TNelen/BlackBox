@@ -120,6 +120,7 @@ List<String> EighteenPlus = [
   "Who has had the most bed partners?",
   "Who dresses most seductive?",
   "Who would you like to see naked?",
+  "Who would have sex in public",
 ];
 
 List<String> BeerOClock = [
@@ -143,13 +144,15 @@ List<String> BeerOClock = [
   "Who wants to fly like a bird when drunk?",
   "Who tried the most different beers?",
   "Who is most likely to drink him/herself unconscious?",
-  "Who would have sex in public",
+  "Who is the first to go all-out at a party?"
+
 ];
 
 List<String> CharacterTraits = [
   "Who is best at nagging?",
   "Who is the most romantic?",
   "Who is the biggest cry baby?",
+  "Who is most patient?",
   "Who is the prettiest?",
   "Who has the most secrets?",
   "Who has to be taken down a notch?",
@@ -171,11 +174,12 @@ List<String> CharacterTraits = [
   "Who is the loudest snorer?",
   "Who is netflix addicted?",
   "Who is the funniest?",
-  "who is most resistant to stress?",
 ];
 
 List<String> SuperStar = [
   "Who knows the most songs by title?",
+  "With who do you want to change lives for a day?",
+  "Who will be the first at the cover of a magazine?",
   "Who will get married first?",
   "Who is best at karaoke?",
   "Who was always the teacher's favorite?",

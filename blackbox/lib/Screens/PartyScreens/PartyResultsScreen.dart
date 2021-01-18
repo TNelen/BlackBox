@@ -602,10 +602,6 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                   );
                 }
               } else {
-                if (_isInterstitialAdReady) {
-                  _interstitialAd.show();
-                }
-                //go to overview
                 Navigator.push(
                     //TODO : create endScreen
                     context,
