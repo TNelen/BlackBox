@@ -12,6 +12,11 @@ import '../../Interfaces/Database.dart';
 import '../popups/Popup.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:blackbox/translations/online-mode.i18n.dart';
+
+
+import 'package:i18n_extension/i18n_widget.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class CreateGameScreen extends StatefulWidget {
   Database _database;
@@ -118,10 +123,10 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   });
                 } else {
                   Popup.makePopup(
-                      context, "Woops!", "Please fill in all fields!");
+                      context, "Woops!", "Please fill in all fields!".i18n);
                 }
               },
-              child: Text("Create",
+              child: Text("Create".i18n,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: Constants.actionbuttonFontSize)
                       .copyWith(
@@ -174,12 +179,21 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
     );
 
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', ''), // English, no country code
+        const Locale('nl', ''), // nl, no country code
+      ],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: "atarian",
         scaffoldBackgroundColor: Constants.iBlack,
       ),
-      home: Scaffold(
+      home: I18n(child:Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           elevation: 0,
@@ -197,7 +211,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     ),
                   ),
                   Text(
-                    'Back',
+                    'Back'.i18n,
                     style: TextStyle(
                       fontSize: Constants.actionbuttonFontSize,
                       color: Constants.colors[Constants.colorindex],
@@ -232,7 +246,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                     shrinkWrap: true,
                     children: <Widget>[
                       AutoSizeText(
-                        "Create new Game",
+                        "Create new Game".i18n,
                         style: TextStyle(
                             color: Constants.iWhite,
                             fontSize: Constants.titleFontSize,
@@ -241,26 +255,26 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                       ),
                       SizedBox(height: 30.0),
                       Text(
-                        'Game settings',
+                        'Game settings'.i18n,
                         style: TextStyle(
                             color: Constants.colors[Constants.colorindex],
                             fontSize: Constants.normalFontSize),
                       ),
                       SizedBox(height: 20.0),
                       ToggleButtonCard(
-                        'Blank vote',
+                        'Blank vote'.i18n,
                         _canVoteBlank,
                         onToggle: (bool newValue) => _canVoteBlank = newValue,
                       ),
                       SizedBox(height: 5.0),
                       ToggleButtonCard(
-                        'Vote on yourself',
+                        'Vote on yourself'.i18n,
                         _canVoteOnSelf,
                         onToggle: (bool newValue) => _canVoteOnSelf = newValue,
                       ),
                       SizedBox(height: 20.0),
                       Text(
-                        'Choose categories',
+                        'Choose categories'.i18n,
                         style: TextStyle(
                           color: Constants.colors[Constants.colorindex],
                           fontSize: Constants.normalFontSize,
@@ -278,7 +292,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
         ),
         floatingActionButton: createButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      ),
+      ),),
     );
   }
 }

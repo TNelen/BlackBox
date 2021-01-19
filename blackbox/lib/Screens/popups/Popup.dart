@@ -8,6 +8,7 @@ import '../../Constants.dart';
 import '../../Interfaces/Database.dart';
 import '../../Models/Question.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:blackbox/translations/popups/popups.i18n.dart';
 
 class Popup {
   static void makePopup(BuildContext context, String title, String message) {
@@ -38,7 +39,7 @@ class Popup {
             // usually buttons at the bottom of the dialog
             FlatButton(
               child: Text(
-                "Close",
+                "Close".i18n,
                 style: TextStyle(
                     fontFamily: "atarian",
                     color: Constants.colors[Constants.colorindex],
@@ -87,7 +88,7 @@ class Popup {
                   onPressed: _launchURL,
                   //color: Constants.iDarkGrey,
                   child: Text(
-                    "Contact us!",
+                    "Contact us!".i18n,
                     style: TextStyle(
                         fontFamily: "atarian",
                         color: Constants.colors[Constants.colorindex],
@@ -99,7 +100,7 @@ class Popup {
             // usually buttons at the bottom of the dialog
             FlatButton(
               child: Text(
-                "Close",
+                "Close".i18n,
                 style: TextStyle(
                     fontFamily: "atarian",
                     color: Constants.colors[Constants.colorindex],
@@ -155,7 +156,7 @@ class Popup {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: Text(
-            'Change username',
+            'Change username'.i18n,
             style: TextStyle(
                 fontFamily: "atarian",
                 color: Constants.colors[Constants.colorindex],
@@ -165,7 +166,7 @@ class Popup {
               height: 230,
               child: Column(children: [
                 Text(
-                  'This name will be shown in the game, make sure others recognise you!',
+                  'This name will be shown in the game, make sure others recognise you!'.i18n,
                   style: TextStyle(
                       fontFamily: "atarian",
                       color: Constants.iWhite,
@@ -178,7 +179,7 @@ class Popup {
           actions: <Widget>[
             FlatButton(
               child: Text(
-                "Cancel",
+                "Cancel".i18n,
                 style: TextStyle(
                     fontFamily: "atarian",
                     color: Constants.colors[Constants.colorindex],
@@ -196,7 +197,7 @@ class Popup {
                 borderRadius: BorderRadius.circular(26.0),
               ),
               child: Text(
-                "Update",
+                "Update".i18n,
                 style: TextStyle(
                     fontFamily: "atarian",
                     color: Constants.iBlack,
@@ -206,7 +207,7 @@ class Popup {
               onPressed: () {
                 if (usernameController.text.toString().length < 3) {
                   Popup.makePopup(
-                      context, 'Oops!', 'Please enter more then 3 characters');
+                      context, 'Oops!'.i18n, 'Please enter more then 3 characters'.i18n);
                 } else {
                   Constants.setUsername(
                       usernameController.text.toString()[0].toUpperCase() +
@@ -263,7 +264,7 @@ class Popup {
               contentPadding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
               fillColor: Constants.iBlack,
               filled: true,
-              hintText: "Start typing here...",
+              hintText: "Start typing here...".i18n,
               hintStyle: TextStyle(
                   fontFamily: "atarian",
                   fontSize: Constants.smallFontSize,
@@ -281,7 +282,7 @@ class Popup {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: Text(
-            'Ask a question...',
+            'Ask a question...'.i18n,
             style: TextStyle(
                 fontFamily: "atarian",
                 color: Constants.colors[Constants.colorindex],
@@ -297,7 +298,7 @@ class Popup {
             // usually buttons at the bottom of the dialog
             FlatButton(
               child: Text(
-                "Cancel",
+                "Cancel".i18n,
                 style: TextStyle(
                     fontFamily: "atarian",
                     color: Constants.colors[Constants.colorindex],
@@ -316,7 +317,7 @@ class Popup {
               ),
               color: Constants.colors[Constants.colorindex],
               child: Text(
-                "Submit",
+                "Submit".i18n,
                 style: TextStyle(
                     fontFamily: "atarian",
                     color: Constants.iBlack,
@@ -328,7 +329,7 @@ class Popup {
                 //print('-' + question+ '-');
                 if (question.length == 0) {
                   Popup.makePopup(context, 'Whoops!',
-                      'You cannot submit an empty question');
+                      'You cannot submit an empty question'.i18n);
                 } else if (question.length >= 5) {
                   FirebaseAnalytics().logEvent(
                       name: 'action_performed',
@@ -340,7 +341,7 @@ class Popup {
                   Navigator.pop(context);
                 } else
                   Popup.makePopup(context, 'Whoops!',
-                      'You cannot submit a question shorter than 5 characters');
+                      'You cannot submit a question shorter than 5 characters'.i18n);
               },
             ),
           ],
@@ -374,7 +375,7 @@ class Popup {
               contentPadding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
               fillColor: Constants.iBlack,
               filled: true,
-              hintText: "Start typing here...",
+              hintText: "Start typing here...".i18n,
               hintStyle: TextStyle(
                   fontFamily: "atarian",
                   fontSize: Constants.smallFontSize,
@@ -392,7 +393,7 @@ class Popup {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: Text(
-            'Ask a question...',
+            'Ask a question...'.i18n,
             style: TextStyle(
                 fontFamily: "atarian",
                 color: Constants.colors[Constants.colorindex],
@@ -408,7 +409,7 @@ class Popup {
             // usually buttons at the bottom of the dialog
             FlatButton(
               child: Text(
-                "Cancel",
+                "Cancel".i18n,
                 style: TextStyle(
                     fontFamily: "atarian",
                     color: Constants.colors[Constants.colorindex],
@@ -427,7 +428,7 @@ class Popup {
               ),
               color: Constants.colors[Constants.colorindex],
               child: Text(
-                "Submit",
+                "Submit".i18n,
                 style: TextStyle(
                     fontFamily: "atarian",
                     color: Constants.iBlack,
@@ -439,7 +440,7 @@ class Popup {
                 //print('-' + question+ '-');
                 if (question.length == 0) {
                   Popup.makePopup(context, 'Whoops!',
-                      'You cannot submit an empty question');
+                      'You cannot submit an empty question'.i18n);
                 } else if (question.length >= 5) {
                   FirebaseAnalytics().logEvent(
                       name: 'action_performed',
@@ -451,7 +452,7 @@ class Popup {
                   Navigator.pop(context);
                 } else
                   Popup.makePopup(context, 'Whoops!',
-                      'You cannot submit a question shorter than 5 characters');
+                      'You cannot submit a question shorter than 5 characters'.i18n);
               },
             ),
           ],
@@ -476,14 +477,14 @@ class Popup {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: Text(
-            'End game?',
+            'End game?'.i18n,
             style: TextStyle(
                 fontFamily: "atarian",
                 color: Constants.colors[Constants.colorindex],
                 fontSize: Constants.subtitleFontSize),
           ),
           content: Text(
-            'Are you sure to end the game? \nThe game will end for all users.',
+            'Are you sure to end the game? \nThe game will end for all users.'.i18n,
             style: TextStyle(
                 fontFamily: "atarian",
                 color: Constants.iWhite,
@@ -493,7 +494,7 @@ class Popup {
             // usually buttons at the bottom of the dialog
             FlatButton(
               child: Text(
-                "Yes I'm sure",
+                "Yes I'm sure".i18n,
                 style: TextStyle(
                     fontFamily: "atarian",
                     color: Constants.colors[Constants.colorindex],

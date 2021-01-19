@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../Constants.dart';
+import 'package:blackbox/translations/popups/popups.i18n.dart';
 
 class NoMemberSelectedPopup {
   static void noMemberSelectedPopup(BuildContext context) {
@@ -12,18 +13,18 @@ class NoMemberSelectedPopup {
           backgroundColor: Constants.iBlack,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: Text(
-            "No members selected",
+            "No member selected".i18n,
             style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
           ),
           content: Text(
-            "Please make a valid choice",
+            "Please make a valid choice".i18n,
             style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: Constants.smallFontSize),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             FlatButton(
               child: Text(
-                "Close",
+                "Close".i18n,
                 style: TextStyle(fontFamily: "atarian", color: Constants.colors[Constants.colorindex], fontSize: Constants.actionbuttonFontSize, fontWeight: FontWeight.bold),
               ),
               onPressed: () {

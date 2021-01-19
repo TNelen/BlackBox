@@ -14,6 +14,11 @@ import '../HomeScreen.dart';
 import 'package:share/share.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:blackbox/translations/online-mode.i18n.dart';
+
+
+import 'package:i18n_extension/i18n_widget.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class GameScreen extends StatefulWidget {
   Database _database;
@@ -109,12 +114,21 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', ''), // English, no country code
+          const Locale('nl', ''), // nl, no country code
+        ],
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: "atarian",
           scaffoldBackgroundColor: Constants.iBlack,
         ),
-        home: Scaffold(
+        home: I18n(child: Scaffold(
           body: StreamBuilder(
               stream: stream.groupData,
               builder: (BuildContext context, AsyncSnapshot<GroupData> snapshot) {
@@ -156,7 +170,7 @@ class _GameScreenState extends State<GameScreen> {
                                   child: Icon(Icons.arrow_back, color: Constants.colors[Constants.colorindex]),
                                 ),
                                 Text(
-                                  'Home',
+                                  'Home'.i18n,
                                   style: TextStyle(
                                     fontSize: Constants.actionbuttonFontSize,
                                     color: Constants.colors[Constants.colorindex],
@@ -192,7 +206,7 @@ class _GameScreenState extends State<GameScreen> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: <Widget>[
                                         AutoSizeText(
-                                          "Game Lobby",
+                                          "Game Lobby".i18n,
                                           style: TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
                                           maxLines: 1,
                                         ),
@@ -211,7 +225,7 @@ class _GameScreenState extends State<GameScreen> {
                                       padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
                                       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                                         Expanded(
-                                          child: Text('Press the check mark to get ready!',
+                                          child: Text('Press the check mark to get ready!'.i18n,
                                               style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                               textAlign: TextAlign.center),
                                         ),
@@ -221,7 +235,7 @@ class _GameScreenState extends State<GameScreen> {
                                       padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
                                       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                                         Expanded(
-                                          child: Text('You can start the game if all players are ready!',
+                                          child: Text('You can start the game if all players are ready!'.i18n,
                                               style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                               textAlign: TextAlign.center),
                                         ),
@@ -234,7 +248,7 @@ class _GameScreenState extends State<GameScreen> {
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            "Players ready:  ",
+                                            "Players ready:  ".i18n,
                                             style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite),
                                           ),
                                           Text(
@@ -249,7 +263,7 @@ class _GameScreenState extends State<GameScreen> {
                                       padding: EdgeInsets.fromLTRB(15, 20, 15, 5),
                                       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                                         Text(
-                                          "Players",
+                                          "Players".i18n,
                                           style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.iWhite, fontWeight: FontWeight.w500),
                                         ),
                                         JumpingDotsProgressIndicator(
@@ -318,7 +332,7 @@ class _GameScreenState extends State<GameScreen> {
                                             SizedBox(),
                                             SizedBox(),
                                             Tooltip(
-                                              message: "Invite players",
+                                              message: "Invite players".i18n,
                                               child: FloatingActionButton(
                                                   heroTag: 'invite',
                                                   elevation: 5.0,
@@ -337,7 +351,7 @@ class _GameScreenState extends State<GameScreen> {
                                             ),
                                             SizedBox(),
                                             Tooltip(
-                                                message: "Ready",
+                                                message: "Ready".i18n,
                                                 child: FloatingActionButton(
                                                   heroTag: 'ready',
                                                   elevation: 0.0,
@@ -387,7 +401,7 @@ class _GameScreenState extends State<GameScreen> {
                                           },
                                           splashColor: Constants.colors[Constants.colorindex],
                                           child: Text(
-                                            "Start Game",
+                                            "Start Game".i18n,
                                             style: TextStyle(color: Constants.iBlack, fontSize: Constants.actionbuttonFontSize),
                                           ),
                                         )
@@ -401,6 +415,6 @@ class _GameScreenState extends State<GameScreen> {
                   ),
                 );
               }),
-        ));
+        )));
   }
 }

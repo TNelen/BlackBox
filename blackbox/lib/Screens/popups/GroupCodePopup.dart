@@ -3,6 +3,7 @@ import '../../Interfaces/Database.dart';
 import '../../Constants.dart';
 import '../OnlineScreens/GameScreen.dart';
 import 'package:share/share.dart';
+import 'package:blackbox/translations/popups/popups.i18n.dart';
 
 class GroupCodePopup {
   static bool _isNumeric(String str) {
@@ -24,7 +25,7 @@ class GroupCodePopup {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.0))),
           title: Text(
-            "Group Code",
+            "Group Code".i18n,
             style: TextStyle(
                 fontFamily: "atarian",
                 color: Constants.iWhite,
@@ -87,7 +88,7 @@ class GroupCodePopup {
                   onPressed: () {
                     final RenderBox box =
                         context.findRenderObject() as RenderBox;
-                    String shareText = "Join a game with this code:\n\n" +
+                    String shareText = "Join a game with this code:\n\n".i18n +
                         groupCode +
                         "\n\n\nDownload BlackBox on Google Play \nhttps://play.google.com/store/apps/details?id=be.dezijwegel.blackbox ";
                     Share.share(shareText,

@@ -4,6 +4,9 @@ import 'GameScreen.dart';
 import '../../Interfaces/Database.dart';
 import '../popups/Popup.dart';
 import '../../Constants.dart';
+import 'package:blackbox/translations/online-mode.i18n.dart';
+import 'package:i18n_extension/i18n_widget.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class JoinGameScreen extends StatefulWidget {
   Database _database;
@@ -45,15 +48,15 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
             ));
       } else {
         Popup.makePopup(
-            context, "Invalid code", "Please check you code and try again!");
+            context, "Invalid code".i18n, "Please check you code and try again!".i18n);
       }
     } else {
       Popup.makePopup(
           context,
-          "Please check your code",
-          "A code should contain " +
+          "Please check your code".i18n,
+          "A code should contain ".i18n +
               Constants.groupCodeLength.toString() +
-              " symbols!");
+              " symbols!".i18n);
     }
   }
 
@@ -79,7 +82,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                 .replaceAll('1', 'I');
             joinGame(groupCode);
           },
-          child: Text("Join",
+          child: Text("Join".i18n,
               textAlign: TextAlign.center,
               style: TextStyle(
                       fontFamily: "atarian",
@@ -102,16 +105,25 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           fillColor: Constants.iWhite,
           filled: true,
-          hintText: "Game code",
+          hintText: "Game code".i18n,
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
     );
 
     return MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', ''), // English, no country code
+          const Locale('nl', ''), // nl, no country code
+        ],
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
         theme: ThemeData(scaffoldBackgroundColor: Constants.iBlack),
-        home: Scaffold(
+        home: I18n(child:Scaffold(
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Constants.iBlack,
@@ -128,7 +140,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                       ),
                     ),
                     Text(
-                      'Back',
+                      'Back'.i18n,
                       style: TextStyle(
                         fontFamily: "atarian",
                         fontSize: Constants.actionbuttonFontSize,
@@ -161,7 +173,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Join Group',
+                      'Join Group'.i18n,
                       style: TextStyle(
                         color: Constants.iWhite,
                         fontSize: Constants.titleFontSize,
@@ -173,7 +185,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                       child: SizedBox(),
                     ),
                     Text(
-                      'Enter group code below',
+                      'Enter group code below'.i18n,
                       style: TextStyle(
                         color: Constants.colors[Constants.colorindex],
                         fontSize: Constants.normalFontSize,
@@ -192,7 +204,7 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
                 ),
               ),
             ),
-          ),
+          ),),
         ));
   }
 }

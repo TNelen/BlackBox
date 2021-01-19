@@ -10,7 +10,11 @@ import 'GameScreen.dart';
 import '../../Database/FirebaseStream.dart';
 import '../popups/Popup.dart';
 import 'ResultsScreen.dart';
+import 'package:blackbox/translations/online-mode.i18n.dart';
 
+
+import 'package:i18n_extension/i18n_widget.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 Map<ReportType, bool> reportMap = Map<ReportType, bool>();
 
 class QuestionScreen extends StatefulWidget {
@@ -97,7 +101,7 @@ class _QuestionScreenState extends State<QuestionScreen>
           SizedBox(
             width: 10,
           ),
-          Text("Submit Question",
+          Text("Submit Question".i18n,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: Constants.smallFontSize).copyWith(
                 color: Constants.iWhite,
@@ -177,7 +181,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                 NoMemberSelectedPopup.noMemberSelectedPopup(context);
               }
             },
-            child: Text("Vote",
+            child: Text("Vote".i18n,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: Constants.actionbuttonFontSize)
                     .copyWith(
@@ -197,12 +201,21 @@ class _QuestionScreenState extends State<QuestionScreen>
           }
 
           return MaterialApp(
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: [
+              const Locale('en', ''), // English, no country code
+              const Locale('nl', ''), // nl, no country code
+            ],
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               fontFamily: "atarian",
               scaffoldBackgroundColor: Constants.iBlack,
             ),
-            home: Scaffold(
+            home: I18n(child: Scaffold(
               appBar: AppBar(
                 elevation: 0,
                 backgroundColor: Constants.iBlack,
@@ -226,7 +239,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                           Navigator.pop(context);
                         },
                         child: Text(
-                          "Results",
+                          "Results".i18n,
                           style: TextStyle(
                               fontSize: Constants.actionbuttonFontSize,
                               color: Constants.colors[Constants.colorindex]),
@@ -245,7 +258,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                             ));
                       },
                       child: Text(
-                        "Leave",
+                        "Leave".i18n,
                         style: TextStyle(
                             fontSize: Constants.actionbuttonFontSize,
                             color: Constants.colors[Constants.colorindex]),
@@ -285,7 +298,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                               children: <Widget>[
                                 SizedBox(height: 10),
                                 Text(
-                                  'Question',
+                                  'Question'.i18n,
                                   style: TextStyle(
                                       color: Constants
                                           .colors[Constants.colorindex],
@@ -356,7 +369,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                                                     Scaffold.of(context)
                                                         .showSnackBar(SnackBar(
                                                       content: Text(
-                                                        'You like this question! Thank you for your feedback!',
+                                                        'You like this question! Thank you for your feedback!'.i18n,
                                                         style: TextStyle(
                                                             color: Constants
                                                                 .iWhite,
@@ -373,7 +386,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                                                       backgroundColor:
                                                           Constants.iDarkGrey,
                                                       action: SnackBarAction(
-                                                        label: 'Undo',
+                                                        label: 'Undo'.i18n,
                                                         textColor: Constants
                                                                 .colors[
                                                             Constants
@@ -404,7 +417,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                         ),
                         SizedBox(height: 20),
                         Text(
-                          'Select a friend',
+                          'Select a friend'.i18n,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Constants.colors[Constants.colorindex],
@@ -430,7 +443,7 @@ class _QuestionScreenState extends State<QuestionScreen>
               floatingActionButton: voteButton,
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
-            ),
+            ),),
           );
         });
   }

@@ -3,6 +3,7 @@ analyzer:
   exclude: [build/**]
   strong-mode:
     implicit-casts: false
+    implicit-dynamic: true
   errors:
     invalid_assignment: warning
     missing_return: error
@@ -10,7 +11,8 @@ analyzer:
     dead_code: info
     todo: ignore
     avoid_print: ignore
-
+  enable-experiment:
+    - extension-methods
 
 linter:
   rules:

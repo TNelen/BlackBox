@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import '../Interfaces/Database.dart';
 import '../Constants.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
+import 'package:i18n_extension/i18n_widget.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:blackbox/translations/SettingsScreen.i18n.dart';
 
 class SettingsScreen extends StatefulWidget {
   Database _database;
@@ -58,11 +61,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
       greenKey.currentState.currentValue = greenAccentColor;
 
     return MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', ''), // English, no country code
+          const Locale('nl', ''), // nl, no country code
+        ],
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
         theme: ThemeData(
             fontFamily: "atarian", scaffoldBackgroundColor: Colors.transparent),
-        home: Scaffold(
+        home: I18n(
+
+        child :Scaffold(
             appBar: AppBar(
               elevation: 0,
               backgroundColor: Constants.iBlack,
@@ -116,7 +130,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 children: [
                   SizedBox(height: 20.0),
                   Text(
-                    'Settings',
+                    'Settings'.i18n,
                     style: TextStyle(
                         color: Constants.iWhite,
                         fontSize: Constants.subtitleFontSize,
@@ -124,7 +138,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   SizedBox(height: 30.0),
                   Text(
-                    'Change username',
+                    'Change username'.i18n,
                     style: TextStyle(
                         color: Constants.colors[Constants.colorindex],
                         fontSize: Constants.normalFontSize,
@@ -178,7 +192,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   SizedBox(height: 40.0),
                   Text(
-                    'Sounds and vibration',
+                    'Sounds and vibration'.i18n,
                     style: TextStyle(
                         color: Constants.colors[Constants.colorindex],
                         fontSize: Constants.normalFontSize,
@@ -186,7 +200,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   SizedBox(height: 5),
                   ToggleButtonCard(
-                    'Sounds',
+                    'Sounds'.i18n,
                     Constants.getSoundEnabled(),
                     key: soundKey,
                     textStyle: TextStyle(
@@ -212,7 +226,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   SizedBox(height: 5),
                   ToggleButtonCard(
-                    'Vibration',
+                    'Vibration'.i18n,
                     Constants.getVibrationEnabled(),
                     key: vibrateKey,
                     textStyle: TextStyle(
@@ -240,7 +254,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   SizedBox(height: 40.0),
                   Text(
-                    'Personalization',
+                    'Personalization'.i18n,
                     style: TextStyle(
                         color: Constants.colors[Constants.colorindex],
                         fontSize: Constants.normalFontSize,
@@ -257,7 +271,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       width: 20,
                     ),
                     Text(
-                      'Choose your accent color...',
+                      'Choose your accent color...'.i18n,
                       style: TextStyle(
                           color: Constants.iWhite,
                           fontSize: Constants.smallFontSize,
@@ -268,7 +282,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     height: 15,
                   ),
                   ToggleButtonCard(
-                    'Blue',
+                    'Blue'.i18n,
                     blueAccentColor,
                     key: blueKey,
                     icon: Icon(
@@ -290,7 +304,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   SizedBox(height: 5),
                   ToggleButtonCard(
-                    'Yellow',
+                    'Yellow'.i18n,
                     yellowAccentColor,
                     key: yellowKey,
                     icon: Icon(
@@ -312,7 +326,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   SizedBox(height: 5),
                   ToggleButtonCard(
-                    'Red',
+                    'Red'.i18n,
                     redAccentColor,
                     key: redKey,
                     icon: Icon(
@@ -334,7 +348,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   SizedBox(height: 5),
                   ToggleButtonCard(
-                    'Green',
+                    'Green'.i18n,
                     greenAccentColor,
                     key: greenKey,
                     icon: Icon(
@@ -356,6 +370,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ],
               ),
-            )));
+            ))));
   }
 }

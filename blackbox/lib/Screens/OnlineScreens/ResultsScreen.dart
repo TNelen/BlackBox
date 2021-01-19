@@ -20,7 +20,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import '../popups/Popup.dart';
 import 'OverviewScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-
+import 'package:blackbox/translations/online-mode.i18n.dart';
+import 'package:i18n_extension/i18n_widget.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 class ResultScreen extends StatefulWidget {
   Database _database;
   GroupData groupData;
@@ -230,7 +232,7 @@ class ResultScreenState extends State<ResultScreen> {
               SizedBox(
                 width: 10,
               ),
-              Text("Submit Question",
+              Text("Submit Question".i18n,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: Constants.actionbuttonFontSize)
                       .copyWith(
@@ -265,18 +267,18 @@ class ResultScreenState extends State<ResultScreen> {
 
               int remainingVotes =
                   groupData.getNumPlaying() - groupData.getNumVotes();
-              String remainingVotesText = ' person';
+              String remainingVotesText = ' person'.i18n;
               if (remainingVotes != 1) {
-                remainingVotesText += 's';
+                remainingVotesText += 's'.i18n;
               }
-              remainingVotesText += ' remaining';
+              remainingVotesText += ' remaining'.i18n;
 
               int remainingQuestions = groupData.getQuestionList().length;
-              String remainingQuestionsText = ' question';
+              String remainingQuestionsText = ' question'.i18n;
               if (remainingQuestions != 1) {
                 remainingQuestionsText += 's';
               }
-              remainingQuestionsText += ' remaining';
+              remainingQuestionsText += ' remaining'.i18n;
 
               return WillPopScope(
                   onWillPop: () async => false,
@@ -310,7 +312,7 @@ class ResultScreenState extends State<ResultScreen> {
                                     RichText(
                                       textAlign: TextAlign.center,
                                       text: TextSpan(
-                                        text: 'Collecting votes',
+                                        text: 'Collecting votes'.i18n,
                                         style: TextStyle(
                                             fontFamily: "atarian",
                                             color: Constants.iWhite,
@@ -376,7 +378,7 @@ class ResultScreenState extends State<ResultScreen> {
                                 ),
                                 groupData.getAdminID() == Constants.getUserID()
                                     ? Text(
-                                        'Time left for voting',
+                                        'Time left for voting'.i18n,
                                         style: TextStyle(
                                             fontSize: Constants.smallFontSize,
                                             color: Constants.iWhite),
@@ -442,11 +444,11 @@ class ResultScreenState extends State<ResultScreen> {
             showMoreCurrent = !showMoreCurrent;
           }
 
-          final alltime = Container(
+          final alltime = I18n(child:Container(
               margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
               child: Column(children: <Widget>[
                 Text(
-                  'Alltime leaderboard',
+                  'Alltime leaderboard'.i18n,
                   style: TextStyle(
                       color: Constants.iWhite,
                       fontSize: Constants.normalFontSize,
@@ -489,12 +491,12 @@ class ResultScreenState extends State<ResultScreen> {
                                         Text(
                                           (index + 1).toString() +
                                               (index == 0
-                                                  ? 'st'
+                                                  ? 'st'.i18n
                                                   : index == 1
-                                                      ? 'nd'
+                                                      ? 'nd'.i18n
                                                       : index == 2
-                                                          ? 'rd'
-                                                          : 'th'),
+                                                          ? 'rd'.i18n
+                                                          : 'th'.i18n),
                                           style: TextStyle(
                                               color: index == 0
                                                   ? Constants.colors[
@@ -549,14 +551,14 @@ class ResultScreenState extends State<ResultScreen> {
                         splashColor: Constants.colors[Constants.colorindex],
                         child: showMoreAll
                             ? Text(
-                                "Show less",
+                                "Show less".i18n,
                                 style: TextStyle(
                                     color:
                                         Constants.colors[Constants.colorindex],
                                     fontSize: Constants.smallFontSize),
                               )
                             : Text(
-                                "Show More",
+                                "Show More".i18n,
                                 style: TextStyle(
                                     color:
                                         Constants.colors[Constants.colorindex],
@@ -566,13 +568,13 @@ class ResultScreenState extends State<ResultScreen> {
                     : SizedBox(
                         height: 25,
                       )
-              ]));
+              ])));
 
-          final results = Container(
+          final results = I18n(child:Container(
               margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
               child: Column(children: <Widget>[
                 Text(
-                  'Results',
+                  'Results'.i18n,
                   style: TextStyle(
                       color: Constants.iWhite,
                       fontSize: Constants.normalFontSize,
@@ -635,8 +637,8 @@ class ResultScreenState extends State<ResultScreen> {
                                                                   .getNumVotes()
                                                                   .toString() ==
                                                               '1'
-                                                          ? ' vote'
-                                                          : ' votes'),
+                                                          ? ' vote'.i18n
+                                                          : ' votes'.i18n),
                                                   style: TextStyle(
                                                       color: Constants.iWhite,
                                                       fontSize: Constants
@@ -718,8 +720,8 @@ class ResultScreenState extends State<ResultScreen> {
                                                                 .getNumVotes()
                                                                 .toString() ==
                                                             '1'
-                                                        ? ' vote'
-                                                        : ' votes'),
+                                                        ? ' vote'.i18n
+                                                        : ' votes'.i18n),
                                             style: TextStyle(
                                                 color: Constants.iWhite,
                                                 fontSize:
@@ -799,8 +801,8 @@ class ResultScreenState extends State<ResultScreen> {
                                                                   .getNumVotes()
                                                                   .toString() ==
                                                               '1'
-                                                          ? ' vote'
-                                                          : ' votes'),
+                                                          ? ' vote'.i18n
+                                                          : ' votes'.i18n),
                                                   style: TextStyle(
                                                       color: Constants.iWhite,
                                                       fontSize: Constants
@@ -869,7 +871,7 @@ class ResultScreenState extends State<ResultScreen> {
                                                 width: 15,
                                               ),
                                               Text(
-                                                (index + 4).toString() + 'th',
+                                                (index + 4).toString() + 'th'.i18n,
                                                 style: TextStyle(
                                                     color: Constants.iWhite,
                                                     fontSize:
@@ -922,14 +924,14 @@ class ResultScreenState extends State<ResultScreen> {
                         splashColor: Constants.colors[Constants.colorindex],
                         child: showMoreCurrent
                             ? Text(
-                                "Show less",
+                                "Show less".i18n,
                                 style: TextStyle(
                                     color:
                                         Constants.colors[Constants.colorindex],
                                     fontSize: Constants.smallFontSize),
                               )
                             : Text(
-                                "Show More",
+                                "Show More".i18n,
                                 style: TextStyle(
                                     color:
                                         Constants.colors[Constants.colorindex],
@@ -939,7 +941,7 @@ class ResultScreenState extends State<ResultScreen> {
                     : SizedBox(
                         height: 50,
                       )
-              ]));
+              ])));
 
           final nextButton = Hero(
             tag: 'button',
@@ -974,14 +976,14 @@ class ResultScreenState extends State<ResultScreen> {
                     },
                     //change isplaying field in database for this group to TRUE
                     child: groupData.getIsPlaying()
-                        ? Text("Next Question",
+                        ? Text("Next Question".i18n,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                     fontSize: Constants.actionbuttonFontSize)
                                 .copyWith(
                                     color: Constants.iBlack,
                                     fontWeight: FontWeight.bold))
-                        : Text("The games has ended. \n Show overview",
+                        : Text("The games has ended. \n Show overview".i18n,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                     fontSize: Constants.actionbuttonFontSize)
@@ -1001,12 +1003,22 @@ class ResultScreenState extends State<ResultScreen> {
           }
 
           return MaterialApp(
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: [
+              const Locale('en', ''), // English, no country code
+              const Locale('nl', ''), // nl, no country code
+            ],
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               fontFamily: "atarian",
               scaffoldBackgroundColor: Colors.transparent,
             ),
-            home: Scaffold(
+            home: I18n(child:
+            Scaffold(
               appBar: AppBar(
                 elevation: 0,
                 backgroundColor: Constants.iBlack,
@@ -1028,7 +1040,7 @@ class ResultScreenState extends State<ResultScreen> {
                           ));
                     },
                     child: Text(
-                      "Leave",
+                      "Leave".i18n,
                       style: TextStyle(
                           fontSize: Constants.actionbuttonFontSize,
                           color: Constants.colors[Constants.colorindex]),
@@ -1058,7 +1070,7 @@ class ResultScreenState extends State<ResultScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                           Text(
-                            'Leaderboard',
+                            'Leaderboard'.i18n,
                             style: TextStyle(
                                 fontSize: Constants.subtitleFontSize,
                                 color: Constants.colors[Constants.colorindex],
@@ -1110,6 +1122,7 @@ class ResultScreenState extends State<ResultScreen> {
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
             ),
+            ),
           );
         });
   }
@@ -1117,12 +1130,21 @@ class ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', ''), // English, no country code
+          const Locale('nl', ''), // nl, no country code
+        ],
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.transparent,
         ),
-        home: Scaffold(
+        home: I18n(child: Scaffold(
           body: _buildBody(context),
-        ));
+        )));
   }
 
   /// Plays audio and vibrates the phone indicating whether or not the player is in the previous top three
