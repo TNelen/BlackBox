@@ -285,7 +285,7 @@ extension Localization on String {
         "nl": "  Stel een vraag",
       } +
       {
-        "en": "  Want to ask a question? Submit it here",
+        "en": "  Want to ask a question? Submit it here!",
         "nl": "  Stuur hier je eigen vraag in",
       } +
       {
