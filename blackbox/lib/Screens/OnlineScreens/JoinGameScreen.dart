@@ -4,7 +4,7 @@ import 'GameScreen.dart';
 import '../../Interfaces/Database.dart';
 import '../popups/Popup.dart';
 import '../../Constants.dart';
-import 'package:blackbox/translations/online-mode.i18n.dart';
+import 'package:blackbox/translations/gameScreens.i18n.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 

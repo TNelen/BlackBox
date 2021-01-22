@@ -5,7 +5,7 @@ import '../../Interfaces/Database.dart';
 import '../../Constants.dart';
 import '../../Models/UserRankData.dart';
 
-import 'package:blackbox/translations/online-mode.i18n.dart';
+import 'package:blackbox/translations/gameScreens.i18n.dart';
 
 
 import 'package:i18n_extension/i18n_widget.dart';

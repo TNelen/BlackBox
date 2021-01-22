@@ -12,6 +12,9 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:blackbox/ad_manager.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:blackbox/Screens/popups/rate_popup.dart';
+import 'package:blackbox/translations/gameScreens.i18n.dart';
+import 'package:i18n_extension/i18n_widget.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class PartyResultScreen extends StatefulWidget {
   OfflineGroupData offlineGroupData;
@@ -129,7 +132,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
         child: Column(children: <Widget>[
           Text(
-            'Alltime leaderboard',
+            'Alltime leaderboard'.i18n,
             style: TextStyle(
                 color: Constants.iWhite,
                 fontSize: Constants.normalFontSize,
@@ -171,10 +174,10 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                   Text(
                                     (index + 1).toString() +
                                         (index == 0
-                                            ? 'st'
+                                            ? 'st'.i18n
                                             : index == 1
-                                                ? 'nd'
-                                                : index == 2 ? 'rd' : 'th'),
+                                                ? 'nd'.i18n
+                                                : index == 2 ? 'rd'.i18n : 'th'.i18n),
                                     style: TextStyle(
                                         color: index == 0
                                             ? Constants
@@ -224,13 +227,13 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                   splashColor: Constants.colors[Constants.colorindex],
                   child: showMoreAll
                       ? Text(
-                          "Show less",
+                          "Show less".i18n,
                           style: TextStyle(
                               color: Constants.colors[Constants.colorindex],
                               fontSize: Constants.smallFontSize),
                         )
                       : Text(
-                          "Show More",
+                          "Show More".i18n,
                           style: TextStyle(
                               color: Constants.colors[Constants.colorindex],
                               fontSize: Constants.smallFontSize),
@@ -245,7 +248,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
         child: Column(children: <Widget>[
           Text(
-            'Results',
+            'Results'.i18n,
             style: TextStyle(
                 color: Constants.iWhite,
                 fontSize: Constants.normalFontSize,
@@ -299,8 +302,8 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                                 (currentVotes[currentWinners[1]]
                                                             .toString() ==
                                                         '1'
-                                                    ? ' vote'
-                                                    : ' votes'),
+                                                    ? ' vote'.i18n
+                                                    : ' votes'.i18n),
                                             style: TextStyle(
                                                 color: Constants.iWhite,
                                                 fontSize:
@@ -375,8 +378,8 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                               (currentVotes[currentWinners[0]]
                                                           .toString() ==
                                                       '1'
-                                                  ? ' vote'
-                                                  : ' votes'),
+                                                  ? ' vote'.i18n
+                                                  : ' votes'.i18n),
                                       style: TextStyle(
                                           color: Constants.iWhite,
                                           fontSize: Constants.smallFontSize,
@@ -446,8 +449,8 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                                 (currentVotes[currentWinners[2]]
                                                             .toString() ==
                                                         '1'
-                                                    ? ' vote'
-                                                    : ' votes'),
+                                                    ? ' vote'.i18n
+                                                    : ' votes'.i18n),
                                             style: TextStyle(
                                                 color: Constants.iWhite,
                                                 fontSize:
@@ -512,7 +515,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                           width: 15,
                                         ),
                                         Text(
-                                          (index + 4).toString() + 'th',
+                                          (index + 4).toString() + 'th'.i18n,
                                           style: TextStyle(
                                               color: Constants.iWhite,
                                               fontSize: Constants.smallFontSize,
@@ -558,13 +561,13 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                   splashColor: Constants.colors[Constants.colorindex],
                   child: showMoreCurrent
                       ? Text(
-                          "Show less",
+                          "Show less".i18n,
                           style: TextStyle(
                               color: Constants.colors[Constants.colorindex],
                               fontSize: Constants.smallFontSize),
                         )
                       : Text(
-                          "Show More",
+                          "Show More".i18n,
                           style: TextStyle(
                               color: Constants.colors[Constants.colorindex],
                               fontSize: Constants.smallFontSize),
@@ -612,13 +615,13 @@ class PartyResultScreenState extends State<PartyResultScreen> {
             },
             //change isplaying field in database for this group to TRUE
             child: !offlineGroupData.isGameEnded()
-                ? Text("Next Question",
+                ? Text("Next Question".i18n,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: Constants.actionbuttonFontSize)
                         .copyWith(
                             color: Constants.iBlack,
                             fontWeight: FontWeight.bold))
-                : Text("The games has ended",
+                : Text("The games has ended".i18n,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: Constants.actionbuttonFontSize)
                         .copyWith(
@@ -651,7 +654,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                     ));
               },
               child: Text(
-                "End game",
+                "End game".i18n,
                 style: TextStyle(
                     fontSize: Constants.actionbuttonFontSize,
                     color: Constants.colors[Constants.colorindex]),
@@ -681,7 +684,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                     Text(
-                      'Leaderboard',
+                      'Leaderboard'.i18n,
                       style: TextStyle(
                           fontSize: Constants.subtitleFontSize,
                           color: Constants.colors[Constants.colorindex],
@@ -738,12 +741,21 @@ class PartyResultScreenState extends State<PartyResultScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', ''), // English, no country code
+          const Locale('nl', ''), // nl, no country code
+        ],
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.transparent,
         ),
-        home: Scaffold(
+        home: I18n(child:Scaffold(
           body: _buildBody(context),
-        ));
+        )));
 
 
   }

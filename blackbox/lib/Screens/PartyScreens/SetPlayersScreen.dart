@@ -6,6 +6,11 @@ import 'package:flutter/material.dart';
 import '../popups/Popup.dart';
 import '../../Constants.dart';
 import 'package:blackbox/Database/QuestionListGetter.dart';
+import 'package:blackbox/translations/gameScreens.i18n.dart';
+
+
+import 'package:i18n_extension/i18n_widget.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class SetPlayersScreen extends StatefulWidget {
   List<Category> selectedCategory = [];
@@ -80,7 +85,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                   // Show a snackbar. This snackbar could also contain "Undo" actions.
                   Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text(
-                      'Player deleted.',
+                      'Player deleted.'.i18n,
                       style: TextStyle(
                           color: Constants.iWhite,
                           fontSize: Constants.miniFontSize,
@@ -90,7 +95,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                     duration: Duration(seconds: 3),
                     backgroundColor: Constants.iDarkGrey,
                     action: SnackBarAction(
-                      label: 'Undo',
+                      label: 'Undo'.i18n,
                       textColor: Constants.colors[Constants
                           .colorindex], // or some operation you would like
                       onPressed: () {
@@ -131,7 +136,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
             contentPadding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
             fillColor: Constants.iBlack,
             filled: true,
-            hintText: "Start typing here...",
+            hintText: "Start typing here...".i18n,
             hintStyle: TextStyle(
                 fontFamily: "atarian",
                 fontSize: Constants.smallFontSize,
@@ -156,7 +161,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(16.0))),
                 title: Text(
-                  'Player Name',
+                  'Player Name'.i18n,
                   style: TextStyle(
                       fontFamily: "atarian",
                       color: Constants.colors[Constants.colorindex],
@@ -172,7 +177,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                   // usually buttons at the bottom of the dialog
                   FlatButton(
                     child: Text(
-                      "Cancel",
+                      "Cancel".i18n,
                       style: TextStyle(
                           fontFamily: "atarian",
                           color: Constants.colors[Constants.colorindex],
@@ -186,7 +191,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
 
                   FlatButton(
                     child: Text(
-                      "Add",
+                      "Add".i18n,
                       style: TextStyle(
                           fontFamily: "atarian",
                           color: Constants.colors[Constants.colorindex],
@@ -198,11 +203,11 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                       //print('-' + question+ '-');
                       if (name.length < 2) {
                         Popup.makePopup(
-                            context, 'Whoops!', 'Player name is too short');
+                            context, 'Whoops!'.i18n, 'Player name is too short'.i18n);
                       } else if (players.contains(
                           name[0].toUpperCase() + name.substring(1))) {
                         Popup.makePopup(
-                            context, 'Whoops!', 'This player already exists');
+                            context, 'Whoops!'.i18n, 'This player already exists'.i18n);
                       } else {
                         FirebaseAnalytics().logEvent(
                             name: 'action_performed',
@@ -220,7 +225,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
       },
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text(
-          "Add player",
+          "Add player".i18n,
           style: TextStyle(
             color: Constants.colors[Constants.colorindex],
             fontSize: Constants.smallFontSize,
@@ -276,10 +281,10 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                     ));
               } else {
                 Popup.makePopup(
-                    context, "Woops!", "There should be at least one player!");
+                    context, "Woops!".i18n, "There should be at least one player!".i18n);
               }
             },
-            child: Text("Start",
+            child: Text("Start".i18n,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                         fontFamily: "atarian",
@@ -294,9 +299,18 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', ''), // English, no country code
+          const Locale('nl', ''), // nl, no country code
+        ],
         title: 'BlackBox',
         theme: ThemeData(scaffoldBackgroundColor: Constants.iBlack),
-        home: Scaffold(
+        home: I18n(child: Scaffold(
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Constants.iBlack,
@@ -313,7 +327,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                       ),
                     ),
                     Text(
-                      'Back',
+                      'Back'.i18n,
                       style: TextStyle(
                         fontFamily: "atarian",
                         fontSize: Constants.actionbuttonFontSize,
@@ -343,7 +357,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                     top: 36.0, bottom: 36, left: 63, right: 63),
                 children: <Widget>[
                   Text(
-                    'who\'s playing?',
+                    'who\'s playing?'.i18n,
                     style: TextStyle(
                       color: Constants.iWhite,
                       fontSize: Constants.titleFontSize,
@@ -366,7 +380,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                         width: 15,
                       ),
                       Text(
-                        'Players',
+                        'Players'.i18n,
                         style: TextStyle(
                           color: Constants.colors[Constants.colorindex],
                           fontSize: Constants.normalFontSize,
@@ -403,7 +417,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                     height: 20,
                   ),
                   Text(
-                    'swipe to remove player',
+                    'swipe to remove player'.i18n,
                     style: TextStyle(
                       color: Constants.colors[Constants.colorindex],
                       fontSize: Constants.miniFontSize,
@@ -420,6 +434,6 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
           floatingActionButton: createButton,
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-        ));
+        )));
   }
 }

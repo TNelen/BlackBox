@@ -194,7 +194,7 @@ extension Localization on String {
       } +
       {
         "en": "Woops!",
-        "nl": "Oepsie!",
+        "nl": "Oeps!",
       } +
       {
         "en": "Create",
@@ -225,88 +225,88 @@ extension Localization on String {
         "nl": "Kies een categorie",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": " remaining",
+        "nl": " resterend",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": " question",
+        "nl": " vraag",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": " votes",
+        "nl": " stemmen",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "Create a new Party",
+        "nl": "Maak een nieuw spel",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "Please select one or more categories!",
+        "nl": "Kies een of meerdere categorieen aub!",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "Start typing here...",
+        "nl": "Begin hier met typen...",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "Add player",
+        "nl": "Voeg speler toe",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "Start",
+        "nl": "Start",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "who's playing?",
+        "nl": "wie speelt er?",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "swipe to remove player",
+        "nl": "swipe om speler te verwijderen",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "pass the phone",
+        "nl": "Geef de gsm door",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": " players have voted",
+        "nl": " spelers hebben gestemd",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "  Vote!",
+        "nl": "  Stem!",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "  All players voted",
+        "nl": "  Iedereen heeft gestemd",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "  Add question",
+        "nl": "  Stel een vraag",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "  Want to ask a question? Submit it here",
+        "nl": "  Stuur hier je eigen vraag in",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": " questions remaining",
+        "nl": " vragen over",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "Swipe to go to results",
+        "nl": "Swipe voor de resultaten",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "End game",
+        "nl": "Stop spel",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "st",
+        "nl": "e",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "The games has ended",
+        "nl": "Het spel is afgelopen",
       } +
       {
         "en": "",

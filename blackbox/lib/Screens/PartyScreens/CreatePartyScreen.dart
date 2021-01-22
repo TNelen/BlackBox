@@ -6,9 +6,10 @@ import '../../Constants.dart';
 import '../popups/Popup.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-
 import 'SetPlayersScreen.dart';
-
+import 'package:blackbox/translations/gameScreens.i18n.dart';
+import 'package:i18n_extension/i18n_widget.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 class CreatePartyScreen extends StatefulWidget {
 
   CreatePartyScreen() {
@@ -53,10 +54,10 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                         builder: (BuildContext context) => SetPlayersScreen(selectedCategory, _canVoteBlank),
                       ));
                 } else {
-                  Popup.makePopup(context, "Woops!", "Please select one or more categories!");
+                  Popup.makePopup(context, "Woops!".i18n, "Please select one or more categories!".i18n);
                 }
               },
-              child: Text("Create", textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
+              child: Text("Create".i18n, textAlign: TextAlign.center, style: TextStyle(fontSize: Constants.actionbuttonFontSize).copyWith(color: Constants.iDarkGrey, fontWeight: FontWeight.bold)),
             ),
           ),
         ));
@@ -92,12 +93,21 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
         );
 
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', ''), // English, no country code
+        const Locale('nl', ''), // nl, no country code
+      ],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: "atarian",
         scaffoldBackgroundColor: Constants.iBlack,
       ),
-      home: Scaffold(
+      home: I18n(child:Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           elevation: 0,
@@ -115,7 +125,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                     ),
                   ),
                   Text(
-                    'Back',
+                    'Back'.i18n,
                     style: TextStyle(
                       fontSize: Constants.actionbuttonFontSize,
                       color: Constants.colors[Constants.colorindex],
@@ -151,25 +161,25 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                       Hero(
                         tag: "PartHeader",
                         child: AutoSizeText(
-                          "Create a new Party",
+                          "Create a new Party".i18n,
                           style: TextStyle(color: Constants.iWhite, fontSize: Constants.titleFontSize, fontWeight: FontWeight.w300),
                           maxLines: 1,
                         ),
                       ),
                       SizedBox(height: 30.0),
                       Text(
-                        'Game settings',
+                        'Game settings'.i18n,
                         style: TextStyle(color: Constants.colors[Constants.colorindex], fontSize: Constants.normalFontSize),
                       ),
                       SizedBox(height: 20.0),
                       ToggleButtonCard(
-                        'Blank vote',
+                        'Blank vote'.i18n,
                         _canVoteBlank,
                         onToggle: (bool newValue) => _canVoteBlank = newValue,
                       ),
                       SizedBox(height: 20.0),
                       Text(
-                        'Choose categories',
+                        'Choose categories'.i18n,
                         style: TextStyle(
                           color: Constants.colors[Constants.colorindex],
                           fontSize: Constants.normalFontSize,
@@ -187,6 +197,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
         ),
         floatingActionButton: nextButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      ),
       ),
     );
   }

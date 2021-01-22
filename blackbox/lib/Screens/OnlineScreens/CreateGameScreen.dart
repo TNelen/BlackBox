@@ -12,7 +12,7 @@ import '../../Interfaces/Database.dart';
 import '../popups/Popup.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:blackbox/translations/online-mode.i18n.dart';
+import 'package:blackbox/translations/gameScreens.i18n.dart';
 
 
 import 'package:i18n_extension/i18n_widget.dart';

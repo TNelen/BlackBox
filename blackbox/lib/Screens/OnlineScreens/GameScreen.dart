@@ -14,7 +14,7 @@ import '../HomeScreen.dart';
 import 'package:share/share.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:blackbox/translations/online-mode.i18n.dart';
+import 'package:blackbox/translations/gameScreens.i18n.dart';
 
 
 import 'package:i18n_extension/i18n_widget.dart';

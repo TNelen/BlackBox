@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import '../../Constants.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import '../../Database/FirebaseStream.dart';
+import 'package:blackbox/translations/gameScreens.i18n.dart';
+import 'package:i18n_extension/i18n_widget.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class PartyQuestionScreen extends StatefulWidget {
   final OfflineGroupData offlineGroupData;
@@ -95,7 +98,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
               NoMemberSelectedPopup.noMemberSelectedPopup(context);
             }
           },
-          child: Text("Vote",
+          child: Text("Vote".i18n,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: Constants.actionbuttonFontSize)
                   .copyWith(
@@ -106,11 +109,20 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', ''), // English, no country code
+        const Locale('nl', ''), // nl, no country code
+      ],
       theme: ThemeData(
         fontFamily: "atarian",
         scaffoldBackgroundColor: Constants.iBlack,
       ),
-      home: Scaffold(
+      home: I18n(child:Scaffold(
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Constants.iBlack,
@@ -149,7 +161,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                         children: <Widget>[
                           SizedBox(height: 10),
                           Text(
-                            'Question',
+                            'Question'.i18n,
                             style: TextStyle(
                                 color: Constants.colors[Constants.colorindex],
                                 fontSize: Constants.subtitleFontSize,
@@ -208,7 +220,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'Select a friend',
+                    'Select a friend'.i18n,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Constants.colors[Constants.colorindex],
@@ -230,7 +242,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
         }),
         floatingActionButton: voteButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      ),
+      ),),
     );
   }
 

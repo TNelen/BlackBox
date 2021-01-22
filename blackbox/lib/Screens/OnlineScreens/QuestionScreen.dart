@@ -10,7 +10,7 @@ import 'GameScreen.dart';
 import '../../Database/FirebaseStream.dart';
 import '../popups/Popup.dart';
 import 'ResultsScreen.dart';
-import 'package:blackbox/translations/online-mode.i18n.dart';
+import 'package:blackbox/translations/gameScreens.i18n.dart';
 
 
 import 'package:i18n_extension/i18n_widget.dart';

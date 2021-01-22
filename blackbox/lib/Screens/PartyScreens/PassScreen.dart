@@ -11,6 +11,9 @@ import '../../Constants.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 import 'PartyQuestionScreen.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
+import 'package:blackbox/translations/gameScreens.i18n.dart';
+import 'package:i18n_extension/i18n_widget.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class PassScreen extends StatefulWidget {
   OfflineGroupData offlineGroupData;
@@ -54,10 +57,19 @@ class _PassScreenState extends State<PassScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', ''), // English, no country code
+          const Locale('nl', ''), // nl, no country code
+        ],
         title: 'BlackBox',
         theme: ThemeData(
             fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
-        home: Scaffold(
+        home: I18n(child:Scaffold(
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Constants.iBlack,
@@ -85,7 +97,7 @@ class _PassScreenState extends State<PassScreen> {
                     // crossAxisAlignment: CrossAxisAlignment.,
                     children: [
                       Text(
-                        'pass the phone',
+                        'pass the phone'.i18n,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Constants.colors[Constants.colorindex],
@@ -105,11 +117,11 @@ class _PassScreenState extends State<PassScreen> {
                           '/' +
                           (offlineGroupData.getPlayers().length - 1)
                               .toString() +
-                          ' players have voted'
+                          ' players have voted'.i18n
                       : offlineGroupData.getAmountOfCurrentVotes().toString() +
                           '/' +
                           offlineGroupData.getPlayers().length.toString() +
-                          ' players have voted',
+                          ' players have voted'.i18n,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Constants.iWhite,
@@ -146,7 +158,7 @@ class _PassScreenState extends State<PassScreen> {
                             children: [
                               SizedBox(height: 35),
                               Text(
-                                "  Vote!",
+                                "  Vote!".i18n,
                                 style: TextStyle(
                                     color: allPlayersVoted()
                                         ? Constants.iLight
@@ -157,7 +169,7 @@ class _PassScreenState extends State<PassScreen> {
                               SizedBox(height: 5),
                               allPlayersVoted()
                                   ? Text(
-                                      "  All players voted",
+                                      "  All players voted".i18n,
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                           color: Constants.iLight,
@@ -165,7 +177,7 @@ class _PassScreenState extends State<PassScreen> {
                                           fontWeight: FontWeight.bold),
                                     )
                                   : Text(
-                                      "  New vote for this round",
+                                      "  New vote for this round".i18n,
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                           color: Constants.iLight,
@@ -223,7 +235,7 @@ class _PassScreenState extends State<PassScreen> {
                             children: [
                               SizedBox(height: 35),
                               Text(
-                                "  Add question",
+                                "  Add question".i18n,
                                 style: TextStyle(
                                     color: Constants.iWhite,
                                     fontSize: Constants.normalFontSize,
@@ -231,7 +243,7 @@ class _PassScreenState extends State<PassScreen> {
                               ),
                               SizedBox(height: 5),
                               Text(
-                                "  Want to ask a question? Submit it here!",
+                                "  Want to ask a question? Submit it here!".i18n,
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                     color: Constants.iLight,
@@ -261,7 +273,7 @@ class _PassScreenState extends State<PassScreen> {
                 ),
                 Text(
                   offlineGroupData.questionsLeft().toString() +
-                      " questions remaining",
+                      " questions remaining".i18n,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Constants.iWhite,
@@ -276,7 +288,7 @@ class _PassScreenState extends State<PassScreen> {
             foregroundColor: Constants.colors[Constants.colorindex],
             backgroundShape: BorderRadius.circular(16.0),
             foregroundShape: BorderRadius.circular(16.0),
-            text: "Swipe to go to results",
+            text: "Swipe to go to results".i18n,
             textStyle: TextStyle(
                 color: Constants.iWhite,
                 fontSize: Constants.smallFontSize,
@@ -289,6 +301,6 @@ class _PassScreenState extends State<PassScreen> {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-        ));
+        )));
   }
 }
