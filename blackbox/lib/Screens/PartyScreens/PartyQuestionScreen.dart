@@ -194,7 +194,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Container(
-                                        width: 150.0,
+                                        width: 180.0,
                                         child: Text(
                                           '- ' +
                                               offlineGroupData

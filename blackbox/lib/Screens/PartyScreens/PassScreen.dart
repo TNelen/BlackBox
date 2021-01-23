@@ -90,7 +90,7 @@ class _PassScreenState extends State<PassScreen> {
             ),
             child: ListView(
               padding: const EdgeInsets.only(
-                  top: 20.0, bottom: 20, left: 50, right: 50),
+                  top: 20.0, bottom: 20, left: 45, right: 45),
               children: [
                 SizedBox(height: 10.0),
                 Row(mainAxisAlignment: MainAxisAlignment.center,
