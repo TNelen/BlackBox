@@ -46,7 +46,15 @@ extension Localization on String {
       {
         "en": "Green",
         "nl": "Groen",
+      } +
+      {
+        "en": "Back",
+        "nl": "Terug",
       }
+
+
+
+
   ;
 
   String get i18n => localize(this, _t);

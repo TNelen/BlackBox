@@ -99,7 +99,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                       Text(
-                        'Back',
+                        'Back'.i18n,
                         style: TextStyle(
                           fontSize: Constants.actionbuttonFontSize,
                           color: Constants.colors[Constants.colorindex],
