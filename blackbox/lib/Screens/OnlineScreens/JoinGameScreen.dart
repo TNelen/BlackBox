@@ -1,3 +1,4 @@
+import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'GameScreen.dart';
@@ -42,9 +43,9 @@ class _JoinGameScreenState extends State<JoinGameScreen> {
 
         Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (BuildContext context) =>
-                  GameScreen(_database, codeController.text.toUpperCase()),
+            SlidePageRoute(
+              fromPage: widget,
+              toPage: GameScreen(_database, codeController.text.toUpperCase())
             ));
       } else {
         Popup.makePopup(

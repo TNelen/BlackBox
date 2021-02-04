@@ -1,5 +1,6 @@
 import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PartyScreens/PartyResultsScreen.dart';
+import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:blackbox/Screens/widgets/IconCard.dart';
 import 'package:blackbox/ad_manager.dart';
@@ -46,9 +47,9 @@ class _PassScreenState extends State<PassScreen> {
   void _moveToResults() {
     Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (BuildContext context) =>
-              PartyResultScreen(offlineGroupData),
+        SlidePageRoute(
+          fromPage: widget,
+          toPage: PartyResultScreen(offlineGroupData)
         ));
   }
 
@@ -142,9 +143,9 @@ class _PassScreenState extends State<PassScreen> {
                           ? null
                           : Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    PartyQuestionScreen(offlineGroupData),
+                              SlidePageRoute(
+                                fromPage: widget,
+                                toPage: PartyQuestionScreen(offlineGroupData),
                               ));
                     },
                     child: Container(
