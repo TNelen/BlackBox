@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:audioplayers/audio_cache.dart';
 import 'package:blackbox/Models/UserRankData.dart';
+import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/ad_manager.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -757,15 +758,17 @@ class ResultScreenState extends State<ResultScreen> {
                       if (groupData.getIsPlaying()) {
                         Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => QuestionScreen(_database, groupData, code),
+                            SlidePageRoute(
+                              fromPage: widget,
+                              toPage: QuestionScreen(_database, groupData, code)
                             ));
                       } else {
                         //go to overview
                         Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => OverviewScreen(_database, groupData),
+                            SlidePageRoute(
+                              fromPage: widget,
+                              toPage: OverviewScreen(_database, groupData)
                             ));
                       }
                     },
@@ -818,8 +821,9 @@ class ResultScreenState extends State<ResultScreen> {
                         _database.updateGroup(groupData);
                         Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => GameScreen(_database, code),
+                            SlidePageRoute(
+                              fromPage: widget,
+                              toPage: GameScreen(_database, code)
                             ));
                       },
                       child: Text(

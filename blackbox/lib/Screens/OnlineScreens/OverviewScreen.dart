@@ -1,5 +1,6 @@
 import 'package:blackbox/Models/GroupData.dart';
 import 'package:blackbox/Screens/HomeScreen.dart';
+import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:flutter/material.dart';
 import '../../Interfaces/Database.dart';
 import '../../Constants.dart';
@@ -64,8 +65,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
             onTap: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => HomeScreen(),
+                  SlidePageRoute(
+                    fromPage: widget,
+                    toPage: HomeScreen()
                   ));
             },
             child: Row(

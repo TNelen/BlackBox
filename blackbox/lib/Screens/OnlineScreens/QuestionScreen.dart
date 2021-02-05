@@ -1,4 +1,5 @@
 import 'package:blackbox/Models/UserData.dart';
+import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/Screens/popups/noMembersScelectedPopup.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -168,8 +169,9 @@ class _QuestionScreenState extends State<QuestionScreen>
 
                 Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => ResultScreen(
+                    SlidePageRoute(
+                      fromPage: widget,
+                      toPage: ResultScreen(
                           _database,
                           groupData,
                           code,
@@ -252,9 +254,9 @@ class _QuestionScreenState extends State<QuestionScreen>
                         _database.updateGroup(groupData);
                         Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  GameScreen(_database, code),
+                            SlidePageRoute(
+                              fromPage: widget,
+                              toPage: GameScreen(_database, code)
                             ));
                       },
                       child: Text(

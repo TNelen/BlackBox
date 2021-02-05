@@ -1,3 +1,4 @@
+import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/ad_manager.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -55,8 +56,9 @@ class _GameScreenState extends State<GameScreen> {
   void _startGame() {
     Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => QuestionScreen(_database, groupdata, code),
+        SlidePageRoute(
+          fromPage: widget,
+          toPage: QuestionScreen(_database, groupdata, code)
         ));
   }
 
@@ -155,8 +157,9 @@ class _GameScreenState extends State<GameScreen> {
                             onTap: () {
                               Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) => HomeScreen(),
+                                  SlidePageRoute(
+                                    fromPage: widget,
+                                    toPage: HomeScreen()
                                   ));
                               groupdata.removeMember(Constants.getUserData());
                               _database.updateGroup(groupdata);

@@ -2,6 +2,7 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/HomeScreen.dart';
 import 'package:blackbox/Screens/PartyScreens/PartyQuestionScreen.dart';
+import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/Util/VibrationHandler.dart';
 import 'package:flutter/material.dart';
 import '../../Models/GroupData.dart';
@@ -55,10 +56,11 @@ class PartyResultScreenState extends State<PartyResultScreen> {
   void _moveToNext() {
     Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (BuildContext context) =>
-              PartyQuestionScreen(offlineGroupData),
-        ));
+        SlidePageRoute(
+          fromPage: widget,
+          toPage: PartyQuestionScreen(offlineGroupData)
+        )
+    );
   }
 
   bool _showRatePop() {
@@ -608,8 +610,9 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                 Navigator.push(
                     //TODO : create endScreen
                     context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => HomeScreen(),
+                    SlidePageRoute(
+                      fromPage: widget,
+                      toPage: HomeScreen()
                     ));
               }
             },
@@ -648,9 +651,10 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                 });
                 Navigator.push(
                     context,
-                    MaterialPageRoute(
+                    SlidePageRoute(
                       //TODO : create endScreen
-                      builder: (BuildContext context) => HomeScreen(),
+                      fromPage: widget,
+                      toPage: HomeScreen()
                     ));
               },
               child: Text(

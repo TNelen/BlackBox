@@ -8,6 +8,9 @@ import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:blackbox/translations/RulesScreen.i18n.dart';
 
+import 'animation/ScaleDownPageRoute.dart';
+import 'animation/ScalePageRoute.dart';
+
 class RuleScreen extends StatefulWidget {
   Database _database;
 
@@ -53,8 +56,9 @@ class _RuleScreenState extends State<RuleScreen> {
                   onTap: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => HomeScreen(),
+                        ScaleDownPageRoute(
+                          fromPage: widget,
+                          toPage: HomeScreen(),
                         ));
                   },
                   child: Row(

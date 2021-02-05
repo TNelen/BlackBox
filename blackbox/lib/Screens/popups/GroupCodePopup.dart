@@ -1,3 +1,4 @@
+import 'package:blackbox/Screens/animation/ScalePageRoute.dart';
 import 'package:flutter/material.dart';
 import '../../Interfaces/Database.dart';
 import '../../Constants.dart';
@@ -111,9 +112,9 @@ class GroupCodePopup {
               onPressed: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            GameScreen(database, groupCode)));
+                    ScaleUpPageRoute(
+                        GameScreen(database, groupCode)
+                  ));
               },
             ),
           ],

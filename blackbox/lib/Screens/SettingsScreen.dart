@@ -10,6 +10,9 @@ import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:blackbox/translations/SettingsScreen.i18n.dart';
 
+import 'animation/ScaleDownPageRoute.dart';
+import 'animation/ScalePageRoute.dart';
+
 class SettingsScreen extends StatefulWidget {
   Database _database;
 
@@ -85,8 +88,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onTap: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => HomeScreen(),
+                        // MaterialPageRoute(
+                        //   builder: (BuildContext context) => HomeScreen(),
+                        // ));
+
+                        ScaleDownPageRoute(
+                          fromPage: widget,
+                          toPage: HomeScreen(),
                         ));
                   },
                   child: Row(

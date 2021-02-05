@@ -6,6 +6,7 @@ import '../Database/Firebase.dart';
 import '../Database/GoogleUserHandler.dart';
 import 'OnlineScreens/CreateGameScreen.dart';
 import 'OnlineScreens/JoinGameScreen.dart';
+import 'animation/ScalePageRoute.dart';
 import 'widgets/HomeScreenTopIcons.dart';
 import 'widgets/home_screen_button.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -273,8 +274,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: HomeScreenButton('Party Mode', 'Play with all your friends on one single device'.i18n, true, true, icon: OMIcons.peopleOutline, onTap: () {
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) => CreatePartyScreen(),
+                                    ScaleUpPageRoute(
+                                        CreatePartyScreen()
                                     ));
                               }),
                             ),
@@ -286,8 +287,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: HomeScreenButton('Create Game'.i18n, 'Invite friends to a new game'.i18n, enableOnlineMode, loggedIn, icon: OMIcons.edit, onTap: () {
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) => CreateGameScreen(database),
+                                    ScaleUpPageRoute(
+                                      CreateGameScreen(database)
                                     ));
                               }),
                             ),
@@ -299,8 +300,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: HomeScreenButton("Join Game".i18n, 'Join with the group code'.i18n, enableOnlineMode, loggedIn, icon: OMIcons.search, onTap: () {
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) => JoinGameScreen(database),
+                                    ScaleUpPageRoute(
+                                      JoinGameScreen(database),
                                     ));
                               }),
                             ),

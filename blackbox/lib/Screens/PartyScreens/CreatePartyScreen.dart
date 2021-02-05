@@ -1,4 +1,5 @@
 import 'package:blackbox/Assets/questions.dart';
+import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/Screens/widgets/CategoryCard.dart';
 import 'package:blackbox/Screens/widgets/toggle_button_card.dart';
 import 'package:flutter/material.dart';
@@ -50,9 +51,11 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                 if (selectedCategory.length != 0) {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => SetPlayersScreen(selectedCategory, _canVoteBlank),
-                      ));
+                      SlidePageRoute(
+                        fromPage: widget,
+                        toPage: SetPlayersScreen(selectedCategory, _canVoteBlank)
+                      )
+                  );
                 } else {
                   Popup.makePopup(context, "Woops!".i18n, "Please select one or more categories!".i18n);
                 }
