@@ -2,6 +2,7 @@ import 'package:blackbox/Assets/questions.dart' as offlineQuestions;
 import 'package:blackbox/Models/GroupData.dart';
 import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/SettingsScreen.dart';
+import 'package:blackbox/Screens/animation/ScalePageRoute.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../../Constants.dart';
@@ -216,9 +217,8 @@ class Popup {
                   database.updateUser(Constants.getUserData());
                   Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            SettingsScreen(database),
+                      ScaleUpPageRoute(
+                        SettingsScreen(database),
                       ));
                 }
               },

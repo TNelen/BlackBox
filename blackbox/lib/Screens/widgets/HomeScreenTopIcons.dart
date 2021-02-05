@@ -1,5 +1,6 @@
 import 'package:blackbox/Constants.dart';
 import 'package:blackbox/Interfaces/Database.dart';
+import 'package:blackbox/Screens/animation/ScalePageRoute.dart';
 import 'package:blackbox/Screens/widgets/IconCard.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +36,8 @@ class IconBar extends StatelessWidget {
                   .logEvent(name: 'SettingsScreenOpened', parameters: null);
               Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => SettingsScreen(database),
+                  ScaleUpPageRoute(
+                    SettingsScreen(database)
                   ));
             },
           ),
@@ -56,8 +57,8 @@ class IconBar extends StatelessWidget {
                   .logEvent(name: 'HelpScreenOpened', parameters: null);
               Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => RuleScreen(database),
+                  ScaleUpPageRoute(
+                    RuleScreen(database),
                   ));
             },
           ),
