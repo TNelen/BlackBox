@@ -264,6 +264,9 @@ class FirebaseSetters {
     var data = Map<String, dynamic>();
     data['name'] = userData.getUsername();
     data['accent'] = userData.getAccent();
+    data['vibration'] = userData.getVibrationEnabled();
+    data['sounds'] = userData.getSoundEnabled();
+    data['notifications'] = userData.getNotificationsEnabled();
 
     await FirebaseFirestore.instance
         .runTransaction((Transaction transaction) async {

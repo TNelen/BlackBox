@@ -18,26 +18,17 @@ class FirebaseGetters {
           .doc(uniqueID)
           .get()
           .then((doc) {
-        if (doc.exists) {
-          if (doc.data()['name'] != null) {
-            bool vibration = true;
-            if (doc.data()['vibration'] != null) {
-              vibration = doc.data()['vibration'] as bool;
-            }
+        if (doc.exists && doc.data()['name'] != null) {
 
-            bool sounds = true;
-            if (doc.data()['sounds'] != null) {
-              sounds = doc.data()['sounds'] as bool;
-            }
+          String name = doc.data()['name'] as String;
 
-            if (doc.data()['accent'] != null) {
-              user = UserData.full(doc.id, doc.data()['name'] as String,
-                  doc.data()['accent'] as int, vibration, sounds);
-            } else {
-              user = UserData.full(doc.id, doc.data()['name'] as String,
-                  Constants.defaultColor, vibration, sounds);
-            }
-          }
+          // Get settings if they exist, or use default values
+          int accentId        = doc.data()['accent']        == null ? Constants.defaultColor : doc.data()['accent'] as int;
+          bool vibration      = doc.data()['vibration']     == null ? true : doc.data()['vibration']      as bool;
+          bool sounds         = doc.data()['sounds']        == null ? true : doc.data()['sounds']         as bool;
+          bool notifications  = doc.data()['notifications'] == null ? true : doc.data()['notifications']  as bool;
+
+          user = UserData.full(doc.id, name, accentId, vibration, sounds, notifications);
         }
       });
 
