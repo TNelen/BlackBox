@@ -12,6 +12,10 @@ extension Localization on String {
         "nl": "Gebruiksernaam",
       } +
       {
+        "en": "Notifications",
+        "nl": "Meldingen",
+      } +
+      {
         "en": "Sounds and vibration",
         "nl": "Geluid en trillen",
       } +

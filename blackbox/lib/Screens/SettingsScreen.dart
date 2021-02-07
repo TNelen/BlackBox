@@ -11,7 +11,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:blackbox/translations/SettingsScreen.i18n.dart';
 
 import 'animation/ScaleDownPageRoute.dart';
-import 'animation/ScalePageRoute.dart';
 
 class SettingsScreen extends StatefulWidget {
   Database _database;
@@ -42,6 +41,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   final GlobalKey<ToggleButtonCardState> soundKey = GlobalKey();
   final GlobalKey<ToggleButtonCardState> vibrateKey = GlobalKey();
+  final GlobalKey<ToggleButtonCardState> notificationsKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -254,8 +254,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       FirebaseAnalytics().setUserProperty(
                           name: 'is_vibration_enabled',
                           value: value.toString());
-                      Constants.setVibrationEnabled(
-                          !Constants.getVibrationEnabled());
+                      Constants.setVibrationEnabled(!Constants.getVibrationEnabled());
+                      _database.updateUser(Constants.getUserData());
+                      setState(() {});
+                    },
+                  ),
+                  SizedBox(height: 40.0),
+                  Text(
+                    'Notifications'.i18n,
+                    style: TextStyle(
+                        color: Constants.colors[Constants.colorindex],
+                        fontSize: Constants.normalFontSize,
+                        fontWeight: FontWeight.w300),
+                  ),
+                  SizedBox(height: 5),
+                  ToggleButtonCard(
+                    'Notifications'.i18n,
+                    Constants.getNotificationsEnabled(),
+                    key: notificationsKey,
+                    textStyle: TextStyle(
+                      color: Constants.getNotificationsEnabled()
+                          ? Constants.iWhite
+                          : Constants.iGrey,
+                      fontSize: Constants.actionbuttonFontSize,
+                    ),
+                    icon: Icon(
+                      Icons.notifications,
+                      size: 17,
+                      color: Constants.getNotificationsEnabled()
+                          ? Constants.colors[Constants.colorindex]
+                          : Constants.iGrey,
+                    ),
+                    onToggle: (bool value) {
+                      FirebaseAnalytics().setUserProperty(
+                          name: 'enable_notifications', value: value.toString());
+                      Constants.setNotificationsEnabled(!Constants.getNotificationsEnabled());
                       _database.updateUser(Constants.getUserData());
                       setState(() {});
                     },

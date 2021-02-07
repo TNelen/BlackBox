@@ -4,6 +4,7 @@ class UserData {
   String _username;
   int _accent = 0;
 
+  bool _areNotificationsEnabled = true;
   bool _isVibrationEnabled = true;
   bool _isSoundEnabled = true;
 
@@ -11,7 +12,7 @@ class UserData {
 
   UserData.essential(this._userID, this._username, this._accent);
 
-  UserData.full(this._userID, this._username, this._accent, this._isVibrationEnabled, this._isSoundEnabled);
+  UserData.full(this._userID, this._username, this._accent, this._isVibrationEnabled, this._isSoundEnabled, this._areNotificationsEnabled);
 
   /// Get this user's display name
   String getUsername()
@@ -68,5 +69,17 @@ class UserData {
   void setSoundEnabled(bool isSoundEnabled)
   {
     _isSoundEnabled = isSoundEnabled;
+  }
+
+  /// Get whether or not this user has notifications enabled
+  bool getNotificationsEnabled()
+  {
+    return _areNotificationsEnabled;
+  }
+
+  /// Enable or disable notifications for this user
+  void setNotificationsEnabled( bool isEnabled )
+  {
+    _areNotificationsEnabled = isEnabled;
   }
 }

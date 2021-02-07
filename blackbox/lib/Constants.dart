@@ -97,9 +97,19 @@ class Constants {
     userData.setVibrationEnabled(isVibrationEnabled);
   }
 
+  static void setNotificationsEnabled( bool enableNotifications )
+  {
+    userData.setNotificationsEnabled( enableNotifications );
+  }
+
   /// Get whether or not sound has been enabled for this user
   static bool getSoundEnabled() {
     return userData.getSoundEnabled();
+  }
+
+  static bool getNotificationsEnabled()
+  {
+    return userData.getNotificationsEnabled();
   }
 
   /// Enable or disable sound
