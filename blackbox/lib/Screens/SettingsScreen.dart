@@ -3,6 +3,7 @@ import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:blackbox/Screens/widgets/toggle_button_card.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Interfaces/Database.dart';
 import '../Constants.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
@@ -24,11 +25,13 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+
   Database _database;
+  SharedPreferences _prefs;
   TextEditingController codeController = TextEditingController();
 
   _SettingsScreenState(Database db) {
-    this._database = db;
+    _database = db;
 
     FirebaseAnalytics()
         .logEvent(name: 'open_screen', parameters: {'screen_name': 'Settings'});
@@ -44,11 +47,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
   final GlobalKey<ToggleButtonCardState> notificationsKey = GlobalKey();
 
   @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((value) => _prefs = value);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    bool blueAccentColor = Constants.getAccentColor(0);
-    bool yellowAccentColor = Constants.getAccentColor(1);
-    bool redAccentColor = Constants.getAccentColor(2);
-    bool greenAccentColor = Constants.getAccentColor(3);
+
+    bool blueAccentColor    = Constants.getAccentColor(0);
+    bool yellowAccentColor  = Constants.getAccentColor(1);
+    bool redAccentColor     = Constants.getAccentColor(2);
+    bool greenAccentColor   = Constants.getAccentColor(3);
 
     // Update the toggle displays
     if (blueKey.currentState != null)
@@ -228,6 +238,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       FirebaseAnalytics().setUserProperty(
                           name: 'is_sound_enabled', value: value.toString());
                       Constants.setSoundEnabled(!Constants.getSoundEnabled());
+                      _prefs.setBool("sounds", Constants.getSoundEnabled());
                       _database.updateUser(Constants.getUserData());
                       setState(() {});
                     },
@@ -255,6 +266,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           name: 'is_vibration_enabled',
                           value: value.toString());
                       Constants.setVibrationEnabled(!Constants.getVibrationEnabled());
+                      _prefs.setBool("vibration", Constants.getVibrationEnabled());
                       _database.updateUser(Constants.getUserData());
                       setState(() {});
                     },
@@ -289,6 +301,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       FirebaseAnalytics().setUserProperty(
                           name: 'enable_notifications', value: value.toString());
                       Constants.setNotificationsEnabled(!Constants.getNotificationsEnabled());
+                      _prefs.setBool("notifications", Constants.getNotificationsEnabled());
                       _database.updateUser(Constants.getUserData());
                       setState(() {});
                     },

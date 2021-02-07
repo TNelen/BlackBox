@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../Models/UserData.dart';
 import '../Database/Firebase.dart';
 import '../Database/GoogleUserHandler.dart';
@@ -92,12 +94,21 @@ class _HomeScreenState extends State<HomeScreen> {
   ScrollController _controller = ScrollController();
   bool setScrollable = true;
 
+  void handleOfflinePreferences() async
+  {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Constants.setSoundEnabled( prefs.getBool("sounds") );
+    Constants.setVibrationEnabled( prefs.getBool("vibration") );
+    Constants.setNotificationsEnabled( prefs.getBool("notifications") );
+  }
+
   @override
   void initState() {
     super.initState();
     print(Constants.getUserID());
     if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
       setState(() {
+        handleOfflinePreferences();
         loggedIn = false;
       });
     } else {
@@ -140,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await core.Firebase.initializeApp();
 
     if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
-      ///check if user isn't loged in via google already when returning to homescreen
+      ///check if user isn't logged in via google already when returning to homescreen
       try {
         GoogleUserHandler guh = GoogleUserHandler();
         await guh.handleSignIn().then((user) async {
@@ -152,8 +163,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
           /// Save user if the account is new
           if (saved == null) {
+
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+
             /// Put user in the database and load the info into UserData @Constants
             user.setAccent(Constants.defaultColor);
+            user.setSoundEnabled( prefs.getBool("sounds") );
+            user.setVibrationEnabled( prefs.getBool("vibration") );
+            user.setNotificationsEnabled( prefs.getBool("notifications") );
             Constants.setUserData(user);
             await database.updateUser(user);
           } else {

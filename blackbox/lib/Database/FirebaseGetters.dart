@@ -4,13 +4,17 @@ import 'package:blackbox/Models/QuestionCategory.dart';
 import 'package:blackbox/Models/UserData.dart';
 import 'package:blackbox/Database/QuestionListGetter.dart';
 import 'package:blackbox/Exceptions/GroupNotFoundException.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Models/Question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blackbox/Constants.dart';
 
 class FirebaseGetters {
+
   static Future<UserData> getUserByID(String uniqueID) async {
+
     UserData user;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     try {
       await FirebaseFirestore.instance
@@ -22,11 +26,19 @@ class FirebaseGetters {
 
           String name = doc.data()['name'] as String;
 
+          bool hasVibration = prefs.containsKey('vibration');
+          bool hasSounds = prefs.containsKey('sounds');
+          bool hasNotifications = prefs.containsKey('notifications');
+
+          bool localVibration = prefs.getBool('vibration');
+          bool localSounds = prefs.getBool('sounds');
+          bool localNotifications = prefs.getBool('notifications');
+
           // Get settings if they exist, or use default values
           int accentId        = doc.data()['accent']        == null ? Constants.defaultColor : doc.data()['accent'] as int;
-          bool vibration      = doc.data()['vibration']     == null ? true : doc.data()['vibration']      as bool;
-          bool sounds         = doc.data()['sounds']        == null ? true : doc.data()['sounds']         as bool;
-          bool notifications  = doc.data()['notifications'] == null ? true : doc.data()['notifications']  as bool;
+          bool vibration      = hasVibration      ? localVibration      : doc.data()['vibration']     != null ? doc.data()['vibration']     as bool : true;
+          bool sounds         = hasSounds         ? localSounds         : doc.data()['sounds']        != null ? doc.data()['sounds']        as bool : true;
+          bool notifications  = hasNotifications  ? localNotifications  : doc.data()['notifications'] != null ? doc.data()['notifications'] as bool : true;
 
           user = UserData.full(doc.id, name, accentId, vibration, sounds, notifications);
         }
