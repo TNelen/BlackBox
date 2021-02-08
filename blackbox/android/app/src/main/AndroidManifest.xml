@@ -9,12 +9,15 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name="io.flutter.app.FlutterApplication"
         android:label="BlackBox"
         android:icon="@mipmap/launcher_icon">
         <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
                 android:value="ca-app-pub-7249563995197214~6874711564" />
+
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
 
         <activity
             android:name=".MainActivity"
@@ -27,10 +30,19 @@
                  until Flutter renders its first frame. It can be removed if
                  there is no splash screen (such as the default splash screen
                  defined in @style/LaunchTheme). -->
+
+            <!-- Specify that the launch screen should continue being displayed -->
+            <!-- until Flutter renders its first frame. -->
             <meta-data
-                android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
-                android:value="true" />
-            
+                android:name="io.flutter.embedding.android.SplashScreenDrawable"
+                android:resource="@drawable/launch_background" />
+
+            <!-- Theme to apply as soon as Flutter begins rendering frames -->
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/LaunchTheme"
+                />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
