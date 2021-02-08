@@ -1,5 +1,6 @@
 import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PartyScreens/PartyResultsScreen.dart';
+import 'package:blackbox/Screens/PartyScreens/widgets/PassScreenButton.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:blackbox/Screens/widgets/IconCard.dart';
@@ -129,146 +130,6 @@ class _PassScreenState extends State<PassScreen> {
                       fontSize: Constants.normalFontSize,
                       fontWeight: FontWeight.w300),
                 ),
-                SizedBox(height: 40.0),
-                Card(
-                  elevation: 5.0,
-                  color: Constants.iDarkGrey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(16.0),
-                    onTap: () {
-                      allPlayersVoted()
-                          ? null
-                          : Navigator.push(
-                              context,
-                              SlidePageRoute(
-                                fromPage: widget,
-                                toPage: PartyQuestionScreen(offlineGroupData),
-                              ));
-                    },
-                    child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 5, left: 10.0, right: 10, bottom: 5),
-                        child: Stack(children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 35),
-                              Text(
-                                "  Vote!".i18n,
-                                style: TextStyle(
-                                    color: allPlayersVoted()
-                                        ? Constants.iLight
-                                        : Constants.iWhite,
-                                    fontSize: Constants.normalFontSize,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 5),
-                              allPlayersVoted()
-                                  ? Text(
-                                      "  All players voted".i18n,
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          color: Constants.iLight,
-                                          fontSize: Constants.smallFontSize,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  : Text(
-                                      "  New vote for this round".i18n,
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          color: Constants.iLight,
-                                          fontSize: Constants.smallFontSize,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                              SizedBox(height: 10),
-                            ],
-                          ),
-                          Positioned(
-                            right: 0.0,
-                            top: 0.0,
-                            child: allPlayersVoted()
-                                ? IconCard(
-                                    OMIcons.edit,
-                                    Constants.iGrey.withOpacity(0.1),
-                                    Constants.iLight.withOpacity(0.5),
-                                    35,
-                                  )
-                                : IconCard(
-                                    OMIcons.edit,
-                                    Constants.iGrey.withOpacity(0.1),
-                                    Constants.colors[Constants.colorindex],
-                                    35,
-                                  ),
-                          ),
-                        ]),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Card(
-                  elevation: 5.0,
-                  color: Constants.iDarkGrey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(16.0),
-                    onTap: () {
-                      Popup.submitQuestionOfflinePopup(
-                          context, offlineGroupData);
-                    },
-                    child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 5, left: 10.0, right: 10, bottom: 5),
-                        child: Stack(children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 35),
-                              Text(
-                                "  Add question".i18n,
-                                style: TextStyle(
-                                    color: Constants.iWhite,
-                                    fontSize: Constants.normalFontSize,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                "  Want to ask a question? Submit it here!".i18n,
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                    color: Constants.iLight,
-                                    fontSize: Constants.smallFontSize,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 10),
-                            ],
-                          ),
-                          Positioned(
-                            right: 0.0,
-                            top: 0.0,
-                            child: IconCard(
-                              OMIcons.libraryAdd,
-                              Constants.iGrey.withOpacity(0.1),
-                              Constants.colors[Constants.colorindex],
-                              35,
-                            ),
-                          ),
-                        ]),
-                      ),
-                    ),
-                  ),
-                ),
                 SizedBox(
                   height: 10,
                 ),
@@ -280,6 +141,73 @@ class _PassScreenState extends State<PassScreen> {
                       color: Constants.iWhite,
                       fontSize: Constants.smallFontSize,
                       fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 40.0),
+                PassScreenButton(
+                  title: "  Vote!".i18n,
+                  titleStyle: TextStyle(
+                      color: allPlayersVoted()
+                          ? Constants.iLight
+                          : Constants.iWhite,
+                      fontSize: Constants.normalFontSize,
+                      fontWeight: FontWeight.bold
+                  ),
+                  subtitle: allPlayersVoted() ? "  All players voted".i18n : "  New vote for this round".i18n,
+                  subtitleStyle: TextStyle(
+                      color: Constants.iLight,
+                      fontSize: Constants.smallFontSize,
+                      fontWeight: FontWeight.bold
+                  ),
+                  iconCard: allPlayersVoted()
+                      ? IconCard(
+                    OMIcons.edit,
+                    Constants.iGrey.withOpacity(0.1),
+                    Constants.iLight.withOpacity(0.5),
+                    35,
+                  )
+                      : IconCard(
+                    OMIcons.edit,
+                    Constants.iGrey.withOpacity(0.1),
+                    Constants.colors[Constants.colorindex],
+                    35,
+                  ),
+                  onTap: () {
+                    allPlayersVoted()
+                        ? null
+                        : Navigator.push(
+                        context,
+                        SlidePageRoute(
+                          fromPage: widget,
+                          toPage: PartyQuestionScreen(offlineGroupData),
+                        ));
+                  },
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                PassScreenButton(
+                  title: "  Add question".i18n,
+                  titleStyle: TextStyle(
+                      color: Constants.iWhite,
+                      fontSize: Constants.normalFontSize,
+                      fontWeight: FontWeight.bold
+                  ),
+                  subtitle: "  Want to ask a question? Submit it here!".i18n,
+                  subtitleStyle: TextStyle(
+                      color: Constants.iLight,
+                      fontSize: Constants.smallFontSize,
+                      fontWeight: FontWeight.bold
+                  ),
+                  iconCard: IconCard(
+                    OMIcons.libraryAdd,
+                    Constants.iGrey.withOpacity(0.1),
+                    Constants.colors[Constants.colorindex],
+                    35,
+                  ),
+                  onTap: () {
+                    Popup.submitQuestionOfflinePopup(
+                        context, offlineGroupData);
+                  },
                 ),
               ],
             ),
