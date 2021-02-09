@@ -257,6 +257,10 @@ extension Localization on String {
         "nl": "Start",
       } +
       {
+        "en": "Continue",
+        "nl": "Ga verder",
+      } +
+      {
         "en": "who's playing?",
         "nl": "wie speelt er?",
       } +
@@ -283,6 +287,14 @@ extension Localization on String {
       {
         "en": "  Add question",
         "nl": "  Stel een vraag",
+      } +
+      {
+        "en": "  Edit players",
+        "nl": "  Verander spelers",
+      } +
+      {
+        "en": "  Add or remove players",
+        "nl": "  Verwijder of voeg spelers toe",
       } +
       {
         "en": "  Want to ask a question? Submit it here!",

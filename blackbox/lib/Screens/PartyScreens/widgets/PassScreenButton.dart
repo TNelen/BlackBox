@@ -19,14 +19,14 @@ class PassScreenButton extends StatelessWidget {
     this.title = "",
     this.subtitle = "",
     this.titleStyle = const TextStyle(
-        color: Constants.iWhite,
-        fontSize: Constants.normalFontSize,
-        fontWeight: FontWeight.bold
-    ),
-    this.subtitleStyle = const TextStyle(
-      color: Constants.iLight,
-      fontSize: Constants.smallFontSize,
+      color: Constants.iWhite,
+      fontSize: Constants.normalFontSize,
       fontWeight: FontWeight.bold
+      ),
+    this.subtitleStyle = const TextStyle(
+        color: Constants.iLight,
+        fontSize: Constants.smallFontSize,
+        fontWeight: FontWeight.bold
     ),
     this.iconCard,
     this.onTap

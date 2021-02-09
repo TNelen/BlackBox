@@ -85,6 +85,8 @@ class OfflineGroupData {
   }
 
   void vote(String playerName) {
+    totalVotes.putIfAbsent(playerName, () => 0);
+    currentVotes.putIfAbsent(playerName, () => 0);
     currentVotes[playerName]++;
     totalVotes[playerName]++;
   }
