@@ -53,13 +53,18 @@ class PartyResultScreenState extends State<PartyResultScreen> {
     _interstitialAd.load();
   }
 
-  void _moveToNext() {
+  void _moveToNext(bool doAnimate) {
     Navigator.push(
         context,
-        SlidePageRoute(
-          fromPage: widget,
-          toPage: PartyQuestionScreen(offlineGroupData)
-        )
+        doAnimate ?
+          SlidePageRoute(
+            fromPage: widget,
+            toPage: PartyQuestionScreen(offlineGroupData)
+          ) :
+          PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) => PartyQuestionScreen(offlineGroupData),
+            transitionDuration: Duration(seconds: 0),
+          ),
     );
   }
 
@@ -77,7 +82,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
         print('Failed to load an interstitial ad');
         break;
       case MobileAdEvent.closed:
-        _moveToNext();
+        _moveToNext(false);
         break;
       default:
       // do nothing
@@ -599,7 +604,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                   _interstitialAd.show();
                 }
 
-                _moveToNext();
+                _moveToNext( true );
                 if (_showRatePop()){
                   showDialog(
                     context: context,

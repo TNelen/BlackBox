@@ -5,8 +5,6 @@ import 'package:blackbox/Screens/animation/ScalePageRoute.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:blackbox/Screens/widgets/IconCard.dart';
-import 'package:blackbox/ad_manager.dart';
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -18,8 +16,6 @@ import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:blackbox/translations/gameScreens.i18n.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'SetPlayersScreen.dart';
 
 class PassScreen extends StatefulWidget {
   OfflineGroupData offlineGroupData;
@@ -47,13 +43,19 @@ class _PassScreenState extends State<PassScreen> {
   }
 
 
-  void _moveToResults() {
+  void _moveToResults(bool doAnimate) {
     Navigator.push(
         context,
-        SlidePageRoute(
-          fromPage: widget,
-          toPage: PartyResultScreen(offlineGroupData)
-        ));
+        doAnimate ?
+          SlidePageRoute(
+              fromPage: widget,
+              toPage: PartyResultScreen(offlineGroupData)
+          ) :
+          PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) => PartyResultScreen(offlineGroupData),
+            transitionDuration: Duration(seconds: 0),
+          ),
+    );
   }
 
 
@@ -247,7 +249,7 @@ class _PassScreenState extends State<PassScreen> {
             icon: OMIcons.chevronRight,
             onConfirmation: () {
 
-              _moveToResults();
+              _moveToResults( true );
             },
           ),
           floatingActionButtonLocation:
