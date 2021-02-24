@@ -25,11 +25,11 @@ class IconCardState extends State<IconCard> {
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Padding(
-          padding: EdgeInsets.all(7.5),
+            padding: EdgeInsets.all(7.5),
             child: Icon(
-          widget.icon,
-          color: widget.iconcolor,
-          size: widget.iconSize,
-        )));
+              widget.icon,
+              color: widget.iconcolor,
+              size: widget.iconSize,
+            )));
   }
 }
