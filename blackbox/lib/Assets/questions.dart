@@ -5,8 +5,9 @@ class Category {
   String categoryName;
   String description;
   List<String> questions;
+  bool isNew;
 
-  Category(this.categoryName, this.description, this.questions);
+  Category(this.categoryName, this.description, this.questions, this.isNew);
 
   String getDescription() {
     return description;
@@ -34,12 +35,9 @@ class Question {
   String getCategory() {
     return categoryName;
   }
-
 }
 
-
 class QuestionList {
-
   //Categoryname, question
   Map<String, String> questionsList = Map();
 
@@ -54,35 +52,34 @@ class QuestionList {
   ///returns a random next question qnd removes it from the list of questions
   /// Have 1/2 chance that it is a user submitted question if there are any.
   Question getRandomNextQuestion() {
-    bool playerQuestionPresent = questionsList.containsValue("A player's question");
+    bool playerQuestionPresent =
+        questionsList.containsValue("A player's question");
     //1/2  chance that the player's question is returned
     if (playerQuestionPresent) {
       var takePlayerQuest = Random().nextBool();
       if (takePlayerQuest) {
         print('taking player question');
-        var questionString = questionsList.keys.firstWhere((element) => questionsList[element] == "A player's question");
+        var questionString = questionsList.keys.firstWhere(
+            (element) => questionsList[element] == "A player's question");
         //remove from list
         print(questionString);
         print(questionsList[questionString]);
 
-        Question returning = Question(questionString, questionsList[questionString]);
+        Question returning =
+            Question(questionString, questionsList[questionString]);
         questionsList.remove(questionString);
 
         return returning;
-      }
-      else {
-        var questions = questionsList.keys.toList()
-          ..shuffle;
+      } else {
+        var questions = questionsList.keys.toList()..shuffle;
         var questionString = questions[0];
         var question = Question(questionString, questionsList[questionString]);
         //remove from list
         questionsList.remove(questionString);
         return question;
       }
-    }
-    else {
-      var questions = questionsList.keys.toList()
-        ..shuffle;
+    } else {
+      var questions = questionsList.keys.toList()..shuffle;
       var questionString = questions[0];
       var question = Question(questionString, questionsList[questionString]);
       //remove from list
@@ -127,7 +124,8 @@ List<String> EighteenPlus = [
 List<String> BeerOClock = [
   "Who does the most embarrassing things when drunk?".i18n,
   "Who would pass out first when drinking tequila?".i18n,
-  "You need to empty 3 bottles of tequila, who's definitely in your squad?".i18n,
+  "You need to empty 3 bottles of tequila, who's definitely in your squad?"
+      .i18n,
   "Who is most likely to kiss someone on a drunk night?".i18n,
   "Who is going to get wasted tonight?".i18n,
   "Who would drink any cocktail?".i18n,
@@ -145,7 +143,6 @@ List<String> BeerOClock = [
   "Who tried the most different beers?".i18n,
   "Who is most likely to drink him/herself unconscious?".i18n,
   "Who is the first to go all-out at a party?".i18n
-
 ];
 
 List<String> CharacterTraits = [
@@ -221,7 +218,8 @@ List<String> Casual = [
   "Who can best sing along with Old Town Road by Lil Nas X?".i18n,
   "Who spends the most amount of money on useless things?".i18n,
   "Who is the biggest Game Of Thrones fan?".i18n,
-  "Who is the best discussion partner for an evening of philosophizing at the bar, with who can you have endless conversations?".i18n,
+  "Who is the best discussion partner for an evening of philosophizing at the bar, with who can you have endless conversations?"
+      .i18n,
   "Who cannot be left alone in a kitchen?".i18n,
   "Who is the biggest wuss?".i18n,
   "Who will end up broke?".i18n,
@@ -271,12 +269,45 @@ List<String> FriendshipKillers = [
   "Who has the ugliest girlfriend/boyfriend".i18n,
 ];
 
+List<String> Family = [
+  "Who does the least amount of chores in the house?".i18n,
+  "Who decides what to watch on TV?".i18n,
+  "Who makes the most mess in the house?".i18n,
+  "Who is the most handy of the family?".i18n,
+  "Who sleeps the longest on a free day?".i18n,
+  "Who is home most often?".i18n,
+  "Who can cook best?".i18n,
+  "Who should do the dishes more often?".i18n,
+  "Who makes the most noise?".i18n,
+  "Who invites the most friends?".i18n,
+  "Who has the prettiest room?".i18n,
+  "Who has the best spot in the sofa?".i18n,
+  "Who eats the most?".i18n,
+  "Who complains most about dinner?".i18n,
+  "?".i18n,
+  "?".i18n,
+  "?".i18n,
+  "?".i18n,
+  "?".i18n,
+];
 
 List<Category> categories = [
-  Category("Casual".i18n, "General black box questions, a rather soft category. Great to get started".i18n, Casual),
-  Category("Character traits".i18n, "Questions about your friends’ character traits".i18n, CharacterTraits),
-  Category("Superstar".i18n, "Admire your friends’ actions or abilities".i18n, SuperStar),
-  Category("Friendship killers".i18n, "The biggest friendship test, your friendship can handle everything if it survives this category".i18n, FriendshipKillers),
-  Category("Beer o'clock".i18n, "Questions related to drinking, partying and nightlife".i18n, BeerOClock),
-  Category("+18".i18n, "Spicy questions, aimed at adults".i18n, EighteenPlus),
+  Category("Family".i18n, "Have fun with your household".i18n, Family, true),
+  Category(
+      "Casual".i18n,
+      "General black box questions, a rather soft category. Great to get started"
+          .i18n,
+      Casual, false),
+  Category("Character traits".i18n,
+      "Questions about your friends’ character traits".i18n, CharacterTraits, false),
+  Category("Superstar".i18n, "Admire your friends’ actions or abilities".i18n,
+      SuperStar, false),
+  Category(
+      "Friendship killers".i18n,
+      "The biggest friendship test, your friendship can handle everything if it survives this category"
+          .i18n,
+      FriendshipKillers, false),
+  Category("Beer o'clock".i18n,
+      "Questions related to drinking, partying and nightlife".i18n, BeerOClock, false),
+  Category("+18".i18n, "Spicy questions, aimed at adults".i18n, EighteenPlus, false),
 ];

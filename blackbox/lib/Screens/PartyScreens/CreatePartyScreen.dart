@@ -87,6 +87,7 @@ class _CreatePartyScreenState extends State<CreatePartyScreen> {
                   }
                   setState(() {});
                 },
+                isNewFlag: categories[index].isNew,
               ),
               SizedBox(
                 height: 5,

@@ -14,7 +14,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:blackbox/translations/gameScreens.i18n.dart';
 
-
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -167,6 +166,7 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
                   }
                   setState(() {});
                 },
+                isNewFlag: false,
               ),
               SizedBox(
                 height: 5,
@@ -193,106 +193,110 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
         fontFamily: "atarian",
         scaffoldBackgroundColor: Constants.iBlack,
       ),
-      home: I18n(child:Scaffold(
-        resizeToAvoidBottomPadding: false,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            InkWell(
-              onTap: () => Navigator.pop(context),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 20),
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: Constants.colors[Constants.colorindex],
+      home: I18n(
+        child: Scaffold(
+          resizeToAvoidBottomPadding: false,
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              InkWell(
+                onTap: () => Navigator.pop(context),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 20),
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Constants.colors[Constants.colorindex],
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Back'.i18n,
-                    style: TextStyle(
-                      fontSize: Constants.actionbuttonFontSize,
-                      color: Constants.colors[Constants.colorindex],
+                    Text(
+                      'Back'.i18n,
+                      style: TextStyle(
+                        fontSize: Constants.actionbuttonFontSize,
+                        color: Constants.colors[Constants.colorindex],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ]),
-        ),
-        body: Center(
-          child: Container(
-            //color: Constants.iBlack,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomLeft,
-                stops: [0.1, 1.0],
-                colors: [
-                  Constants.gradient1,
-                  Constants.gradient2,
-                ],
+            ]),
+          ),
+          body: Center(
+            child: Container(
+              //color: Constants.iBlack,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomLeft,
+                  stops: [0.1, 1.0],
+                  colors: [
+                    Constants.gradient1,
+                    Constants.gradient2,
+                  ],
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 1),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return ListView(
-                    padding: const EdgeInsets.only(
-                        left: 50, right: 50, top: 20, bottom: 20),
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      AutoSizeText(
-                        "Create new Game".i18n,
-                        style: TextStyle(
-                            color: Constants.iWhite,
-                            fontSize: Constants.titleFontSize,
-                            fontWeight: FontWeight.w300),
-                        maxLines: 1,
-                      ),
-                      SizedBox(height: 30.0),
-                      Text(
-                        'Game settings'.i18n,
-                        style: TextStyle(
-                            color: Constants.colors[Constants.colorindex],
-                            fontSize: Constants.normalFontSize),
-                      ),
-                      SizedBox(height: 20.0),
-                      ToggleButtonCard(
-                        'Blank vote'.i18n,
-                        _canVoteBlank,
-                        onToggle: (bool newValue) => _canVoteBlank = newValue,
-                      ),
-                      SizedBox(height: 5.0),
-                      ToggleButtonCard(
-                        'Vote on yourself'.i18n,
-                        _canVoteOnSelf,
-                        onToggle: (bool newValue) => _canVoteOnSelf = newValue,
-                      ),
-                      SizedBox(height: 20.0),
-                      Text(
-                        'Choose categories'.i18n,
-                        style: TextStyle(
-                          color: Constants.colors[Constants.colorindex],
-                          fontSize: Constants.normalFontSize,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 1),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return ListView(
+                      padding: const EdgeInsets.only(
+                          left: 50, right: 50, top: 20, bottom: 20),
+                      shrinkWrap: true,
+                      children: <Widget>[
+                        AutoSizeText(
+                          "Create new Game".i18n,
+                          style: TextStyle(
+                              color: Constants.iWhite,
+                              fontSize: Constants.titleFontSize,
+                              fontWeight: FontWeight.w300),
+                          maxLines: 1,
                         ),
-                      ),
-                      SizedBox(height: 20.0),
-                      categoryField,
-                      SizedBox(height: 75.0),
-                    ],
-                  );
-                },
+                        SizedBox(height: 30.0),
+                        Text(
+                          'Game settings'.i18n,
+                          style: TextStyle(
+                              color: Constants.colors[Constants.colorindex],
+                              fontSize: Constants.normalFontSize),
+                        ),
+                        SizedBox(height: 20.0),
+                        ToggleButtonCard(
+                          'Blank vote'.i18n,
+                          _canVoteBlank,
+                          onToggle: (bool newValue) => _canVoteBlank = newValue,
+                        ),
+                        SizedBox(height: 5.0),
+                        ToggleButtonCard(
+                          'Vote on yourself'.i18n,
+                          _canVoteOnSelf,
+                          onToggle: (bool newValue) =>
+                              _canVoteOnSelf = newValue,
+                        ),
+                        SizedBox(height: 20.0),
+                        Text(
+                          'Choose categories'.i18n,
+                          style: TextStyle(
+                            color: Constants.colors[Constants.colorindex],
+                            fontSize: Constants.normalFontSize,
+                          ),
+                        ),
+                        SizedBox(height: 20.0),
+                        categoryField,
+                        SizedBox(height: 75.0),
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
           ),
+          floatingActionButton: createButton,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
         ),
-        floatingActionButton: createButton,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      ),),
+      ),
     );
   }
 }
