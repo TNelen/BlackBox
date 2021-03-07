@@ -110,6 +110,8 @@ flutter:
            weight: 700
          - asset: assets/fonts/atarian-system-Italic.TTF
            weight: 300
+     
+
   #   
   #
   # For details regarding fonts from package dependencies,

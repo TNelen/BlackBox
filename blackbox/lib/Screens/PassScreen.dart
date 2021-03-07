@@ -13,7 +13,7 @@ import 'package:slide_to_confirm/slide_to_confirm.dart';
 import 'EditPlayersScreen.dart';
 import 'PartyQuestionScreen.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
-import 'package:blackbox/translations/gameScreens.i18n.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -222,7 +222,7 @@ class _PassScreenState extends State<PassScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(
-                          Icons.edit,
+                          Icons.people_alt_outlined,
                           color: Constants.colors[Constants.colorindex],
                           size: 35,
                         ),

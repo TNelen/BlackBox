@@ -10,7 +10,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:blackbox/ad_manager.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:blackbox/Screens/popups/rate_popup.dart';
-import 'package:blackbox/translations/gameScreens.i18n.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 

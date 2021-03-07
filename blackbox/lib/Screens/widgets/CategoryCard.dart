@@ -52,7 +52,7 @@ class CategoryCardState extends State<CategoryCard> {
                               color: widget.defaultValue
                                   ? Constants.iDarkGrey
                                   : Constants.iWhite,
-                              fontSize: Constants.normalFontSize,
+                              fontSize: Constants.actionbuttonFontSize,
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
@@ -86,7 +86,7 @@ class CategoryCardState extends State<CategoryCard> {
                             ? Constants.iBlack
                             : Constants.iLight,
                         fontSize: Constants.smallFontSize,
-                        fontWeight: FontWeight.bold),
+                        fontWeight: FontWeight.w300),
                   ),
                   SizedBox(height: 5),
                 ],

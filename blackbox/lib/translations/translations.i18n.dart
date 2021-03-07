@@ -1,10 +1,475 @@
 import 'package:i18n_extension/i18n_extension.dart';
 
-
-
 extension Localization on String {
-
   static var _t = Translations("en") +
+      /////////////
+      ///Popups///
+      ////////////
+
+      {
+        "en": "Rate this app",
+        "nl": "Beoordeel deze app",
+      } +
+      {
+        "en":
+            "If you like the app, please consider giving it a rating in the play store. ",
+        "nl":
+            "Vind je dit een tof spel, geef ons een beoordeling in de play store aub",
+      } +
+      {
+        "en": "Hi there!",
+        "nl": "Hey daar!",
+      } +
+      {
+        "en":
+            "We would like to hear how we can improve the app for you! Do not hesitate to contact us! We will do our best to provide the best possible experience for all players. ",
+        "nl":
+            "We willen graag horen hoe we onze app kunnen verbeteren voor jou!  Aarzel niet om contact met ons op te nemen.",
+      } +
+      {
+        "en":
+            "We are very sorry to hear that you are not satisfied with our app. Please contact us with your issue and we will do our best to improve your experience",
+        "nl":
+            "We vinden het spijtig dat je onze app niet leuk vind. Neem aub contact met ons op om je probleem te tonen, we doen ons best om voor iedereen een zo goed mogelijke app te maken",
+      } +
+      {
+        "en": "Close",
+        "nl": "Sluit",
+      } +
+      {
+        "en": "Contact us!",
+        "nl": "Contacteer ons!",
+      } +
+      {
+        "en": "Change username",
+        "nl": "Verander gebruikersnaam",
+      } +
+      {
+        "en":
+            "This name will be shown in the game, make sure others recognise you!",
+        "nl":
+            "Deze naam wordt getoond in het spel, zorg ervoor dat anderen je herkennen",
+      } +
+      {
+        "en": "Please enter more then 3 characters",
+        "nl": "Gebruik meer dan 3 karakers aub",
+      } +
+      {
+        "en": "Start typing here...",
+        "nl": "Begin hier met typen...",
+      } +
+      {
+        "en": "Ask a question...",
+        "nl": "Stel een vraag",
+      } +
+      {
+        "en": "Submit",
+        "nl": "Bevestig",
+      } +
+      {
+        "en": "You cannot submit an empty question",
+        "nl": "Je kan geen lege vraag insturen",
+      } +
+      {
+        "en": "You cannot submit a question shorter than 5 characters",
+        "nl": "Je kan geen vraag korter dan 5 karakters insturen",
+      } +
+      {
+        "en": "Cancel",
+        "nl": "Annuleer",
+      } +
+      {
+        "en": "End game?",
+        "nl": "Stop spel?",
+      } +
+      {
+        "en":
+            "Are you sure to end the game? \nThe game will end for all users.",
+        "nl":
+            "Ben je zeker dat je het spel wil eindigen? \nHet spel eindigt voor alle spelers.",
+      } +
+      {
+        "en": "Yes I'm sure",
+        "nl": "Ja ik ben zeker",
+      } +
+      {
+        "en": "No members selected",
+        "nl": "Geen speler geselecteerd",
+      } +
+      {
+        "en": "No member selected",
+        "nl": "Geen speler geselecteerd",
+      } +
+      {
+        "en": "Please make a valid choice",
+        "nl": "Maak een geldige keuze aub",
+      } +
+      {
+        "en": "Close",
+        "nl": "Sluit",
+      } +
+      {
+        "en": "Group Code",
+        "nl": "Groep code",
+      } +
+      {
+        "en": "Join a game with this code:\n\n",
+        "nl": "Speel mee met een spel met deze code:\n\n",
+      } +
+
+      ///////////////////
+      /// GamerScreens ///
+      ////////////////////
+
+      {
+        "en": "Submit Question",
+        "nl": "Stel een vraag",
+      } +
+      {
+        "en": "Blank",
+        "nl": "Blanco",
+      } +
+      {
+        "en": "remaining",
+        "nl": "resterend",
+      } +
+      {
+        "en": "question",
+        "nl": "vraag",
+      } +
+      {
+        "en": "Collecting votes",
+        "nl": "Stemmen verzamelen",
+      } +
+      {
+        "en": "Time left for voting",
+        "nl": "Tijd resterend om te stemmen",
+      } +
+      {
+        "en": "Alltime leaderboard",
+        "nl": "Algemene rangschikking",
+      } +
+      {
+        "en": "st",
+        "nl": "e",
+      } +
+      {
+        "en": "nd",
+        "nl": "e",
+      } +
+      {
+        "en": "rd",
+        "nl": "e",
+      } +
+      {
+        "en": "th",
+        "nl": "e",
+      } +
+      {
+        "en": "Show less",
+        "nl": "Toon minder",
+      } +
+      {
+        "en": "Show More",
+        "nl": "Toon meer",
+      } +
+      {
+        "en": "Results",
+        "nl": "Resultaten",
+      } +
+      {
+        "en": "vote",
+        "nl": "stem",
+      } +
+      {
+        "en": " vote",
+        "nl": "stem",
+      } +
+      {
+        "en": "votes",
+        "nl": "stemmen",
+      } +
+      {
+        "en": "Next Question",
+        "nl": "Volgende vraag",
+      } +
+      {
+        "en": "The games has ended. \n Show overview",
+        "nl": "Het spel is afgelopen. \n Toon overzicht",
+      } +
+      {
+        "en": "Leave",
+        "nl": "Verlaat",
+      } +
+      {
+        "en": "Leaderboard",
+        "nl": "Rangschikking",
+      } +
+      {
+        "en": "Vote",
+        "nl": "Stem",
+      } +
+      {
+        "en": "Results",
+        "nl": "Resultaten",
+      } +
+      {
+        "en": "Question",
+        "nl": "Vraag",
+      } +
+      {
+        "en": "You like this question! Thank you for your feedback!",
+        "nl": "Je vind deze vraag leuk!  bedankt voor je feedback!",
+      } +
+      {
+        "en": "Undo",
+        "nl": "Ongedaan",
+      } +
+      {
+        "en": "Select a friend",
+        "nl": "Selecteer een speler",
+      } +
+      {
+        "en": "Home",
+        "nl": "Hoofdscherm",
+      } +
+      {
+        "en": "overview",
+        "nl": "Overzicht",
+      } +
+      {
+        "en": "Invalid code",
+        "nl": "Ongeldige code",
+      } +
+      {
+        "en": "Please check you code and try again!",
+        "nl": "Kijk de code na en probeer opnieuw!",
+      } +
+      {
+        "en": "Please check your code",
+        "nl": "Kijk je code na aub!",
+      } +
+      {
+        "en": "A code should contain ",
+        "nl": "Een code moet ",
+      } +
+      {
+        "en": "symbols!",
+        "nl": "symbolen bevatten",
+      } +
+      {
+        "en": "Join",
+        "nl": "Meespelen",
+      } +
+      {
+        "en": "Game code",
+        "nl": "Groep code",
+      } +
+      {
+        "en": "Back",
+        "nl": "Terug",
+      } +
+      {
+        "en": "Join Group",
+        "nl": "Meespelen",
+      } +
+      {
+        "en": "Enter group code below",
+        "nl": "Vul de groepcode hieronder in",
+      } +
+      {
+        "en": "Game Lobby",
+        "nl": "Hoofdruimte",
+      } +
+      {
+        "en": "Press the check mark to get ready!",
+        "nl": "Druk het vinkje om je klaar te maken",
+      } +
+      {
+        "en": "You can start the game if all players are ready!",
+        "nl": "Je kan het spel starten als alle spelers klaar zijn!",
+      } +
+      {
+        "en": "Players ready:  ",
+        "nl": "Spelers klaar:  ",
+      } +
+      {
+        "en": "Players",
+        "nl": "Spelers",
+      } +
+      {
+        "en": "Invite players",
+        "nl": "Uitnodigen",
+      } +
+      {
+        "en": "Ready",
+        "nl": "Klaar",
+      } +
+      {
+        "en": "Start Game",
+        "nl": "Start spel",
+      } +
+      {
+        "en": "Please fill in all fields!",
+        "nl": "Vul alle velden in aub!",
+      } +
+      {
+        "en": "Woops!",
+        "nl": "Oeps!",
+      } +
+      {
+        "en": "Create",
+        "nl": "Maak",
+      } +
+      {
+        "en": "Back",
+        "nl": "Terug",
+      } +
+      {
+        "en": "Create new Game",
+        "nl": "Maak een nieuw spel",
+      } +
+      {
+        "en": "Game settings",
+        "nl": "Spel instellingen",
+      } +
+      {
+        "en": "Blank vote",
+        "nl": "Blanco stemmen",
+      } +
+      {
+        "en": "Vote on yourself",
+        "nl": "Op jezelf stemmen",
+      } +
+      {
+        "en": "Choose categories",
+        "nl": "Kies een categorie",
+      } +
+      {
+        "en": " remaining",
+        "nl": " resterend",
+      } +
+      {
+        "en": " question",
+        "nl": " vraag",
+      } +
+      {
+        "en": " votes",
+        "nl": " stemmen",
+      } +
+      {
+        "en": "Create a new Party",
+        "nl": "Maak een nieuw spel",
+      } +
+      {
+        "en": "Please select one or more categories!",
+        "nl": "Kies een of meerdere categorieen aub!",
+      } +
+      {
+        "en": "Start typing here...",
+        "nl": "Begin hier met typen...",
+      } +
+      {
+        "en": "Add player",
+        "nl": "Voeg speler toe",
+      } +
+      {
+        "en": "Start",
+        "nl": "Start",
+      } +
+      {
+        "en": "Continue",
+        "nl": "Ga verder",
+      } +
+      {
+        "en": "who's playing?",
+        "nl": "wie speelt er?",
+      } +
+      {
+        "en": "swipe to remove player",
+        "nl": "swipe om speler te verwijderen",
+      } +
+      {
+        "en": "pass the phone",
+        "nl": "Geef de gsm door",
+      } +
+      {
+        "en": " players have voted",
+        "nl": " spelers hebben gestemd",
+      } +
+      {
+        "en": "  Vote!",
+        "nl": "  Stem!",
+      } +
+      {
+        "en": "  All players voted",
+        "nl": "  Iedereen heeft gestemd",
+      } +
+      {
+        "en": "  Add question",
+        "nl": "  Stel een vraag",
+      } +
+      {
+        "en": "  Edit players",
+        "nl": "  Verander spelers",
+      } +
+      {
+        "en": "  Add or remove players",
+        "nl": "  Verwijder of voeg spelers toe",
+      } +
+      {
+        "en": "  Want to ask a question? Submit it here!",
+        "nl": "  Stuur hier je eigen vraag in",
+      } +
+      {
+        "en": " questions remaining",
+        "nl": " vragen over",
+      } +
+      {
+        "en": "Swipe to go to results",
+        "nl": "Swipe voor de resultaten",
+      } +
+      {
+        "en": "End game",
+        "nl": "Stop spel",
+      } +
+      {
+        "en": "st",
+        "nl": "e",
+      } +
+      {
+        "en": "The games has ended",
+        "nl": "Het spel is afgelopen",
+      } +
+      {
+        "en": "Player Name",
+        "nl": "Spelersnaam",
+      } +
+
+      //////////////////
+      /// Homescreen ///
+      //////////////////
+      {
+        "en": "Welcome to BlackBox!",
+        "nl": "Welkom bij BlackBox",
+      } +
+      {
+        "en": "Select one or more categories...",
+        "nl": "Selcteer een of meerdere categorieen...",
+      } +
+      {
+        "en": "Popular",
+        "nl": "Populair",
+      } +
+      {
+        "en": "Other",
+        "nl": "Andere",
+      } +
+      {
+        "en": "Next",
+        "nl": "Volgende",
+      } +
+
       //////////////////
       ///EighteenPlus///
       //////////////////
@@ -26,7 +491,8 @@ extension Localization on String {
       } +
       {
         "en": "Who cares most about being attractive to the other sex?",
-        "nl": "Wie doet het meeste moeite om aantrekkelijk te zijn voor het andere geslacht?",
+        "nl":
+            "Wie doet het meeste moeite om aantrekkelijk te zijn voor het andere geslacht?",
       } +
       {
         "en": "Who has the most exes?",
@@ -70,7 +536,8 @@ extension Localization on String {
       } +
       {
         "en": "If you have to kiss someone of the same sex, who would it be?",
-        "nl": "Als je iemand van hetzelfde geslacht moet kussen, wie zou dit zijn?",
+        "nl":
+            "Als je iemand van hetzelfde geslacht moet kussen, wie zou dit zijn?",
       } +
       {
         "en": "Who has the most attractive booty?",
@@ -105,7 +572,8 @@ extension Localization on String {
         "nl": "Wie is het eerste zat met tequila",
       } +
       {
-        "en": "You need to empty 3 bottles of tequila, who's definitely in your squad?",
+        "en":
+            "You need to empty 3 bottles of tequila, who's definitely in your squad?",
         "nl": "Je moet 3 flessen wodka opdrinken, wie bel je?",
       } +
       {
@@ -126,7 +594,8 @@ extension Localization on String {
       } +
       {
         "en": "Who would kiss someone of the same sex on a drunk night?",
-        "nl": "Wie zou iemand van hetzelfde geslacht kussen op een dronken avond?",
+        "nl":
+            "Wie zou iemand van hetzelfde geslacht kussen op een dronken avond?",
       } +
       {
         "en": "Who would go home with a random person after a party?",
@@ -450,8 +919,10 @@ extension Localization on String {
         "nl": "Wie is de grootste Game of Thrones fan?",
       } +
       {
-        "en": "Who is the best discussion partner for an evening of philosophizing at the bar, with who can you have endless conversations?",
-        "nl": "Met wie kan je een hele avond praten op cafe over diepzinnige dingen?",
+        "en":
+            "Who is the best discussion partner for an evening of philosophizing at the bar, with who can you have endless conversations?",
+        "nl":
+            "Met wie kan je een hele avond praten op cafe over diepzinnige dingen?",
       } +
       {
         "en": "Who cannot be left alone in a kitchen?",
@@ -469,7 +940,6 @@ extension Localization on String {
         "en": "Who is most interested in politics?",
         "nl": "Wie is het meest geinteresseerd in politiek?",
       } +
-
       {
         "en": "Who is most organised?",
         "nl": "Wie is meest georganiseerd?",
@@ -561,7 +1031,6 @@ extension Localization on String {
         "en": "Who cannot live without social media attention?",
         "nl": "Wie kan niet zonder sociale media aandacht?",
       } +
-
       {
         "en": "Who would you couple up with?",
         "nl": "Met wie zou je samen willen zijn?",
@@ -638,8 +1107,8 @@ extension Localization on String {
       ///categories and description///
       ////////////////////////////////
       {
-      "en": "Casual",
-      "nl": "Casual",
+        "en": "Casual",
+        "nl": "Casual",
       } +
       {
         "en": "Character traits",
@@ -662,7 +1131,8 @@ extension Localization on String {
         "nl": "+18",
       } +
       {
-        "en": "General black box questions, a rather soft category. Great to get started",
+        "en":
+            "General black box questions, a rather soft category. Great to get started",
         "nl": "algemene Blackbox vragen, ideaal om mee te starten",
       } +
       {
@@ -674,7 +1144,8 @@ extension Localization on String {
         "nl": "Bewonder je vrienden hun acties of eigenschappen",
       } +
       {
-        "en": "The biggest friendship test, your friendship can handle everything if it survives this category",
+        "en":
+            "The biggest friendship test, your friendship can handle everything if it survives this category",
         "nl": "De grootste vriendschapstest. Niet voor gevoelige mensen",
       } +
       {
@@ -748,12 +1219,7 @@ extension Localization on String {
       {
         "en": "",
         "nl": "",
-      } +
-      {
-        "en": "",
-        "nl": "",
-      }
-  ;
+      };
 
   String get i18n => localize(this, _t);
 }

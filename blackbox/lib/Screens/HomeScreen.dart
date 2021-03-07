@@ -1,41 +1,34 @@
+import 'package:blackbox/Assets/questions.dart';
+import 'package:blackbox/Screens/popups/Popup.dart';
+import 'package:blackbox/Screens/widgets/CategoryCard.dart';
+import 'package:blackbox/Screens/widgets/PopularCategoryCard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'CreatePartyScreen.dart';
-import 'animation/ScalePageRoute.dart';
+import 'SetPlayersScreen.dart';
+import 'animation/SlidePageRoute.dart';
 import 'widgets/HomeScreenTopIcons.dart';
-import 'widgets/home_screen_button.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/painting.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
 import '../Constants.dart';
-import 'package:blackbox/translations/homescreen.i18n.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-
 class HomeScreen extends StatefulWidget {
-  bool enableOnlineMode = true;
-  bool loggedIn = false;
-
   HomeScreen() {}
 
   @override
-  _HomeScreenState createState() =>
-      _HomeScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-
   _HomeScreenState() {
-
     FirebaseAnalytics().logEvent(
         name: 'open_screen', parameters: {'screen_name': 'HomeScreen'});
   }
 
-  ScrollController _controller = ScrollController();
   bool setScrollable = true;
+  List<Category> selectedCategory = [];
 
   void handleOfflinePreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -47,22 +40,51 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      if (setScrollable && _controller.position.extentAfter == 0)
-        setState(() {
-          setScrollable = false;
-        });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final nextButton = Hero(
+        tag: 'tobutton',
+        child: Padding(
+          padding: EdgeInsets.only(left: 45, right: 45),
+          child: Material(
+            elevation: 5.0,
+            borderRadius: BorderRadius.circular(26.0),
+            color: Constants.colors[Constants.colorindex],
+            child: MaterialButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(26.0),
+              ),
+              minWidth: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
+              onPressed: () {
+                if (selectedCategory.length != 0) {
+                  Navigator.push(
+                      context,
+                      SlidePageRoute(
+                          fromPage: widget,
+                          toPage: SetPlayersScreen(selectedCategory)));
+                } else {
+                  Popup.makePopup(context, "Woops!".i18n,
+                      "Please select one or more categories!".i18n);
+                }
+              },
+              child: Text("Next".i18n,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: Constants.actionbuttonFontSize)
+                      .copyWith(
+                          color: Constants.iDarkGrey,
+                          fontWeight: FontWeight.bold)),
+            ),
+          ),
+        ));
+
     return WillPopScope(
-        onWillPop: () async {
-          return false;
-        },
-        child: MaterialApp(
+      onWillPop: () async {
+        return false;
+      },
+      child: MaterialApp(
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
@@ -81,101 +103,133 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Scaffold(
               backgroundColor: Colors.transparent,
               body: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    stops: [0.1, 0.9],
-                    colors: [
-                      Constants.gradient1,
-                      Constants.gradient2,
-                    ],
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      stops: [0.1, 0.9],
+                      colors: [
+                        Constants.gradient1,
+                        Constants.gradient2,
+                      ],
+                    ),
                   ),
-                ),
-                //margin: EdgeInsets.only(top: 16, left: 5, right: 5),
-                child: ListView(
-                  //shrinkWrap: true,
-                  controller: _controller,
-                  physics: setScrollable
-                      ? AlwaysScrollableScrollPhysics()
-                      : NeverScrollableScrollPhysics(),
-                  children: [
-                    SizedBox(
-                      height: 5.0 * MediaQuery.of(context).devicePixelRatio,
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              width: MediaQuery.of(context).size.width * 0.75,
-                              child: IconBar()),
-                        ]),
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 25,
-                          ),
-                          Container(
-                              padding: EdgeInsets.only(left: 10, right: 10),
-                              child: Text(
-                                "Welcome to BlackBox!".i18n,
-                                style: TextStyle(
-                                    color:
-                                        Constants.colors[Constants.colorindex],
-                                    fontSize: Constants.normalFontSize,
-                                    fontWeight: FontWeight.w300),
-                              )),
-                          SizedBox(
-                            height: 25,
-                          ),
-                        ]),
-                    SizedBox(
-                      height: 13 * MediaQuery.of(context).devicePixelRatio,
-                    ),
-                    Container(
-                        padding: EdgeInsets.only(left: 45, right: 45),
-                        child: Column(
-                          children: <Widget>[
+                  //margin: EdgeInsets.only(top: 16, left: 5, right: 5),
+                  child: Column(
+                    //shrinkWrap: true,
+
+                    children: [
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             Container(
-                              padding: EdgeInsets.only(
-                                  left: 10,
-                                  bottom: 10 *
-                                      MediaQuery.of(context).devicePixelRatio),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Who\'s playing...'.i18n,
-                                  style: TextStyle(
-                                      fontSize: Constants.subtitleFontSize,
-                                      color: Constants.iWhite,
-                                      fontWeight: FontWeight.w300),
-                                ),
-                              ),
-                            ),
-                            Hero(
-                              tag: 'partymode',
-                              child: HomeScreenButton(
-                                  'Party Mode',
-                                  'Play with all your friends on one single device'
-                                      .i18n,
-                                  true,
-                                  true,
-                                  icon: OMIcons.peopleOutline, onTap: () {
-                                Navigator.push(context,
-                                    ScaleUpPageRoute(CreatePartyScreen()));
-                              }),
-                            ),
-                            SizedBox(
-                              height: 6,
-                            ),
-                          ],
-                        )),
-                  ],
-                ),
-              ),
+                                width: MediaQuery.of(context).size.width * 0.75,
+                                child: IconBar()),
+                          ]),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                          padding: EdgeInsets.only(left: 30, right: 30),
+                          child: Text("Select one or more categories...".i18n,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Constants.colors[Constants.colorindex],
+                                  fontSize: Constants.normalFontSize,
+                                  fontWeight: FontWeight.w300))),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 30, right: 30),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Popular'.i18n,
+                            style: TextStyle(
+                                fontSize: Constants.normalFontSize,
+                                color: Constants.iWhite,
+                                fontWeight: FontWeight.w300),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 5.5,
+                        child: ListView.builder(
+                          padding: EdgeInsets.only(left: 30),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: popularcategories.length,
+                          itemBuilder: (BuildContext context, int index) =>
+                              PopularCategoryCard(
+                            selectedCategory.contains(popularcategories[index]),
+                            popularcategories[index].categoryName.i18n,
+                            popularcategories[index].description.i18n,
+                            onTap: () {
+                              if (!selectedCategory
+                                  .contains(popularcategories[index])) {
+                                selectedCategory.add(popularcategories[index]);
+                              } else if (selectedCategory
+                                  .contains(popularcategories[index])) {
+                                selectedCategory
+                                    .remove(popularcategories[index]);
+                              }
+                              setState(() {});
+                            },
+                            isNewFlag: popularcategories[index].isNew,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        padding: EdgeInsets.only(left: 30, right: 30),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Other'.i18n,
+                            style: TextStyle(
+                                fontSize: Constants.normalFontSize,
+                                color: Constants.iWhite,
+                                fontWeight: FontWeight.w300),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.only(left: 45, right: 45),
+                        scrollDirection: Axis.vertical,
+                        itemCount: categories.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            CategoryCard(
+                          selectedCategory.contains(categories[index]),
+                          categories[index].categoryName.i18n,
+                          categories[index].description.i18n,
+                          onTap: () {
+                            if (!selectedCategory.contains(categories[index])) {
+                              selectedCategory.add(categories[index]);
+                            } else if (selectedCategory
+                                .contains(categories[index])) {
+                              selectedCategory.remove(categories[index]);
+                            }
+                            setState(() {});
+                          },
+                          isNewFlag: categories[index].isNew,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                    ],
+                  )),
+              floatingActionButton: nextButton,
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat,
             ),
-          ),
-        ));
+          )),
+    );
   }
 }

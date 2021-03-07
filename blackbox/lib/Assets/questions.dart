@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:blackbox/translations/questions.i18n.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 
 class Category {
   String categoryName;
@@ -7,7 +7,12 @@ class Category {
   List<String> questions;
   bool isNew;
 
-  Category(this.categoryName, this.description, this.questions, this.isNew);
+  Category(
+    this.categoryName,
+    this.description,
+    this.questions,
+    this.isNew,
+  );
 
   String getDescription() {
     return description;
@@ -291,23 +296,51 @@ List<String> Family = [
   "?".i18n,
 ];
 
-List<Category> categories = [
-  Category("Family".i18n, "Have fun with your household".i18n, Family, true),
+List<Category> popularcategories = [
+  Category(
+    "Family".i18n,
+    "Have fun with your household".i18n,
+    Family,
+    true,
+  ),
   Category(
       "Casual".i18n,
       "General black box questions, a rather soft category. Great to get started"
           .i18n,
-      Casual, false),
-  Category("Character traits".i18n,
-      "Questions about your friends’ character traits".i18n, CharacterTraits, false),
-  Category("Superstar".i18n, "Admire your friends’ actions or abilities".i18n,
-      SuperStar, false),
+      Casual,
+      false),
   Category(
-      "Friendship killers".i18n,
-      "The biggest friendship test, your friendship can handle everything if it survives this category"
-          .i18n,
-      FriendshipKillers, false),
-  Category("Beer o'clock".i18n,
-      "Questions related to drinking, partying and nightlife".i18n, BeerOClock, false),
-  Category("+18".i18n, "Spicy questions, aimed at adults".i18n, EighteenPlus, false),
+    "Superstar".i18n,
+    "Admire your friends’ actions or abilities".i18n,
+    SuperStar,
+    false,
+  ),
+];
+
+List<Category> categories = [
+  Category(
+    "Character traits".i18n,
+    "Questions about your friends’ character traits".i18n,
+    CharacterTraits,
+    false,
+  ),
+  Category(
+    "Friendship killers".i18n,
+    "The biggest friendship test, your friendship can handle everything if it survives this category"
+        .i18n,
+    FriendshipKillers,
+    false,
+  ),
+  Category(
+    "Beer o'clock".i18n,
+    "Questions related to drinking, partying and nightlife".i18n,
+    BeerOClock,
+    false,
+  ),
+  Category(
+    "+18".i18n,
+    "Spicy questions, aimed at adults".i18n,
+    EighteenPlus,
+    false,
+  ),
 ];

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../Constants.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 
-import 'package:blackbox/translations/gameScreens.i18n.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 

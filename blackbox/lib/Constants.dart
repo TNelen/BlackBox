@@ -11,6 +11,8 @@ class Constants {
   static const gradient1 = Color(0xFF121212);
   static const gradient2 = Color(0xFF21272C);
 
+  //static const gradient2 = Color(0xFF21272C);
+
   static int colorindex;
 
   //accent color list
@@ -24,11 +26,11 @@ class Constants {
   //fontsizes
   static const titleFontSize = 50.0;
   static const subtitleFontSize = 40.0;
-  static const normalFontSize = 30.0;
-  static const smallFontSize = 18.0;
-  static const miniFontSize = 13.0;
+  static const normalFontSize = 26.0;
+  static const smallFontSize = 16.0;
+  static const miniFontSize = 12.0;
 
-  static const actionbuttonFontSize = 25.0;
+  static const actionbuttonFontSize = 22.0;
 
   static int enableVersionMSG = 0;
   static int enableWelcomeMSG = 0;
@@ -43,7 +45,8 @@ class Constants {
   static void loadData() {
     SharedPreferences.getInstance().then((value) => {
           _prefs = value,
-          colorindex = _prefs.getInt("accent"),
+          colorindex =
+              _prefs.getInt("accent") == null ? 0 : _prefs.getInt("accent"),
           _areNotificationsEnabled = _prefs.getBool("notifications"),
           _isVibrationEnabled = _prefs.getBool("vibration"),
           _isSoundEnabled = _prefs.getBool("sounds"),
@@ -72,11 +75,11 @@ class Constants {
   }
 
   static bool getSoundEnabled() {
-    return _isSoundEnabled;
+    return _isSoundEnabled ??= true;
   }
 
   static bool getNotificationsEnabled() {
-    return _areNotificationsEnabled;
+    return _areNotificationsEnabled ??= true;
   }
 
   /// Enable or disable vibration

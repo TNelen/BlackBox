@@ -1,7 +1,6 @@
 import 'package:i18n_extension/i18n_extension.dart';
 
 extension Localization on String {
-
   static var _t = Translations("en") +
       {
         "en": "Submit Question",
@@ -175,7 +174,6 @@ extension Localization on String {
         "en": "Players",
         "nl": "Spelers",
       } +
-
       {
         "en": "Invite players",
         "nl": "Uitnodigen",
@@ -321,8 +319,8 @@ extension Localization on String {
         "nl": "Het spel is afgelopen",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "Player Name",
+        "nl": "Spelersnaam",
       } +
       {
         "en": "",
@@ -343,11 +341,7 @@ extension Localization on String {
       {
         "en": "",
         "nl": "",
-      }
-
-
-
-  ;
+      };
 
   String get i18n => localize(this, _t);
 }

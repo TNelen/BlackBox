@@ -9,20 +9,16 @@ class ToggleButtonCard extends StatefulWidget {
   final Icon icon;
   final Color splashColor;
 
-  ToggleButtonCard(
-    this.text, this.defaultValue, 
-    { 
-      this.onToggle, 
-      this.textStyle: 
-        const TextStyle(
+  ToggleButtonCard(this.text, this.defaultValue,
+      {this.onToggle,
+      this.textStyle: const TextStyle(
           fontSize: Constants.actionbuttonFontSize,
           color: Constants.iWhite,
-        ), 
+          fontFamily: "atarian"),
       this.icon,
       this.splashColor,
-      Key key
-    }
-  ) : super(key: key);
+      Key key})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -45,11 +41,10 @@ class ToggleButtonCardState extends State<ToggleButtonCard> {
     _currentValue = widget.defaultValue ?? false;
   }
 
-  void _setValue( bool value )
-  {
+  void _setValue(bool value) {
     _currentValue = value;
 
-    if (widget.onToggle != null) widget.onToggle( value );
+    if (widget.onToggle != null) widget.onToggle(value);
 
     setState(() {});
   }
@@ -65,12 +60,13 @@ class ToggleButtonCardState extends State<ToggleButtonCard> {
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(16.0),
-          splashColor: widget.splashColor ?? Constants.colors[Constants.colorindex],
-          onTap: () => _setValue( !_currentValue ),
+          splashColor:
+              widget.splashColor ?? Constants.colors[Constants.colorindex],
+          onTap: () => _setValue(!_currentValue),
           child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.0),
-          ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,7 +88,7 @@ class ToggleButtonCardState extends State<ToggleButtonCard> {
                 ]),
                 Switch(
                   value: _currentValue,
-                  onChanged: (value) => _setValue( value ),
+                  onChanged: (value) => _setValue(value),
                   activeTrackColor: Constants.colors[Constants.colorindex],
                   activeColor: Constants.iWhite,
                 ),

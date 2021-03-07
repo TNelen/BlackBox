@@ -4,7 +4,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../../Constants.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:blackbox/translations/popups/popups.i18n.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 
 class Popup {
   static void makePopup(BuildContext context, String title, String message) {

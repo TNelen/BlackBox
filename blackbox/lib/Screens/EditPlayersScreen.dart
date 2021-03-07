@@ -3,7 +3,7 @@ import 'package:blackbox/Screens/animation/ScaleDownPageRoute.dart';
 import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:blackbox/translations/gameScreens.i18n.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -231,7 +231,7 @@ class _EditPlayersScreenState extends State<EditPlayersScreen> {
             color: Constants.colors[Constants.colorindex],
             fontSize: Constants.smallFontSize,
             fontWeight: FontWeight.w300,
-            fontFamily: "atarian",
+            fontFamily: "stanberry",
           ),
         ),
         Icon(Icons.add, color: Constants.colors[Constants.colorindex]),

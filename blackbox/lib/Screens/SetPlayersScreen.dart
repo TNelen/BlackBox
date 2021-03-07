@@ -2,43 +2,42 @@ import 'package:blackbox/Assets/questions.dart';
 import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PartyQuestionScreen.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
+import 'package:blackbox/Screens/widgets/toggle_button_card.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'popups/Popup.dart';
 import '../Constants.dart';
-import 'package:blackbox/translations/gameScreens.i18n.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 class SetPlayersScreen extends StatefulWidget {
   List<Category> selectedCategory = [];
-  bool canVoteBlank;
 
-  SetPlayersScreen(List<Category> selectedCategory, bool canVoteBlank) {
+  SetPlayersScreen(List<Category> selectedCategory) {
     this.selectedCategory = selectedCategory;
-    this.canVoteBlank = canVoteBlank;
   }
 
   @override
   _SetPlayersScreenState createState() =>
-      _SetPlayersScreenState(selectedCategory, canVoteBlank);
+      _SetPlayersScreenState(selectedCategory);
 }
 
 class _SetPlayersScreenState extends State<SetPlayersScreen> {
   List<Category> selectedCategory;
   List<String> players = [];
-  bool canVoteBlank;
   QuestionList questionList;
   TextEditingController codeController = TextEditingController();
 
-  _SetPlayersScreenState(List<Category> selectedCategory, bool canVoteBlank) {
+  _SetPlayersScreenState(List<Category> selectedCategory) {
     this.selectedCategory = selectedCategory;
-    this.canVoteBlank = canVoteBlank;
 
     FirebaseAnalytics().logEvent(
         name: 'open_screen', parameters: {'screen_name': 'setPlayersScreen'});
   }
+
+  bool canVoteBlank = false;
 
   @override
   Widget build(BuildContext context) {
@@ -250,7 +249,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
             padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
             onPressed: () {
               if (players.length != 0 && selectedCategory.length != 0) {
-                canVoteBlank ? players.add("Blank") : null;
+                canVoteBlank ? players.add("Blank".i18n) : null;
                 questionList = QuestionList(selectedCategory);
 
                 Map<String, dynamic> map = {
@@ -351,13 +350,33 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
               ),
               child: ListView(
                 padding: const EdgeInsets.only(
-                    top: 36.0, bottom: 36, left: 63, right: 63),
+                    top: 36.0, bottom: 36, left: 45, right: 45),
                 children: <Widget>[
+                  Text(
+                    'Game settings'.i18n,
+                    style: TextStyle(
+                      color: Constants.iWhite,
+                      fontSize: Constants.normalFontSize,
+                      fontWeight: FontWeight.w300,
+                      fontFamily: "atarian",
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ToggleButtonCard(
+                    'Blank vote'.i18n,
+                    canVoteBlank,
+                    onToggle: (bool newValue) => canVoteBlank = newValue,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Text(
                     'who\'s playing?'.i18n,
                     style: TextStyle(
                       color: Constants.iWhite,
-                      fontSize: Constants.titleFontSize,
+                      fontSize: Constants.normalFontSize,
                       fontWeight: FontWeight.w300,
                       fontFamily: "atarian",
                     ),
