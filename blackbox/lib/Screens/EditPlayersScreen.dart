@@ -1,19 +1,17 @@
 import 'package:blackbox/Models/OfflineGroupData.dart';
-import 'package:blackbox/Screens/PartyScreens/PassScreen.dart';
 import 'package:blackbox/Screens/animation/ScaleDownPageRoute.dart';
+import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import '../popups/Popup.dart';
-import '../../Constants.dart';
-import 'package:blackbox/Database/QuestionListGetter.dart';
 import 'package:blackbox/translations/gameScreens.i18n.dart';
-
 
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-class EditPlayersScreen extends StatefulWidget {
+import '../Constants.dart';
+import 'PassScreen.dart';
 
+class EditPlayersScreen extends StatefulWidget {
   final OfflineGroupData _groupData;
 
   EditPlayersScreen(this._groupData);
@@ -23,7 +21,6 @@ class EditPlayersScreen extends StatefulWidget {
 }
 
 class _EditPlayersScreenState extends State<EditPlayersScreen> {
-
   TextEditingController codeController = TextEditingController();
 
   _SetPlayersScreenState() {
@@ -31,20 +28,15 @@ class _EditPlayersScreenState extends State<EditPlayersScreen> {
         name: 'open_screen', parameters: {'screen_name': 'editPlayersScreen'});
   }
 
-  final QuestionListGetter questionListGetter = QuestionListGetter.instance;
-
   @override
   Widget build(BuildContext context) {
-
     String removedPlayer = "";
     int removedIndex = null;
 
     final playerlist = Scrollbar(
         child: ListView.separated(
             shrinkWrap: true,
-            separatorBuilder: (context, index)
-            {
-
+            separatorBuilder: (context, index) {
               if (widget._groupData.players[index] == "Blank")
                 return Container();
 
@@ -56,7 +48,6 @@ class _EditPlayersScreenState extends State<EditPlayersScreen> {
             },
             itemCount: widget._groupData.players.length,
             itemBuilder: (context, index) {
-
               if (widget._groupData.players[index] == "Blank")
                 return Container();
 
@@ -85,19 +76,14 @@ class _EditPlayersScreenState extends State<EditPlayersScreen> {
                     ),
                   ),
                   confirmDismiss: (direction) async {
-
                     // Check whether or not at least one player remains
 
                     int numPlayers = widget._groupData.players.length;
-                    if (widget._groupData.canVoteBlank)
-                      numPlayers--;
+                    if (widget._groupData.canVoteBlank) numPlayers--;
 
                     return numPlayers >= 1;
                   },
                   onDismissed: (direction) {
-
-
-
                     Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(
                         'Player deleted.'.i18n,
@@ -113,7 +99,8 @@ class _EditPlayersScreenState extends State<EditPlayersScreen> {
                         label: 'Undo'.i18n,
                         textColor: Constants.colors[Constants.colorindex],
                         onPressed: () {
-                          setState(() => widget._groupData.players.insert(removedIndex, removedPlayer));
+                          setState(() => widget._groupData.players
+                              .insert(removedIndex, removedPlayer));
                         },
                       ),
                     ));
@@ -123,11 +110,8 @@ class _EditPlayersScreenState extends State<EditPlayersScreen> {
                       removedIndex = index;
                       widget._groupData.players.removeAt(index);
                     });
-                  }
-              );
-            }
-        )
-    );
+                  });
+            }));
 
     TextEditingController playerNameController = TextEditingController();
 
@@ -159,7 +143,7 @@ class _EditPlayersScreenState extends State<EditPlayersScreen> {
                 fontSize: Constants.smallFontSize,
                 color: Constants.iGrey),
             border:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
+                OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
       ),
     );
 
@@ -219,19 +203,20 @@ class _EditPlayersScreenState extends State<EditPlayersScreen> {
                       String name = playerNameController.text;
                       //print('-' + question+ '-');
                       if (name.length < 2) {
-                        Popup.makePopup(
-                            context, 'Whoops!'.i18n, 'Player name is too short'.i18n);
+                        Popup.makePopup(context, 'Whoops!'.i18n,
+                            'Player name is too short'.i18n);
                       } else if (widget._groupData.players.contains(
                           name[0].toUpperCase() + name.substring(1))) {
-                        Popup.makePopup(
-                            context, 'Whoops!'.i18n, 'This player already exists'.i18n);
+                        Popup.makePopup(context, 'Whoops!'.i18n,
+                            'This player already exists'.i18n);
                       } else {
                         FirebaseAnalytics().logEvent(
                             name: 'action_performed',
                             parameters: {'action_name': 'addPlayer'});
                         Navigator.pop(context);
 
-                        setState(() => widget._groupData.players.add(name[0].toUpperCase() + name.substring(1)));
+                        setState(() => widget._groupData.players
+                            .add(name[0].toUpperCase() + name.substring(1)));
                       }
                     },
                   ),
@@ -269,27 +254,25 @@ class _EditPlayersScreenState extends State<EditPlayersScreen> {
             padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
             onPressed: () {
               if (widget._groupData.players.length != 0) {
-
                 Navigator.push(
                     context,
                     ScaleDownPageRoute(
                       fromPage: widget,
-                      toPage: PassScreen( widget._groupData ),
+                      toPage: PassScreen(widget._groupData),
                     ));
-
               } else {
-                Popup.makePopup(
-                    context, "Woops!".i18n, "There should be at least one player!".i18n);
+                Popup.makePopup(context, "Woops!".i18n,
+                    "There should be at least one player!".i18n);
               }
             },
             child: Text("Continue".i18n,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontFamily: "atarian",
-                    fontSize: Constants.actionbuttonFontSize)
+                        fontFamily: "atarian",
+                        fontSize: Constants.actionbuttonFontSize)
                     .copyWith(
-                    color: Constants.iDarkGrey,
-                    fontWeight: FontWeight.bold)),
+                        color: Constants.iDarkGrey,
+                        fontWeight: FontWeight.bold)),
           ),
         ),
       ),
@@ -308,12 +291,13 @@ class _EditPlayersScreenState extends State<EditPlayersScreen> {
         ],
         title: 'BlackBox',
         theme: ThemeData(scaffoldBackgroundColor: Constants.iBlack),
-        home: I18n(child: Scaffold(
+        home: I18n(
+            child: Scaffold(
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Constants.iBlack,
-            title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            ]),
+            title:
+                Row(mainAxisAlignment: MainAxisAlignment.start, children: []),
           ),
           body: Center(
             child: Container(
@@ -409,7 +393,7 @@ class _EditPlayersScreenState extends State<EditPlayersScreen> {
           ),
           floatingActionButton: createButton,
           floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerFloat,
+              FloatingActionButtonLocation.centerFloat,
         )));
   }
 }

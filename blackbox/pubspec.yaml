@@ -41,6 +41,8 @@ dependencies:
   outline_material_icons: ^0.1.1
   firebase_messaging: ^7.0.3
   firebase_admob: ^0.10.2
+  delayed_display: ^1.1.0
+
 
 
   flutter:

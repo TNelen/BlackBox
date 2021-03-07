@@ -2,31 +2,24 @@ import 'package:blackbox/Screens/rules_column.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
-import '../Interfaces/Database.dart';
 import 'package:blackbox/Screens/HomeScreen.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:blackbox/translations/RulesScreen.i18n.dart';
 
 import 'animation/ScaleDownPageRoute.dart';
-import 'animation/ScalePageRoute.dart';
 
 class RuleScreen extends StatefulWidget {
-  Database _database;
-
-  RuleScreen(Database db) {
-    this._database = db;
-  }
+  RuleScreen() {}
 
   @override
-  _RuleScreenState createState() => _RuleScreenState(_database);
+  _RuleScreenState createState() => _RuleScreenState();
 }
 
 class _RuleScreenState extends State<RuleScreen> {
-  Database _database;
-
-  _RuleScreenState(this._database) {
-    FirebaseAnalytics().logEvent(name: 'open_screen', parameters: {'screen_name': 'RulesScreen'});
+  _RuleScreenState() {
+    FirebaseAnalytics().logEvent(
+        name: 'open_screen', parameters: {'screen_name': 'RulesScreen'});
   }
 
   @override
@@ -43,7 +36,11 @@ class _RuleScreenState extends State<RuleScreen> {
       ],
       debugShowCheckedModeBanner: false,
       title: 'BlackBox',
-      theme: ThemeData(accentColor: Constants.colors[Constants.colorindex], disabledColor: Constants.colors[Constants.colorindex], fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
+      theme: ThemeData(
+          accentColor: Constants.colors[Constants.colorindex],
+          disabledColor: Constants.colors[Constants.colorindex],
+          fontFamily: "atarian",
+          scaffoldBackgroundColor: Constants.iBlack),
       home: I18n(
         child: Scaffold(
           appBar: AppBar(
@@ -97,12 +94,16 @@ class _RuleScreenState extends State<RuleScreen> {
             ),
             child: ListView(
               //shrinkWrap: true,
-              padding: const EdgeInsets.only(top: 20.0, bottom: 20, left: 50, right: 50),
+              padding: const EdgeInsets.only(
+                  top: 20.0, bottom: 20, left: 50, right: 50),
               children: [
                 SizedBox(height: 20.0),
                 Text(
                   'Rules'.i18n,
-                  style: TextStyle(color: Constants.iWhite, fontSize: Constants.subtitleFontSize, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      color: Constants.iWhite,
+                      fontSize: Constants.subtitleFontSize,
+                      fontWeight: FontWeight.w500),
                 ),
                 SizedBox(height: 30.0),
                 RulesColumn(),

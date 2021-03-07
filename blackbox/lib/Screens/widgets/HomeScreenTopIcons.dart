@@ -1,5 +1,4 @@
 import 'package:blackbox/Constants.dart';
-import 'package:blackbox/Interfaces/Database.dart';
 import 'package:blackbox/Screens/animation/ScalePageRoute.dart';
 import 'package:blackbox/Screens/widgets/IconCard.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -9,9 +8,7 @@ import '../RulesScreen.dart';
 import '../SettingsScreen.dart';
 
 class IconBar extends StatelessWidget {
-  final Database database;
-
-  IconBar(this.database);
+  IconBar();
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +31,7 @@ class IconBar extends StatelessWidget {
             onTap: () {
               FirebaseAnalytics()
                   .logEvent(name: 'SettingsScreenOpened', parameters: null);
-              Navigator.push(
-                  context,
-                  ScaleUpPageRoute(
-                    SettingsScreen(database)
-                  ));
+              Navigator.push(context, ScaleUpPageRoute(SettingsScreen()));
             },
           ),
         ),
@@ -58,7 +51,7 @@ class IconBar extends StatelessWidget {
               Navigator.push(
                   context,
                   ScaleUpPageRoute(
-                    RuleScreen(database),
+                    RuleScreen(),
                   ));
             },
           ),

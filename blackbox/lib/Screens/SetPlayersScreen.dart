@@ -1,14 +1,12 @@
 import 'package:blackbox/Assets/questions.dart';
 import 'package:blackbox/Models/OfflineGroupData.dart';
-import 'package:blackbox/Screens/PartyScreens/PartyQuestionScreen.dart';
+import 'package:blackbox/Screens/PartyQuestionScreen.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import '../popups/Popup.dart';
-import '../../Constants.dart';
-import 'package:blackbox/Database/QuestionListGetter.dart';
+import 'popups/Popup.dart';
+import '../Constants.dart';
 import 'package:blackbox/translations/gameScreens.i18n.dart';
-
 
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -29,7 +27,7 @@ class SetPlayersScreen extends StatefulWidget {
 
 class _SetPlayersScreenState extends State<SetPlayersScreen> {
   List<Category> selectedCategory;
-  List<String> players = [Constants.getUsername().split(" ")[0]];
+  List<String> players = [];
   bool canVoteBlank;
   QuestionList questionList;
   TextEditingController codeController = TextEditingController();
@@ -41,8 +39,6 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
     FirebaseAnalytics().logEvent(
         name: 'open_screen', parameters: {'screen_name': 'setPlayersScreen'});
   }
-
-  final QuestionListGetter questionListGetter = QuestionListGetter.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -203,12 +199,12 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                       String name = playerNameController.text;
                       //print('-' + question+ '-');
                       if (name.length < 2) {
-                        Popup.makePopup(
-                            context, 'Whoops!'.i18n, 'Player name is too short'.i18n);
+                        Popup.makePopup(context, 'Whoops!'.i18n,
+                            'Player name is too short'.i18n);
                       } else if (players.contains(
                           name[0].toUpperCase() + name.substring(1))) {
-                        Popup.makePopup(
-                            context, 'Whoops!'.i18n, 'This player already exists'.i18n);
+                        Popup.makePopup(context, 'Whoops!'.i18n,
+                            'This player already exists'.i18n);
                       } else {
                         FirebaseAnalytics().logEvent(
                             name: 'action_performed',
@@ -277,12 +273,11 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                 Navigator.push(
                     context,
                     SlidePageRoute(
-                      fromPage: widget,
-                      toPage: PartyQuestionScreen(offlineGroupData)
-                    ));
+                        fromPage: widget,
+                        toPage: PartyQuestionScreen(offlineGroupData)));
               } else {
-                Popup.makePopup(
-                    context, "Woops!".i18n, "There should be at least one player!".i18n);
+                Popup.makePopup(context, "Woops!".i18n,
+                    "There should be at least one player!".i18n);
               }
             },
             child: Text("Start".i18n,
@@ -311,7 +306,8 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
         ],
         title: 'BlackBox',
         theme: ThemeData(scaffoldBackgroundColor: Constants.iBlack),
-        home: I18n(child: Scaffold(
+        home: I18n(
+            child: Scaffold(
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Constants.iBlack,

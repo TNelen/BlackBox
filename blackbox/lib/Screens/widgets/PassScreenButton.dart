@@ -1,10 +1,9 @@
 import 'package:blackbox/Screens/widgets/IconCard.dart';
 import 'package:flutter/material.dart';
 
-import '../../../Constants.dart';
+import '../../Constants.dart';
 
 class PassScreenButton extends StatelessWidget {
-
   final VoidCallback onTap;
 
   final String title;
@@ -15,22 +14,19 @@ class PassScreenButton extends StatelessWidget {
 
   final IconCard iconCard;
 
-  PassScreenButton({
-    this.title = "",
-    this.subtitle = "",
-    this.titleStyle = const TextStyle(
-      color: Constants.iWhite,
-      fontSize: Constants.normalFontSize,
-      fontWeight: FontWeight.bold
-      ),
-    this.subtitleStyle = const TextStyle(
-        color: Constants.iLight,
-        fontSize: Constants.smallFontSize,
-        fontWeight: FontWeight.bold
-    ),
-    this.iconCard,
-    this.onTap
-  });
+  PassScreenButton(
+      {this.title = "",
+      this.subtitle = "",
+      this.titleStyle = const TextStyle(
+          color: Constants.iWhite,
+          fontSize: Constants.normalFontSize,
+          fontWeight: FontWeight.bold),
+      this.subtitleStyle = const TextStyle(
+          color: Constants.iLight,
+          fontSize: Constants.smallFontSize,
+          fontWeight: FontWeight.bold),
+      this.iconCard,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +43,8 @@ class PassScreenButton extends StatelessWidget {
         },
         child: Container(
           child: Padding(
-            padding: const EdgeInsets.only(
-                top: 5, left: 10.0, right: 10, bottom: 5),
+            padding:
+                const EdgeInsets.only(top: 5, left: 10.0, right: 10, bottom: 5),
             child: Stack(children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -67,18 +63,11 @@ class PassScreenButton extends StatelessWidget {
                   SizedBox(height: 10),
                 ],
               ),
-              Positioned(
-                right: 0.0,
-                top: 0.0,
-                child: iconCard ?? Container()
-              ),
+              Positioned(right: 0.0, top: 0.0, child: iconCard ?? Container()),
             ]),
           ),
         ),
       ),
     );
   }
-
-
-
 }

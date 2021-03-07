@@ -1,12 +1,12 @@
 import 'package:blackbox/Assets/questions.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
+import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:blackbox/Screens/widgets/CategoryCard.dart';
 import 'package:blackbox/Screens/widgets/toggle_button_card.dart';
 import 'package:flutter/material.dart';
-import '../../Constants.dart';
-import '../popups/Popup.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import '../Constants.dart';
 import 'SetPlayersScreen.dart';
 import 'package:blackbox/translations/gameScreens.i18n.dart';
 import 'package:i18n_extension/i18n_widget.dart';

@@ -1,14 +1,14 @@
 import 'package:blackbox/Models/OfflineGroupData.dart';
-import 'package:blackbox/Screens/PartyScreens/PartyResultsScreen.dart';
-import 'package:blackbox/Screens/PartyScreens/widgets/PassScreenButton.dart';
+import 'package:blackbox/Screens/PartyResultsScreen.dart';
 import 'package:blackbox/Screens/animation/ScalePageRoute.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:blackbox/Screens/widgets/IconCard.dart';
+import 'package:blackbox/Screens/widgets/PassScreenButton.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_indicators/progress_indicators.dart';
-import '../../Constants.dart';
+import '../Constants.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 import 'EditPlayersScreen.dart';
 import 'PartyQuestionScreen.dart';
@@ -38,26 +38,25 @@ class _PassScreenState extends State<PassScreen> {
 
   bool allPlayersVoted() {
     return offlineGroupData.canVoteBlank
-        ? ((offlineGroupData.getPlayers().length - 1) == offlineGroupData.getAmountOfCurrentVotes())
-        : ( offlineGroupData.getPlayers().length      == offlineGroupData.getAmountOfCurrentVotes());
+        ? ((offlineGroupData.getPlayers().length - 1) ==
+            offlineGroupData.getAmountOfCurrentVotes())
+        : (offlineGroupData.getPlayers().length ==
+            offlineGroupData.getAmountOfCurrentVotes());
   }
-
 
   void _moveToResults(bool doAnimate) {
     Navigator.push(
-        context,
-        doAnimate ?
-          SlidePageRoute(
-              fromPage: widget,
-              toPage: PartyResultScreen(offlineGroupData)
-          ) :
-          PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) => PartyResultScreen(offlineGroupData),
-            transitionDuration: Duration(seconds: 0),
-          ),
+      context,
+      doAnimate
+          ? SlidePageRoute(
+              fromPage: widget, toPage: PartyResultScreen(offlineGroupData))
+          : PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) =>
+                  PartyResultScreen(offlineGroupData),
+              transitionDuration: Duration(seconds: 0),
+            ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +74,8 @@ class _PassScreenState extends State<PassScreen> {
         title: 'BlackBox',
         theme: ThemeData(
             fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
-        home: I18n(child:Scaffold(
+        home: I18n(
+            child: Scaffold(
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Constants.iBlack,
@@ -121,11 +121,16 @@ class _PassScreenState extends State<PassScreen> {
                     SizedBox(height: 20.0),
                     Text(
                       offlineGroupData.canVoteBlank
-                          ? offlineGroupData.getAmountOfCurrentVotes().toString() +
+                          ? offlineGroupData
+                                  .getAmountOfCurrentVotes()
+                                  .toString() +
                               '/' +
-                              (offlineGroupData.getPlayers().length - 1).toString() +
+                              (offlineGroupData.getPlayers().length - 1)
+                                  .toString() +
                               ' players have voted'.i18n
-                          : offlineGroupData.getAmountOfCurrentVotes().toString() +
+                          : offlineGroupData
+                                  .getAmountOfCurrentVotes()
+                                  .toString() +
                               '/' +
                               offlineGroupData.getPlayers().length.toString() +
                               ' players have voted'.i18n,
@@ -155,36 +160,36 @@ class _PassScreenState extends State<PassScreen> {
                               ? Constants.iLight
                               : Constants.iWhite,
                           fontSize: Constants.normalFontSize,
-                          fontWeight: FontWeight.bold
-                      ),
-                      subtitle: allPlayersVoted() ? "  All players voted".i18n : "  New vote for this round".i18n,
+                          fontWeight: FontWeight.bold),
+                      subtitle: allPlayersVoted()
+                          ? "  All players voted".i18n
+                          : "  New vote for this round".i18n,
                       subtitleStyle: TextStyle(
                           color: Constants.iLight,
                           fontSize: Constants.smallFontSize,
-                          fontWeight: FontWeight.bold
-                      ),
+                          fontWeight: FontWeight.bold),
                       iconCard: allPlayersVoted()
                           ? IconCard(
-                        OMIcons.checkCircle,
-                        Constants.iGrey.withOpacity(0.1),
-                        Constants.iLight.withOpacity(0.5),
-                        35,
-                      )
+                              OMIcons.checkCircle,
+                              Constants.iGrey.withOpacity(0.1),
+                              Constants.iLight.withOpacity(0.5),
+                              35,
+                            )
                           : IconCard(
-                        OMIcons.checkCircle,
-                        Constants.iGrey.withOpacity(0.1),
-                        Constants.colors[Constants.colorindex],
-                        35,
-                      ),
+                              OMIcons.checkCircle,
+                              Constants.iGrey.withOpacity(0.1),
+                              Constants.colors[Constants.colorindex],
+                              35,
+                            ),
                       onTap: () {
                         allPlayersVoted()
                             ? null
                             : Navigator.push(
-                            context,
-                            SlidePageRoute(
-                              fromPage: widget,
-                              toPage: PartyQuestionScreen(offlineGroupData),
-                            ));
+                                context,
+                                SlidePageRoute(
+                                  fromPage: widget,
+                                  toPage: PartyQuestionScreen(offlineGroupData),
+                                ));
                       },
                     ),
                     SizedBox(
@@ -192,7 +197,8 @@ class _PassScreenState extends State<PassScreen> {
                     ),
                     PassScreenButton(
                       title: "  Add question".i18n,
-                      subtitle: "  Want to ask a question? Submit it here!".i18n,
+                      subtitle:
+                          "  Want to ask a question? Submit it here!".i18n,
                       iconCard: IconCard(
                         OMIcons.libraryAdd,
                         Constants.iGrey.withOpacity(0.1),
@@ -210,9 +216,9 @@ class _PassScreenState extends State<PassScreen> {
                   right: 20,
                   child: Material(
                     color: Constants.iDarkGrey,
-                    borderRadius: BorderRadius.all( Radius.circular( 10.0 ) ),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     child: InkWell(
-                      borderRadius: BorderRadius.all( Radius.circular( 10.0 ) ),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(
@@ -226,10 +232,8 @@ class _PassScreenState extends State<PassScreen> {
                         Navigator.push(
                             context,
                             ScaleUpPageRoute(
-                                EditPlayersScreen( offlineGroupData )
-                            ));
+                                EditPlayersScreen(offlineGroupData)));
                       },
-
                     ),
                   ),
                 ),
@@ -248,8 +252,7 @@ class _PassScreenState extends State<PassScreen> {
                 fontWeight: FontWeight.bold),
             icon: OMIcons.chevronRight,
             onConfirmation: () {
-
-              _moveToResults( true );
+              _moveToResults(true);
             },
           ),
           floatingActionButtonLocation:

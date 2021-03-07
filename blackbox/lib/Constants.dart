@@ -1,10 +1,7 @@
-import 'package:blackbox/Models/UserData.dart';
-import 'Database/Firebase.dart';
-import 'Interfaces/Database.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Constants {
-  static const groupCodeLength = 5;
   static const iBlack = Color(0xFF121212);
   static const iDarkGrey = Color(0xFF21272C);
   static const iGrey = Color(0xFF577D90);
@@ -13,14 +10,8 @@ class Constants {
   static const iAccent = Color(0xFF92dff3);
   static const gradient1 = Color(0xFF121212);
   static const gradient2 = Color(0xFF21272C);
-  //static const gradient3 = Color(0xFF0c4d4d);
 
-  static int colorindex = 0;
-
-  /// The standard color in the app, before a user is loaded
-  static int defaultColor = 0;
-
-  /// The default color that a new user will get
+  static int colorindex;
 
   //accent color list
   static const colors = [
@@ -43,77 +34,64 @@ class Constants {
   static int enableWelcomeMSG = 0;
   static const enableMSG = [true, false];
 
-  static UserData userData = UserData("Some ID", "Player");
-  static final Database database = Firebase();
+  static bool _areNotificationsEnabled;
+  static bool _isVibrationEnabled;
+  static bool _isSoundEnabled;
+
+  static SharedPreferences _prefs;
+
+  static void loadData() {
+    SharedPreferences.getInstance().then((value) => {
+          _prefs = value,
+          colorindex = _prefs.getInt("accent"),
+          _areNotificationsEnabled = _prefs.getBool("notifications"),
+          _isVibrationEnabled = _prefs.getBool("vibration"),
+          _isSoundEnabled = _prefs.getBool("sounds"),
+        });
+  }
 
   //setaccentColor
   static void setAccentColor(int color) {
-    colorindex = color - 1;
-    userData.setAccent(colorindex);
-    database.updateUser(userData);
+    colorindex = color;
+    _prefs.setInt("accent", colorindex);
+  }
+
+  static bool getIsAccentcolor(int color) {
+    return colorindex == color ? true : false;
   }
 
   //getAccentcolor
   //returns true is colorindex == color
-  static bool getAccentColor(int color) {
-    if (colorindex == color) {
-      return true;
-    } else
-      return false;
-  }
-
-  /// Set the UserData of this user
-  static void setUserData(UserData newData) {
-    userData = newData;
-    colorindex = newData.getAccent();
-  }
-
-  /// Get the name of the user who's logged in
-  static String getUsername() {
-    return userData.getUsername();
-  }
-
-  static UserData getUserData() {
-    return userData;
-  }
-
-  /// Change the name of the current user
-  static void setUsername(String newName) {
-    userData.setUsername(newName);
-  }
-
-  /// Get the unique, internal ID of the user who's logged in
-  static String getUserID() {
-    return userData.getUserID();
+  static int getAccentColor() {
+    return colorindex ??= 0;
   }
 
   /// Get whether or not vibration has been enabled for this user
   static bool getVibrationEnabled() {
-    return userData.getVibrationEnabled();
+    return _isVibrationEnabled ??= true;
+  }
+
+  static bool getSoundEnabled() {
+    return _isSoundEnabled;
+  }
+
+  static bool getNotificationsEnabled() {
+    return _areNotificationsEnabled;
   }
 
   /// Enable or disable vibration
   static void setVibrationEnabled(bool isVibrationEnabled) {
-    userData.setVibrationEnabled(isVibrationEnabled);
+    _isVibrationEnabled = isVibrationEnabled;
+    _prefs.setBool("vibration", isVibrationEnabled);
   }
 
-  static void setNotificationsEnabled( bool enableNotifications )
-  {
-    userData.setNotificationsEnabled( enableNotifications );
+  static void setNotificationsEnabled(bool enableNotifications) {
+    _areNotificationsEnabled = enableNotifications;
+    _prefs.setBool("notifications", enableNotifications);
   }
 
-  /// Get whether or not sound has been enabled for this user
-  static bool getSoundEnabled() {
-    return userData.getSoundEnabled();
-  }
-
-  static bool getNotificationsEnabled()
-  {
-    return userData.getNotificationsEnabled();
-  }
-
-  /// Enable or disable sound
   static void setSoundEnabled(bool isSoundEnabled) {
-    userData.setSoundEnabled(isSoundEnabled);
+    _isSoundEnabled = isSoundEnabled;
+    _prefs.setBool("sounds", isSoundEnabled);
   }
 }

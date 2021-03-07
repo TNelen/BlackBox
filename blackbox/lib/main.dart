@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:blackbox/Database/GoogleUserHandler.dart';
 import 'package:blackbox/push_nofitications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +6,7 @@ import 'package:blackbox/Screens/HomeScreen.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'Constants.dart';
-import './Database/GoogleUserHandler.dart';
-import './Models/UserData.dart';
-import './Interfaces/Database.dart';
-import 'dart:io';
 import 'package:progress_indicators/progress_indicators.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
 import 'ad_manager.dart';
@@ -36,113 +30,36 @@ class MyApp extends StatelessWidget {
           fontFamily: "atarian",
           scaffoldBackgroundColor: Constants.iBlack,
         ),
-        home: SplashScreen(Constants.database));
+        home: SplashScreen());
     //home: HomeScreen( Constants.database ));
   }
 }
 
 class SplashScreen extends StatefulWidget {
-  Database database;
-
-  SplashScreen(Database db) {
-    database = db;
-    db.openConnection();
-  }
+  SplashScreen() {}
 
   @override
-  _SplashScreenState createState() => _SplashScreenState(database);
+  _SplashScreenState createState() => _SplashScreenState();
 
-  SplashPage(Database db) {
-    this.database = db;
-  }
+  SplashPage() {}
 }
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-  Database database;
-  double _progress;
-  bool loggedIn = false;
-  bool connected = false;
-  bool wifiChecked = false;
-  Timer loginTimer;
-
   Future<void> _initAdMob() {
-    // TODO: Initialize AdMob SDK
     return FirebaseAdMob.instance.initialize(appId: AdManager.appId);
   }
 
-  Future<void> login() async {
-    await Firebase.initializeApp();
-    if (Constants.getUserID() == "Some ID" || Constants.getUserID() == "") {
-      ///check if user isn't loged in via google already when returning to homescreen
-      try {
-        GoogleUserHandler guh = GoogleUserHandler();
-        await guh.handleSignIn().then((user) async {
-          /// Log the retreived user in and update the data in the database
-          UserData saved = await database.getUserByID(user.getUserID());
-          setState(() {
-            loggedIn = true;
-          });
-
-          /// Save user if the account is new
-          if (saved == null) {
-            /// Put user in the database and load the info into UserData @Constants
-            user.setAccent(Constants.defaultColor);
-            Constants.setUserData(user);
-            await database.updateUser(user);
-          } else {
-            /// Load database info into UserData @Constants
-            Constants.setUserData(saved);
-          }
-        });
-      } catch (e) {
-        print(e.toString());
-      }
-    }
-  }
-
-  _SplashScreenState(Database db) {
-    this.database = db;
-  }
-
-  Future<bool> checkWifi() async {
-    bool on;
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        on = true;
-      }
-    } on SocketException catch (_) {
-      on = false;
-    }
-    wifiChecked = true;
-    return on;
-  }
+  _SplashScreenState() {}
 
   @override
   void initState() {
     super.initState();
     PushNotificationsManager manager = PushNotificationsManager();
     manager.init();
-
-    _progress = 0;
-    loginTimer = Timer.periodic(Duration(seconds: 1), (Timer t) {
-      setState(() {
-        checkWifi().then((result) {
-          connected = result;
-        });
-
-        if (connected) {
-          _initAdMob();
-          login();
-        }
-
-        // we "finish" downloading here
-        if (loggedIn) {
-          t.cancel();
-        }
-      });
-    });
+    _initAdMob();
+    //load user data from localstorage
+    Constants.loadData();
   }
 
   @override
@@ -159,8 +76,6 @@ class _SplashScreenState extends State<SplashScreen>
             ),
             minWidth: MediaQuery.of(context).size.width,
             onPressed: () {
-              loginTimer.cancel();
-
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -168,36 +83,6 @@ class _SplashScreenState extends State<SplashScreen>
                   ));
             },
             child: Text("Start game",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                        fontFamily: "atarian",
-                        fontSize: Constants.actionbuttonFontSize)
-                    .copyWith(
-                  color: Constants.iWhite,
-                )),
-          ),
-        ));
-
-    final continueOfflineButton = Padding(
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 80),
-        child: Material(
-          elevation: 1.0,
-          borderRadius: BorderRadius.circular(28.0),
-          color: Constants.iDarkGrey,
-          child: MaterialButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(28.0),
-            ),
-            minWidth: MediaQuery.of(context).size.width,
-            onPressed: () {
-              loginTimer.cancel();
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => HomeScreen(),
-                  ));
-            },
-            child: Text("Continue offline",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                         fontFamily: "atarian",
@@ -260,54 +145,12 @@ class _SplashScreenState extends State<SplashScreen>
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 5,
                         ),
-                        (loggedIn)
-                            ? Container(height: 80, child: startButton)
-                            : (connected
-                                ? Container(
-                                    height: 80,
-                                    child: FadingText(
-                                      "Logging you in...",
-                                      style: TextStyle(
-                                          fontFamily: "atarian",
-                                          color: Constants.iWhite,
-                                          fontSize: Constants.smallFontSize,
-                                          fontWeight: FontWeight.w300),
-                                    ))
-                                : SizedBox(
-                                    height: 80,
-                                  )),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        (!connected && wifiChecked)
-                            ? Column(children: [
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "You are not connected to internet",
-                                        style: TextStyle(
-                                            fontSize: Constants.smallFontSize,
-                                            color: Constants.iWhite,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      JumpingDotsProgressIndicator(
-                                        numberOfDots: 3,
-                                        fontSize: Constants.smallFontSize,
-                                        color: Constants.iWhite,
-                                      ),
-                                    ]),
-                                continueOfflineButton
-                              ])
-                            : SizedBox(),
+                        Container(height: 80, child: startButton)
                       ],
                     ))
                   ],
                 )),
               ),
-              /*SizedBox(
-                height: MediaQuery.of(context).size.height / 2.5,
-              )*/
             ],
           )
         ],

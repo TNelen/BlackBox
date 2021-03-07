@@ -1,12 +1,9 @@
-import 'package:audioplayers/audio_cache.dart';
 import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/HomeScreen.dart';
-import 'package:blackbox/Screens/PartyScreens/PartyQuestionScreen.dart';
+import 'package:blackbox/Screens/PartyQuestionScreen.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
-import 'package:blackbox/Util/VibrationHandler.dart';
 import 'package:flutter/material.dart';
-import '../../Models/GroupData.dart';
-import '../../Constants.dart';
+import '../Constants.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -55,21 +52,20 @@ class PartyResultScreenState extends State<PartyResultScreen> {
 
   void _moveToNext(bool doAnimate) {
     Navigator.push(
-        context,
-        doAnimate ?
-          SlidePageRoute(
-            fromPage: widget,
-            toPage: PartyQuestionScreen(offlineGroupData)
-          ) :
-          PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) => PartyQuestionScreen(offlineGroupData),
-            transitionDuration: Duration(seconds: 0),
-          ),
+      context,
+      doAnimate
+          ? SlidePageRoute(
+              fromPage: widget, toPage: PartyQuestionScreen(offlineGroupData))
+          : PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) =>
+                  PartyQuestionScreen(offlineGroupData),
+              transitionDuration: Duration(seconds: 0),
+            ),
     );
   }
 
   bool _showRatePop() {
-    return offlineGroupData.questionsLeft()==10;
+    return offlineGroupData.questionsLeft() == 10;
   }
 
   void _onInterstitialAdEvent(MobileAdEvent event) {
@@ -103,7 +99,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
       listener: _onInterstitialAdEvent,
     );
 
-    if(!_isInterstitialAdReady) {
+    if (!_isInterstitialAdReady) {
       _loadInterstitialAd();
     }
   }
@@ -184,7 +180,9 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                                             ? 'st'.i18n
                                             : index == 1
                                                 ? 'nd'.i18n
-                                                : index == 2 ? 'rd'.i18n : 'th'.i18n),
+                                                : index == 2
+                                                    ? 'rd'.i18n
+                                                    : 'th'.i18n),
                                     style: TextStyle(
                                         color: index == 0
                                             ? Constants
@@ -604,8 +602,8 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                   _interstitialAd.show();
                 }
 
-                _moveToNext( true );
-                if (_showRatePop()){
+                _moveToNext(true);
+                if (_showRatePop()) {
                   showDialog(
                     context: context,
                     child: RatePopup(),
@@ -615,10 +613,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                 Navigator.push(
                     //TODO : create endScreen
                     context,
-                    SlidePageRoute(
-                      fromPage: widget,
-                      toPage: HomeScreen()
-                    ));
+                    SlidePageRoute(fromPage: widget, toPage: HomeScreen()));
               }
             },
             //change isplaying field in database for this group to TRUE
@@ -657,10 +652,9 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                 Navigator.push(
                     context,
                     SlidePageRoute(
-                      //TODO : create endScreen
-                      fromPage: widget,
-                      toPage: HomeScreen()
-                    ));
+                        //TODO : create endScreen
+                        fromPage: widget,
+                        toPage: HomeScreen()));
               },
               child: Text(
                 "End game".i18n,
@@ -762,45 +756,9 @@ class PartyResultScreenState extends State<PartyResultScreen> {
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.transparent,
         ),
-        home: I18n(child:Scaffold(
+        home: I18n(
+            child: Scaffold(
           body: _buildBody(context),
         )));
-
-
-  }
-
-  /// Plays audio and vibrates the phone indicating whether or not the player is in the previous top three
-  /// See https://pub.dev/packages/audioplayers for more information
-  ///
-
-  void handleWinnerFeedback(GroupData groupData) async {
-    if (groupData
-        .getTopThreeIDs('previous')
-        .containsKey(Constants.getUserID())) {
-      if (Constants.getSoundEnabled()) playSound("winner.wav");
-      if (Constants.getVibrationEnabled())
-        VibrationHandler.vibrate(
-            vibratePattern: [10, 50, 46, 48, 49, 70, 64, 66, 41, 70]);
-    } else {
-      if (Constants.getSoundEnabled()) playSound("loser.wav");
-      if (Constants.getVibrationEnabled())
-        VibrationHandler.vibrate(vibratePattern: [50, 50, 50, 129]);
-    }
-  }
-
-  /// Plays and terminates a sound in the assets/sounds folder
-  /// eg. assets/sounds/music.mp3 would be played by passing music.mp3 as parameter
-  void playSound(String path) async {
-    String full_path = 'sounds/' + path;
-
-    final AudioCache player = AudioCache();
-
-    /// Create an instance that is able to play sounds
-    await player.play(full_path);
-
-    /// Play the sound and wait for completion
-    player.clear(full_path);
-
-    /// Delete the loaded sound from temp memory
   }
 }
