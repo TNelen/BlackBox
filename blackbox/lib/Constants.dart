@@ -28,7 +28,7 @@ class Constants {
   static const subtitleFontSize = 40.0;
   static const normalFontSize = 26.0;
   static const smallFontSize = 16.0;
-  static const miniFontSize = 12.0;
+  static const miniFontSize = 11.0;
 
   static const actionbuttonFontSize = 22.0;
 

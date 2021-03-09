@@ -1131,9 +1131,8 @@ extension Localization on String {
         "nl": "+18",
       } +
       {
-        "en":
-            "General black box questions, a rather soft category. Great to get started",
-        "nl": "algemene Blackbox vragen, ideaal om mee te starten",
+        "en": "General black box questions. Great to get started",
+        "nl": "Algemene Blackbox vragen, ideaal om mee te starten",
       } +
       {
         "en": "Questions about your friends’ character traits",
@@ -1144,9 +1143,8 @@ extension Localization on String {
         "nl": "Bewonder je vrienden hun acties of eigenschappen",
       } +
       {
-        "en":
-            "The biggest friendship test, your friendship can handle everything if it survives this category",
-        "nl": "De grootste vriendschapstest. Niet voor gevoelige mensen",
+        "en": "The biggest friendship test, only for true friends!",
+        "nl": "De grootste vriendschapstest. Alleen voor echte vrienden!",
       } +
       {
         "en": "Questions related to drinking, partying and nightlife",

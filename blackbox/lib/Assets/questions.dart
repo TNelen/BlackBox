@@ -1,18 +1,19 @@
 import 'dart:math';
 import 'package:blackbox/translations/translations.i18n.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Category {
   String categoryName;
   String description;
   List<String> questions;
   bool isNew;
+  IconData icon;
+  Color color;
 
-  Category(
-    this.categoryName,
-    this.description,
-    this.questions,
-    this.isNew,
-  );
+  Category(this.categoryName, this.description, this.questions, this.isNew,
+      this.icon, this.color);
 
   String getDescription() {
     return description;
@@ -297,50 +298,43 @@ List<String> Family = [
 ];
 
 List<Category> popularcategories = [
-  Category(
-    "Family".i18n,
-    "Have fun with your household".i18n,
-    Family,
-    true,
-  ),
+  Category("Family".i18n, "Have fun with your household".i18n, Family, true,
+      FontAwesomeIcons.home, Colors.tealAccent[100]),
   Category(
       "Casual".i18n,
-      "General black box questions, a rather soft category. Great to get started"
+      "General black box questions. Great to get started"
           .i18n,
       Casual,
-      false),
-  Category(
-    "Superstar".i18n,
-    "Admire your friends’ actions or abilities".i18n,
-    SuperStar,
-    false,
-  ),
+      false,
+      FontAwesomeIcons.hatCowboy,
+      Colors.greenAccent[100]),
+  Category("Superstar".i18n, "Admire your friends’ actions or abilities".i18n,
+      SuperStar, false, FontAwesomeIcons.trophy, Colors.lightBlueAccent[100]),
 ];
 
 List<Category> categories = [
   Category(
-    "Character traits".i18n,
-    "Questions about your friends’ character traits".i18n,
-    CharacterTraits,
-    false,
-  ),
+      "Character traits".i18n,
+      "Questions about your friends’ character traits".i18n,
+      CharacterTraits,
+      false,
+      FontAwesomeIcons.userSecret,
+      Colors.deepPurple[300]),
   Category(
-    "Friendship killers".i18n,
-    "The biggest friendship test, your friendship can handle everything if it survives this category"
-        .i18n,
-    FriendshipKillers,
-    false,
-  ),
+      "Friendship killers".i18n,
+      "The biggest friendship test, only for true friends!"
+          .i18n,
+      FriendshipKillers,
+      false,
+      FontAwesomeIcons.heartBroken,
+      Colors.brown[100]),
   Category(
-    "Beer o'clock".i18n,
-    "Questions related to drinking, partying and nightlife".i18n,
-    BeerOClock,
-    false,
-  ),
-  Category(
-    "+18".i18n,
-    "Spicy questions, aimed at adults".i18n,
-    EighteenPlus,
-    false,
-  ),
+      "Beer o'clock".i18n,
+      "Questions related to drinking, partying and nightlife".i18n,
+      BeerOClock,
+      false,
+      FontAwesomeIcons.glassCheers,
+      Colors.yellowAccent[100]),
+  Category("+18".i18n, "Spicy questions, aimed at adults".i18n, EighteenPlus,
+      false, FontAwesomeIcons.kissWinkHeart, Colors.deepOrange[100]),
 ];

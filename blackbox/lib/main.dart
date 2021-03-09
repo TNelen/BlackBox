@@ -9,6 +9,7 @@ import 'Constants.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
+import 'Screens/widgets/HomeScreenTopIcons.dart';
 import 'ad_manager.dart';
 
 void main() {
@@ -84,9 +85,7 @@ class _SplashScreenState extends State<SplashScreen>
             },
             child: Text("Start game",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                        fontFamily: "atarian",
-                        fontSize: Constants.actionbuttonFontSize)
+                style: TextStyle(fontSize: Constants.actionbuttonFontSize)
                     .copyWith(
                   color: Constants.iWhite,
                 )),
@@ -118,15 +117,25 @@ class _SplashScreenState extends State<SplashScreen>
                         ))),
                     Center(
                         child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
+                        SizedBox(
+                          height: 25,
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.75,
+                                  child: IconBar()),
+                            ]),
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 4,
                         ),
                         Text(
                           "BlackBox",
                           style: TextStyle(
-                              fontFamily: "atarian",
                               color: Colors.white,
                               fontSize: Constants.subtitleFontSize,
                               fontWeight: FontWeight.w300),
@@ -137,7 +146,6 @@ class _SplashScreenState extends State<SplashScreen>
                         Text(
                           "A MAGNETAR Game",
                           style: TextStyle(
-                              fontFamily: "atarian",
                               color: Colors.white,
                               fontSize: Constants.smallFontSize,
                               fontWeight: FontWeight.w300),
@@ -145,9 +153,62 @@ class _SplashScreenState extends State<SplashScreen>
                         SizedBox(
                           height: MediaQuery.of(context).size.height / 5,
                         ),
-                        Container(height: 80, child: startButton)
+
+                        //  Container(height: 80, child: startButton)
                       ],
-                    ))
+                    )),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height / 3,
+                        child: Padding(
+                          padding:
+                              EdgeInsets.only(left: 15, right: 15, bottom: 25),
+                          child: Card(
+                            elevation: 5.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            color: Constants.iWhite,
+                            child: Center(
+                                child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Welcome to Blackox!",
+                                  style: TextStyle(
+                                      fontSize: 35,
+                                      fontFamily: "roboto",
+                                      color: Constants.iBlack,
+                                      fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "Get to know eachother",
+                                  style: TextStyle(
+                                      fontSize: Constants.smallFontSize,
+                                      fontFamily: "roboto",
+                                      color: Constants.iDarkGrey,
+                                      fontWeight: FontWeight.w300),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "Start playing now!",
+                                  style: TextStyle(
+                                      fontSize: Constants.smallFontSize,
+                                      fontFamily: "roboto",
+                                      color: Constants.iDarkGrey,
+                                      fontWeight: FontWeight.w300),
+                                  textAlign: TextAlign.center,
+                                ),
+                                startButton
+                              ],
+                            )),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 )),
               ),
