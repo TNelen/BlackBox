@@ -3,6 +3,7 @@ import 'package:blackbox/Screens/PassScreen.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/Screens/popups/noMembersScelectedPopup.dart';
 import 'package:blackbox/Util/Curves.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
@@ -67,16 +68,17 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
     );
 
     final voteButton = Padding(
-      padding: const EdgeInsets.only(left: 35, right: 35),
+      padding: const EdgeInsets.only(left: 35, right: 35, top: 20, bottom: 20),
       child: Material(
         elevation: 5.0,
-        borderRadius: BorderRadius.circular(28.0),
-        color: Constants.colors[Constants.colorindex],
+        borderRadius: BorderRadius.circular(12.0),
+        color: Constants.iLight,
         child: MaterialButton(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28.0),
+            borderRadius: BorderRadius.circular(12.0),
           ),
-          minWidth: MediaQuery.of(context).size.width,
+          minWidth: MediaQuery.of(context).size.width / 2,
+          height: 50,
           onPressed: () {
             if (selectedPlayer != null) {
               FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
@@ -149,76 +151,102 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Expanded(
+                          flex: 1,
                           child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Text(
-                            'Question'.i18n,
-                            style: TextStyle(
-                                color: Constants.iWhite,
-                                fontSize: Constants.normalFontSize,
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ],
-                      )),
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                'Question'.i18n,
+                                style: TextStyle(
+                                    color: Constants.iWhite,
+                                    fontSize: Constants.normalFontSize,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            ],
+                          )),
                       Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              offlineGroupData
-                                  .getCurrentQuestion()
-                                  .getQuestion(),
-                              style: TextStyle(
-                                  color: Constants.iWhite,
-                                  fontSize: Constants.normalFontSize,
-                                  fontWeight: FontWeight.w300),
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(height: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  width: 180.0,
-                                  child: Text(
-                                    '- ' +
-                                        offlineGroupData
-                                            .getCurrentQuestion()
-                                            .getCategory() +
-                                        ' -',
-                                    style: TextStyle(
-                                        color: Constants.iWhite,
-                                        fontSize: Constants.smallFontSize,
-                                        fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
-                                  ),
+                        flex: 2,
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              left: 30, right: 30, top: 20, bottom: 30),
+                          child: DelayedDisplay(
+                            delay: Duration(milliseconds: 0),
+                            child: Card(
+                              elevation: 5.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              color: Constants.iDarkGrey,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20.0, vertical: 20.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      offlineGroupData
+                                          .getCurrentQuestion()
+                                          .getQuestion(),
+                                      style: TextStyle(
+                                          color: Constants.iWhite,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w300),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(height: 5),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Container(
+                                          width: 180.0,
+                                          child: Text(
+                                            '- ' +
+                                                offlineGroupData
+                                                    .getCurrentQuestion()
+                                                    .getCategory() +
+                                                ' -',
+                                            style: TextStyle(
+                                                color: Constants.iWhite,
+                                                fontSize:
+                                                    Constants.smallFontSize,
+                                                fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ],
+                          ),
                         ),
                       ),
                       Expanded(
+                          flex: 4,
                           child: Column(
-                        children: [
-                          Text(
-                            'Select a friend'.i18n,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Constants.colors[Constants.colorindex],
-                                fontSize: Constants.normalFontSize,
-                                fontWeight: FontWeight.w700),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          membersList,
-                        ],
-                      )),
-                      Expanded(child: voteButton)
+                            children: [
+                              Text(
+                                'Select a friend'.i18n,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.lightBlueAccent[100]
+                                        .withOpacity(0.75),
+                                    fontWeight: FontWeight.w300),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                  padding: EdgeInsets.only(left: 30, right: 30),
+                                  child: membersList),
+                            ],
+                          )),
+                      Expanded(
+                          flex: 1,
+                          child: Container(height: 50, child: voteButton))
                     ],
                   )
                 ],
@@ -237,10 +265,10 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
       color:
           playerName == selectedPlayer ? Constants.iLight : Constants.iDarkGrey,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24.0),
+        borderRadius: BorderRadius.circular(12.0),
       ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(24.0),
+        borderRadius: BorderRadius.circular(12.0),
         splashColor: Constants.colors[Constants.colorindex],
         onTap: () {
           setState(() {
@@ -259,7 +287,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                     ? Constants.iDarkGrey
                     : Constants.iWhite,
                 fontSize: Constants.smallFontSize,
-                fontWeight: FontWeight.bold),
+                fontWeight: FontWeight.w500),
           ),
         )),
       ),
