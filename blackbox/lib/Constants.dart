@@ -23,6 +23,16 @@ class Constants {
     Color(0xFF1DB854)
   ];
 
+  static List<Color> categoryColors = [
+    Colors.tealAccent[100],
+    Colors.greenAccent[100],
+    Colors.lightBlueAccent[100],
+    Colors.deepPurple[300],
+    Colors.brown[100],
+    Colors.yellowAccent[100],
+    Colors.deepOrange[100]
+  ];
+
   //fontsizes
   static const titleFontSize = 50.0;
   static const subtitleFontSize = 40.0;

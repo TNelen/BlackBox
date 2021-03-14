@@ -5,12 +5,65 @@ import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/Screens/widgets/toggle_button_card.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tags/flutter_tags.dart';
 import 'popups/Popup.dart';
 import '../Constants.dart';
 import 'package:blackbox/translations/translations.i18n.dart';
 
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+class TopCurvePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint();
+    paint.color = Colors.lightBlueAccent[100].withOpacity(0.5);
+    paint.style = PaintingStyle.fill; // Change this to fill
+
+    var path = Path();
+
+    path.moveTo(0, size.height * 0.24);
+    path.quadraticBezierTo(size.width * 0.1, size.height * 0.27,
+        size.width * 0.5, size.height * 0.27);
+    path.quadraticBezierTo(size.width * 0.9, size.height * 0.27,
+        size.width * 1.0, size.height * 0.33);
+    path.lineTo(size.width, 0);
+    path.lineTo(0, 0);
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+class BottomCurvePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint();
+    paint.color = Colors.lightBlueAccent[100].withOpacity(0.5);
+    paint.style = PaintingStyle.fill; // Change this to fill
+
+    var path = Path();
+
+    path.moveTo(0, size.height * 0.8);
+    path.quadraticBezierTo(size.width * 0.1, size.height * 0.86,
+        size.width * 0.5, size.height * 0.86);
+    path.quadraticBezierTo(size.width * 0.9, size.height * 0.86,
+        size.width * 1.0, size.height * 0.9);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
 
 class SetPlayersScreen extends StatefulWidget {
   List<Category> selectedCategory = [];
@@ -41,196 +94,57 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String removedPlayer = "";
-    int removedIndex = null;
-
-    final playerlist = Scrollbar(
-        child: ListView.separated(
-            shrinkWrap: true,
-            separatorBuilder: (context, index) => Divider(
-                  indent: 40,
-                  endIndent: 40,
-                  color: Constants.iLight,
-                ),
-            itemCount: players.length,
-            itemBuilder: (context, index) => Dismissible(
-                background: Container(),
-                secondaryBackground: Container(
-                  alignment: AlignmentDirectional.centerEnd,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
-                    child: Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
-                key: Key(players[index]),
-                child: Center(
-                  child: Text(
-                    players[index],
-                    style: TextStyle(
-                      color: Constants.iWhite,
-                      fontSize: Constants.normalFontSize,
-                      fontWeight: FontWeight.w300,
-                      fontFamily: "atarian",
-                    ),
-                  ),
-                ),
-                onDismissed: (direction) {
-                  // Show a snackbar. This snackbar could also contain "Undo" actions.
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    content: Text(
-                      'Player deleted.'.i18n,
-                      style: TextStyle(
-                          color: Constants.iWhite,
-                          fontSize: Constants.miniFontSize,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
-                    duration: Duration(seconds: 3),
-                    backgroundColor: Constants.iDarkGrey,
-                    action: SnackBarAction(
-                      label: 'Undo'.i18n,
-                      textColor: Constants.colors[Constants
-                          .colorindex], // or some operation you would like
-                      onPressed: () {
-                        setState(
-                            () => players.insert(removedIndex, removedPlayer));
-                      },
-                    ),
-                  ));
-                  // Remove the item from the data source.
-                  setState(() {
-                    removedPlayer = players[index];
-                    removedIndex = index;
-                    players.removeAt(index);
-                  });
-                })));
-
-    TextEditingController playerNameController = TextEditingController();
-
-    final namefield = Theme(
-      data: ThemeData(
-        primaryColor: Constants.colors[Constants.colorindex],
-        primaryColorDark: Constants.colors[Constants.colorindex],
-      ),
-      child: TextField(
-        obscureText: false,
-        keyboardType: TextInputType.text,
-        autocorrect: false,
-        maxLength: 15,
-        maxLines: 1,
-        controller: playerNameController,
-        style: TextStyle(
-            fontFamily: "atarian",
-            fontSize: Constants.smallFontSize,
-            color: Constants.iWhite),
-        decoration: InputDecoration(
-            focusColor: Constants.colors[Constants.colorindex],
-            hoverColor: Constants.colors[Constants.colorindex],
-            contentPadding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-            fillColor: Constants.iBlack,
-            filled: true,
-            hintText: "Start typing here...".i18n,
-            hintStyle: TextStyle(
-                fontFamily: "atarian",
-                fontSize: Constants.smallFontSize,
-                color: Constants.iGrey),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(16.0))),
+    final tagsTextField = TagsTextField(
+      autofocus: false,
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      enabled: true,
+      constraintSuggestion: true,
+      onSubmitted: (String str) {
+        setState(() {
+          players.add(str);
+        });
+      },
+      textStyle: TextStyle(
+          fontFamily: "roboto",
+          fontSize: Constants.smallFontSize,
+          color: Constants.iWhite),
+      hintTextColor: Constants.iGrey,
+      hintText: "Add player...".i18n,
+      inputDecoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 3.0),
       ),
     );
 
-    final addPlayerButton = FlatButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(26.0),
-      ),
-      padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
-      onPressed: () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              // return object of type Dialog
-              return AlertDialog(
-                backgroundColor: Constants.iBlack,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(16.0))),
-                title: Text(
-                  'Player Name'.i18n,
-                  style: TextStyle(
-                      fontFamily: "atarian",
-                      color: Constants.colors[Constants.colorindex],
-                      fontSize: Constants.subtitleFontSize),
-                ),
-                content: Container(
-                    height: 150,
-                    child: Column(children: [
-                      SizedBox(height: 25),
-                      namefield,
-                    ])),
-                actions: <Widget>[
-                  // usually buttons at the bottom of the dialog
-                  FlatButton(
-                    child: Text(
-                      "Cancel".i18n,
-                      style: TextStyle(
-                          fontFamily: "atarian",
-                          color: Constants.colors[Constants.colorindex],
-                          fontSize: Constants.actionbuttonFontSize,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
+    final playerPills = Tags(
+      key: Key("1"),
+      textField: tagsTextField,
+      itemCount: players.length,
+      itemBuilder: (index) {
+        final item = players[index];
 
-                  FlatButton(
-                    child: Text(
-                      "Add".i18n,
-                      style: TextStyle(
-                          fontFamily: "atarian",
-                          color: Constants.colors[Constants.colorindex],
-                          fontSize: Constants.actionbuttonFontSize,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () {
-                      String name = playerNameController.text;
-                      //print('-' + question+ '-');
-                      if (name.length < 2) {
-                        Popup.makePopup(context, 'Whoops!'.i18n,
-                            'Player name is too short'.i18n);
-                      } else if (players.contains(
-                          name[0].toUpperCase() + name.substring(1))) {
-                        Popup.makePopup(context, 'Whoops!'.i18n,
-                            'This player already exists'.i18n);
-                      } else {
-                        FirebaseAnalytics().logEvent(
-                            name: 'action_performed',
-                            parameters: {'action_name': 'addPlayer'});
-                        Navigator.pop(context);
-
-                        setState(() => players
-                            .add(name[0].toUpperCase() + name.substring(1)));
-                      }
-                    },
-                  ),
-                ],
-              );
-            });
-      },
-      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Text(
-          "Add player".i18n,
-          style: TextStyle(
-            color: Constants.colors[Constants.colorindex],
-            fontSize: Constants.smallFontSize,
-            fontWeight: FontWeight.w300,
-            fontFamily: "atarian",
+        return GestureDetector(
+          child: ItemTags(
+            key: Key(index.toString()),
+            index: index,
+            title: item,
+            textActiveColor: Constants.iDarkGrey,
+            pressEnabled: false,
+            activeColor: Constants.categoryColors[index % 7],
+            removeButton: ItemTagsRemoveButton(
+              icon: Icons.clear,
+              backgroundColor: Constants.categoryColors[index % 7],
+              color: Constants.iDarkGrey,
+              onRemoved: () {
+                setState(() {
+                  players.removeAt(index);
+                });
+                return true;
+              },
+            ),
           ),
-        ),
-        Icon(Icons.add, color: Constants.colors[Constants.colorindex]),
-      ]),
+        );
+      },
     );
 
     final createButton = Hero(
@@ -282,7 +196,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
             child: Text("Start".i18n,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                        fontFamily: "atarian",
+                        fontFamily: "roboto",
                         fontSize: Constants.actionbuttonFontSize)
                     .copyWith(
                         color: Constants.iDarkGrey,
@@ -307,149 +221,96 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
         theme: ThemeData(scaffoldBackgroundColor: Constants.iBlack),
         home: I18n(
             child: Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Constants.iBlack,
-            title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              InkWell(
-                onTap: () => Navigator.pop(context),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 20),
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Constants.colors[Constants.colorindex],
-                      ),
-                    ),
-                    Text(
-                      'Back'.i18n,
-                      style: TextStyle(
-                        fontFamily: "atarian",
-                        fontSize: Constants.actionbuttonFontSize,
-                        color: Constants.colors[Constants.colorindex],
-                      ),
-                    ),
-                  ],
-                ),
+          resizeToAvoidBottomInset: false,
+          body: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomLeft,
+                stops: [0.1, 1.0],
+                colors: [
+                  Constants.gradient1,
+                  Constants.gradient2,
+                ],
               ),
-            ]),
-          ),
-          body: Center(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomLeft,
-                  stops: [0.1, 1.0],
-                  colors: [
-                    Constants.gradient1,
-                    Constants.gradient2,
-                  ],
-                ),
+            ),
+            child: Stack(fit: StackFit.expand, children: <Widget>[
+              CustomPaint(
+                painter: TopCurvePainter(),
               ),
-              child: ListView(
-                padding: const EdgeInsets.only(
-                    top: 36.0, bottom: 36, left: 45, right: 45),
+              CustomPaint(
+                painter: BottomCurvePainter(),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    'Game settings'.i18n,
-                    style: TextStyle(
-                      color: Constants.iWhite,
-                      fontSize: Constants.normalFontSize,
-                      fontWeight: FontWeight.w300,
-                      fontFamily: "atarian",
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Settings'.i18n,
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Constants.iWhite,
+                            fontWeight: FontWeight.w300),
+                        textAlign: TextAlign.left,
+                      ),
                     ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  ToggleButtonCard(
-                    'Blank vote'.i18n,
-                    canVoteBlank,
-                    onToggle: (bool newValue) => canVoteBlank = newValue,
+                  Container(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: ToggleButtonCard(
+                      'Blank vote'.i18n,
+                      canVoteBlank,
+                      onToggle: (bool newValue) => canVoteBlank = newValue,
+                      textStyle: TextStyle(
+                          fontSize: Constants.smallFontSize,
+                          color: Constants.iDarkGrey,
+                          fontWeight: FontWeight.w300),
+                      color: Constants.iWhite,
+                    ),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 70,
                   ),
-                  Text(
-                    'who\'s playing?'.i18n,
-                    style: TextStyle(
-                      color: Constants.iWhite,
-                      fontSize: Constants.normalFontSize,
-                      fontWeight: FontWeight.w300,
-                      fontFamily: "atarian",
+                  Container(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Players'.i18n,
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Constants.iWhite,
+                            fontWeight: FontWeight.w300),
+                        textAlign: TextAlign.left,
+                      ),
                     ),
                   ),
                   SizedBox(
                     height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.people_outline,
-                        color: Constants.colors[Constants.colorindex],
-                        size: 30,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        'Players'.i18n,
-                        style: TextStyle(
-                          color: Constants.colors[Constants.colorindex],
-                          fontSize: Constants.normalFontSize,
-                          fontFamily: "atarian",
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '(' + players.length.toString() + ')',
-                        style: TextStyle(
-                          color: Constants.colors[Constants.colorindex],
-                          fontSize: Constants.smallFontSize,
-                          fontFamily: "atarian",
-                        ),
-                      ),
-                      SizedBox(
-                        width: 25,
-                      ),
-                    ],
                   ),
                   SizedBox(
                     height: 20.0,
                   ),
-                  LimitedBox(
-                    maxHeight: 250,
-                    child: playerlist,
-                  ),
-                  addPlayerButton,
-
-                  //),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'swipe to remove player'.i18n,
-                    style: TextStyle(
-                      color: Constants.colors[Constants.colorindex],
-                      fontSize: Constants.miniFontSize,
-                      fontFamily: "atarian",
-                    ),
+                  Container(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: playerPills,
                   ),
                   SizedBox(
                     height: 60.0,
                   ),
                 ],
               ),
-            ),
+            ]),
           ),
-          floatingActionButton: createButton,
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
         )));
   }
 }

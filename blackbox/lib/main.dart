@@ -1,12 +1,13 @@
 import 'dart:async';
+import 'package:blackbox/Screens/CategoryScreen.dart';
 import 'package:blackbox/push_nofitications.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:blackbox/Screens/HomeScreen.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'Constants.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
 import 'Screens/widgets/HomeScreenTopIcons.dart';
@@ -16,6 +17,32 @@ void main() {
   try {
     runApp(MyApp());
   } catch (exception) {}
+}
+
+class CurvePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint();
+    paint.color = Colors.lightBlueAccent[100].withOpacity(0.5);
+    paint.style = PaintingStyle.fill; // Change this to fill
+
+    var path = Path();
+
+    path.moveTo(0, size.height * 0.7);
+    path.quadraticBezierTo(size.width * 0.1, size.height * 0.66,
+        size.width * 0.5, size.height * 0.66);
+    path.quadraticBezierTo(size.width * 0.9, size.height * 0.66,
+        size.width * 1.0, size.height * 0.60);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -65,60 +92,79 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    final startButton = Padding(
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 80),
-        child: Material(
-          elevation: 1.0,
-          borderRadius: BorderRadius.circular(28.0),
-          color: Constants.iDarkGrey,
-          child: MaterialButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(28.0),
-            ),
-            minWidth: MediaQuery.of(context).size.width,
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => HomeScreen(),
-                  ));
-            },
-            child: Text("Start game",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: Constants.actionbuttonFontSize)
-                    .copyWith(
-                  color: Constants.iWhite,
-                )),
+    final startButton = Card(
+      elevation: 5.0,
+      color: Constants.iLight,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12.0),
+        // splashColor: Constants.colors[Constants.colorindex],
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => CategoryScreen(),
+              ));
+        },
+        child: Container(
+          width: MediaQuery.of(context).size.width / 2,
+          height: 50,
+          child: Padding(
+            padding:
+                const EdgeInsets.only(top: 3, left: 3.0, right: 3, bottom: 3),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    'Start',
+                    style: TextStyle(
+                        fontFamily: "roboto",
+                        fontSize: Constants.smallFontSize,
+                        color: Constants.iDarkGrey,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  FaIcon(
+                    FontAwesomeIcons.chevronCircleRight,
+                    size: 22,
+                    color: Constants.iDarkGrey,
+                  )
+                ]),
           ),
-        ));
+        ),
+      ),
+    );
 
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(color: Constants.iBlack),
+      body: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              stops: [0.1, 0.9],
+              colors: [
+                Constants.gradient1,
+                Constants.gradient2,
+              ],
+            ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+          child: Stack(
+            fit: StackFit.expand,
             children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Container(
-                    child: Stack(
-                  children: <Widget>[
-                    Align(
-                        alignment: const Alignment(0, -0.7),
-                        child: GlowingProgressIndicator(
-                            child: CircleAvatar(
-                          backgroundColor: Constants.iBlack,
-                          radius: 70,
-                          child: Image.asset('images/icon_transparent.png'),
-                        ))),
-                    Center(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
+              CustomPaint(
+                painter: CurvePainter(),
+              ),
+              Column(
+                children: [
+                  Expanded(
+                      flex: 6,
+                      child: Column(children: <Widget>[
                         SizedBox(
                           height: 25,
                         ),
@@ -131,13 +177,13 @@ class _SplashScreenState extends State<SplashScreen>
                                   child: IconBar()),
                             ]),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height / 4,
+                          height: MediaQuery.of(context).size.height / 8,
                         ),
                         Text(
                           "BlackBox",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: Constants.subtitleFontSize,
+                              fontSize: Constants.titleFontSize,
                               fontWeight: FontWeight.w300),
                         ),
                         SizedBox(
@@ -147,74 +193,37 @@ class _SplashScreenState extends State<SplashScreen>
                           "A MAGNETAR Game",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: Constants.smallFontSize,
+                              fontSize: Constants.normalFontSize,
                               fontWeight: FontWeight.w300),
                         ),
+                      ])),
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Start playing now!",
+                          style: TextStyle(
+                              fontSize: Constants.normalFontSize,
+                              fontFamily: "roboto",
+                              color: Constants.iWhite,
+                              fontWeight: FontWeight.w300),
+                          textAlign: TextAlign.center,
+                        ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height / 5,
+                          height: 20,
                         ),
-
-                        //  Container(height: 80, child: startButton)
+                        startButton
                       ],
-                    )),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height / 3,
-                        child: Padding(
-                          padding:
-                              EdgeInsets.only(left: 15, right: 15, bottom: 25),
-                          child: Card(
-                            elevation: 5.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            color: Constants.iWhite,
-                            child: Center(
-                                child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Welcome to Blackox!",
-                                  style: TextStyle(
-                                      fontSize: 35,
-                                      fontFamily: "roboto",
-                                      color: Constants.iBlack,
-                                      fontWeight: FontWeight.w600),
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  "Get to know eachother",
-                                  style: TextStyle(
-                                      fontSize: Constants.smallFontSize,
-                                      fontFamily: "roboto",
-                                      color: Constants.iDarkGrey,
-                                      fontWeight: FontWeight.w300),
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  "Start playing now!",
-                                  style: TextStyle(
-                                      fontSize: Constants.smallFontSize,
-                                      fontFamily: "roboto",
-                                      color: Constants.iDarkGrey,
-                                      fontWeight: FontWeight.w300),
-                                  textAlign: TextAlign.center,
-                                ),
-                                startButton
-                              ],
-                            )),
-                          ),
-                        ),
-                      ),
                     ),
-                  ],
-                )),
-              ),
+                  ),
+                ],
+              )
+              // This is the Custom Shape Container
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

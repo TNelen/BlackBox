@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../Constants.dart';
+
 class Category {
   String categoryName;
   String description;
@@ -299,17 +301,16 @@ List<String> Family = [
 
 List<Category> popularcategories = [
   Category("Family".i18n, "Have fun with your household".i18n, Family, true,
-      FontAwesomeIcons.home, Colors.tealAccent[100]),
+      FontAwesomeIcons.home, Constants.categoryColors[0]),
   Category(
       "Casual".i18n,
-      "General black box questions. Great to get started"
-          .i18n,
+      "General black box questions. Great to get started".i18n,
       Casual,
       false,
       FontAwesomeIcons.hatCowboy,
-      Colors.greenAccent[100]),
+      Constants.categoryColors[1]),
   Category("Superstar".i18n, "Admire your friends’ actions or abilities".i18n,
-      SuperStar, false, FontAwesomeIcons.trophy, Colors.lightBlueAccent[100]),
+      SuperStar, false, FontAwesomeIcons.trophy, Constants.categoryColors[2]),
 ];
 
 List<Category> categories = [
@@ -319,22 +320,21 @@ List<Category> categories = [
       CharacterTraits,
       false,
       FontAwesomeIcons.userSecret,
-      Colors.deepPurple[300]),
+      Constants.categoryColors[3]),
   Category(
       "Friendship killers".i18n,
-      "The biggest friendship test, only for true friends!"
-          .i18n,
+      "The biggest friendship test, only for true friends!".i18n,
       FriendshipKillers,
       false,
       FontAwesomeIcons.heartBroken,
-      Colors.brown[100]),
+      Constants.categoryColors[4]),
   Category(
       "Beer o'clock".i18n,
       "Questions related to drinking, partying and nightlife".i18n,
       BeerOClock,
       false,
       FontAwesomeIcons.glassCheers,
-      Colors.yellowAccent[100]),
+      Constants.categoryColors[5]),
   Category("+18".i18n, "Spicy questions, aimed at adults".i18n, EighteenPlus,
-      false, FontAwesomeIcons.kissWinkHeart, Colors.deepOrange[100]),
+      false, FontAwesomeIcons.kissWinkHeart, Constants.categoryColors[6]),
 ];

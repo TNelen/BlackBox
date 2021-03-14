@@ -8,15 +8,17 @@ class ToggleButtonCard extends StatefulWidget {
   final Function(bool) onToggle;
   final Icon icon;
   final Color splashColor;
+  final Color color;
 
   ToggleButtonCard(this.text, this.defaultValue,
       {this.onToggle,
       this.textStyle: const TextStyle(
           fontSize: Constants.actionbuttonFontSize,
           color: Constants.iWhite,
-          fontFamily: "atarian"),
+          fontFamily: "roboto"),
       this.icon,
       this.splashColor,
+      this.color : Constants.iDarkGrey,
       Key key})
       : super(key: key);
 
@@ -54,7 +56,7 @@ class ToggleButtonCardState extends State<ToggleButtonCard> {
     return Container(
       child: Card(
         elevation: 5.0,
-        color: Constants.iDarkGrey,
+        color: widget.color,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),

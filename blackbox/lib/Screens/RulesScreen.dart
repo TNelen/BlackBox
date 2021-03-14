@@ -2,11 +2,11 @@ import 'package:blackbox/Screens/rules_column.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../Constants.dart';
-import 'package:blackbox/Screens/HomeScreen.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:blackbox/translations/RulesScreen.i18n.dart';
 
+import '../main.dart';
 import 'animation/ScaleDownPageRoute.dart';
 
 class RuleScreen extends StatefulWidget {
@@ -55,7 +55,7 @@ class _RuleScreenState extends State<RuleScreen> {
                         context,
                         ScaleDownPageRoute(
                           fromPage: widget,
-                          toPage: HomeScreen(),
+                          toPage: SplashScreen(),
                         ));
                   },
                   child: Row(

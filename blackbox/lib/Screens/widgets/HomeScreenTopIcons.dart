@@ -3,7 +3,7 @@ import 'package:blackbox/Screens/animation/ScalePageRoute.dart';
 import 'package:blackbox/Screens/widgets/IconCard.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../RulesScreen.dart';
 import '../SettingsScreen.dart';
 
@@ -23,9 +23,9 @@ class IconBar extends StatelessWidget {
           height: 60,
           child: InkWell(
             child: IconCard(
-              OMIcons.settings,
+              FontAwesomeIcons.cog,
               Constants.iDarkGrey,
-              Constants.iWhite,
+              Colors.lightBlueAccent[100],
               25,
             ),
             onTap: () {
@@ -40,9 +40,9 @@ class IconBar extends StatelessWidget {
           height: 60,
           child: InkWell(
             child: IconCard(
-              OMIcons.helpOutline,
+              FontAwesomeIcons.solidQuestionCircle,
               Constants.iDarkGrey,
-              Constants.iWhite,
+              Colors.lightBlueAccent[100],
               25,
             ),
             onTap: () {

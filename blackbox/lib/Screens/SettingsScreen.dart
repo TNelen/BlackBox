@@ -1,4 +1,3 @@
-import 'package:blackbox/Screens/HomeScreen.dart';
 import 'package:blackbox/Screens/widgets/toggle_button_card.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:blackbox/translations/SettingsScreen.i18n.dart';
 import 'package:blackbox/Constants.dart';
+import '../main.dart';
 import 'animation/ScaleDownPageRoute.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -90,7 +90,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                                 ScaleDownPageRoute(
                                   fromPage: widget,
-                                  toPage: HomeScreen(),
+                                  toPage: SplashScreen(),
                                 ));
                           },
                           child: Row(

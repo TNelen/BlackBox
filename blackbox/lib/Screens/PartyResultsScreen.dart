@@ -1,5 +1,4 @@
 import 'package:blackbox/Models/OfflineGroupData.dart';
-import 'package:blackbox/Screens/HomeScreen.dart';
 import 'package:blackbox/Screens/PartyQuestionScreen.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +12,8 @@ import 'package:blackbox/Screens/popups/rate_popup.dart';
 import 'package:blackbox/translations/translations.i18n.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import '../main.dart';
 
 class PartyResultScreen extends StatefulWidget {
   OfflineGroupData offlineGroupData;
@@ -613,7 +614,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                 Navigator.push(
                     //TODO : create endScreen
                     context,
-                    SlidePageRoute(fromPage: widget, toPage: HomeScreen()));
+                    SlidePageRoute(fromPage: widget, toPage: SplashScreen()));
               }
             },
             //change isplaying field in database for this group to TRUE
@@ -654,7 +655,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                     SlidePageRoute(
                         //TODO : create endScreen
                         fromPage: widget,
-                        toPage: HomeScreen()));
+                        toPage: SplashScreen()));
               },
               child: Text(
                 "End game".i18n,

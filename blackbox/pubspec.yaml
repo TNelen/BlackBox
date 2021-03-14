@@ -43,6 +43,7 @@ dependencies:
   firebase_admob: ^0.10.2
   delayed_display: ^1.1.0
   font_awesome_flutter: ^8.11.0
+  flutter_tags: "^0.4.9+1"
 
 
 

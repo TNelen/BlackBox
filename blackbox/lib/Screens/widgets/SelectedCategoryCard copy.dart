@@ -21,23 +21,23 @@ class SelectedCategoryCard extends StatefulWidget {
 class SelectedCategoryCardState extends State<SelectedCategoryCard> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 8),
-      child: Stack(children: [
-        Card(
-          elevation: 5.0,
-          color: Constants.iDarkGrey,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(12.0),
-            splashColor: Constants.colors[Constants.colorindex],
-            onTap: () {
-              setState(() {
-                if (widget.onTap != null) widget.onTap();
-              });
-            },
+    return InkWell(
+      borderRadius: BorderRadius.circular(12.0),
+      splashColor: Constants.colors[Constants.colorindex],
+      onTap: () {
+        setState(() {
+          if (widget.onTap != null) widget.onTap();
+        });
+      },
+      child: Padding(
+        padding: EdgeInsets.only(right: 8),
+        child: Stack(children: [
+          Card(
+            elevation: 5.0,
+            color: widget.category.color,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
             child: Container(
               width: MediaQuery.of(context).size.width / 9,
               child: Center(
@@ -47,20 +47,20 @@ class SelectedCategoryCardState extends State<SelectedCategoryCard> {
                     child: FaIcon(
                       widget.category.icon,
                       size: 22,
-                      color: widget.category.color,
+                      color: Colors.black.withOpacity(0.6),
                     )),
               ),
             ),
           ),
-        ),
-        Positioned(
-            left: MediaQuery.of(context).size.width / 11,
-            child: Icon(
-              Icons.remove_circle,
-              color: Constants.iLight,
-              size: 15,
-            )),
-      ]),
+          Positioned(
+              left: MediaQuery.of(context).size.width / 11,
+              child: Icon(
+                Icons.remove_circle,
+                color: Constants.iWhite,
+                size: 15,
+              )),
+        ]),
+      ),
     );
   }
 }
