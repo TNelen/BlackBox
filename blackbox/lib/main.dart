@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:blackbox/Screens/CategoryScreen.dart';
 import 'package:blackbox/push_nofitications.dart';
-import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -11,38 +10,13 @@ import 'Constants.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 
 import 'Screens/widgets/HomeScreenTopIcons.dart';
+import 'Util/Curves.dart';
 import 'ad_manager.dart';
 
 void main() {
   try {
     runApp(MyApp());
   } catch (exception) {}
-}
-
-class CurvePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint = Paint();
-    paint.color = Colors.lightBlueAccent[100].withOpacity(0.5);
-    paint.style = PaintingStyle.fill; // Change this to fill
-
-    var path = Path();
-
-    path.moveTo(0, size.height * 0.7);
-    path.quadraticBezierTo(size.width * 0.1, size.height * 0.66,
-        size.width * 0.5, size.height * 0.66);
-    path.quadraticBezierTo(size.width * 0.9, size.height * 0.66,
-        size.width * 1.0, size.height * 0.60);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
 }
 
 class MyApp extends StatelessWidget {
@@ -158,7 +132,7 @@ class _SplashScreenState extends State<SplashScreen>
             fit: StackFit.expand,
             children: <Widget>[
               CustomPaint(
-                painter: CurvePainter(),
+                painter: StartCurvePainter(),
               ),
               Column(
                 children: [

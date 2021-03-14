@@ -20,16 +20,16 @@ class Popup {
           title: Text(
             title,
             style: TextStyle(
-                fontFamily: "atarian",
+                fontFamily: "roboto",
                 color: Constants.colors[Constants.colorindex],
-                fontSize: Constants.normalFontSize),
+                fontSize: Constants.smallFontSize),
           ),
           content: Text(
             message,
             style: TextStyle(
-                fontFamily: "atarian",
+                fontFamily: "roboto",
                 color: Constants.iWhite,
-                fontSize: Constants.smallFontSize),
+                fontSize: Constants.smallFontSize - 3),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
@@ -37,9 +37,9 @@ class Popup {
               child: Text(
                 "Close".i18n,
                 style: TextStyle(
-                    fontFamily: "atarian",
+                    fontFamily: "roboto",
                     color: Constants.colors[Constants.colorindex],
-                    fontSize: Constants.actionbuttonFontSize,
+                    fontSize: Constants.smallFontSize,
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {
@@ -66,7 +66,7 @@ class Popup {
           title: Text(
             title,
             style: TextStyle(
-                fontFamily: "atarian",
+                fontFamily: "roboto",
                 color: Constants.colors[Constants.colorindex],
                 fontSize: Constants.normalFontSize),
           ),
@@ -76,7 +76,7 @@ class Popup {
                 Text(
                   message,
                   style: TextStyle(
-                      fontFamily: "atarian",
+                      fontFamily: "roboto",
                       color: Constants.iWhite,
                       fontSize: Constants.smallFontSize),
                 ),
@@ -86,7 +86,7 @@ class Popup {
                   child: Text(
                     "Contact us!".i18n,
                     style: TextStyle(
-                        fontFamily: "atarian",
+                        fontFamily: "roboto",
                         color: Constants.colors[Constants.colorindex],
                         fontSize: Constants.smallFontSize),
                   ),
@@ -98,7 +98,7 @@ class Popup {
               child: Text(
                 "Close".i18n,
                 style: TextStyle(
-                    fontFamily: "atarian",
+                    fontFamily: "roboto",
                     color: Constants.colors[Constants.colorindex],
                     fontSize: Constants.actionbuttonFontSize,
                     fontWeight: FontWeight.bold),
@@ -131,7 +131,7 @@ class Popup {
           maxLines: 1,
           controller: questionController,
           style: TextStyle(
-              fontFamily: "atarian",
+              fontFamily: "roboto",
               fontSize: Constants.smallFontSize,
               color: Constants.iWhite),
           decoration: InputDecoration(
@@ -140,7 +140,7 @@ class Popup {
               filled: true,
               hintText: "Start typing here...".i18n,
               hintStyle: TextStyle(
-                  fontFamily: "atarian",
+                  fontFamily: "roboto",
                   fontSize: Constants.smallFontSize,
                   color: Constants.iGrey),
               border: OutlineInputBorder(
@@ -158,7 +158,7 @@ class Popup {
           title: Text(
             'Ask a question...'.i18n,
             style: TextStyle(
-                fontFamily: "atarian",
+                fontFamily: "roboto",
                 color: Constants.colors[Constants.colorindex],
                 fontSize: Constants.subtitleFontSize),
           ),
@@ -174,7 +174,7 @@ class Popup {
               child: Text(
                 "Cancel".i18n,
                 style: TextStyle(
-                    fontFamily: "atarian",
+                    fontFamily: "roboto",
                     color: Constants.colors[Constants.colorindex],
                     fontSize: Constants.actionbuttonFontSize,
                     fontWeight: FontWeight.bold),
@@ -193,7 +193,7 @@ class Popup {
               child: Text(
                 "Submit".i18n,
                 style: TextStyle(
-                    fontFamily: "atarian",
+                    fontFamily: "roboto",
                     color: Constants.iBlack,
                     fontSize: Constants.actionbuttonFontSize,
                     fontWeight: FontWeight.bold),

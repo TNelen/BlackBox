@@ -2,6 +2,7 @@ import 'package:blackbox/Assets/questions.dart';
 import 'package:blackbox/Screens/widgets/CategoryCard.dart';
 import 'package:blackbox/Screens/widgets/PopularCategoryCard.dart';
 import 'package:blackbox/Screens/widgets/SelectedCategoryCard%20copy.dart';
+import 'package:blackbox/Util/Curves.dart';
 import 'SetPlayersScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -11,32 +12,6 @@ import 'package:blackbox/translations/translations.i18n.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-class CurvePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint = Paint();
-    paint.color = Colors.lightBlueAccent[100].withOpacity(0.5);
-    paint.style = PaintingStyle.fill; // Change this to fill
-
-    var path = Path();
-
-    path.moveTo(0, size.height * 0.09);
-    path.quadraticBezierTo(size.width * 0.1, size.height * 0.12,
-        size.width * 0.5, size.height * 0.12);
-    path.quadraticBezierTo(size.width * 0.9, size.height * 0.12,
-        size.width * 1.0, size.height * 0.18);
-    path.lineTo(size.width, 0);
-    path.lineTo(0, 0);
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-}
 
 class CategoryScreen extends StatefulWidget {
   CategoryScreen() {}
@@ -143,7 +118,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   fit: StackFit.expand,
                   children: <Widget>[
                     CustomPaint(
-                      painter: CurvePainter(),
+                      painter: CategoryTopCurvePainter(),
                     ),
                     Column(
                       //shrinkWrap: true,
