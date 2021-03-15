@@ -261,7 +261,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
   Widget buildUserVoteCard(String playerName) {
     return Container(
         child: Card(
-      elevation: 5.0,
+      elevation: 2.0,
       color:
           playerName == selectedPlayer ? Constants.iLight : Constants.iDarkGrey,
       shape: RoundedRectangleBorder(
@@ -269,10 +269,10 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12.0),
-        splashColor: Constants.colors[Constants.colorindex],
+        splashColor: Constants.iAccent,
         onTap: () {
           setState(() {
-            color = Constants.colors[Constants.colorindex];
+            color = Constants.iAccent;
             selectedPlayer = playerName;
           });
         },

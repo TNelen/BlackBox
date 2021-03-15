@@ -21,7 +21,7 @@ class Popup {
             title,
             style: TextStyle(
                 fontFamily: "roboto",
-                color: Constants.colors[Constants.colorindex],
+                color: Constants.iAccent,
                 fontSize: Constants.smallFontSize),
           ),
           content: Text(
@@ -38,7 +38,7 @@ class Popup {
                 "Close".i18n,
                 style: TextStyle(
                     fontFamily: "roboto",
-                    color: Constants.colors[Constants.colorindex],
+                    color: Constants.iAccent,
                     fontSize: Constants.smallFontSize,
                     fontWeight: FontWeight.bold),
               ),
@@ -67,7 +67,7 @@ class Popup {
             title,
             style: TextStyle(
                 fontFamily: "roboto",
-                color: Constants.colors[Constants.colorindex],
+                color: Constants.iAccent,
                 fontSize: Constants.normalFontSize),
           ),
           content: Container(
@@ -87,7 +87,7 @@ class Popup {
                     "Contact us!".i18n,
                     style: TextStyle(
                         fontFamily: "roboto",
-                        color: Constants.colors[Constants.colorindex],
+                        color: Constants.iAccent,
                         fontSize: Constants.smallFontSize),
                   ),
                 ),
@@ -99,7 +99,7 @@ class Popup {
                 "Close".i18n,
                 style: TextStyle(
                     fontFamily: "roboto",
-                    color: Constants.colors[Constants.colorindex],
+                    color: Constants.iAccent,
                     fontSize: Constants.actionbuttonFontSize,
                     fontWeight: FontWeight.bold),
               ),
@@ -120,8 +120,8 @@ class Popup {
     // ignore: unnecessary_final
     final questionfield = Theme(
         data: ThemeData(
-          primaryColor: Constants.colors[Constants.colorindex],
-          primaryColorDark: Constants.colors[Constants.colorindex],
+          primaryColor: Constants.iAccent,
+          primaryColorDark: Constants.iAccent,
         ),
         child: TextField(
           obscureText: false,
@@ -159,15 +159,10 @@ class Popup {
             'Ask a question...'.i18n,
             style: TextStyle(
                 fontFamily: "roboto",
-                color: Constants.colors[Constants.colorindex],
-                fontSize: Constants.subtitleFontSize),
+                color: Constants.iAccent,
+                fontSize: Constants.smallFontSize),
           ),
-          content: Container(
-              height: 230,
-              child: Column(children: [
-                SizedBox(height: 25),
-                questionfield,
-              ])),
+          content: questionfield,
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             FlatButton(
@@ -175,9 +170,9 @@ class Popup {
                 "Cancel".i18n,
                 style: TextStyle(
                     fontFamily: "roboto",
-                    color: Constants.colors[Constants.colorindex],
-                    fontSize: Constants.actionbuttonFontSize,
-                    fontWeight: FontWeight.bold),
+                    color: Constants.iLight,
+                    fontSize: Constants.smallFontSize,
+                    fontWeight: FontWeight.w500),
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -186,17 +181,17 @@ class Popup {
 
             FlatButton(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.0),
+                borderRadius: BorderRadius.circular(12.0),
                 //side: BorderSide(color: Colors.red)
               ),
-              color: Constants.colors[Constants.colorindex],
+              color: Constants.iAccent,
               child: Text(
                 "Submit".i18n,
                 style: TextStyle(
                     fontFamily: "roboto",
                     color: Constants.iBlack,
-                    fontSize: Constants.actionbuttonFontSize,
-                    fontWeight: FontWeight.bold),
+                    fontSize: Constants.smallFontSize,
+                    fontWeight: FontWeight.w500),
               ),
               onPressed: () {
                 String question = questionController.text;

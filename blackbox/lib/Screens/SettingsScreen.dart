@@ -24,10 +24,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         .logEvent(name: 'open_screen', parameters: {'screen_name': 'Settings'});
   }
 
-  final GlobalKey<ToggleButtonCardState> blueKey = GlobalKey();
-  final GlobalKey<ToggleButtonCardState> yellowKey = GlobalKey();
-  final GlobalKey<ToggleButtonCardState> redKey = GlobalKey();
-  final GlobalKey<ToggleButtonCardState> greenKey = GlobalKey();
 
   final GlobalKey<ToggleButtonCardState> soundKey = GlobalKey();
   final GlobalKey<ToggleButtonCardState> vibrateKey = GlobalKey();
@@ -40,23 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool blueAccentColor = Constants.getIsAccentcolor(0);
-    bool yellowAccentColor = Constants.getIsAccentcolor(1);
-    bool redAccentColor = Constants.getIsAccentcolor(2);
-    bool greenAccentColor = Constants.getIsAccentcolor(3);
-
     // Update the toggle displays
-    if (blueKey.currentState != null)
-      blueKey.currentState.currentValue = blueAccentColor;
-
-    if (yellowKey.currentState != null)
-      yellowKey.currentState.currentValue = yellowAccentColor;
-
-    if (redKey.currentState != null)
-      redKey.currentState.currentValue = redAccentColor;
-
-    if (greenKey.currentState != null)
-      greenKey.currentState.currentValue = greenAccentColor;
 
     return MaterialApp(
         localizationsDelegates: [
@@ -71,7 +51,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         debugShowCheckedModeBanner: false,
         title: 'BlackBox',
         theme: ThemeData(
-            fontFamily: "atarian", scaffoldBackgroundColor: Colors.transparent),
+            fontFamily: "roboto", scaffoldBackgroundColor: Colors.transparent),
         home: I18n(
             child: Scaffold(
                 appBar: AppBar(
@@ -99,14 +79,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 padding: EdgeInsets.only(right: 20),
                                 child: Icon(
                                   Icons.arrow_back,
-                                  color: Constants.colors[Constants.colorindex],
+                                  color: Constants.iAccent,
                                 ),
                               ),
                               Text(
                                 'Back'.i18n,
                                 style: TextStyle(
-                                  fontSize: Constants.actionbuttonFontSize,
-                                  color: Constants.colors[Constants.colorindex],
+                                  fontSize: Constants.smallFontSize,
+                                  color: Constants.iAccent,
                                 ),
                               ),
                             ],
@@ -137,15 +117,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         'Settings'.i18n,
                         style: TextStyle(
                             color: Constants.iWhite,
-                            fontSize: Constants.subtitleFontSize,
+                            fontSize: Constants.normalFontSize,
                             fontWeight: FontWeight.w500),
                       ),
                       SizedBox(height: 40.0),
                       Text(
                         'Sounds and vibration'.i18n,
                         style: TextStyle(
-                            color: Constants.colors[Constants.colorindex],
-                            fontSize: Constants.normalFontSize,
+                            color: Constants.iAccent,
+                            fontSize: Constants.smallFontSize,
                             fontWeight: FontWeight.w300),
                       ),
                       SizedBox(height: 5),
@@ -157,13 +137,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: Constants.getSoundEnabled()
                               ? Constants.iWhite
                               : Constants.iGrey,
-                          fontSize: Constants.actionbuttonFontSize,
+                          fontSize: Constants.smallFontSize,
                         ),
                         icon: Icon(
                           Icons.audiotrack,
                           size: 17,
                           color: Constants.getSoundEnabled()
-                              ? Constants.colors[Constants.colorindex]
+                              ? Constants.iAccent
                               : Constants.iGrey,
                         ),
                         onToggle: (bool value) {
@@ -185,13 +165,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: Constants.getVibrationEnabled()
                               ? Constants.iWhite
                               : Constants.iGrey,
-                          fontSize: Constants.actionbuttonFontSize,
+                          fontSize: Constants.smallFontSize,
                         ),
                         icon: Icon(
                           Icons.vibration,
                           size: 17,
                           color: Constants.getVibrationEnabled()
-                              ? Constants.colors[Constants.colorindex]
+                              ? Constants.iAccent
                               : Constants.iGrey,
                         ),
                         onToggle: (bool value) {
@@ -208,8 +188,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Text(
                         'Notifications'.i18n,
                         style: TextStyle(
-                            color: Constants.colors[Constants.colorindex],
-                            fontSize: Constants.normalFontSize,
+                            color: Constants.iAccent,
+                            fontSize: Constants.smallFontSize,
                             fontWeight: FontWeight.w300),
                       ),
                       SizedBox(height: 5),
@@ -221,13 +201,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: Constants.getNotificationsEnabled()
                               ? Constants.iWhite
                               : Constants.iGrey,
-                          fontSize: Constants.actionbuttonFontSize,
+                          fontSize: Constants.smallFontSize,
                         ),
                         icon: Icon(
                           Icons.notifications,
                           size: 17,
                           color: Constants.getNotificationsEnabled()
-                              ? Constants.colors[Constants.colorindex]
+                              ? Constants.iAccent
                               : Constants.iGrey,
                         ),
                         onToggle: (bool value) {
@@ -238,122 +218,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               !Constants.getNotificationsEnabled());
 
                           setState(() {});
-                        },
-                      ),
-                      SizedBox(height: 40.0),
-                      Text(
-                        'Personalization'.i18n,
-                        style: TextStyle(
-                            color: Constants.colors[Constants.colorindex],
-                            fontSize: Constants.normalFontSize,
-                            fontWeight: FontWeight.w300),
-                      ),
-                      SizedBox(height: 20.0),
-                      Row(children: <Widget>[
-                        Icon(
-                          Icons.palette,
-                          size: 20,
-                          color: Constants.iWhite,
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          'Choose your accent color...'.i18n,
-                          style: TextStyle(
-                              color: Constants.iWhite,
-                              fontSize: Constants.smallFontSize,
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ]),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      ToggleButtonCard(
-                        'Blue'.i18n,
-                        blueAccentColor,
-                        key: blueKey,
-                        icon: Icon(
-                          Icons.lens,
-                          size: 17,
-                          color: Constants.colors[0],
-                        ),
-                        splashColor: Constants.colors[0],
-                        onToggle: (bool value) {
-                          if (value) {
-                            FirebaseAnalytics().setUserProperty(
-                                name: "accent_color", value: "Blue");
-                            Constants.setAccentColor(0);
-                            setState(() {});
-                          } else {
-                            blueKey.currentState.currentValue = true;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 5),
-                      ToggleButtonCard(
-                        'Yellow'.i18n,
-                        yellowAccentColor,
-                        key: yellowKey,
-                        icon: Icon(
-                          Icons.lens,
-                          size: 17,
-                          color: Constants.colors[1],
-                        ),
-                        splashColor: Constants.colors[1],
-                        onToggle: (bool value) {
-                          if (value) {
-                            FirebaseAnalytics().setUserProperty(
-                                name: "accent_color", value: "Yellow");
-                            Constants.setAccentColor(1);
-                            setState(() {});
-                          } else {
-                            yellowKey.currentState.currentValue = true;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 5),
-                      ToggleButtonCard(
-                        'Red'.i18n,
-                        redAccentColor,
-                        key: redKey,
-                        icon: Icon(
-                          Icons.lens,
-                          size: 17,
-                          color: Constants.colors[2],
-                        ),
-                        splashColor: Constants.colors[2],
-                        onToggle: (bool value) {
-                          if (value) {
-                            FirebaseAnalytics().setUserProperty(
-                                name: "accent_color", value: "Red");
-                            Constants.setAccentColor(2);
-                            setState(() {});
-                          } else {
-                            redKey.currentState.currentValue = true;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 5),
-                      ToggleButtonCard(
-                        'Green'.i18n,
-                        greenAccentColor,
-                        key: greenKey,
-                        icon: Icon(
-                          Icons.lens,
-                          size: 17,
-                          color: Constants.colors[3],
-                        ),
-                        splashColor: Constants.colors[3],
-                        onToggle: (bool value) {
-                          if (value) {
-                            FirebaseAnalytics().setUserProperty(
-                                name: "accent_color", value: "Green");
-                            Constants.setAccentColor(3);
-                            setState(() {});
-                          } else {
-                            greenKey.currentState.currentValue = true;
-                          }
                         },
                       ),
                     ],

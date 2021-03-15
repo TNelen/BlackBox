@@ -37,9 +37,9 @@ class _RuleScreenState extends State<RuleScreen> {
       debugShowCheckedModeBanner: false,
       title: 'BlackBox',
       theme: ThemeData(
-          accentColor: Constants.colors[Constants.colorindex],
-          disabledColor: Constants.colors[Constants.colorindex],
-          fontFamily: "atarian",
+          accentColor: Constants.iAccent,
+          disabledColor: Constants.iAccent,
+          fontFamily: "roboto",
           scaffoldBackgroundColor: Constants.iBlack),
       home: I18n(
         child: Scaffold(
@@ -64,14 +64,14 @@ class _RuleScreenState extends State<RuleScreen> {
                         padding: EdgeInsets.only(right: 20),
                         child: Icon(
                           Icons.arrow_back,
-                          color: Constants.colors[Constants.colorindex],
+                          color: Constants.iAccent,
                         ),
                       ),
                       Text(
                         'Back'.i18n,
                         style: TextStyle(
-                          fontSize: Constants.actionbuttonFontSize,
-                          color: Constants.colors[Constants.colorindex],
+                          fontSize: Constants.smallFontSize,
+                          color: Constants.iAccent,
                         ),
                       ),
                     ],

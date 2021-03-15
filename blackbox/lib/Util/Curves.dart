@@ -129,3 +129,55 @@ class QuestionTopCurvePainter extends CustomPainter {
     return true;
   }
 }
+
+class PassTopCurvePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint();
+    paint.color = Colors.lightBlueAccent[100].withOpacity(0.5);
+    paint.style = PaintingStyle.fill; // Change this to fill
+
+    var path = Path();
+
+    path.moveTo(0, size.height * 0.30);
+    path.quadraticBezierTo(size.width * 0.1, size.height * 0.33,
+        size.width * 0.5, size.height * 0.33);
+    path.quadraticBezierTo(size.width * 0.9, size.height * 0.33,
+        size.width * 1.0, size.height * 0.36);
+    path.lineTo(size.width, 0);
+    path.lineTo(0, 0);
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+class ResultsBottomCurvePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint();
+    paint.color = Colors.lightBlueAccent[100].withOpacity(0.5);
+    paint.style = PaintingStyle.fill; // Change this to fill
+
+    var path = Path();
+
+    path.moveTo(0, size.height * 0.40);
+    path.quadraticBezierTo(size.width * 0.1, size.height * 0.43,
+        size.width * 0.5, size.height * 0.43);
+    path.quadraticBezierTo(size.width * 0.9, size.height * 0.43,
+        size.width * 1.0, size.height * 0.46);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}

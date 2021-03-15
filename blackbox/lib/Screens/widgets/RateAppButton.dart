@@ -12,7 +12,7 @@ class RateAppButton {
             Text(
               "rate this app",
               style: TextStyle(
-                  color: Constants.colors[Constants.colorindex],
+                  color: Constants.iAccent,
                   fontSize: Constants.smallFontSize,
                   fontWeight: FontWeight.w300),
             ),
@@ -21,7 +21,7 @@ class RateAppButton {
             ),
             Icon(
               Icons.star,
-              color: Constants.colors[Constants.colorindex],
+              color: Constants.iAccent,
               size: 15,
             ),
           ],

@@ -44,7 +44,7 @@ class PassScreenButton extends StatelessWidget {
         child: Container(
           child: Padding(
             padding:
-                const EdgeInsets.only(top: 5, left: 10.0, right: 10, bottom: 5),
+                const EdgeInsets.only(top: 5, left: 25.0, right: 10, bottom: 5),
             child: Stack(children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,

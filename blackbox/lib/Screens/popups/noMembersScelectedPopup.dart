@@ -16,14 +16,14 @@ class NoMemberSelectedPopup {
           title: Text(
             "No member selected".i18n,
             style: TextStyle(
-                fontFamily: "atarian",
-                color: Constants.colors[Constants.colorindex],
-                fontSize: Constants.normalFontSize),
+                fontFamily: "roboto",
+                color: Constants.iAccent,
+                fontSize: Constants.smallFontSize),
           ),
           content: Text(
             "Please make a valid choice".i18n,
             style: TextStyle(
-                fontFamily: "atarian",
+                fontFamily: "roboto",
                 color: Constants.iWhite,
                 fontSize: Constants.smallFontSize),
           ),
@@ -33,9 +33,9 @@ class NoMemberSelectedPopup {
               child: Text(
                 "Close".i18n,
                 style: TextStyle(
-                    fontFamily: "atarian",
-                    color: Constants.colors[Constants.colorindex],
-                    fontSize: Constants.actionbuttonFontSize,
+                    fontFamily: "roboto",
+                    color: Constants.iAccent,
+                    fontSize: Constants.smallFontSize,
                     fontWeight: FontWeight.bold),
               ),
               onPressed: () {

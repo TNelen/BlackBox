@@ -1,7 +1,7 @@
 import 'package:blackbox/Assets/questions.dart';
 import 'package:blackbox/Screens/widgets/CategoryCard.dart';
 import 'package:blackbox/Screens/widgets/PopularCategoryCard.dart';
-import 'package:blackbox/Screens/widgets/SelectedCategoryCard%20copy.dart';
+import 'package:blackbox/Screens/widgets/SelectedCategoryCard.dart';
 import 'package:blackbox/Util/Curves.dart';
 import 'SetPlayersScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -44,7 +44,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12.0),
-        splashColor: Constants.colors[Constants.colorindex],
+        splashColor: Constants.iAccent,
         onTap: () {
           Navigator.push(
               context,

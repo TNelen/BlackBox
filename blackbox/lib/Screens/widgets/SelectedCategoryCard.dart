@@ -23,7 +23,7 @@ class SelectedCategoryCardState extends State<SelectedCategoryCard> {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12.0),
-      splashColor: Constants.colors[Constants.colorindex],
+      splashColor: Constants.iAccent,
       onTap: () {
         setState(() {
           if (widget.onTap != null) widget.onTap();

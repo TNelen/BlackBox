@@ -30,7 +30,7 @@ class CategoryCardState extends State<CategoryCard> {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12.0),
-        splashColor: Constants.colors[Constants.colorindex],
+        splashColor: Constants.iAccent,
         onTap: () {
           setState(() {
             if (widget.onTap != null) widget.onTap();

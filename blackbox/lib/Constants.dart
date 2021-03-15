@@ -11,18 +11,6 @@ class Constants {
   static const gradient1 = Color(0xFF121212);
   static const gradient2 = Color(0xFF21272C);
 
-  //static const gradient2 = Color(0xFF21272C);
-
-  static int colorindex;
-
-  //accent color list
-  static const colors = [
-    Color(0xFF92dff3),
-    Color(0xFFffe082),
-    Color(0xFFcd5c5c),
-    Color(0xFF1DB854)
-  ];
-
   static List<Color> categoryColors = [
     Colors.tealAccent[100],
     Colors.greenAccent[100],
@@ -55,29 +43,13 @@ class Constants {
   static void loadData() {
     SharedPreferences.getInstance().then((value) => {
           _prefs = value,
-          colorindex =
-              _prefs.getInt("accent") == null ? 0 : _prefs.getInt("accent"),
           _areNotificationsEnabled = _prefs.getBool("notifications"),
           _isVibrationEnabled = _prefs.getBool("vibration"),
           _isSoundEnabled = _prefs.getBool("sounds"),
         });
   }
 
-  //setaccentColor
-  static void setAccentColor(int color) {
-    colorindex = color;
-    _prefs.setInt("accent", colorindex);
-  }
-
-  static bool getIsAccentcolor(int color) {
-    return colorindex == color ? true : false;
-  }
-
-  //getAccentcolor
-  //returns true is colorindex == color
-  static int getAccentColor() {
-    return colorindex ??= 0;
-  }
+ 
 
   /// Get whether or not vibration has been enabled for this user
   static bool getVibrationEnabled() {

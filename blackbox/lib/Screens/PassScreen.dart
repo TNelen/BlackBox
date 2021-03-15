@@ -5,8 +5,10 @@ import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:blackbox/Screens/widgets/IconCard.dart';
 import 'package:blackbox/Screens/widgets/PassScreenButton.dart';
+import 'package:blackbox/Util/Curves.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import '../Constants.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
@@ -73,15 +75,9 @@ class _PassScreenState extends State<PassScreen> {
         ],
         title: 'BlackBox',
         theme: ThemeData(
-            fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
+            fontFamily: "roboto", scaffoldBackgroundColor: Constants.iBlack),
         home: I18n(
             child: Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Constants.iBlack,
-            title:
-                Row(mainAxisAlignment: MainAxisAlignment.start, children: []),
-          ),
           body: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -95,27 +91,34 @@ class _PassScreenState extends State<PassScreen> {
               ),
             ),
             child: Stack(
-              children: [
+              fit: StackFit.expand,
+              children: <Widget>[
+                CustomPaint(
+                  painter: PassTopCurvePainter(),
+                ),
+                CustomPaint(
+                  painter: BottomCurvePainter(),
+                ),
                 ListView(
                   padding: const EdgeInsets.only(
-                      top: 40.0, bottom: 20, left: 45, right: 45),
+                      top: 80.0, bottom: 20, left: 45, right: 45),
                   children: [
                     SizedBox(height: 10.0),
                     Row(mainAxisAlignment: MainAxisAlignment.center,
                         // crossAxisAlignment: CrossAxisAlignment.,
                         children: [
                           Text(
-                            'pass the phone'.i18n,
+                            'Pass the phone'.i18n,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: Constants.colors[Constants.colorindex],
-                                fontSize: Constants.titleFontSize,
+                                color: Constants.iWhite,
+                                fontSize: Constants.normalFontSize + 3,
                                 fontWeight: FontWeight.w300),
                           ),
                           JumpingDotsProgressIndicator(
                             numberOfDots: 3,
-                            fontSize: Constants.titleFontSize,
-                            color: Constants.colors[Constants.colorindex],
+                            fontSize: Constants.normalFontSize + 3,
+                            color: Constants.iWhite,
                           ),
                         ]),
                     SizedBox(height: 20.0),
@@ -136,8 +139,8 @@ class _PassScreenState extends State<PassScreen> {
                               ' players have voted'.i18n,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Constants.iWhite,
-                          fontSize: Constants.normalFontSize,
+                          color: Constants.iLight,
+                          fontSize: Constants.smallFontSize,
                           fontWeight: FontWeight.w300),
                     ),
                     SizedBox(
@@ -148,26 +151,26 @@ class _PassScreenState extends State<PassScreen> {
                           " questions remaining".i18n,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Constants.iWhite,
-                          fontSize: Constants.smallFontSize,
+                          color: Constants.iLight,
+                          fontSize: Constants.miniFontSize,
                           fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 40.0),
+                    SizedBox(height: 75.0),
                     PassScreenButton(
-                      title: "  Vote!".i18n,
+                      title: "Vote!".i18n,
                       titleStyle: TextStyle(
                           color: allPlayersVoted()
                               ? Constants.iLight
                               : Constants.iWhite,
-                          fontSize: Constants.normalFontSize,
-                          fontWeight: FontWeight.bold),
+                          fontSize: Constants.normalFontSize - 3,
+                          fontWeight: FontWeight.w500),
                       subtitle: allPlayersVoted()
-                          ? "  All players voted".i18n
-                          : "  New vote for this round".i18n,
+                          ? "All players voted".i18n
+                          : "New vote for this round".i18n,
                       subtitleStyle: TextStyle(
                           color: Constants.iLight,
-                          fontSize: Constants.smallFontSize,
-                          fontWeight: FontWeight.bold),
+                          fontSize: Constants.smallFontSize - 2,
+                          fontWeight: FontWeight.w300),
                       iconCard: allPlayersVoted()
                           ? IconCard(
                               OMIcons.checkCircle,
@@ -178,7 +181,7 @@ class _PassScreenState extends State<PassScreen> {
                           : IconCard(
                               OMIcons.checkCircle,
                               Constants.iGrey.withOpacity(0.1),
-                              Constants.colors[Constants.colorindex],
+                              Constants.iAccent,
                               35,
                             ),
                       onTap: () {
@@ -196,13 +199,22 @@ class _PassScreenState extends State<PassScreen> {
                       height: 15,
                     ),
                     PassScreenButton(
-                      title: "  Add question".i18n,
-                      subtitle:
-                          "  Want to ask a question? Submit it here!".i18n,
+                      title: "Add question".i18n,
+                      subtitle: "Want to ask a question? Submit it here!".i18n,
+                      titleStyle: TextStyle(
+                          color: allPlayersVoted()
+                              ? Constants.iLight
+                              : Constants.iWhite,
+                          fontSize: Constants.normalFontSize - 3,
+                          fontWeight: FontWeight.w500),
+                      subtitleStyle: TextStyle(
+                          color: Constants.iLight,
+                          fontSize: Constants.smallFontSize - 2,
+                          fontWeight: FontWeight.w300),
                       iconCard: IconCard(
                         OMIcons.libraryAdd,
                         Constants.iGrey.withOpacity(0.1),
-                        Constants.colors[Constants.colorindex],
+                        Constants.iAccent,
                         35,
                       ),
                       onTap: () {
@@ -214,20 +226,21 @@ class _PassScreenState extends State<PassScreen> {
                 ),
                 Positioned(
                   right: 20,
+                  top: 20,
                   child: Material(
-                    color: Constants.iDarkGrey,
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     child: InkWell(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.people_alt_outlined,
-                          color: Constants.colors[Constants.colorindex],
-                          size: 35,
+                        child: FaIcon(
+                          FontAwesomeIcons.userEdit,
+                          color: Constants.iDarkGrey,
+                          size: 25,
                         ),
                       ),
-                      splashColor: Constants.colors[Constants.colorindex],
+                      splashColor: Constants.iDarkGrey,
                       onTap: () {
                         Navigator.push(
                             context,
@@ -242,15 +255,16 @@ class _PassScreenState extends State<PassScreen> {
           ),
           floatingActionButton: ConfirmationSlider(
             backgroundColor: Constants.iDarkGrey,
-            foregroundColor: Constants.colors[Constants.colorindex],
+            foregroundColor: Constants.iLight,
             backgroundShape: BorderRadius.circular(16.0),
             foregroundShape: BorderRadius.circular(16.0),
             text: "Swipe to go to results".i18n,
             textStyle: TextStyle(
-                color: Constants.iWhite,
+                color: Constants.iLight,
                 fontSize: Constants.smallFontSize,
-                fontWeight: FontWeight.bold),
-            icon: OMIcons.chevronRight,
+                fontWeight: FontWeight.w500),
+            icon: FontAwesomeIcons.angleDoubleRight,
+            iconColor: Constants.iDarkGrey,
             onConfirmation: () {
               _moveToResults(true);
             },

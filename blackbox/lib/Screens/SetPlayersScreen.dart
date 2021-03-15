@@ -50,7 +50,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
       constraintSuggestion: true,
       onSubmitted: (String str) {
         setState(() {
-          players.add(str);
+          players.add(str[0].toUpperCase() + str.substring(1));
         });
       },
       textStyle: TextStyle(
@@ -104,7 +104,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12.0),
-        // splashColor: Constants.colors[Constants.colorindex],
+        // splashColor: Constants.iAccent,
         onTap: () {
           if (players.length != 0 && selectedCategory.length != 0) {
             canVoteBlank ? players.add("Blank".i18n) : null;

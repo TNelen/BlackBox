@@ -24,7 +24,7 @@ class _RatePopupState extends State<RatePopup> {
         'Rate this app'.i18n,
         style: TextStyle(
             fontFamily: 'atarian',
-            color: Constants.colors[Constants.colorindex],
+            color: Constants.iAccent,
             fontSize: Constants.normalFontSize),
       ),
       content: Container(
@@ -75,7 +75,7 @@ class _RatePopupState extends State<RatePopup> {
             'Close'.i18n,
             style: TextStyle(
                 fontFamily: 'atarian',
-                color: Constants.colors[Constants.colorindex],
+                color: Constants.iAccent,
                 fontSize: Constants.actionbuttonFontSize,
                 fontWeight: FontWeight.bold),
           ),

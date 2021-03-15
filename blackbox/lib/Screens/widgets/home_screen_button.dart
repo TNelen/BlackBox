@@ -24,7 +24,7 @@ class HomeScreenButton extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(16.0),
-        splashColor: Constants.colors[Constants.colorindex],
+        splashColor: Constants.iAccent,
         onTap: () {
           if (wifi && loggedIn) {
             if (onTap != null) onTap();
@@ -37,9 +37,8 @@ class HomeScreenButton extends StatelessWidget {
             children: [
               Icon(
                 this.icon,
-                color: (wifi && loggedIn)
-                    ? Constants.colors[Constants.colorindex]
-                    : Constants.iLight,
+                color:
+                    (wifi && loggedIn) ? Constants.iAccent : Constants.iLight,
                 size: 35,
               ),
               SizedBox(
@@ -63,7 +62,7 @@ class HomeScreenButton extends StatelessWidget {
                         ),
                         this._title == "Party Mode"
                             ? Card(
-                                color: Constants.colors[Constants.colorindex],
+                                color: Constants.iAccent,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16.0),
                                 ),
