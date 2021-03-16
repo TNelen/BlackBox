@@ -130,8 +130,20 @@ extension Localization on String {
         "nl": "Stel een vraag",
       } +
       {
+        "en": "Start playing now!",
+        "nl": "Begin met spelen!",
+      } +
+      {
         "en": "Blank",
         "nl": "Blanco",
+      } +
+      {
+        "en": "Game",
+        "nl": "Spel",
+      } +
+      {
+        "en": "Rules",
+        "nl": "Spelregels",
       } +
       {
         "en": "remaining",
@@ -144,6 +156,10 @@ extension Localization on String {
       {
         "en": "Collecting votes",
         "nl": "Stemmen verzamelen",
+      } +
+      {
+        "en": "(Can not be changed during the game)",
+        "nl": "(Kan niet aangepast worden tijdens het spel)",
       } +
       {
         "en": "Time left for voting",
@@ -1139,6 +1155,90 @@ extension Localization on String {
         "en": "Who has the ugliest girlfriend/boyfriend",
         "nl": "Wie heeft de lelijkste vriend/vriendin?",
       } +
+      /////////////////////////
+      ///      Family     ////
+      /////////////////////////
+      {
+        "en": "Who does the least amount of chores in the house?",
+        "nl": "Wie doet het minste klusjes thuis?",
+      } +
+      {
+        "en": "Who decides what to watch on TV?",
+        "nl": "Wie bepaalt er wat we kijken op TV?",
+      } +
+      {
+        "en": "Who makes the most mess in the house?",
+        "nl": "Wie maakt het meeste rommel thuis?",
+      } +
+      {
+        "en": "Who is the most handy of the family?",
+        "nl": "Wie is het handigste?",
+      } +
+      {
+        "en": "Who sleeps the longest on a free day?",
+        "nl": "Wie slaapt het langste op een vrije dag?",
+      } +
+      {
+        "en": "Who is home most often?",
+        "nl": "Wie is er het meeste thuis?",
+      } +
+      {
+        "en": "Who can cook best?",
+        "nl": "Wie kan er het beste koken?",
+      } +
+      {
+        "en": "Who should do the dishes more often?",
+        "nl": "Wie zou de afwas vaker moeten doen?",
+      } +
+      {
+        "en": "Who makes the most noise?",
+        "nl": "Wie maakt het meeste lawaai?",
+      } +
+      {
+        "en": "Who invites the most friends?",
+        "nl": "Wie nodigt het meeste vrienden uit?",
+      } +
+      {
+        "en": "Who has the prettiest room?",
+        "nl": "Wie heeft de mooiste kamer?",
+      } +
+      {
+        "en": "Who has the best spot in the sofa?",
+        "nl": "Wie heeft de beste plek in de zetel?",
+      } +
+      {
+        "en": "Who eats the most?",
+        "nl": "Wie eet het meest?",
+      } +
+      {
+        "en": "Who complains most about dinner?",
+        "nl": "Wie klaagt het meest?",
+      } +
+      {
+        "en": "Who stays up longest?",
+        "nl": "Wie blijft het langste wakker?",
+      } +
+      {
+        "en": "Who is most picky about what they like to eat?",
+        "nl": "Wie is de meest kieskeurige eter?",
+      } +
+      {
+        "en": "Who drinks the most beer?",
+        "nl": "Wie drinkt het meeste bier?",
+      } +
+      {
+        "en": "Who drinks the most coffee?",
+        "nl": "Wie drinkt het meeste koffie?",
+      } +
+      {
+        "en": "Who skips breakfast the most?",
+        "nl": "Wie slaagt het vaakst ontbijt over?",
+      } +
+      {
+        "en": "Who spends the most time in the garden?",
+        "nl": "Wie spendeerd het meeste tijd buiten?",
+      } +
+
       ////////////////////////////////
       ///categories and description///
       ////////////////////////////////
@@ -1179,8 +1279,8 @@ extension Localization on String {
         "nl": "Bewonder je vrienden hun acties of eigenschappen",
       } +
       {
-        "en": "The biggest friendship test, only for true friends!",
-        "nl": "De grootste vriendschapstest. Alleen voor echte vrienden!",
+        "en": "The biggest friendship test!",
+        "nl": "De grootste vriendschapstest!",
       } +
       {
         "en": "Questions related to drinking, partying and nightlife",

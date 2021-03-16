@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../Constants.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:blackbox/translations/RulesScreen.i18n.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 
 import '../main.dart';
 import 'animation/ScaleDownPageRoute.dart';

@@ -292,11 +292,12 @@ List<String> Family = [
   "Who has the best spot in the sofa?".i18n,
   "Who eats the most?".i18n,
   "Who complains most about dinner?".i18n,
-  "?".i18n,
-  "?".i18n,
-  "?".i18n,
-  "?".i18n,
-  "?".i18n,
+  "Who stays up longest?".i18n,
+  "Who is most picky about what they like to eat?".i18n,
+  "Who drinks the most beer?".i18n,
+  "Who drinks the most coffee?".i18n,
+  "Who skips breakfast?".i18n,
+  "Who spends the most time in the garden?".i18n,
 ];
 
 List<Category> popularcategories = [
@@ -323,7 +324,7 @@ List<Category> categories = [
       Constants.categoryColors[3]),
   Category(
       "Friendship killers".i18n,
-      "The biggest friendship test, only for true friends!".i18n,
+      "The biggest friendship test!".i18n,
       FriendshipKillers,
       false,
       FontAwesomeIcons.heartBroken,
