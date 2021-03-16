@@ -13,7 +13,7 @@ class RulesColumn extends StatefulWidget {
     // Game
     'You can select one or more categories when creating a game.'.i18n +
         '\n' +
-        'All players vote one by one. After you have voted, pass the phone to the next player'
+        'All players vote one by one. After you have voted, pass the phone to the next player.'
             .i18n +
         '\n' +
         'After everyone has voted, go to the results, and a new round starts.'
@@ -49,16 +49,19 @@ class _RulesColumnState extends State<RulesColumn> {
               widget.titles[i],
               textAlign: TextAlign.start,
               style: TextStyle(
-                color: Constants.iAccent,
-                fontSize: Constants.actionbuttonFontSize,
-              ),
+                  color: Constants.iAccent,
+                  fontSize: Constants.smallFontSize + 3,
+                  fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              height: 15,
             ),
             Text(
               widget.descriptions[i],
               style: TextStyle(
-                color: Constants.iWhite,
-                fontSize: Constants.smallFontSize,
-              ),
+                  color: Constants.iWhite,
+                  fontSize: Constants.smallFontSize,
+                  fontWeight: FontWeight.w300),
             ),
             SizedBox(height: 15),
           ]));

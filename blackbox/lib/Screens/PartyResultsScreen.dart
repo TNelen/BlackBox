@@ -121,8 +121,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> alltimeWinners = offlineGroupData.getAlltimeRanking();
-    Map<String, int> allTimeVotes = offlineGroupData.getTotalVotes();
+    
     List<String> currentWinners = offlineGroupData.getCurrentRanking();
     Map<String, int> currentVotes = offlineGroupData.getCurrentVotes();
 

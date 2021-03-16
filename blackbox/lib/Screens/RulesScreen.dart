@@ -102,7 +102,7 @@ class _RuleScreenState extends State<RuleScreen> {
                   'Rules'.i18n,
                   style: TextStyle(
                       color: Constants.iWhite,
-                      fontSize: Constants.subtitleFontSize,
+                      fontSize: Constants.normalFontSize,
                       fontWeight: FontWeight.w500),
                 ),
                 SizedBox(height: 30.0),

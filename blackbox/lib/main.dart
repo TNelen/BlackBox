@@ -5,9 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:i18n_extension/i18n_widget.dart';
 import 'Constants.dart';
 import 'package:firebase_admob/firebase_admob.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 
 import 'Screens/widgets/HomeScreenTopIcons.dart';
 import 'Util/Curves.dart';
@@ -113,89 +116,106 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    return Scaffold(
-      body: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              stops: [0.1, 0.9],
-              colors: [
-                Constants.gradient1,
-                Constants.gradient2,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', ''), // English, no country code
+        const Locale('nl', ''), // nl, no country code
+      ],
+      title: 'BlackBox',
+      theme: ThemeData(
+          fontFamily: "roboto", scaffoldBackgroundColor: Constants.iBlack),
+      home: I18n(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                stops: [0.1, 0.9],
+                colors: [
+                  Constants.gradient1,
+                  Constants.gradient2,
+                ],
+              ),
+            ),
+            child: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                CustomPaint(
+                  painter: StartCurvePainter(),
+                ),
+                Column(
+                  children: [
+                    Expanded(
+                        flex: 6,
+                        child: Column(children: <Widget>[
+                          SizedBox(
+                            height: 25,
+                          ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.75,
+                                    child: IconBar()),
+                              ]),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 8,
+                          ),
+                          Text(
+                            "BlackBox",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "atarian",
+                                fontSize: Constants.titleFontSize,
+                                fontWeight: FontWeight.w300),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "A MAGNETAR Game",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: Constants.normalFontSize,
+                                fontFamily: "atarian",
+                                fontWeight: FontWeight.w300),
+                          ),
+                        ])),
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Start playing now!".i18n,
+                            style: TextStyle(
+                                fontSize: Constants.normalFontSize,
+                                fontFamily: "roboto",
+                                color: Constants.iWhite,
+                                fontWeight: FontWeight.w300),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          startButton
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+                // This is the Custom Shape Container
               ],
             ),
-          ),
-          child: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              CustomPaint(
-                painter: StartCurvePainter(),
-              ),
-              Column(
-                children: [
-                  Expanded(
-                      flex: 6,
-                      child: Column(children: <Widget>[
-                        SizedBox(
-                          height: 25,
-                        ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.75,
-                                  child: IconBar()),
-                            ]),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height / 8,
-                        ),
-                        Text(
-                          "BlackBox",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: Constants.titleFontSize,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "A MAGNETAR Game",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: Constants.normalFontSize,
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ])),
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Start playing now!",
-                          style: TextStyle(
-                              fontSize: Constants.normalFontSize,
-                              fontFamily: "roboto",
-                              color: Constants.iWhite,
-                              fontWeight: FontWeight.w300),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        startButton
-                      ],
-                    ),
-                  ),
-                ],
-              )
-              // This is the Custom Shape Container
-            ],
           ),
         ),
       ),

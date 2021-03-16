@@ -275,28 +275,28 @@ extension Localization on String {
         "nl": " spelers hebben gestemd",
       } +
       {
-        "en": "  Vote!",
-        "nl": "  Stem!",
+        "en": "Vote!",
+        "nl": "Stem!",
       } +
       {
-        "en": "  All players voted",
-        "nl": "  Iedereen heeft gestemd",
+        "en": "All players voted",
+        "nl": "Iedereen heeft gestemd",
       } +
       {
-        "en": "  Add question",
-        "nl": "  Stel een vraag",
+        "en": "Add question",
+        "nl": "Stel een vraag",
       } +
       {
-        "en": "  Edit players",
-        "nl": "  Verander spelers",
+        "en": "Edit players",
+        "nl": "Verander spelers",
       } +
       {
-        "en": "  Add or remove players",
-        "nl": "  Verwijder of voeg spelers toe",
+        "en": "Add or remove players",
+        "nl": "Verwijder of voeg spelers toe",
       } +
       {
-        "en": "  Want to ask a question? Submit it here!",
-        "nl": "  Stuur hier je eigen vraag in",
+        "en": "Want to ask a question? Submit it here!",
+        "nl": "Stuur hier je eigen vraag in",
       } +
       {
         "en": " questions remaining",

@@ -17,6 +17,10 @@ extension Localization on String {
             "Vind je dit een tof spel, geef ons een beoordeling in de play store aub",
       } +
       {
+        "en": "There should be at least one player!",
+        "nl": "Er moet minstens één speler zijn!",
+      } +
+      {
         "en": "Hi there!",
         "nl": "Hey daar!",
       } +
@@ -394,32 +398,32 @@ extension Localization on String {
         "nl": "Geef de gsm door",
       } +
       {
-        "en": " players have voted",
-        "nl": " spelers hebben gestemd",
+        "en": "players have voted",
+        "nl": "spelers hebben gestemd",
       } +
       {
-        "en": "  Vote!",
-        "nl": "  Stem!",
+        "en": "Vote!",
+        "nl": "Stem!",
       } +
       {
-        "en": "  All players voted",
-        "nl": "  Iedereen heeft gestemd",
+        "en": "All players voted",
+        "nl": "Iedereen heeft gestemd",
       } +
       {
-        "en": "  Add question",
-        "nl": "  Stel een vraag",
+        "en": "Add question",
+        "nl": "Stel een vraag",
       } +
       {
-        "en": "  Edit players",
-        "nl": "  Verander spelers",
+        "en": "Edit players",
+        "nl": "Verander spelers",
       } +
       {
-        "en": "  Add or remove players",
-        "nl": "  Verwijder of voeg spelers toe",
+        "en": "Add or remove players",
+        "nl": "Verwijder of voeg spelers toe",
       } +
       {
-        "en": "  Want to ask a question? Submit it here!",
-        "nl": "  Stuur hier je eigen vraag in",
+        "en": "Want to ask a question? Submit it here!",
+        "nl": "Stuur hier je eigen vraag in",
       } +
       {
         "en": " questions remaining",
@@ -432,6 +436,22 @@ extension Localization on String {
       {
         "en": "End game",
         "nl": "Stop spel",
+      } +
+      {
+        "en": "Pass the phone",
+        "nl": "Geef de gsm door",
+      } +
+      {
+        "en": " players have voted",
+        "nl": " spelers hebben gestemd",
+      } +
+      {
+        "en": "Round results",
+        "nl": "Resultaten",
+      } +
+      {
+        "en": "Next ",
+        "nl": "Volgende ",
       } +
       {
         "en": "st",
@@ -462,12 +482,28 @@ extension Localization on String {
         "nl": "Populair",
       } +
       {
+        "en": "Next",
+        "nl": "Volgende",
+      } +
+      {
+        "en": "None selected",
+        "nl": "Geen geselecteerd",
+      } +
+      {
         "en": "Other",
         "nl": "Andere",
       } +
       {
         "en": "Next",
         "nl": "Volgende",
+      } +
+      {
+        "en": "Settings",
+        "nl": "Instellingen",
+      } +
+      {
+        "en": "Add player...",
+        "nl": "Voeg speler toe...",
       } +
 
       //////////////////

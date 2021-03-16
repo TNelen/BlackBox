@@ -261,7 +261,7 @@ class _PassScreenState extends State<PassScreen> {
             text: "Swipe to go to results".i18n,
             textStyle: TextStyle(
                 color: Constants.iLight,
-                fontSize: Constants.smallFontSize,
+                fontSize: Constants.miniFontSize,
                 fontWeight: FontWeight.w500),
             icon: FontAwesomeIcons.angleDoubleRight,
             iconColor: Constants.iDarkGrey,
