@@ -296,7 +296,7 @@ List<String> Family = [
   "Who is most picky about what they like to eat?".i18n,
   "Who drinks the most beer?".i18n,
   "Who drinks the most coffee?".i18n,
-  "Who skips breakfast?".i18n,
+  "Who skips breakfast the most?".i18n,
   "Who spends the most time in the garden?".i18n,
 ];
 

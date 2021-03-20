@@ -156,17 +156,17 @@ class _SplashScreenState extends State<SplashScreen>
                     Expanded(
                         flex: 6,
                         child: Column(children: <Widget>[
-                          SizedBox(
-                            height: 25,
+                          SafeArea(
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.75,
+                                      child: IconBar()),
+                                ]),
                           ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.75,
-                                    child: IconBar()),
-                              ]),
                           SizedBox(
                             height: MediaQuery.of(context).size.height / 8,
                           ),

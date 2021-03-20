@@ -227,7 +227,7 @@ class _PassScreenState extends State<PassScreen> {
                 Positioned(
                   right: 20,
                   top: 20,
-                  child: Material(
+                  child: SafeArea(child: Material(
                     color: Colors.transparent,
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     child: InkWell(
@@ -248,6 +248,7 @@ class _PassScreenState extends State<PassScreen> {
                                 EditPlayersScreen(offlineGroupData)));
                       },
                     ),
+                  ),
                   ),
                 ),
               ],

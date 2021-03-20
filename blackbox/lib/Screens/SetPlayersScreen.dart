@@ -7,6 +7,8 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'CategoryScreen.dart';
+import 'animation/ScaleDownPageRoute.dart';
 import 'popups/Popup.dart';
 import '../Constants.dart';
 import 'package:blackbox/translations/translations.i18n.dart';
@@ -202,6 +204,40 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
               CustomPaint(
                 painter: BottomCurvePainter(),
               ),
+              Positioned(
+                left: 1,
+                right: 1,
+                child: SafeArea(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          ScaleDownPageRoute(
+                            fromPage: widget,
+                            toPage: CategoryScreen(),
+                          ));
+                    },
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 10),
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Constants.iDarkGrey,
+                          ),
+                        ),
+                        Text(
+                          'Back'.i18n,
+                          style: TextStyle(
+                            fontSize: Constants.smallFontSize,
+                            color: Constants.iDarkGrey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -230,12 +266,20 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                             Container(
                               padding: EdgeInsets.only(left: 20, right: 20),
                               child: Row(children: [
-                                Text(
-                                  'Blank vote'.i18n,
-                                  style: TextStyle(
-                                      fontSize: Constants.smallFontSize,
-                                      color: Constants.iDarkGrey,
-                                      fontWeight: FontWeight.w500),
+                                FlatButton(
+                                  splashColor: Colors.transparent,
+                                  onPressed: () {
+                                    setState(() {
+                                      canVoteBlank = !canVoteBlank;
+                                    });
+                                  },
+                                  child: Text(
+                                    'Blank vote'.i18n,
+                                    style: TextStyle(
+                                        fontSize: Constants.smallFontSize,
+                                        color: Constants.iDarkGrey,
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                 ),
                                 Switch(
                                   value: canVoteBlank,

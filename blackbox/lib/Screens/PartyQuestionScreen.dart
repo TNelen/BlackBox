@@ -181,7 +181,8 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 20.0, vertical: 20.0),
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
                                     Text(
                                       offlineGroupData
@@ -193,13 +194,13 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                                           fontWeight: FontWeight.w300),
                                       textAlign: TextAlign.center,
                                     ),
-                                    SizedBox(height: 5),
+                                    SizedBox(height: 15),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: <Widget>[
                                         Container(
-                                          width: 180.0,
+                                          width: 220.0,
                                           child: Text(
                                             '- ' +
                                                 offlineGroupData
@@ -209,8 +210,8 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                                             style: TextStyle(
                                                 color: Constants.iWhite,
                                                 fontSize:
-                                                    Constants.smallFontSize,
-                                                fontWeight: FontWeight.bold),
+                                                    Constants.smallFontSize - 2,
+                                                fontWeight: FontWeight.w500),
                                             textAlign: TextAlign.center,
                                           ),
                                         ),

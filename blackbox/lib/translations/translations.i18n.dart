@@ -481,6 +481,10 @@ extension Localization on String {
         "en": "Player Name",
         "nl": "Spelersnaam",
       } +
+      {
+        "en": "New vote for this round",
+        "nl": "Nieuwe stem uitbrengen",
+      } +
 
       //////////////////
       /// Homescreen ///
@@ -1267,6 +1271,10 @@ extension Localization on String {
         "nl": "+18",
       } +
       {
+        "en": "Family",
+        "nl": "Family",
+      } +
+      {
         "en": "General black box questions. Great to get started",
         "nl": "Algemene Blackbox vragen, ideaal om mee te starten",
       } +
@@ -1291,8 +1299,8 @@ extension Localization on String {
         "nl": "Pittige vragen, gericht op meerderjarigen",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "Have fun with your household",
+        "nl": "Speel met je gezin",
       } +
       {
         "en": "",
