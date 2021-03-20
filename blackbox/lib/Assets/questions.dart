@@ -155,7 +155,7 @@ List<String> BeerOClock = [
 
 List<String> CharacterTraits = [
   "Who is best at nagging?".i18n,
-  "Who is the most romantic?".i18n,
+  "Who is most romantic?".i18n,
   "Who is the biggest cry baby?".i18n,
   "Who is most patient?".i18n,
   "Who is the prettiest?".i18n,
@@ -169,10 +169,10 @@ List<String> CharacterTraits = [
   "Who is always late?".i18n,
   "Who would die saving someone?".i18n,
   "Who is the sweetest?".i18n,
-  "Who is the most honest?".i18n,
+  "Who is most honest?".i18n,
   "Who is most religious?".i18n,
   "Whose eyes are the prettiest?".i18n,
-  "Who is the most stress resistant?".i18n,
+  "Who is most stress resistant?".i18n,
   "Who is most likely to be a gang member?".i18n,
   "Who cares most about what people think of him/her?".i18n,
   "Who is most impatient?".i18n,

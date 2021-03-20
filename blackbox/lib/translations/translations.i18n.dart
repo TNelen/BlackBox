@@ -709,7 +709,7 @@ extension Localization on String {
         "nl": "Wie is de grootste klager?",
       } +
       {
-        "en": "Who is the most romantic?",
+        "en": "Who is most romantic?",
         "nl": "Wie is meest romantisch?",
       } +
       {
@@ -765,7 +765,7 @@ extension Localization on String {
         "nl": "Wie is het liefste?",
       } +
       {
-        "en": "Who is the most honest?",
+        "en": "Who is most honest?",
         "nl": "Wie is het eerlijkste?",
       } +
       {
@@ -777,7 +777,7 @@ extension Localization on String {
         "nl": "Wies heeft de mooiste ogen?",
       } +
       {
-        "en": "Who is the most stress resistant?",
+        "en": "Who is most stress resistant?",
         "nl": "Wie is meest stressresistent?",
       } +
       {
