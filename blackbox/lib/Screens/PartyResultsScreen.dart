@@ -509,33 +509,6 @@ class PartyResultScreenState extends State<PartyResultScreen> {
       ),
       home: I18n(
         child: Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Constants.iBlack,
-            title: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              FlatButton(
-                onPressed: () {
-                  FirebaseAnalytics()
-                      .logEvent(name: 'game_action', parameters: {
-                    'type': 'PartyGameEnded',
-                  });
-                  Navigator.push(
-                      context,
-                      SlidePageRoute(
-                          //TODO : create endScreen
-                          fromPage: widget,
-                          toPage: SplashScreen()));
-                },
-                child: Text(
-                  "End game".i18n,
-                  style: TextStyle(
-                      fontSize: Constants.smallFontSize,
-                      color: Constants.iLight,
-                      fontWeight: FontWeight.w300),
-                ),
-              )
-            ]),
-          ),
           body: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -554,6 +527,33 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                 CustomPaint(
                   painter: ResultsBottomCurvePainter(),
                 ),
+                Positioned(
+                  right: 12,
+                  top: 12,
+                  child: SafeArea(
+                    child: InkWell(
+                      onTap: () {
+                        FirebaseAnalytics()
+                            .logEvent(name: 'game_action', parameters: {
+                          'type': 'PartyGameEnded',
+                        });
+                        Navigator.push(
+                            context,
+                            SlidePageRoute(
+                                //TODO : create endScreen
+                                fromPage: widget,
+                                toPage: SplashScreen()));
+                      },
+                      child: Text(
+                        "End game".i18n,
+                        style: TextStyle(
+                            fontSize: Constants.smallFontSize,
+                            color: Constants.iLight,
+                            fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                  ),
+                ),
                 Column(
                   children: <Widget>[
                     //Title
@@ -563,7 +563,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: 25,
+                            height: 70,
                           ),
                           Center(
                               child: Row(
