@@ -52,9 +52,7 @@ class QuestionList {
 
   QuestionList(List<Category> categories) {
     for (Category cat in categories) {
-      List<String> categoryQuestions = cat.getQuestions();
-      categoryQuestions.shuffle();
-      for (String question in categoryQuestions) {
+      for (String question in cat.getQuestions()) {
         questionsList.putIfAbsent(question, () => cat.getCategoryName());
       }
     }
