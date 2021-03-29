@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:blackbox/Assets/questions.dart';
 
 class OfflineGroupData {

@@ -1,3 +1,5 @@
+// @dart = 2.7
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:blackbox/Constants.dart';
@@ -32,15 +34,12 @@ class RulesColumn extends StatefulWidget {
 }
 
 class _RulesColumnState extends State<RulesColumn> {
-  int _openIndex =
-      -1; // Keeps track of the opened tile. Will be -1 when all are closed
-
   @override
   Widget build(BuildContext context) {
-    List<Widget> infoTiles = List<Widget>();
+    // ignore: deprecated_member_use
+    List<Widget> infoTiles = <Widget>[];
     int i = 0;
     while (i < widget.titles.length && i < widget.descriptions.length) {
-      int index = i;
       infoTiles.add(Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

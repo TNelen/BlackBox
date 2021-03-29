@@ -74,14 +74,14 @@ class QuestionList {
         print(questionsList[questionString]);
 
         Question returning =
-            Question(questionString, questionsList[questionString]);
+            Question(questionString, questionsList[questionString]!);
         questionsList.remove(questionString);
 
         return returning;
       } else {
         var questions = questionsList.keys.toList()..shuffle;
         var questionString = questions[0];
-        var question = Question(questionString, questionsList[questionString]);
+        var question = Question(questionString, questionsList[questionString]!);
         //remove from list
         questionsList.remove(questionString);
         return question;
@@ -89,7 +89,7 @@ class QuestionList {
     } else {
       var questions = questionsList.keys.toList()..shuffle;
       var questionString = questions[0];
-      var question = Question(questionString, questionsList[questionString]);
+      var question = Question(questionString, questionsList[questionString]!);
       //remove from list
       questionsList.remove(questionString);
       return question;
@@ -302,16 +302,16 @@ List<String> Family = [
 
 List<Category> popularcategories = [
   Category("Family".i18n, "Have fun with your household".i18n, Family, true,
-      FontAwesomeIcons.home, Constants.categoryColors[0]),
+      FontAwesomeIcons.home, Constants.categoryColors[0]!),
   Category(
       "Casual".i18n,
       "General black box questions. Great to get started".i18n,
       Casual,
       false,
       FontAwesomeIcons.hatCowboy,
-      Constants.categoryColors[1]),
+      Constants.categoryColors[1]!),
   Category("Superstar".i18n, "Admire your friends’ actions or abilities".i18n,
-      SuperStar, false, FontAwesomeIcons.trophy, Constants.categoryColors[2]),
+      SuperStar, false, FontAwesomeIcons.trophy, Constants.categoryColors[2]!),
 ];
 
 List<Category> categories = [
@@ -321,21 +321,21 @@ List<Category> categories = [
       CharacterTraits,
       false,
       FontAwesomeIcons.userSecret,
-      Constants.categoryColors[3]),
+      Constants.categoryColors[3]!),
   Category(
       "Friendship killers".i18n,
       "The biggest friendship test!".i18n,
       FriendshipKillers,
       false,
       FontAwesomeIcons.heartBroken,
-      Constants.categoryColors[4]),
+      Constants.categoryColors[4]!),
   Category(
       "Beer o'clock".i18n,
       "Questions related to drinking, partying and nightlife".i18n,
       BeerOClock,
       false,
       FontAwesomeIcons.glassCheers,
-      Constants.categoryColors[5]),
+      Constants.categoryColors[5]!),
   Category("+18".i18n, "Spicy questions, aimed at adults".i18n, EighteenPlus,
-      false, FontAwesomeIcons.kissWinkHeart, Constants.categoryColors[6]),
+      false, FontAwesomeIcons.kissWinkHeart, Constants.categoryColors[6]!),
 ];

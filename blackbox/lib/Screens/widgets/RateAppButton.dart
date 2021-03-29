@@ -33,7 +33,9 @@ class RateAppButton {
 
           showDialog(
             context: context,
-            child: RatePopup(),
+            builder: (BuildContext context) {
+              return RatePopup();
+            },
           );
         });
   }

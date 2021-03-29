@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PassScreen.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';

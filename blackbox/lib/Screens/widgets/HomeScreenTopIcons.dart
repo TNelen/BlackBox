@@ -1,3 +1,5 @@
+// @dart = 2.7
+
 import 'package:blackbox/Constants.dart';
 import 'package:blackbox/Screens/animation/ScalePageRoute.dart';
 import 'package:blackbox/Screens/widgets/IconCard.dart';

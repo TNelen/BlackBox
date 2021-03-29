@@ -28,9 +28,8 @@ class SetPlayersScreen extends StatefulWidget {
 }
 
 class _SetPlayersScreenState extends State<SetPlayersScreen> {
-  List<Category> selectedCategory;
+  List<Category> selectedCategory = [];
   List<String> players = [];
-  QuestionList questionList;
   TextEditingController codeController = TextEditingController();
 
   _SetPlayersScreenState(List<Category> selectedCategory) {
@@ -110,7 +109,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
         onTap: () {
           if (players.length != 0 && selectedCategory.length != 0) {
             canVoteBlank ? players.add("Blank".i18n) : null;
-            questionList = QuestionList(selectedCategory);
+            QuestionList questionList = QuestionList(selectedCategory);
 
             Map<String, dynamic> map = {
               'code': 'New group',

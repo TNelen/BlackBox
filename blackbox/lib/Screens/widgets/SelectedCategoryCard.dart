@@ -9,7 +9,8 @@ class SelectedCategoryCard extends StatefulWidget {
   final Function() onTap;
   bool isNewFlag = false;
 
-  SelectedCategoryCard(this.category, {this.onTap, Key key, this.isNewFlag})
+  SelectedCategoryCard(this.category,
+      {required this.onTap, required Key key, required this.isNewFlag})
       : super(key: key);
 
   @override

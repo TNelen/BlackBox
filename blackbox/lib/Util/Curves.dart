@@ -4,7 +4,7 @@ class CategoryTopCurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.lightBlueAccent[100].withOpacity(0.5);
+    paint.color = Colors.lightBlueAccent[100]!.withOpacity(0.5);
     paint.style = PaintingStyle.fill; // Change this to fill
 
     var path = Path();
@@ -30,7 +30,7 @@ class TopCurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.lightBlueAccent[100].withOpacity(0.5);
+    paint.color = Colors.lightBlueAccent[100]!.withOpacity(0.5);
     paint.style = PaintingStyle.fill; // Change this to fill
 
     var path = Path();
@@ -56,7 +56,7 @@ class BottomCurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.lightBlueAccent[100].withOpacity(0.5);
+    paint.color = Colors.lightBlueAccent[100]!.withOpacity(0.5);
     paint.style = PaintingStyle.fill; // Change this to fill
 
     var path = Path();
@@ -82,7 +82,7 @@ class StartCurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.lightBlueAccent[100].withOpacity(0.5);
+    paint.color = Colors.lightBlueAccent[100]!.withOpacity(0.5);
     paint.style = PaintingStyle.fill; // Change this to fill
 
     var path = Path();
@@ -108,7 +108,7 @@ class QuestionTopCurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.lightBlueAccent[100].withOpacity(0.5);
+    paint.color = Colors.lightBlueAccent[100]!.withOpacity(0.5);
     paint.style = PaintingStyle.fill; // Change this to fill
 
     var path = Path();
@@ -134,7 +134,7 @@ class PassTopCurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.lightBlueAccent[100].withOpacity(0.5);
+    paint.color = Colors.lightBlueAccent[100]!.withOpacity(0.5);
     paint.style = PaintingStyle.fill; // Change this to fill
 
     var path = Path();
@@ -160,7 +160,7 @@ class ResultsBottomCurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.lightBlueAccent[100].withOpacity(0.5);
+    paint.color = Colors.lightBlueAccent[100]!.withOpacity(0.5);
     paint.style = PaintingStyle.fill; // Change this to fill
 
     var path = Path();

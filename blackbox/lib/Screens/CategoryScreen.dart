@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:blackbox/Assets/questions.dart';
 import 'package:blackbox/Screens/widgets/CategoryCard.dart';
 import 'package:blackbox/Screens/widgets/PopularCategoryCard.dart';

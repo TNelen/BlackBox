@@ -1,25 +1,26 @@
-import 'dart:async';
+// @dart=2.9
+
 import 'package:blackbox/Screens/CategoryScreen.dart';
 import 'package:blackbox/push_nofitications.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'Constants.dart';
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:blackbox/translations/translations.i18n.dart';
 
 import 'Screens/widgets/HomeScreenTopIcons.dart';
 import 'Util/Curves.dart';
-import 'ad_manager.dart';
 
-void main() {
-  try {
-    runApp(MyApp());
-  } catch (exception) {}
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -51,18 +52,18 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-  Future<void> _initAdMob() {
-    return FirebaseAdMob.instance.initialize(appId: AdManager.appId);
-  }
-
   _SplashScreenState() {}
 
   @override
   void initState() {
     super.initState();
+    Firebase.initializeApp().whenComplete(() {
+      print("Firebase app init complete");
+      setState(() {});
+    });
+    MobileAds.instance.initialize();
     PushNotificationsManager manager = PushNotificationsManager();
     manager.init();
-    _initAdMob();
     //load user data from localstorage
     Constants.loadData();
   }

@@ -1,15 +1,17 @@
+// @dart=2.9
+
 import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PartyQuestionScreen.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/Util/Curves.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../Constants.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:blackbox/ad_manager.dart';
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:blackbox/Screens/popups/rate_popup.dart';
 import 'package:blackbox/translations/translations.i18n.dart';
 import 'package:i18n_extension/i18n_widget.dart';
@@ -45,14 +47,6 @@ class PartyResultScreenState extends State<PartyResultScreen> {
     viewportFraction: 0.85,
   );
 
-  InterstitialAd _interstitialAd;
-
-  bool _isInterstitialAdReady;
-
-  void _loadInterstitialAd() {
-    _interstitialAd.load();
-  }
-
   void _moveToNext(bool doAnimate) {
     Navigator.push(
       context,
@@ -71,22 +65,30 @@ class PartyResultScreenState extends State<PartyResultScreen> {
     return offlineGroupData.questionsLeft() == 10;
   }
 
-  void _onInterstitialAdEvent(MobileAdEvent event) {
-    switch (event) {
-      case MobileAdEvent.loaded:
-        _isInterstitialAdReady = true;
-        break;
-      case MobileAdEvent.failedToLoad:
-        _isInterstitialAdReady = false;
-        print('Failed to load an interstitial ad');
-        break;
-      case MobileAdEvent.closed:
-        _moveToNext(false);
-        break;
-      default:
-      // do nothing
-    }
-  }
+  final AdListener listener = AdListener(
+    // Called when an ad is successfully received.
+    onAdLoaded: (Ad ad) => print('Ad loaded.'),
+    // Called when an ad request failed.
+    onAdFailedToLoad: (Ad ad, LoadAdError error) {
+      ad.dispose();
+      print('Ad failed to load: $error');
+    },
+    // Called when an ad opens an overlay that covers the screen.
+    onAdOpened: (Ad ad) => print('Ad opened.'),
+    // Called when an ad removes an overlay that covers the screen.
+    onAdClosed: (Ad ad) {
+      ad.dispose();
+      print('Ad closed.');
+    },
+    // Called when an ad is in the process of leaving the application.
+    onApplicationExit: (Ad ad) => print('Left application.'),
+  );
+
+  final InterstitialAd myInterstitial = InterstitialAd(
+    adUnitId: AdManager.interstitialAdUnitId,
+    request: AdRequest(),
+    listener: AdListener(),
+  );
 
   @override
   void initState() {
@@ -95,23 +97,14 @@ class PartyResultScreenState extends State<PartyResultScreen> {
 
     BackButtonInterceptor.add(myInterceptor);
 
-    _isInterstitialAdReady = false;
-
-    _interstitialAd = InterstitialAd(
-      adUnitId: AdManager.interstitialAdUnitId,
-      listener: _onInterstitialAdEvent,
-    );
-
-    if (!_isInterstitialAdReady) {
-      _loadInterstitialAd();
-    }
+    myInterstitial.load();
   }
 
   @override
   dispose() {
     controller.dispose();
     BackButtonInterceptor.remove(myInterceptor);
-    _interstitialAd?.dispose();
+    myInterstitial?.dispose();
     super.dispose();
   }
 
@@ -415,15 +408,15 @@ class PartyResultScreenState extends State<PartyResultScreen> {
               if (!offlineGroupData.isGameEnded()) {
                 offlineGroupData.nextRound();
 
-                if (_isInterstitialAdReady) {
-                  _interstitialAd.show();
-                }
+                myInterstitial.show();
 
                 _moveToNext(true);
                 if (_showRatePop()) {
                   showDialog(
                     context: context,
-                    child: RatePopup(),
+                    builder: (BuildContext context) {
+                      return RatePopup();
+                    },
                   );
                 }
               } else {

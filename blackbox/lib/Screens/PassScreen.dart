@@ -20,7 +20,7 @@ import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 class PassScreen extends StatefulWidget {
-  OfflineGroupData offlineGroupData;
+  late OfflineGroupData offlineGroupData;
 
   PassScreen(OfflineGroupData offlineGroupData) {
     this.offlineGroupData = offlineGroupData;
@@ -227,28 +227,29 @@ class _PassScreenState extends State<PassScreen> {
                 Positioned(
                   right: 20,
                   top: 20,
-                  child: SafeArea(child: Material(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    child: InkWell(
+                  child: SafeArea(
+                    child: Material(
+                      color: Colors.transparent,
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FaIcon(
-                          FontAwesomeIcons.userEdit,
-                          color: Constants.iDarkGrey,
-                          size: 25,
+                      child: InkWell(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FaIcon(
+                            FontAwesomeIcons.userEdit,
+                            color: Constants.iDarkGrey,
+                            size: 25,
+                          ),
                         ),
+                        splashColor: Constants.iDarkGrey,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              ScaleUpPageRoute(
+                                  EditPlayersScreen(offlineGroupData)));
+                        },
                       ),
-                      splashColor: Constants.iDarkGrey,
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            ScaleUpPageRoute(
-                                EditPlayersScreen(offlineGroupData)));
-                      },
                     ),
-                  ),
                   ),
                 ),
               ],
