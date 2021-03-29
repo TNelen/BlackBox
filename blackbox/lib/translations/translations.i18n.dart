@@ -964,7 +964,7 @@ extension Localization on String {
       } +
       {
         "en": "Who can best sing along with Old Town Road by Lil Nas X?",
-        "nl": "Wie kan het beste meezingen met Old town road vna Lil Nas X?",
+        "nl": "Wie kan het beste meezingen met Old town road van Lil Nas X?",
       } +
       {
         "en": "Who spends the most amount of money on useless things?",
