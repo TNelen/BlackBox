@@ -301,7 +301,7 @@ List<String> Family = [
   "Who spends the most time in the garden?".i18n,
 ];
 
-List<Category> popularcategories = [
+List<Category> categories = [
   Category("Family".i18n, "Have fun with your household".i18n, Family, true,
       FontAwesomeIcons.home, Constants.categoryColors[0]),
   Category(
@@ -313,9 +313,6 @@ List<Category> popularcategories = [
       Constants.categoryColors[1]),
   Category("Superstar".i18n, "Admire your friends’ actions or abilities".i18n,
       SuperStar, false, FontAwesomeIcons.trophy, Constants.categoryColors[2]),
-];
-
-List<Category> categories = [
   Category(
       "Character traits".i18n,
       "Questions about your friends’ character traits".i18n,

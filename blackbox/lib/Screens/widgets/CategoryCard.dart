@@ -39,9 +39,10 @@ class CategoryCardState extends State<CategoryCard> {
           });
         },
         child: Container(
+          width: MediaQuery.of(context).size.width - 60,
           child: Padding(
             padding:
-                const EdgeInsets.only(top: 5, left: 5.0, right: 5, bottom: 5),
+                const EdgeInsets.only(top: 8, left: 5.0, right: 5, bottom: 8),
             child: Row(children: [
               Container(
                 height: 45,
@@ -50,7 +51,9 @@ class CategoryCardState extends State<CategoryCard> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6.0),
                   ),
-                  color: widget.category.color,
+                  color: widget.defaultValue
+                      ? widget.category.color.withOpacity(0.2)
+                      : widget.category.color,
                   child: Center(
                     child: FaIcon(
                       widget.category.icon,
@@ -63,32 +66,36 @@ class CategoryCardState extends State<CategoryCard> {
               SizedBox(
                 width: 12,
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.category.categoryName,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        color: widget.defaultValue
-                            ? Colors.white24
-                            : Constants.iWhite,
-                        fontSize: Constants.smallFontSize,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    widget.category.description,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        color: widget.defaultValue
-                            ? Colors.white12
-                            : Constants.iLight,
-                        fontSize: Constants.miniFontSize,
-                        fontWeight: FontWeight.w300),
-                  ),
-                ],
+              Container(
+                width: MediaQuery.of(context).size.width - 140,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.category.categoryName,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                          color: widget.defaultValue
+                              ? Colors.white24
+                              : Constants.iWhite,
+                          fontSize: Constants.smallFontSize,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      widget.category.description,
+                      textAlign: TextAlign.start,
+                      maxLines: 2,
+                      style: TextStyle(
+                          color: widget.defaultValue
+                              ? Colors.white12
+                              : Constants.iLight,
+                          fontSize: Constants.smallFontSize - 3,
+                          fontWeight: FontWeight.w300),
+                    ),
+                  ],
+                ),
               ),
             ]),
           ),

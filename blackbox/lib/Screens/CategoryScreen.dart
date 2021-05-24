@@ -1,8 +1,6 @@
 // @dart=2.9
 import 'package:blackbox/Assets/questions.dart';
 import 'package:blackbox/Screens/widgets/CategoryCard.dart';
-import 'package:blackbox/Screens/widgets/PopularCategoryCard.dart';
-import 'package:blackbox/Screens/widgets/SelectedCategoryCard.dart';
 import 'package:blackbox/Util/Curves.dart';
 import 'SetPlayersScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -55,28 +53,31 @@ class _CategoryScreenState extends State<CategoryScreen> {
               ));
         },
         child: Container(
-          width: MediaQuery.of(context).size.width / 9,
+          width: MediaQuery.of(context).size.width / 2,
           height: 50,
           child: Padding(
             padding:
                 const EdgeInsets.only(top: 3, left: 3.0, right: 3, bottom: 3),
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(
-                'Next '.i18n,
-                style: TextStyle(
-                    fontSize: Constants.miniFontSize,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    'Next'.i18n,
+                    style: TextStyle(
+                        fontFamily: "roboto",
+                        fontSize: Constants.smallFontSize,
+                        color: Constants.iDarkGrey,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  FaIcon(
+                    FontAwesomeIcons.chevronCircleRight,
+                    size: 22,
                     color: Constants.iDarkGrey,
-                    fontWeight: FontWeight.w500),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              FaIcon(
-                FontAwesomeIcons.chevronCircleRight,
-                size: 22,
-                color: Constants.iDarkGrey,
-              )
-            ]),
+                  )
+                ]),
           ),
         ),
       ),
@@ -141,109 +142,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         ),
                         SizedBox(height: 15),
                         Container(
-                          height: MediaQuery.of(context).size.height / 12,
-                          child: Row(children: [
-                            Expanded(
-                              flex: 3,
-                              child: selectedCategory.length == 0
-                                  ? Container(
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              13,
-                                      padding:
-                                          EdgeInsets.only(left: 20, right: 20),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'None selected'.i18n,
-                                          style: TextStyle(
-                                              fontSize: Constants.miniFontSize,
-                                              color: Constants.iLight,
-                                              fontWeight: FontWeight.w300),
-                                        ),
-                                      ),
-                                    )
-                                  : Container(
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              13,
-                                      child: ListView.builder(
-                                        padding: EdgeInsets.only(left: 20),
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: selectedCategory.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) =>
-                                                SelectedCategoryCard(
-                                          selectedCategory[index],
-                                          onTap: () {
-                                            selectedCategory.remove(
-                                                selectedCategory[index]);
-
-                                            setState(() {});
-                                          },
-                                          isNewFlag:
-                                              selectedCategory[index].isNew,
-                                        ),
-                                      ),
-                                    ),
-                            ),
-                            Expanded(
-                                flex: 1,
-                                child: selectedCategory.length == 0
-                                    ? SizedBox()
-                                    : nextButton)
-                          ]),
-                        ),
-                        SizedBox(height: 15),
-                        Container(
                           padding: EdgeInsets.only(left: 20, right: 20),
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Popular'.i18n,
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.lightBlueAccent[100]
-                                      .withOpacity(0.75),
-                                  fontWeight: FontWeight.w300),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15),
-                        Container(
-                          height: MediaQuery.of(context).size.height / 5.5,
-                          child: ListView.builder(
-                            padding: EdgeInsets.only(left: 20),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: popularcategories.length,
-                            itemBuilder: (BuildContext context, int index) =>
-                                PopularCategoryCard(
-                              selectedCategory
-                                  .contains(popularcategories[index]),
-                              popularcategories[index],
-                              onTap: () {
-                                if (!selectedCategory
-                                    .contains(popularcategories[index])) {
-                                  selectedCategory
-                                      .add(popularcategories[index]);
-                                } else if (selectedCategory
-                                    .contains(popularcategories[index])) {
-                                  selectedCategory
-                                      .remove(popularcategories[index]);
-                                }
-                                setState(() {});
-                              },
-                              isNewFlag: popularcategories[index].isNew,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Container(
-                          padding: EdgeInsets.only(left: 20, right: 20),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Other'.i18n,
+                              'Categories'.i18n,
                               style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.lightBlueAccent[100]
@@ -283,6 +186,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ],
                 ),
               ),
+              floatingActionButton:
+                  selectedCategory.length != 0 ? nextButton : SizedBox(),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat,
             ),
           )),
     );
