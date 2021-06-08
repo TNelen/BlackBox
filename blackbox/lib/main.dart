@@ -9,7 +9,6 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'Constants.dart';
 import 'package:blackbox/translations/translations.i18n.dart';
@@ -61,7 +60,6 @@ class _SplashScreenState extends State<SplashScreen>
       print("Firebase app init complete");
       setState(() {});
     });
-    MobileAds.instance.initialize();
     PushNotificationsManager manager = PushNotificationsManager();
     manager.init();
     //load user data from localstorage

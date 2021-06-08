@@ -6,12 +6,10 @@ import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/Util/Curves.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../Constants.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:blackbox/ad_manager.dart';
 import 'package:blackbox/Screens/popups/rate_popup.dart';
 import 'package:blackbox/translations/translations.i18n.dart';
 import 'package:i18n_extension/i18n_widget.dart';
@@ -65,31 +63,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
     return offlineGroupData.questionsLeft() == 10;
   }
 
-  final AdListener listener = AdListener(
-    // Called when an ad is successfully received.
-    onAdLoaded: (Ad ad) => print('Ad loaded.'),
-    // Called when an ad request failed.
-    onAdFailedToLoad: (Ad ad, LoadAdError error) {
-      ad.dispose();
-      print('Ad failed to load: $error');
-    },
-    // Called when an ad opens an overlay that covers the screen.
-    onAdOpened: (Ad ad) => print('Ad opened.'),
-    // Called when an ad removes an overlay that covers the screen.
-    onAdClosed: (Ad ad) {
-      ad.dispose();
-      print('Ad closed.');
-    },
-    // Called when an ad is in the process of leaving the application.
-    onApplicationExit: (Ad ad) => print('Left application.'),
-  );
-
-  final InterstitialAd myInterstitial = InterstitialAd(
-    adUnitId: AdManager.interstitialAdUnitId,
-    request: AdRequest(),
-    listener: AdListener(),
-  );
-
+  
   @override
   void initState() {
     showMoreCurrent = false;
@@ -97,14 +71,12 @@ class PartyResultScreenState extends State<PartyResultScreen> {
 
     BackButtonInterceptor.add(myInterceptor);
 
-    myInterstitial.load();
   }
 
   @override
   dispose() {
     controller.dispose();
     BackButtonInterceptor.remove(myInterceptor);
-    myInterstitial?.dispose();
     super.dispose();
   }
 
@@ -407,9 +379,6 @@ class PartyResultScreenState extends State<PartyResultScreen> {
             onTap: () {
               if (!offlineGroupData.isGameEnded()) {
                 offlineGroupData.nextRound();
-
-                myInterstitial.show();
-
                 _moveToNext(true);
                 if (_showRatePop()) {
                   showDialog(
