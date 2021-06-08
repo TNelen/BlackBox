@@ -72,10 +72,10 @@ class _SplashScreenState extends State<SplashScreen>
       elevation: 5.0,
       color: Constants.iLight,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(25.0),
       ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(25.0),
         // splashColor: Constants.iAccent,
         onTap: () {
           Navigator.push(
@@ -85,32 +85,14 @@ class _SplashScreenState extends State<SplashScreen>
               ));
         },
         child: Container(
-          width: MediaQuery.of(context).size.width / 2,
+          width: 50,
           height: 50,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 3, left: 3.0, right: 3, bottom: 3),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Start',
-                    style: TextStyle(
-                        fontFamily: "roboto",
-                        fontSize: Constants.smallFontSize,
-                        color: Constants.iDarkGrey,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  FaIcon(
-                    FontAwesomeIcons.chevronCircleRight,
-                    size: 22,
-                    color: Constants.iDarkGrey,
-                  )
-                ]),
-          ),
+          child: Center(
+              child: FaIcon(
+            FontAwesomeIcons.arrowRight,
+            size: 22,
+            color: Constants.iDarkGrey,
+          )),
         ),
       ),
     );
@@ -144,74 +126,107 @@ class _SplashScreenState extends State<SplashScreen>
                 ],
               ),
             ),
-            child: Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                CustomPaint(
-                  painter: StartCurvePainter(),
-                ),
-                Column(
-                  children: [
-                    Expanded(
-                        flex: 6,
-                        child: Column(children: <Widget>[
-                          SafeArea(
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.75,
-                                      child: IconBar()),
-                                ]),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height / 8,
-                          ),
-                          Text(
-                            "BlackBox",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: "atarian",
-                                fontSize: Constants.titleFontSize,
-                                fontWeight: FontWeight.w300),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "A MAGNETAR Game",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: Constants.normalFontSize,
-                                fontFamily: "atarian",
-                                fontWeight: FontWeight.w300),
-                          ),
-                        ])),
-                    Expanded(
-                      flex: 3,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Start playing now!".i18n,
-                            style: TextStyle(
-                                fontSize: Constants.normalFontSize,
-                                fontFamily: "roboto",
-                                color: Constants.iWhite,
-                                fontWeight: FontWeight.w300),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          startButton
-                        ],
-                      ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Column(children: <Widget>[
+                    SizedBox(
+                      height: 10,
                     ),
-                  ],
+                    SafeArea(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                                width: MediaQuery.of(context).size.width * 0.75,
+                                child: IconBar()),
+                          ]),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      "BlackBox",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "atarian",
+                          fontSize: Constants.titleFontSize,
+                          fontWeight: FontWeight.w300),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "A MAGNETAR Game",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: Constants.normalFontSize,
+                          fontFamily: "atarian",
+                          fontWeight: FontWeight.w300),
+                    ),
+                  ]),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                      padding: EdgeInsets.only(bottom: 30),
+                      child: Stack(alignment: Alignment.topCenter, children: [
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height / 3,
+                              ),
+                              Card(
+                                elevation: 5.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                color: Constants.iDarkGrey,
+                                child: Container(
+                                  height: 200,
+                                  width: MediaQuery.of(context).size.width - 30,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                      Text(
+                                        "Start playing now!".i18n,
+                                        style: TextStyle(
+                                            fontSize: Constants.normalFontSize,
+                                            fontFamily: "roboto",
+                                            color: Constants.iWhite,
+                                            fontWeight: FontWeight.w300),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      startButton
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ]),
+                        Center(
+                            child: Container(
+                                foregroundDecoration: BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.4),
+                                  backgroundBlendMode: BlendMode.saturation,
+                                ),
+                                width: 250,
+                                height: 250,
+                                child: Image.asset(
+                                  "images/blueboxquestiongrey.png",
+                                  scale: 0.5,
+                                ))),
+                      ])),
                 )
+
                 // This is the Custom Shape Container
               ],
             ),
