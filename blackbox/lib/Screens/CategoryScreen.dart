@@ -1,5 +1,6 @@
 // @dart=2.9
 import 'package:blackbox/Assets/questions.dart';
+import 'package:blackbox/Screens/rules_column.dart';
 import 'package:blackbox/Screens/widgets/CategoryCard.dart';
 import 'package:blackbox/Util/Curves.dart';
 import 'SetPlayersScreen.dart';
@@ -31,6 +32,65 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => new AlertDialog(
+          backgroundColor: Constants.iDarkGrey,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(24.0))),
+          title: Center(
+            child: Text(
+              "How to play".i18n,
+              style: TextStyle(
+                  fontFamily: "roboto",
+                  color: Constants.iWhite,
+                  fontWeight: FontWeight.w300,
+                  fontSize: Constants.normalFontSize),
+            ),
+          ),
+          content: Container(
+              height: 400,
+              child: Column(
+                children: [
+                  RulesColumn(),
+                  Card(
+                    //elevation: 5.0,
+                    color: Constants.iAccent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(12.0),
+                      // splashColor: Constants.iAccent,
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 2,
+                          height: 30,
+                          child: Center(
+                            child: Text(
+                              "I got it!".i18n,
+                              style: TextStyle(
+                                  fontFamily: "roboto",
+                                  color: Constants.iWhite,
+                                  fontSize: Constants.smallFontSize,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+        ),
+      );
+    });
   }
 
   @override
@@ -105,87 +165,64 @@ class _CategoryScreenState extends State<CategoryScreen> {
             child: Scaffold(
               backgroundColor: Colors.transparent,
               body: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    stops: [0.1, 0.9],
-                    colors: [
-                      Constants.gradient1,
-                      Constants.gradient2,
-                    ],
-                  ),
-                ),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: <Widget>[
-                    CustomPaint(
-                      painter: CategoryTopCurvePainter(),
-                    ),
-                    Column(
-                      //shrinkWrap: true,
-
-                      children: [
-                        SizedBox(
-                          height: 45,
-                        ),
-                        Container(
-                            padding: EdgeInsets.only(left: 10, right: 10),
-                            child: Text("Select one or more categories...".i18n,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Constants.iWhite,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w300))),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        SizedBox(height: 15),
-                        Container(
-                          padding: EdgeInsets.only(left: 20, right: 20),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Categories'.i18n,
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.lightBlueAccent[100]
-                                      .withOpacity(0.75),
-                                  fontWeight: FontWeight.w300),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.only(left: 30, right: 30),
-                          scrollDirection: Axis.vertical,
-                          itemCount: categories.length,
-                          itemBuilder: (BuildContext context, int index) =>
-                              CategoryCard(
-                            selectedCategory.contains(categories[index]),
-                            categories[index],
-                            onTap: () {
-                              if (!selectedCategory
-                                  .contains(categories[index])) {
-                                selectedCategory.add(categories[index]);
-                              } else if (selectedCategory
-                                  .contains(categories[index])) {
-                                selectedCategory.remove(categories[index]);
-                              }
-                              setState(() {});
-                            },
-                            isNewFlag: categories[index].isNew,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      stops: [0.1, 0.9],
+                      colors: [
+                        Constants.gradient1,
+                        Constants.gradient2,
                       ],
-                    )
-                  ],
-                ),
-              ),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Container(
+                          padding: EdgeInsets.only(left: 10, right: 10),
+                          child: Text("Select one or more categories...".i18n,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Constants.iWhite,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w300))),
+                      SizedBox(
+                        height: 35,
+                      ),
+                      GridView.builder(
+                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 180,
+                            childAspectRatio: 4 / 3,
+                            crossAxisSpacing: 15,
+                            mainAxisSpacing: 15),
+                        shrinkWrap: true,
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        scrollDirection: Axis.vertical,
+                        itemCount: categories.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            CategoryCard(
+                          selectedCategory.contains(categories[index]),
+                          categories[index],
+                          onTap: () {
+                            if (!selectedCategory.contains(categories[index])) {
+                              selectedCategory.add(categories[index]);
+                            } else if (selectedCategory
+                                .contains(categories[index])) {
+                              selectedCategory.remove(categories[index]);
+                            }
+                            setState(() {});
+                          },
+                          isNewFlag: categories[index].isNew,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 70,
+                      ),
+                    ],
+                  )),
               floatingActionButton:
                   selectedCategory.length != 0 ? nextButton : SizedBox(),
               floatingActionButtonLocation:

@@ -26,7 +26,9 @@ class CategoryCardState extends State<CategoryCard> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5.0,
-      color: Constants.iDarkGrey,
+      color: widget.defaultValue
+          ? widget.category.color.withOpacity(0.2)
+          : widget.category.color,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
@@ -42,62 +44,53 @@ class CategoryCardState extends State<CategoryCard> {
           width: MediaQuery.of(context).size.width - 60,
           child: Padding(
             padding:
-                const EdgeInsets.only(top: 8, left: 5.0, right: 5, bottom: 8),
-            child: Row(children: [
-              Container(
-                height: 45,
-                width: 45,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6.0),
+                const EdgeInsets.only(top: 8, left: 10.0, right: 10, bottom: 8),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 7,
                   ),
-                  color: widget.defaultValue
-                      ? widget.category.color.withOpacity(0.2)
-                      : widget.category.color,
-                  child: Center(
-                    child: FaIcon(
-                      widget.category.icon,
-                      size: 17,
-                      color: Colors.black.withOpacity(0.6),
+                  FaIcon(
+                    widget.category.icon,
+                    size: 25,
+                    color: Colors.black.withOpacity(0.6),
+                  ),
+                  SizedBox(
+                    height: 7,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 140,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.category.categoryName,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: widget.defaultValue
+                                  ? Constants.iDarkGrey.withOpacity(0.5)
+                                  : Constants.iDarkGrey,
+                              fontSize: Constants.smallFontSize,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          widget.category.description,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          style: TextStyle(
+                              color: widget.defaultValue
+                                  ? Constants.iDarkGrey.withOpacity(0.5)
+                                  : Constants.iDarkGrey,
+                              fontSize: Constants.smallFontSize - 3,
+                              fontWeight: FontWeight.w300),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ),
-              SizedBox(
-                width: 12,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width - 140,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.category.categoryName,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color: widget.defaultValue
-                              ? Colors.white24
-                              : Constants.iWhite,
-                          fontSize: Constants.smallFontSize,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      widget.category.description,
-                      textAlign: TextAlign.start,
-                      maxLines: 2,
-                      style: TextStyle(
-                          color: widget.defaultValue
-                              ? Colors.white12
-                              : Constants.iLight,
-                          fontSize: Constants.smallFontSize - 3,
-                          fontWeight: FontWeight.w300),
-                    ),
-                  ],
-                ),
-              ),
-            ]),
+                ]),
           ),
         ),
       ),
