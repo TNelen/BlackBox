@@ -69,8 +69,8 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     final startButton = Card(
-      elevation: 5.0,
-      color: Constants.iLight,
+      //elevation: 5.0,
+      color: Constants.iAccent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25.0),
       ),
@@ -91,7 +91,7 @@ class _SplashScreenState extends State<SplashScreen>
               child: FaIcon(
             FontAwesomeIcons.arrowRight,
             size: 22,
-            color: Constants.iDarkGrey,
+            color: Constants.iWhite,
           )),
         ),
       ),
@@ -169,7 +169,7 @@ class _SplashScreenState extends State<SplashScreen>
                   ]),
                 ),
                 Expanded(
-                  flex: 5,
+                  flex: 4,
                   child: Container(
                       padding: EdgeInsets.only(bottom: 30),
                       child: Stack(alignment: Alignment.topCenter, children: [
@@ -180,14 +180,14 @@ class _SplashScreenState extends State<SplashScreen>
                                 height: MediaQuery.of(context).size.height / 3,
                               ),
                               Card(
-                                elevation: 5.0,
+                                //elevation: 5.0,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
+                                  borderRadius: BorderRadius.circular(35.0),
                                 ),
-                                color: Constants.iDarkGrey,
+                                color: Colors.grey.shade800,
                                 child: Container(
                                   height: 200,
-                                  width: MediaQuery.of(context).size.width - 30,
+                                  width: MediaQuery.of(context).size.width - 50,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -214,10 +214,10 @@ class _SplashScreenState extends State<SplashScreen>
                             ]),
                         Center(
                             child: Container(
-                                foregroundDecoration: BoxDecoration(
-                                  color: Colors.grey.withOpacity(0.4),
-                                  backgroundBlendMode: BlendMode.saturation,
-                                ),
+                                // foregroundDecoration: BoxDecoration(
+                                //   color: Colors.grey.withOpacity(0.4),
+                                //   backgroundBlendMode: BlendMode.saturation,
+                                // ),
                                 width: 250,
                                 height: 250,
                                 child: Image.asset(

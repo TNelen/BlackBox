@@ -26,8 +26,8 @@ class IconBar extends StatelessWidget {
           child: InkWell(
             child: IconCard(
               FontAwesomeIcons.cog,
-              Constants.iDarkGrey,
-              Colors.lightBlueAccent[100],
+              Colors.transparent,
+              Constants.iLight,
               25,
             ),
             onTap: () {
@@ -43,8 +43,8 @@ class IconBar extends StatelessWidget {
           child: InkWell(
             child: IconCard(
               FontAwesomeIcons.solidQuestionCircle,
-              Constants.iDarkGrey,
-              Colors.lightBlueAccent[100],
+              Colors.transparent,
+              Constants.iLight,
               25,
             ),
             onTap: () {

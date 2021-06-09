@@ -9,7 +9,7 @@ class Constants {
   static const iGrey = Color(0xFF577D90);
   static const iLight = Color(0xFFb3b3b3);
   static const iWhite = Color(0xFFF5F5F5);
-  static const iAccent = Color(0xFF92dff3);
+  static const iAccent = Color(0xFF00BBFF);
   static const gradient1 = Color(0xFF121212);
   static const gradient2 = Color(0xFF21272C);
 
