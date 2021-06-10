@@ -78,7 +78,9 @@ class _SplashScreenState extends State<SplashScreen>
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) => CategoryScreen(),
+                builder: (BuildContext context) => CategoryScreen(
+                  showHelp: true,
+                ),
               ));
         },
         child: Container(

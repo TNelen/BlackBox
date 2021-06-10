@@ -213,7 +213,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                           context,
                           ScaleDownPageRoute(
                             fromPage: widget,
-                            toPage: CategoryScreen(),
+                            toPage: CategoryScreen(showHelp: false,),
                           ));
                     },
                     child: Row(

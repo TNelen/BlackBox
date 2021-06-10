@@ -2,7 +2,7 @@
 import 'package:blackbox/Assets/questions.dart';
 import 'package:blackbox/Screens/rules_column.dart';
 import 'package:blackbox/Screens/widgets/CategoryCard.dart';
-import 'package:blackbox/Util/Curves.dart';
+import '../main.dart';
 import 'SetPlayersScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CategoryScreen extends StatefulWidget {
-  CategoryScreen() {}
+  final bool showHelp;
+
+  CategoryScreen({this.showHelp});
 
   @override
   _CategoryScreenState createState() => _CategoryScreenState();
@@ -33,77 +35,79 @@ class _CategoryScreenState extends State<CategoryScreen> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => new AlertDialog(
-          backgroundColor: Constants.iDarkGrey,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(24.0))),
-          title: Center(
-            child: Text(
-              "How to play".i18n,
-              style: TextStyle(
-                  fontFamily: "roboto",
-                  color: Constants.iWhite,
-                  fontWeight: FontWeight.w300,
-                  fontSize: Constants.normalFontSize),
-            ),
-          ),
-          content: Container(
-              height: 400,
-              child: Column(
-                children: [
-                  RulesColumn(),
-                  Card(
-                    //elevation: 5.0,
-                    color: Constants.iAccent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(12.0),
-                      // splashColor: Constants.iAccent,
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width / 2,
-                          height: 30,
-                          child: Center(
-                            child: Text(
-                              "I got it!".i18n,
-                              style: TextStyle(
-                                  fontFamily: "roboto",
-                                  color: Constants.iWhite,
-                                  fontSize: Constants.smallFontSize,
-                                  fontWeight: FontWeight.w400),
+    widget.showHelp
+        ? WidgetsBinding.instance.addPostFrameCallback((_) async {
+            await showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => new AlertDialog(
+                backgroundColor: Constants.iDarkGrey,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(24.0))),
+                title: Center(
+                  child: Text(
+                    "How to play".i18n,
+                    style: TextStyle(
+                        fontFamily: "roboto",
+                        color: Constants.iWhite,
+                        fontWeight: FontWeight.w300,
+                        fontSize: Constants.normalFontSize),
+                  ),
+                ),
+                content: Container(
+                    height: 400,
+                    child: Column(
+                      children: [
+                        RulesColumn(),
+                        Card(
+                          //elevation: 5.0,
+                          color: Constants.iAccent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(12.0),
+                            // splashColor: Constants.iAccent,
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.all(8),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width / 2,
+                                height: 30,
+                                child: Center(
+                                  child: Text(
+                                    "I got it!".i18n,
+                                    style: TextStyle(
+                                        fontFamily: "roboto",
+                                        color: Constants.iWhite,
+                                        fontSize: Constants.smallFontSize,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                ],
-              )),
-        ),
-      );
-    });
+                      ],
+                    )),
+              ),
+            );
+          })
+        : null;
   }
 
   @override
   Widget build(BuildContext context) {
     final nextButton = Card(
-      elevation: 5.0,
-      color: Constants.iLight,
+      //elevation: 5.0,
+      color: Constants.iAccent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12.0),
-        splashColor: Constants.iAccent,
+        // splashColor: Constants.iAccent,
         onTap: () {
           Navigator.push(
               context,
@@ -112,32 +116,28 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     SetPlayersScreen(selectedCategory),
               ));
         },
-        child: Container(
-          width: MediaQuery.of(context).size.width / 2,
-          height: 50,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 3, left: 3.0, right: 3, bottom: 3),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Next'.i18n,
-                    style: TextStyle(
-                        fontFamily: "roboto",
-                        fontSize: Constants.smallFontSize,
-                        color: Constants.iDarkGrey,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  FaIcon(
-                    FontAwesomeIcons.chevronCircleRight,
-                    size: 22,
-                    color: Constants.iDarkGrey,
-                  )
-                ]),
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: Container(
+            width: MediaQuery.of(context).size.width / 2,
+            height: 30,
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(
+                "Next".i18n,
+                style: TextStyle(
+                    fontFamily: "roboto",
+                    color: Constants.iWhite,
+                    fontSize: Constants.smallFontSize,
+                    fontWeight: FontWeight.w400),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              FaIcon(
+                FontAwesomeIcons.chevronRight,
+                color: Constants.iWhite,
+              ),
+            ]),
           ),
         ),
       ),
@@ -178,16 +178,46 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ),
                   child: Column(
                     children: [
+                      SafeArea(
+                          child: Row(
+                        children: [
+                          IconButton(
+                              icon: FaIcon(
+                                FontAwesomeIcons.chevronLeft,
+                                color: Constants.iLight,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          SplashScreen(),
+                                    ));
+                              })
+                        ],
+                      )),
                       SizedBox(
-                        height: 50,
+                        height: 0,
                       ),
                       Container(
                           padding: EdgeInsets.only(left: 10, right: 10),
-                          child: Text("Select one or more categories...".i18n,
+                          child: Text("Categories".i18n,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: Constants.iWhite,
                                   fontSize: 25,
+                                  fontWeight: FontWeight.w500))),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                          padding: EdgeInsets.only(left: 10, right: 10),
+                          child: Text(
+                              "Please select one or more categories...".i18n,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Constants.iLight,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.w300))),
                       SizedBox(
                         height: 35,
@@ -195,11 +225,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       GridView.builder(
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 180,
-                            childAspectRatio: 4 / 3,
-                            crossAxisSpacing: 15,
-                            mainAxisSpacing: 15),
+                            childAspectRatio: 10 / 7,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10),
                         shrinkWrap: true,
-                        padding: EdgeInsets.only(left: 20, right: 20),
+                        padding: EdgeInsets.only(left: 30, right: 30),
                         scrollDirection: Axis.vertical,
                         itemCount: categories.length,
                         itemBuilder: (BuildContext context, int index) =>

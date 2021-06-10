@@ -26,9 +26,7 @@ class CategoryCardState extends State<CategoryCard> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5.0,
-      color: widget.defaultValue
-          ? widget.category.color.withOpacity(0.2)
-          : widget.category.color,
+      color: Colors.grey.shade800,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
@@ -44,20 +42,22 @@ class CategoryCardState extends State<CategoryCard> {
           width: MediaQuery.of(context).size.width - 60,
           child: Padding(
             padding:
-                const EdgeInsets.only(top: 8, left: 10.0, right: 10, bottom: 8),
+                const EdgeInsets.only(top: 5, left: 5.0, right: 5, bottom: 5),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 7,
+                    height: 4,
                   ),
                   FaIcon(
                     widget.category.icon,
-                    size: 25,
-                    color: Colors.black.withOpacity(0.6),
+                    size: 20,
+                    color: widget.defaultValue
+                        ? widget.category.color.withOpacity(0.1)
+                        : widget.category.color,
                   ),
                   SizedBox(
-                    height: 7,
+                    height: 4,
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width - 140,
@@ -70,8 +70,8 @@ class CategoryCardState extends State<CategoryCard> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: widget.defaultValue
-                                  ? Constants.iDarkGrey.withOpacity(0.5)
-                                  : Constants.iDarkGrey,
+                                  ? Constants.iWhite.withOpacity(0.3)
+                                  : Constants.iWhite,
                               fontSize: Constants.smallFontSize,
                               fontWeight: FontWeight.w500),
                         ),
@@ -82,8 +82,8 @@ class CategoryCardState extends State<CategoryCard> {
                           maxLines: 2,
                           style: TextStyle(
                               color: widget.defaultValue
-                                  ? Constants.iDarkGrey.withOpacity(0.5)
-                                  : Constants.iDarkGrey,
+                                  ? Constants.iWhite.withOpacity(0.4)
+                                  : Constants.iWhite.withOpacity(0.8),
                               fontSize: Constants.smallFontSize - 3,
                               fontWeight: FontWeight.w300),
                         ),
