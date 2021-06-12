@@ -2,7 +2,6 @@ import 'package:blackbox/Assets/questions.dart';
 import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PartyQuestionScreen.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
-import 'package:blackbox/Util/Curves.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
@@ -57,9 +56,9 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
       textStyle: TextStyle(
           fontFamily: "roboto",
           fontSize: Constants.smallFontSize,
-          color: Constants.iWhite),
-      hintTextColor: Constants.iGrey,
-      hintText: "Add player...".i18n,
+          color: Constants.iLight),
+      hintTextColor: Constants.iLight,
+      hintText: "Start typing here...".i18n,
       inputDecoration: InputDecoration(
         border: InputBorder.none,
         contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 3.0),
@@ -80,10 +79,10 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
             title: item,
             textActiveColor: Constants.iDarkGrey,
             pressEnabled: false,
-            activeColor: Constants.categoryColors[index % 7],
+            activeColor: Constants.iAccent,
             removeButton: ItemTagsRemoveButton(
               icon: Icons.clear,
-              backgroundColor: Constants.categoryColors[index % 7],
+              backgroundColor: Constants.iAccent,
               color: Constants.iDarkGrey,
               onRemoved: () {
                 setState(() {
@@ -97,76 +96,77 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
       },
     );
 
-    final createButton = Card(
-      elevation: 5.0,
-      color: Constants.iLight,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12.0),
-        // splashColor: Constants.iAccent,
-        onTap: () {
-          if (players.length != 0 && selectedCategory.length != 0) {
-            canVoteBlank ? players.add("Blank".i18n) : null;
-            QuestionList questionList = QuestionList(selectedCategory);
-
-            Map<String, dynamic> map = {
-              'code': 'New group',
-              'type': 'PartyCreated',
-              'can_vote_blank': canVoteBlank,
-            };
-
-            // General game action log
-            FirebaseAnalytics().logEvent(name: 'game_action', parameters: map);
-
-            // Only logged here
-            FirebaseAnalytics()
-                .logEvent(name: 'party_created', parameters: map);
-
-            OfflineGroupData offlineGroupData =
-                OfflineGroupData(players, questionList, canVoteBlank);
-
-            Navigator.push(
-                context,
-                SlidePageRoute(
-                    fromPage: widget,
-                    toPage: PartyQuestionScreen(offlineGroupData)));
-          } else {
-            Popup.makePopup(context, "Woops!".i18n,
-                "There should be at least one player!".i18n);
-          }
-        },
-        child: Container(
-          width: MediaQuery.of(context).size.width / 2,
-          height: 50,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 3, left: 3.0, right: 3, bottom: 3),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Start',
-                    style: TextStyle(
-                        fontFamily: "roboto",
-                        fontSize: Constants.smallFontSize,
-                        color: Constants.iDarkGrey,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  FaIcon(
-                    FontAwesomeIcons.chevronCircleRight,
-                    size: 22,
-                    color: Constants.iDarkGrey,
-                  )
-                ]),
+    final createButton = Hero(
+        tag: "actionbutton",
+        child: Card(
+          elevation: 5.0,
+          color: Constants.iAccent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
           ),
-        ),
-      ),
-    );
+          child: InkWell(
+            borderRadius: BorderRadius.circular(12.0),
+            // splashColor: Constants.iAccent,
+            onTap: () {
+              if (players.length != 0 && selectedCategory.length != 0) {
+                canVoteBlank ? players.add("Blank".i18n) : null;
+                QuestionList questionList = QuestionList(selectedCategory);
+
+                Map<String, dynamic> map = {
+                  'code': 'New group',
+                  'type': 'PartyCreated',
+                  'can_vote_blank': canVoteBlank,
+                };
+
+                // General game action log
+                FirebaseAnalytics()
+                    .logEvent(name: 'game_action', parameters: map);
+
+                // Only logged here
+                FirebaseAnalytics()
+                    .logEvent(name: 'party_created', parameters: map);
+
+                OfflineGroupData offlineGroupData =
+                    OfflineGroupData(players, questionList, canVoteBlank);
+
+                Navigator.push(
+                    context,
+                    SlidePageRoute(
+                        fromPage: widget,
+                        toPage: PartyQuestionScreen(offlineGroupData)));
+              } else {
+                Popup.makePopup(context, "Woops!".i18n,
+                    "There should be at least one player!".i18n);
+              }
+            },
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: Container(
+                width: MediaQuery.of(context).size.width / 2,
+                height: 30,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        'Start',
+                        style: TextStyle(
+                            fontFamily: "roboto",
+                            fontSize: Constants.smallFontSize,
+                            color: Constants.iWhite,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      FaIcon(
+                        FontAwesomeIcons.chevronRight,
+                        color: Constants.iWhite,
+                      )
+                    ]),
+              ),
+            ),
+          ),
+        ));
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -196,140 +196,124 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                 ],
               ),
             ),
-            child: Stack(fit: StackFit.expand, children: <Widget>[
-              CustomPaint(
-                painter: TopCurvePainter(),
-              ),
-              CustomPaint(
-                painter: BottomCurvePainter(),
-              ),
-              Positioned(
-                left: 1,
-                right: 1,
-                child: SafeArea(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          ScaleDownPageRoute(
-                            fromPage: widget,
-                            toPage: CategoryScreen(showHelp: false,),
-                          ));
-                    },
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 10),
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: Constants.iDarkGrey,
-                          ),
-                        ),
-                        Text(
-                          'Back'.i18n,
-                          style: TextStyle(
-                            fontSize: Constants.smallFontSize,
-                            color: Constants.iDarkGrey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Column(
+            child: Container(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Expanded(
-                      flex: 6,
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.zero,
+                        topRight: Radius.zero,
+                        bottomLeft: Radius.circular(50.0),
+                        bottomRight: Radius.circular(50.0),
+                      ),
+                    ),
+                    color: Colors.grey.shade800,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height / 3,
                       child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.only(left: 20, right: 20),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
+                        children: [
+                          SafeArea(
+                              child: Column(
+                            children: [
+                              Align(
+                                  alignment: Alignment.topLeft,
+                                  child: IconButton(
+                                      icon: FaIcon(
+                                        FontAwesomeIcons.chevronLeft,
+                                        color: Constants.iLight,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            ScaleDownPageRoute(
+                                              fromPage: widget,
+                                              toPage: CategoryScreen(
+                                                showHelp: false,
+                                              ),
+                                            ));
+                                      })),
+                              Align(
+                                alignment: Alignment.center,
                                 child: Text(
                                   'Settings'.i18n,
                                   style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 30,
                                       color: Constants.iWhite,
                                       fontWeight: FontWeight.w300),
                                   textAlign: TextAlign.left,
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(left: 20, right: 20),
-                              child: Row(children: [
-                                FlatButton(
-                                  splashColor: Colors.transparent,
-                                  onPressed: () {
-                                    setState(() {
-                                      canVoteBlank = !canVoteBlank;
-                                    });
-                                  },
-                                  child: Text(
-                                    'Blank vote'.i18n,
-                                    style: TextStyle(
-                                        fontSize: Constants.smallFontSize,
-                                        color: Constants.iDarkGrey,
-                                        fontWeight: FontWeight.w500),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 20, right: 20),
+                                child: Row(children: [
+                                  FlatButton(
+                                    splashColor: Colors.transparent,
+                                    onPressed: () {
+                                      setState(() {
+                                        canVoteBlank = !canVoteBlank;
+                                      });
+                                    },
+                                    child: Text(
+                                      'Blank vote'.i18n,
+                                      style: TextStyle(
+                                          fontSize: Constants.smallFontSize,
+                                          color: Constants.iWhite,
+                                          fontWeight: FontWeight.w300),
+                                    ),
                                   ),
-                                ),
-                                Switch(
-                                  value: canVoteBlank,
-                                  onChanged: (bool newValue) {
-                                    setState(() {
-                                      canVoteBlank = newValue;
-                                    });
-                                  },
-                                  activeTrackColor: Constants.iLight,
-                                  activeColor: Constants.iWhite,
-                                ),
-                              ]),
-                            ),
-                          ])),
-                  Expanded(
-                    flex: 11,
-                    child: Column(children: [
-                      Container(
-                        padding: EdgeInsets.only(left: 20, right: 20),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Players'.i18n,
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Constants.iWhite,
-                                fontWeight: FontWeight.w300),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
+                                  Switch(
+                                    value: canVoteBlank,
+                                    onChanged: (bool newValue) {
+                                      setState(() {
+                                        canVoteBlank = newValue;
+                                      });
+                                    },
+                                    activeTrackColor: Constants.iAccent,
+                                    activeColor: Constants.iWhite,
+                                  ),
+                                ]),
+                              ),
+                            ],
+                          )),
+                        ],
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 20, right: 20),
-                        child: playerPills,
-                      ),
-                    ]),
+                      //color: Colors.red,
+                    ),
                   ),
-                  Flexible(
-                      flex: 3,
-                      child: Center(
-                          child: Container(height: 60, child: createButton))),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Players'.i18n,
+                      style: TextStyle(
+                          fontSize: 30,
+                          color: Constants.iWhite,
+                          fontWeight: FontWeight.w300),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: playerPills,
+                  ),
                 ],
               ),
-            ]),
+            ),
           ),
+          floatingActionButton: createButton,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
         )));
   }
 }

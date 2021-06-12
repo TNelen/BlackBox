@@ -8,6 +8,7 @@ import 'package:blackbox/Util/Curves.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../Constants.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 
@@ -69,40 +70,57 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
           players.map((playerName) => buildUserVoteCard(playerName)).toList(),
     );
 
-    final voteButton = Padding(
-      padding: const EdgeInsets.only(left: 35, right: 35, top: 20, bottom: 20),
-      child: Material(
-        elevation: 5.0,
+    final voteButton = Card(
+      elevation: 5.0,
+      color: Constants.iAccent,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
-        color: Constants.iLight,
-        child: MaterialButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          minWidth: MediaQuery.of(context).size.width / 2,
-          height: 50,
-          onPressed: () {
-            if (selectedPlayer != null) {
-              FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
-                'type': 'PartyVoteCast',
-              });
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12.0),
+        // splashColor: Constants.iAccent,
+        onTap: () {
+          if (selectedPlayer != null) {
+            FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
+              'type': 'PartyVoteCast',
+            });
 
-              FirebaseAnalytics()
-                  .logEvent(name: 'PartyVoteOnUser', parameters: null);
-              offlineGroupData.vote(selectedPlayer);
-              Navigator.push(
-                  context,
-                  SlidePageRoute(
-                      fromPage: widget, toPage: PassScreen(offlineGroupData)));
-            } else {
-              NoMemberSelectedPopup.noMemberSelectedPopup(context);
-            }
-          },
-          child: Text("Vote".i18n,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: Constants.actionbuttonFontSize)
-                  .copyWith(
-                      color: Constants.iBlack, fontWeight: FontWeight.bold)),
+            FirebaseAnalytics()
+                .logEvent(name: 'PartyVoteOnUser', parameters: null);
+            offlineGroupData.vote(selectedPlayer);
+            Navigator.push(
+                context,
+                SlidePageRoute(
+                    fromPage: widget, toPage: PassScreen(offlineGroupData)));
+          } else {
+            NoMemberSelectedPopup.noMemberSelectedPopup(context);
+          }
+        },
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: Container(
+            width: MediaQuery.of(context).size.width / 2,
+            height: 30,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    'Vote',
+                    style: TextStyle(
+                        fontFamily: "roboto",
+                        fontSize: Constants.smallFontSize,
+                        color: Constants.iWhite,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  FaIcon(
+                    FontAwesomeIcons.chevronRight,
+                    color: Constants.iWhite,
+                  )
+                ]),
+          ),
         ),
       ),
     );
@@ -129,133 +147,117 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
               // can refer to the Scaffold with Scaffold.of().
               builder: (BuildContext context) {
             return Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  stops: [0.1, 0.9],
-                  colors: [
-                    Constants.gradient1,
-                    Constants.gradient2,
-                  ],
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    stops: [0.1, 0.9],
+                    colors: [
+                      Constants.gradient1,
+                      Constants.gradient2,
+                    ],
+                  ),
                 ),
-              ),
-              child: Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  CustomPaint(
-                    painter: QuestionTopCurvePainter(),
-                  ),
-                  CustomPaint(
-                    painter: BottomCurvePainter(),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                          flex: 1,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                'Question'.i18n,
-                                style: TextStyle(
-                                    color: Constants.iWhite,
-                                    fontSize: Constants.normalFontSize,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ],
-                          )),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              left: 30, right: 30, top: 20, bottom: 30),
-                          child: DelayedDisplay(
-                            delay: Duration(milliseconds: 0),
-                            child: Card(
-                              elevation: 5.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              color: Constants.iDarkGrey,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20.0, vertical: 20.0),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Text(
-                                      offlineGroupData
-                                          .getCurrentQuestion()
-                                          .getQuestion(),
-                                      style: TextStyle(
-                                          color: Constants.iWhite,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w300),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(height: 15),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Container(
-                                          width: 220.0,
-                                          child: Text(
-                                            '- ' +
-                                                offlineGroupData
-                                                    .getCurrentQuestion()
-                                                    .getCategory() +
-                                                ' -',
-                                            style: TextStyle(
-                                                color: Constants.iWhite,
-                                                fontSize:
-                                                    Constants.smallFontSize - 2,
-                                                fontWeight: FontWeight.w500),
-                                            textAlign: TextAlign.center,
-                                          ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    // Expanded(
+                    //     flex: 2,
+                    //     child: Center(
+                    //       child: Text(
+                    //         'Question'.i18n,
+                    //         style: TextStyle(
+                    //             color: Constants.iWhite,
+                    //             fontSize: 30,
+                    //             fontWeight: FontWeight.w300),
+                    //       ),
+                    //     )),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            left: 30, right: 30, top: 20, bottom: 30),
+                        child: DelayedDisplay(
+                          delay: Duration(milliseconds: 0),
+                          child: Card(
+                            elevation: 5.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            //color: Colors.grey.shade800,
+                            color: Colors.transparent,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 20.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Text(
+                                    offlineGroupData
+                                        .getCurrentQuestion()
+                                        .getQuestion(),
+                                    style: TextStyle(
+                                        color: Constants.iWhite,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w300),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(height: 15),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                        width: 220.0,
+                                        child: Text(
+                                          '- ' +
+                                              offlineGroupData
+                                                  .getCurrentQuestion()
+                                                  .getCategory() +
+                                              ' -',
+                                          style: TextStyle(
+                                              color: Constants.iWhite,
+                                              fontSize:
+                                                  Constants.smallFontSize - 2,
+                                              fontWeight: FontWeight.w500),
+                                          textAlign: TextAlign.center,
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
                       ),
-                      Expanded(
-                          flex: 4,
-                          child: Column(
-                            children: [
-                              Text(
-                                'Select a friend'.i18n,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.lightBlueAccent[100]
-                                        .withOpacity(0.75),
-                                    fontWeight: FontWeight.w300),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                  padding: EdgeInsets.only(left: 30, right: 30),
-                                  child: membersList),
-                            ],
-                          )),
-                      Expanded(
-                          flex: 1,
-                          child: Container(height: 50, child: voteButton))
-                    ],
-                  )
-                ],
-              ),
-            );
+                    ),
+                    Expanded(
+                        flex: 3,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Select a friend'.i18n,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Constants.iWhite,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                                padding: EdgeInsets.only(left: 30, right: 30),
+                                child: membersList),
+                          ],
+                        )),
+                  ],
+                ));
           }),
+          floatingActionButton: voteButton,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
         ),
       ),
     );

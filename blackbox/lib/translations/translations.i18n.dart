@@ -1256,7 +1256,7 @@ extension Localization on String {
       } +
       {
         "en": "Character traits",
-        "nl": "Karaktereigenschappen",
+        "nl": "Eigenschappen",
       } +
       {
         "en": "Superstar",

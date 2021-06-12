@@ -108,18 +108,19 @@ class QuestionTopCurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.lightBlueAccent[100]!.withOpacity(0.5);
+    paint.color = Colors.grey.shade800;
+
     paint.style = PaintingStyle.fill; // Change this to fill
 
     var path = Path();
 
-    path.moveTo(0, size.height * 0.13);
-    path.quadraticBezierTo(size.width * 0.1, size.height * 0.07,
-        size.width * 0.5, size.height * 0.07);
-    path.quadraticBezierTo(size.width * 0.9, size.height * 0.07,
-        size.width * 1.0, size.height * 0.04);
-    path.lineTo(size.width, 0);
-    path.lineTo(0, 0);
+    path.moveTo(0, size.height * 0.45);
+    path.quadraticBezierTo(size.width * 0.2, size.height * 0.40,
+        size.width * 0.5, size.height * 0.40);
+    path.quadraticBezierTo(size.width * 0.8, size.height * 0.40,
+        size.width * 1.0, size.height * 0.45);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
 
     canvas.drawPath(path, paint);
   }

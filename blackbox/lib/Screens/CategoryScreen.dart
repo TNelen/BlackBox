@@ -99,45 +99,50 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final nextButton = Card(
-      //elevation: 5.0,
-      color: Constants.iAccent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12.0),
-        // splashColor: Constants.iAccent,
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    SetPlayersScreen(selectedCategory),
-              ));
-        },
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: Container(
-            width: MediaQuery.of(context).size.width / 2,
-            height: 30,
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(
-                "Next".i18n,
-                style: TextStyle(
-                    fontFamily: "roboto",
-                    color: Constants.iWhite,
-                    fontSize: Constants.smallFontSize,
-                    fontWeight: FontWeight.w400),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              FaIcon(
-                FontAwesomeIcons.chevronRight,
-                color: Constants.iWhite,
-              ),
-            ]),
+    final nextButton = Hero(
+      tag: "actionbutton",
+      child: Card(
+        //elevation: 5.0,
+        color: Constants.iAccent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12.0),
+          // splashColor: Constants.iAccent,
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      SetPlayersScreen(selectedCategory),
+                ));
+          },
+          child: Padding(
+            padding: EdgeInsets.all(8),
+            child: Container(
+              width: MediaQuery.of(context).size.width / 2,
+              height: 30,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      "Next".i18n,
+                      style: TextStyle(
+                          fontFamily: "roboto",
+                          color: Constants.iWhite,
+                          fontSize: Constants.smallFontSize,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    FaIcon(
+                      FontAwesomeIcons.chevronRight,
+                      color: Constants.iWhite,
+                    ),
+                  ]),
+            ),
           ),
         ),
       ),
@@ -205,8 +210,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: Constants.iWhite,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w500))),
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w300))),
                       SizedBox(
                         height: 10,
                       ),
