@@ -114,17 +114,18 @@ class _SplashScreenState extends State<SplashScreen>
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  stops: [0.1, 0.9],
-                  colors: [
-                    Constants.gradient1,
-                    Constants.gradient2,
-                  ],
-                ),
-              ),
+              // decoration: BoxDecoration(
+              //   gradient: LinearGradient(
+              //     begin: Alignment.topRight,
+              //     end: Alignment.bottomLeft,
+              //     stops: [0.1, 0.9],
+              //     colors: [
+              //       Constants.gradient1,
+              //       Constants.gradient2,
+              //     ],
+              //   ),
+              // ),
+              color: Constants.grey,
               child: Stack(
                   fit: StackFit.expand,
                   alignment: Alignment.topCenter,
@@ -166,7 +167,8 @@ class _SplashScreenState extends State<SplashScreen>
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(35.0),
                             ),
-                            color: Colors.grey.shade800,
+                            color: Constants.black,
+                            //color: Colors.grey.shade800,
                             child: Container(
                               height: 290,
                               width: MediaQuery.of(context).size.width - 50,

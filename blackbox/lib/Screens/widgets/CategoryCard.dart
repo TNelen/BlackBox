@@ -25,13 +25,15 @@ class CategoryCardState extends State<CategoryCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 5.0,
-      color: Colors.grey.shade800,
+      elevation: 0.0,
+      //color: Colors.grey.shade800,
+
+      color: Constants.black.withOpacity(0.7),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(30.0),
       ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(30.0),
         splashColor: Constants.iAccent,
         onTap: () {
           setState(() {

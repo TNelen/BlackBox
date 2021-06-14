@@ -170,17 +170,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
             child: Scaffold(
               backgroundColor: Colors.transparent,
               body: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      stops: [0.1, 0.9],
-                      colors: [
-                        Constants.gradient1,
-                        Constants.gradient2,
-                      ],
-                    ),
-                  ),
+                  // decoration: BoxDecoration(
+                  //   gradient: LinearGradient(
+                  //     begin: Alignment.topRight,
+                  //     end: Alignment.bottomLeft,
+                  //     stops: [0.1, 0.9],
+                  //     colors: [
+                  //       Constants.gradient1,
+                  //       Constants.gradient2,
+                  //     ],
+                  //   ),
+                  // ),
+                  color: Constants.grey,
                   child: Column(
                     children: [
                       SafeArea(
@@ -204,53 +205,93 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       SizedBox(
                         height: 0,
                       ),
-                      Container(
-                          padding: EdgeInsets.only(left: 10, right: 10),
-                          child: Text("Categories".i18n,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Constants.iWhite,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w300))),
-                      SizedBox(
-                        height: 10,
+                      Expanded(
+                        flex: 2,
+                        child: Card(
+                          //elevation: 5.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          color: Constants.iAccent.withOpacity(0.8),
+                          child: Container(
+                            height: MediaQuery.of(context).size.height / 4,
+                            width: MediaQuery.of(context).size.width - 30,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 25),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.category,
+                                    size: 55,
+                                    color: Constants.iWhite,
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    "Categories".i18n,
+                                    style: TextStyle(
+                                        fontSize: 30,
+                                        fontFamily: "roboto",
+                                        color: Constants.iWhite,
+                                        fontWeight: FontWeight.w600),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    "Please select one or more categories".i18n,
+                                    style: TextStyle(
+                                        fontSize: Constants.smallFontSize,
+                                        fontFamily: "roboto",
+                                        color:
+                                            Constants.iWhite.withOpacity(0.8),
+                                        fontWeight: FontWeight.w300),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                      Container(
-                          padding: EdgeInsets.only(left: 10, right: 10),
-                          child: Text(
-                              "Please select one or more categories...".i18n,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Constants.iLight,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w300))),
                       SizedBox(
-                        height: 35,
+                        height: 25,
                       ),
-                      GridView.builder(
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 180,
-                            childAspectRatio: 10 / 7,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10),
-                        shrinkWrap: true,
-                        padding: EdgeInsets.only(left: 30, right: 30),
-                        scrollDirection: Axis.vertical,
-                        itemCount: categories.length,
-                        itemBuilder: (BuildContext context, int index) =>
-                            CategoryCard(
-                          selectedCategory.contains(categories[index]),
-                          categories[index],
-                          onTap: () {
-                            if (!selectedCategory.contains(categories[index])) {
-                              selectedCategory.add(categories[index]);
-                            } else if (selectedCategory
-                                .contains(categories[index])) {
-                              selectedCategory.remove(categories[index]);
-                            }
-                            setState(() {});
-                          },
-                          isNewFlag: categories[index].isNew,
+                      Expanded(
+                        flex: 5,
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 200,
+                                  childAspectRatio: 10 / 7,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10),
+                          shrinkWrap: true,
+                          padding: EdgeInsets.only(left: 15, right: 15),
+                          scrollDirection: Axis.vertical,
+                          itemCount: categories.length,
+                          itemBuilder: (BuildContext context, int index) =>
+                              CategoryCard(
+                            selectedCategory.contains(categories[index]),
+                            categories[index],
+                            onTap: () {
+                              if (!selectedCategory
+                                  .contains(categories[index])) {
+                                selectedCategory.add(categories[index]);
+                              } else if (selectedCategory
+                                  .contains(categories[index])) {
+                                selectedCategory.remove(categories[index]);
+                              }
+                              setState(() {});
+                            },
+                            isNewFlag: categories[index].isNew,
+                          ),
                         ),
                       ),
                       SizedBox(

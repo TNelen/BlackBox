@@ -9,9 +9,11 @@ class Constants {
   static const iGrey = Color(0xFF577D90);
   static const iLight = Color(0xFFb3b3b3);
   static const iWhite = Color(0xFFF5F5F5);
-  static const iAccent = Color(0xFF00BBFF);
+  static const iAccent = Color(0xFF3DA3F8);
   static const gradient1 = Color(0xFF121212);
   static const gradient2 = Color(0xFF21272C);
+  static const grey = Color(0xFF2E3139);
+  static const black = Color(0xFF121924);
 
   static List<Color> categoryColors = [
     Colors.tealAccent[100],
