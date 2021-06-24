@@ -166,139 +166,156 @@ class _CategoryScreenState extends State<CategoryScreen> {
           theme: ThemeData(
             scaffoldBackgroundColor: Colors.transparent,
           ),
+
+          // IconButton(
+          //               icon: FaIcon(
+          //                 FontAwesomeIcons.chevronLeft,
+          //                 color: Constants.iLight,
+          //               ),
+          //               onPressed: () {
+          //                 Navigator.push(
+          //                     context,
+          //                     MaterialPageRoute(
+          //                       builder: (BuildContext context) =>
+          //                           SplashScreen(),
+          //                     ));
+          //               })
           home: I18n(
             child: Scaffold(
               backgroundColor: Colors.transparent,
-              body: Container(
-                  // decoration: BoxDecoration(
-                  //   gradient: LinearGradient(
-                  //     begin: Alignment.topRight,
-                  //     end: Alignment.bottomLeft,
-                  //     stops: [0.1, 0.9],
-                  //     colors: [
-                  //       Constants.gradient1,
-                  //       Constants.gradient2,
-                  //     ],
-                  //   ),
-                  // ),
-                  color: Constants.grey,
-                  child: Column(
-                    children: [
-                      SafeArea(
-                          child: Row(
-                        children: [
-                          IconButton(
-                              icon: FaIcon(
-                                FontAwesomeIcons.chevronLeft,
-                                color: Constants.iLight,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          SplashScreen(),
-                                    ));
-                              })
-                        ],
-                      )),
-                      SizedBox(
-                        height: 0,
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Card(
-                          //elevation: 5.0,
+              body: NestedScrollView(
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    SliverAppBar(
+                        leading: IconButton(
+                            icon: FaIcon(
+                              FontAwesomeIcons.chevronLeft,
+                              color: Constants.iLight,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        SplashScreen(),
+                                  ));
+                            }),
+                        expandedHeight: 200.0,
+                        floating: false,
+                        backgroundColor: Constants.grey,
+                        pinned: true,
+                        flexibleSpace: FlexibleSpaceBar(
+                          centerTitle: true,
+                          title: Text(
+                            "Categories".i18n,
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: "roboto",
+                                color: Constants.iWhite,
+                                fontWeight: FontWeight.w600),
+                            textAlign: TextAlign.center,
+                          ),
+                          background: Image.asset(
+                            "images/questions.png",
+                            scale: 1,
+                          ),
+                        )),
+                  ];
+                },
+                body: Container(
+                    color: Constants.grey,
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: [
+                        Card(
+                          elevation: 0.0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(35.0),
                           ),
-                          color: Constants.iAccent.withOpacity(0.8),
+                          color: Constants.grey,
                           child: Container(
-                            height: MediaQuery.of(context).size.height / 4,
                             width: MediaQuery.of(context).size.width - 30,
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 25),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Icon(
-                                    Icons.category,
-                                    size: 55,
-                                    color: Constants.iWhite,
+                                  SizedBox(
+                                    height: 5,
                                   ),
                                   SizedBox(
                                     height: 5,
                                   ),
-                                  Text(
-                                    "Categories".i18n,
-                                    style: TextStyle(
-                                        fontSize: 30,
-                                        fontFamily: "roboto",
-                                        color: Constants.iWhite,
-                                        fontWeight: FontWeight.w600),
-                                    textAlign: TextAlign.center,
-                                  ),
+                                  selectedCategory.length == 0
+                                      ? Text(
+                                          "Please select one or more categories"
+                                              .i18n,
+                                          style: TextStyle(
+                                              fontSize: Constants.smallFontSize,
+                                              fontFamily: "roboto",
+                                              color: Constants.iWhite
+                                                  .withOpacity(0.8),
+                                              fontWeight: FontWeight.w300),
+                                          textAlign: TextAlign.center,
+                                        )
+                                      : Text(
+                                          "${selectedCategory.length} categories selected"
+                                              .i18n,
+                                          style: TextStyle(
+                                              fontSize: Constants.smallFontSize,
+                                              fontFamily: "roboto",
+                                              color: Constants.iWhite
+                                                  .withOpacity(0.8),
+                                              fontWeight: FontWeight.w300),
+                                          textAlign: TextAlign.center,
+                                        ),
                                   SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    "Please select one or more categories".i18n,
-                                    style: TextStyle(
-                                        fontSize: Constants.smallFontSize,
-                                        fontFamily: "roboto",
-                                        color:
-                                            Constants.iWhite.withOpacity(0.8),
-                                        fontWeight: FontWeight.w300),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SizedBox(
-                                    height: 15,
+                                    height: 25,
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Expanded(
-                        flex: 5,
-                        child: GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 200,
-                                  childAspectRatio: 10 / 7,
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10),
-                          shrinkWrap: true,
-                          padding: EdgeInsets.only(left: 15, right: 15),
-                          scrollDirection: Axis.vertical,
-                          itemCount: categories.length,
-                          itemBuilder: (BuildContext context, int index) =>
-                              CategoryCard(
-                            selectedCategory.contains(categories[index]),
-                            categories[index],
-                            onTap: () {
-                              if (!selectedCategory
-                                  .contains(categories[index])) {
-                                selectedCategory.add(categories[index]);
-                              } else if (selectedCategory
-                                  .contains(categories[index])) {
-                                selectedCategory.remove(categories[index]);
-                              }
-                              setState(() {});
-                            },
-                            isNewFlag: categories[index].isNew,
+                        Container(
+                          height: 550,
+                          child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithMaxCrossAxisExtent(
+                                    maxCrossAxisExtent: 200,
+                                    childAspectRatio: 10 / 7,
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 10),
+                            shrinkWrap: true,
+                            padding: EdgeInsets.only(left: 15, right: 15),
+                            scrollDirection: Axis.vertical,
+                            itemCount: categories.length,
+                            physics: ClampingScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) =>
+                                CategoryCard(
+                              selectedCategory.contains(categories[index]),
+                              categories[index],
+                              onTap: () {
+                                if (!selectedCategory
+                                    .contains(categories[index])) {
+                                  selectedCategory.add(categories[index]);
+                                } else if (selectedCategory
+                                    .contains(categories[index])) {
+                                  selectedCategory.remove(categories[index]);
+                                }
+                                setState(() {});
+                              },
+                              isNewFlag: categories[index].isNew,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 70,
-                      ),
-                    ],
-                  )),
+                        SizedBox(
+                          height: 5,
+                        ),
+                      ],
+                    )),
+              ),
               floatingActionButton:
                   selectedCategory.length != 0 ? nextButton : SizedBox(),
               floatingActionButtonLocation:

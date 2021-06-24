@@ -81,6 +81,10 @@ flutter:
     - images/box.png
     - images/bluebox.png
     - images/blueboxquestiongrey.png
+    - images/questions.png
+    - images/questions-white.png
+    - images/questions-blue.png
+    - images/questions-blue2.png
     - assets/sounds/loser.wav
     - assets/sounds/winner.wav
     - assets/questions.txt

@@ -208,78 +208,6 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                   height: 25,
                 ),
                 Expanded(
-                  flex: 5,
-                  child: Card(
-                    //elevation: 5.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(35.0),
-                    ),
-                    color: Constants.black.withOpacity(0.7),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height / 4,
-                      width: MediaQuery.of(context).size.width - 30,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 25),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Align(
-                                alignment: Alignment.topLeft,
-                                child: IconButton(
-                                    icon: FaIcon(
-                                      FontAwesomeIcons.chevronLeft,
-                                      color: Constants.iLight,
-                                    ),
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          ScaleDownPageRoute(
-                                            fromPage: widget,
-                                            toPage: CategoryScreen(
-                                              showHelp: false,
-                                            ),
-                                          ));
-                                    })),
-                            FaIcon(
-                              FontAwesomeIcons.users,
-                              color: Constants.grey,
-                              size: 60,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Players'.i18n,
-                                style: TextStyle(
-                                    fontSize: 30,
-                                    color: Constants.iWhite,
-                                    fontWeight: FontWeight.w500),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(left: 20, right: 20),
-                              child: playerPills,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 20,
-                ),
-                Expanded(
                   flex: 3,
                   child: Card(
                     //elevation: 5.0,
@@ -294,24 +222,23 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                           padding: EdgeInsets.symmetric(horizontal: 25),
                           child: Column(
                             children: [
-                              SizedBox(
-                                height: 20,
-                              ),
-                              // Row(
-                              //     mainAxisAlignment:
-                              //         MainAxisAlignment.spaceBetween,
-                              //     children: [
-                              //       SizedBox(),
-                              //       Padding(
-                              //         padding:
-                              //             EdgeInsets.only(top: 10, right: 10),
-                              //         child: FaIcon(
-                              //           FontAwesomeIcons.userCog,
-                              //           color: Constants.grey.withOpacity(0.5),
-                              //           size: 60,
-                              //         ),
-                              //       )
-                              //     ]),
+                              Align(
+                                  alignment: Alignment.topLeft,
+                                  child: IconButton(
+                                      icon: FaIcon(
+                                        FontAwesomeIcons.chevronLeft,
+                                        color: Constants.iLight,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            ScaleDownPageRoute(
+                                              fromPage: widget,
+                                              toPage: CategoryScreen(
+                                                showHelp: false,
+                                              ),
+                                            ));
+                                      })),
                               Align(
                                 alignment: Alignment.center,
                                 child: Text(
@@ -364,6 +291,61 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                               ),
                             ],
                           )),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 20,
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Card(
+                    //elevation: 5.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(35.0),
+                    ),
+                    color: Constants.black.withOpacity(0.7),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 4,
+                      width: MediaQuery.of(context).size.width - 30,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 25),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            FaIcon(
+                              FontAwesomeIcons.users,
+                              color: Constants.grey,
+                              size: 60,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Players'.i18n,
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    color: Constants.iWhite,
+                                    fontWeight: FontWeight.w500),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 20, right: 20),
+                              child: playerPills,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),

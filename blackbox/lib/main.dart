@@ -69,10 +69,10 @@ class _SplashScreenState extends State<SplashScreen>
       //elevation: 5.0,
       color: Constants.iAccent,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25.0),
+        borderRadius: BorderRadius.circular(12.0),
       ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(25.0),
+        borderRadius: BorderRadius.circular(12.0),
         // splashColor: Constants.iAccent,
         onTap: () {
           Navigator.push(
@@ -84,7 +84,7 @@ class _SplashScreenState extends State<SplashScreen>
               ));
         },
         child: Container(
-          width: 50,
+          width: 200,
           height: 50,
           child: Center(
               child: FaIcon(
@@ -167,7 +167,7 @@ class _SplashScreenState extends State<SplashScreen>
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(35.0),
                             ),
-                            color: Constants.black,
+                            color: Constants.black.withOpacity(0.7),
                             //color: Colors.grey.shade800,
                             child: Container(
                               height: 290,
