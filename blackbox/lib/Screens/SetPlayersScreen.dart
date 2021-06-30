@@ -186,128 +186,69 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
         theme: ThemeData(scaffoldBackgroundColor: Constants.iBlack),
         home: I18n(
             child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Container(
-            // decoration: BoxDecoration(
-            //   gradient: LinearGradient(
-            //     begin: Alignment.topCenter,
-            //     end: Alignment.bottomLeft,
-            //     stops: [0.1, 1.0],
-            //     colors: [
-            //       Constants.gradient1,
-            //       Constants.gradient2,
-            //     ],
-            //   ),
-            // ),
-            color: Constants.grey,
-
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 25,
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Card(
-                    //elevation: 5.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(35.0),
-                    ),
-                    color: Constants.iAccent.withOpacity(0.7),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height / 4,
-                      width: MediaQuery.of(context).size.width - 30,
-                      child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 25),
-                          child: Column(
-                            children: [
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: IconButton(
-                                      icon: FaIcon(
-                                        FontAwesomeIcons.chevronLeft,
-                                        color: Constants.iLight,
-                                      ),
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            ScaleDownPageRoute(
-                                              fromPage: widget,
-                                              toPage: CategoryScreen(
-                                                showHelp: false,
-                                              ),
-                                            ));
-                                      })),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Settings'.i18n,
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      color: Constants.iWhite,
-                                      fontWeight: FontWeight.w500),
-                                  textAlign: TextAlign.left,
+          backgroundColor: Colors.transparent,
+          body: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                    leading: IconButton(
+                        icon: FaIcon(
+                          FontAwesomeIcons.chevronLeft,
+                          color: Constants.iLight,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              ScaleDownPageRoute(
+                                fromPage: widget,
+                                toPage: CategoryScreen(
+                                  showHelp: false,
                                 ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-
-                              Text(
-                                'Blank vote'.i18n,
-                                style: TextStyle(
-                                    fontSize: Constants.smallFontSize,
-                                    color: Constants.iWhite,
-                                    fontWeight: FontWeight.w300),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-
-                              // Here, default theme colors are used for activeBgColor, activeFgColor, inactiveBgColor and inactiveFgColor
-                              ToggleSwitch(
-                                initialLabelIndex: 0,
-                                totalSwitches: 2,
-                                minWidth: 100.0,
-                                minHeight: 40.0,
-                                fontSize: 16.0,
-                                activeBgColor: [
-                                  Constants.iWhite.withOpacity(0.8)
-                                ],
-                                activeFgColor: Constants.black,
-                                inactiveBgColor:
-                                    Constants.black.withOpacity(0.2),
-                                inactiveFgColor:
-                                    Constants.black.withOpacity(0.6),
-                                labels: [
-                                  'Enable',
-                                  'Disable',
-                                ],
-                                onToggle: (index) {
-                                  print('switched to: $index');
-                                  canVoteBlank = index == 0;
-                                },
-                              ),
-                            ],
-                          )),
-                    ),
+                              ));
+                        }),
+                    expandedHeight: 200.0,
+                    floating: false,
+                    backgroundColor: Constants.grey,
+                    pinned: true,
+                    flexibleSpace: FlexibleSpaceBar(
+                      centerTitle: true,
+                      title: Text(
+                        "Set Players".i18n,
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: "roboto",
+                            color: Constants.iWhite,
+                            fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.center,
+                      ),
+                      background: Container(
+                        height: 15,
+                        child: Image.asset(
+                          "images/users-solid-3.png",
+                          fit: BoxFit.scaleDown,
+                          scale: 0.5,
+                        ),
+                      ),
+                    )),
+              ];
+            },
+            body: Container(
+              color: Constants.grey,
+              child: ListView(
+                children: <Widget>[
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 12,
                   ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 20,
-                ),
-                Expanded(
-                  flex: 5,
-                  child: Card(
+                  Card(
                     //elevation: 5.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(35.0),
                     ),
                     color: Constants.black.withOpacity(0.7),
                     child: Container(
-                      height: MediaQuery.of(context).size.height / 4,
+                      height: MediaQuery.of(context).size.height / 2.5,
                       width: MediaQuery.of(context).size.width - 30,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 25),
@@ -348,11 +289,68 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 120,
-                ),
-              ],
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 20,
+                  ),
+                  Card(
+                    //elevation: 5.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(35.0),
+                    ),
+                    color: Constants.iAccent.withOpacity(0.7),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 5,
+                      width: MediaQuery.of(context).size.width - 30,
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 25),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Blank vote'.i18n,
+                                style: TextStyle(
+                                    fontSize: Constants.smallFontSize,
+                                    color: Constants.iWhite,
+                                    fontWeight: FontWeight.w300),
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+
+                              // Here, default theme colors are used for activeBgColor, activeFgColor, inactiveBgColor and inactiveFgColor
+                              ToggleSwitch(
+                                initialLabelIndex: 0,
+                                totalSwitches: 2,
+                                minWidth: 100.0,
+                                minHeight: 40.0,
+                                fontSize: 16.0,
+                                activeBgColor: [
+                                  Constants.iWhite.withOpacity(0.8)
+                                ],
+                                activeFgColor: Constants.black,
+                                inactiveBgColor:
+                                    Constants.black.withOpacity(0.2),
+                                inactiveFgColor:
+                                    Constants.black.withOpacity(0.6),
+                                labels: [
+                                  'Enable',
+                                  'Disable',
+                                ],
+                                onToggle: (index) {
+                                  print('switched to: $index');
+                                  canVoteBlank = index == 0;
+                                },
+                              ),
+                            ],
+                          )),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 120,
+                  ),
+                ],
+              ),
             ),
           ),
           floatingActionButton: createButton,
