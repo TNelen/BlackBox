@@ -33,7 +33,7 @@ class PassScreenButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 5.0,
+      elevation: 0.0,
       color: Constants.iDarkGrey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),

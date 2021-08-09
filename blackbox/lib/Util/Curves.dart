@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 
+import '../Constants.dart';
+
 class CategoryTopCurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.lightBlueAccent[100]!.withOpacity(0.5);
+    paint.color = Constants.black.withOpacity(0.7);
+
     paint.style = PaintingStyle.fill; // Change this to fill
 
     var path = Path();
 
     path.moveTo(0, size.height * 0.09);
-    path.quadraticBezierTo(size.width * 0.1, size.height * 0.12,
-        size.width * 0.5, size.height * 0.12);
-    path.quadraticBezierTo(size.width * 0.9, size.height * 0.12,
-        size.width * 1.0, size.height * 0.18);
+    path.quadraticBezierTo(size.width * 0.1, size.height * 0.14,
+        size.width * 0.5, size.height * 0.14);
+    path.quadraticBezierTo(size.width * 0.9, size.height * 0.14,
+        size.width * 1.0, size.height * 0.09);
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
 

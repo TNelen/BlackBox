@@ -79,26 +79,11 @@ class _PassScreenState extends State<PassScreen> {
         home: I18n(
             child: Scaffold(
           body: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomLeft,
-                stops: [0.1, 1.0],
-                colors: [
-                  Constants.gradient1,
-                  Constants.gradient2,
-                ],
-              ),
-            ),
+           color: Constants.grey,
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
-                CustomPaint(
-                  painter: PassTopCurvePainter(),
-                ),
-                CustomPaint(
-                  painter: BottomCurvePainter(),
-                ),
+                
                 ListView(
                   padding: const EdgeInsets.only(
                       top: 80.0, bottom: 20, left: 45, right: 45),
@@ -181,7 +166,7 @@ class _PassScreenState extends State<PassScreen> {
                           : IconCard(
                               OMIcons.checkCircle,
                               Constants.iGrey.withOpacity(0.1),
-                              Constants.iAccent,
+                              Constants.iBlue,
                               35,
                             ),
                       onTap: () {
@@ -214,7 +199,7 @@ class _PassScreenState extends State<PassScreen> {
                       iconCard: IconCard(
                         OMIcons.libraryAdd,
                         Constants.iGrey.withOpacity(0.1),
-                        Constants.iAccent,
+                        Constants.iBlue,
                         35,
                       ),
                       onTap: () {

@@ -48,7 +48,8 @@ class _RulesColumnState extends State<RulesColumn> {
               widget.titles[i],
               textAlign: TextAlign.start,
               style: TextStyle(
-                  color: Constants.iAccent,
+                  fontFamily: "roboto",
+                  color: Constants.iWhite,
                   fontSize: Constants.smallFontSize + 3,
                   fontWeight: FontWeight.w500),
             ),
@@ -58,7 +59,8 @@ class _RulesColumnState extends State<RulesColumn> {
             Text(
               widget.descriptions[i],
               style: TextStyle(
-                  color: Constants.iWhite,
+                  fontFamily: "roboto",
+                  color: Constants.iWhite.withOpacity(0.6),
                   fontSize: Constants.smallFontSize,
                   fontWeight: FontWeight.w300),
             ),

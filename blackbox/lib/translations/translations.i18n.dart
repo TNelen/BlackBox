@@ -49,6 +49,14 @@ extension Localization on String {
         "nl": "Verander gebruikersnaam",
       } +
       {
+        "en": "Start playing now!",
+        "nl": "Begin met spelen!",
+      } +
+      {
+        "en": "The #1 game to get to know yourself and your friends!",
+        "nl": "Het #1 spel om jezelf en je vrienden beter te leren kennen!",
+      } +
+      {
         "en":
             "This name will be shown in the game, make sure others recognise you!",
         "nl":
@@ -119,6 +127,15 @@ extension Localization on String {
       {
         "en": "Join a game with this code:\n\n",
         "nl": "Speel mee met een spel met deze code:\n\n",
+      } +
+
+      ///////////////////
+      /// Homescreen ///
+      ////////////////////
+
+      {
+        "en": "The #1 game to get to know yourself and your friends!",
+        "nl": "Het #1 spel om jezelf en je vrienden beter the leren kennen!",
       } +
 
       ///////////////////
@@ -352,6 +369,18 @@ extension Localization on String {
       {
         "en": "Game settings",
         "nl": "Spel instellingen",
+      } +
+      {
+        "en": "How to play",
+        "nl": "Spelregels",
+      } +
+      {
+        "en": "I got it!",
+        "nl": "Ik snap het!",
+      } +
+      {
+        "en": "Game",
+        "nl": "Spel",
       } +
       {
         "en": "Blank vote",
@@ -1307,12 +1336,12 @@ extension Localization on String {
         "nl": "Speel met je gezin",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "category selected",
+        "nl": "categorieën geselecteerd",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "categories selected",
+        "nl": "categorie geselecteerd",
       } +
       {
         "en": "",

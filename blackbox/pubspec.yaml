@@ -49,6 +49,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   share: ^0.5.3
   back_button_interceptor: ^4.0.7
+  flutter_neumorphic: ^3.1.0
 
 dev_dependencies:
   flutter_test:

@@ -74,7 +74,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
       child: Material(
         elevation: 5.0,
         borderRadius: BorderRadius.circular(12.0),
-        color: Constants.iLight,
+        color: Constants.iBlue,
         child: MaterialButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
@@ -129,26 +129,20 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
               // can refer to the Scaffold with Scaffold.of().
               builder: (BuildContext context) {
             return Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  stops: [0.1, 0.9],
-                  colors: [
-                    Constants.gradient1,
-                    Constants.gradient2,
-                  ],
-                ),
-              ),
-              child: Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  CustomPaint(
-                    painter: QuestionTopCurvePainter(),
-                  ),
-                  CustomPaint(
-                    painter: BottomCurvePainter(),
-                  ),
+              // decoration: BoxDecoration(
+              //   gradient: LinearGradient(
+              //     begin: Alignment.topRight,
+              //     end: Alignment.bottomLeft,
+              //     stops: [0.1, 0.9],
+              //     colors: [
+              //       Constants.gradient1,
+              //       Constants.gradient2,
+              //     ],
+              //   ),
+              // ),
+              color: Constants.grey,
+              child: 
+                  
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
@@ -174,9 +168,9 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                           child: DelayedDisplay(
                             delay: Duration(milliseconds: 0),
                             child: Card(
-                              elevation: 5.0,
+                              elevation: 0.0,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
+                                borderRadius: BorderRadius.circular(15.0),
                               ),
                               color: Constants.iDarkGrey,
                               child: Padding(
@@ -252,8 +246,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                           child: Container(height: 50, child: voteButton))
                     ],
                   )
-                ],
-              ),
+                
             );
           }),
         ),
@@ -264,14 +257,14 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
   Widget buildUserVoteCard(String playerName) {
     return Container(
         child: Card(
-      elevation: 2.0,
+      elevation: 0.0,
       color:
           playerName == selectedPlayer ? Constants.iLight : Constants.iDarkGrey,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(15.0),
       ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(15.0),
         splashColor: Constants.iAccent,
         onTap: () {
           setState(() {
@@ -290,7 +283,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                     ? Constants.iDarkGrey
                     : Constants.iWhite,
                 fontSize: Constants.smallFontSize,
-                fontWeight: FontWeight.w500),
+                fontWeight: FontWeight.w400),
           ),
         )),
       ),
