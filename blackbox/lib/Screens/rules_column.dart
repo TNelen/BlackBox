@@ -45,25 +45,27 @@ class _RulesColumnState extends State<RulesColumn> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.titles[i],
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                  fontFamily: "roboto",
-                  color: Constants.iWhite,
-                  fontSize: Constants.smallFontSize + 3,
-                  fontWeight: FontWeight.w500),
+                widget.titles[i],
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                    fontFamily: "roboto",
+                    color: Constants.iWhite,
+                    fontSize: Constants.smallFontSize + 3,
+                    fontWeight: FontWeight.w500),
+              
             ),
             SizedBox(
               height: 15,
             ),
-            Text(
-              widget.descriptions[i],
-              style: TextStyle(
-                  fontFamily: "roboto",
-                  color: Constants.iWhite.withOpacity(0.6),
-                  fontSize: Constants.smallFontSize,
-                  fontWeight: FontWeight.w300),
-            ),
+           Text(
+                widget.descriptions[i],
+                style: TextStyle(
+                    fontFamily: "roboto",
+                    color: Constants.iWhite.withOpacity(0.6),
+                    fontSize: Constants.smallFontSize,
+                    fontWeight: FontWeight.w300),
+              ),
+            
             SizedBox(height: 15),
           ]));
 

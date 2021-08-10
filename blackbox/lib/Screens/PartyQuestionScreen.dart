@@ -8,6 +8,7 @@ import 'package:blackbox/Util/Curves.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../Constants.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 
@@ -60,13 +61,27 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
   Widget build(BuildContext context) {
     final List<String> players = offlineGroupData.getPlayers();
 
-    final membersList = GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      childAspectRatio: (3 / 1),
-      padding: EdgeInsets.symmetric(horizontal: 8.0),
-      children:
-          players.map((playerName) => buildUserVoteCard(playerName)).toList(),
+    final membersList = AnimationLimiter(
+      child: GridView.count(
+        crossAxisCount: 2,
+        shrinkWrap: true,
+        children: List.generate(
+          players.length,
+          (int index) {
+            return AnimationConfiguration.staggeredGrid(
+              position: index,
+              duration: const Duration(milliseconds: 375),
+              columnCount: 2,
+              child: ScaleAnimation(
+                child: FadeInAnimation(
+                  child: buildUserVoteCard(players[index]),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+     
     );
 
     final voteButton = Padding(
@@ -129,125 +144,109 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
               // can refer to the Scaffold with Scaffold.of().
               builder: (BuildContext context) {
             return Container(
-              // decoration: BoxDecoration(
-              //   gradient: LinearGradient(
-              //     begin: Alignment.topRight,
-              //     end: Alignment.bottomLeft,
-              //     stops: [0.1, 0.9],
-              //     colors: [
-              //       Constants.gradient1,
-              //       Constants.gradient2,
-              //     ],
-              //   ),
-              // ),
-              color: Constants.grey,
-              child: 
-                  
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                          flex: 1,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                'Question'.i18n,
-                                style: TextStyle(
-                                    color: Constants.iWhite,
-                                    fontSize: Constants.normalFontSize,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ],
-                          )),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              left: 30, right: 30, top: 20, bottom: 30),
-                          child: DelayedDisplay(
-                            delay: Duration(milliseconds: 0),
-                            child: Card(
-                              elevation: 0.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              color: Constants.iDarkGrey,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20.0, vertical: 20.0),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Text(
-                                      offlineGroupData
-                                          .getCurrentQuestion()
-                                          .getQuestion(),
-                                      style: TextStyle(
-                                          color: Constants.iWhite,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w300),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(height: 15),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Container(
-                                          width: 220.0,
-                                          child: Text(
-                                            '- ' +
-                                                offlineGroupData
-                                                    .getCurrentQuestion()
-                                                    .getCategory() +
-                                                ' -',
-                                            style: TextStyle(
-                                                color: Constants.iWhite,
-                                                fontSize:
-                                                    Constants.smallFontSize - 2,
-                                                fontWeight: FontWeight.w500),
-                                            textAlign: TextAlign.center,
-                                          ),
+                color: Constants.grey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                        flex: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              'Question'.i18n,
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  color: Constants.iWhite,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ],
+                        )),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            left: 30, right: 30, top: 20, bottom: 30),
+                        child: DelayedDisplay(
+                          delay: Duration(milliseconds: 0),
+                          child: Card(
+                            elevation: 0.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Constants.iDarkGrey,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 20.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Text(
+                                    offlineGroupData
+                                        .getCurrentQuestion()
+                                        .getQuestion(),
+                                    style: TextStyle(
+                                        color: Constants.iWhite,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w300),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(height: 15),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                        width: 220.0,
+                                        child: Text(
+                                          '- ' +
+                                              offlineGroupData
+                                                  .getCurrentQuestion()
+                                                  .getCategory() +
+                                              ' -',
+                                          style: TextStyle(
+                                              color: Constants.iWhite,
+                                              fontSize:
+                                                  Constants.smallFontSize - 2,
+                                              fontWeight: FontWeight.w500),
+                                          textAlign: TextAlign.center,
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
                       ),
-                      Expanded(
-                          flex: 4,
-                          child: Column(
-                            children: [
-                              Text(
-                                'Select a friend'.i18n,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.lightBlueAccent[100]
-                                        .withOpacity(0.75),
-                                    fontWeight: FontWeight.w300),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                  padding: EdgeInsets.only(left: 30, right: 30),
-                                  child: membersList),
-                            ],
-                          )),
-                      Expanded(
-                          flex: 1,
-                          child: Container(height: 50, child: voteButton))
-                    ],
-                  )
-                
-            );
+                    ),
+                    Expanded(
+                        flex: 4,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Select a friend'.i18n,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.lightBlueAccent[100]
+                                      .withOpacity(0.75),
+                                  fontWeight: FontWeight.w300),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                                padding: EdgeInsets.only(left: 30, right: 30),
+                                child: membersList),
+                          ],
+                        )),
+                    Expanded(
+                        flex: 1,
+                        child: Container(height: 50, child: voteButton))
+                  ],
+                ));
           }),
         ),
       ),
@@ -256,6 +255,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
 
   Widget buildUserVoteCard(String playerName) {
     return Container(
+      
         child: Card(
       elevation: 0.0,
       color:

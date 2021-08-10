@@ -2,11 +2,15 @@
 
 import 'package:blackbox/Screens/CategoryScreen.dart';
 import 'package:blackbox/push_nofitications.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animator/animation/animation_preferences.dart';
+import 'package:flutter_animator/flutter_animator.dart';
+import 'package:flutter_animator/widgets/fading_entrances/fade_in_up.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -66,33 +70,38 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    final startButton = Card(
-      //elevation: 5.0,
-      color: Constants.iBlue,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12.0),
-        // splashColor: Constants.iAccent,
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => CategoryScreen(
-                  showHelp: true,
-                ),
-              ));
-        },
-        child: Container(
-          width: 200,
-          height: 50,
-          child: Center(
-              child: FaIcon(
-            FontAwesomeIcons.arrowRight,
-            size: 22,
-            color: Constants.iWhite,
-          )),
+    final startButton = HeadShake(
+      preferences: AnimationPreferences(
+          duration: Duration(milliseconds: 750), offset: Duration(seconds: 2)),
+      child: Card(
+        //elevation: 5.0,
+        color: Constants.iBlue,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12.0),
+          // splashColor: Constants.iAccent,
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => CategoryScreen(
+                    showHelp: true,
+                    showList: false,
+                  ),
+                ));
+          },
+          child: Container(
+            width: 200,
+            height: 50,
+            child: Center(
+                child: FaIcon(
+              FontAwesomeIcons.arrowRight,
+              size: 22,
+              color: Constants.iWhite,
+            )),
+          ),
         ),
       ),
     );
@@ -111,7 +120,8 @@ class _SplashScreenState extends State<SplashScreen>
       title: 'BlackBox',
       theme: ThemeData(
           fontFamily: "roboto", scaffoldBackgroundColor: Constants.iBlack),
-      home:  I18n( child: Scaffold(
+      home: I18n(
+        child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Container(
               // decoration: BoxDecoration(
@@ -139,24 +149,32 @@ class _SplashScreenState extends State<SplashScreen>
                               SizedBox(
                                 height: 75,
                               ),
-                              Text(
-                                "BlackBox",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "atarian",
-                                    fontSize: Constants.titleFontSize,
-                                    fontWeight: FontWeight.w300),
+                              DelayedDisplay(
+                                delay: Duration(milliseconds: 200),
+                                slidingBeginOffset: const Offset(0.0, 0.8),
+                                child: Text(
+                                  "BlackBox",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "atarian",
+                                      fontSize: Constants.titleFontSize,
+                                      fontWeight: FontWeight.w300),
+                                ),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(
-                                "A MAGNETAR Game",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: Constants.normalFontSize,
-                                    fontFamily: "atarian",
-                                    fontWeight: FontWeight.w300),
+                              DelayedDisplay(
+                                delay: Duration(milliseconds: 700),
+                                slidingBeginOffset: const Offset(0.0, 0.8),
+                                child: Text(
+                                  "A MAGNETAR Game",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: Constants.normalFontSize,
+                                      fontFamily: "atarian",
+                                      fontWeight: FontWeight.w300),
+                                ),
                               ),
                             ]),
 
@@ -164,7 +182,7 @@ class _SplashScreenState extends State<SplashScreen>
                           padding: EdgeInsets.only(bottom: 30),
                           child: Card(
                             elevation: 5.0,
-                            
+
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(35.0),
                             ),

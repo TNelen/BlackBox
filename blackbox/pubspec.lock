@@ -174,6 +174,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_animator:
+    dependency: "direct main"
+    description:
+      name: flutter_animator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.2"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -186,6 +193,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
+  flutter_staggered_animations:
+    dependency: "direct main"
+    description:
+      name: flutter_staggered_animations
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   flutter_tags:
     dependency: "direct main"
     description:

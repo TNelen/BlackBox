@@ -193,6 +193,8 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+
             color: Constants.grey,
             // decoration: BoxDecoration(
             //   gradient: LinearGradient(
@@ -227,6 +229,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                                           fromPage: widget,
                                           toPage: CategoryScreen(
                                             showHelp: false,
+                                            showList: true,
                                           ),
                                         ));
                                   },
