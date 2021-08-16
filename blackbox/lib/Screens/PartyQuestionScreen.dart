@@ -3,12 +3,11 @@
 import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PassScreen.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
-import 'package:blackbox/Screens/popups/noMembersScelectedPopup.dart';
-import 'package:blackbox/Util/Curves.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../Constants.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 
@@ -63,14 +62,16 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
 
     final membersList = AnimationLimiter(
       child: GridView.count(
+        childAspectRatio: 2.75,
         crossAxisCount: 2,
         shrinkWrap: true,
+        clipBehavior: Clip.antiAlias ,
         children: List.generate(
           players.length,
           (int index) {
             return AnimationConfiguration.staggeredGrid(
               position: index,
-              duration: const Duration(milliseconds: 375),
+              duration: const Duration(milliseconds: 600),
               columnCount: 2,
               child: ScaleAnimation(
                 child: FadeInAnimation(
@@ -81,46 +82,63 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
           },
         ),
       ),
-     
     );
 
-    final voteButton = Padding(
-      padding: const EdgeInsets.only(left: 35, right: 35, top: 20, bottom: 20),
-      child: Material(
-        elevation: 5.0,
+    final voteButton = 
+    Card(
+      elevation: 5.0,
+      color: Constants.iBlue,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
-        color: Constants.iBlue,
-        child: MaterialButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          minWidth: MediaQuery.of(context).size.width / 2,
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12.0),
+        splashColor: Constants.iAccent,
+         onTap: () {
+          FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
+            'type': 'PartyVoteCast',
+          });
+          FirebaseAnalytics()
+              .logEvent(name: 'PartyVoteOnUser', parameters: null);
+          offlineGroupData.vote(selectedPlayer);
+          Navigator.push(
+              context,
+              SlidePageRoute(
+                  fromPage: widget, toPage: PassScreen(offlineGroupData)));
+        },
+        child: Container(
+          width: MediaQuery.of(context).size.width / 2,
           height: 50,
-          onPressed: () {
-            if (selectedPlayer != null) {
-              FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
-                'type': 'PartyVoteCast',
-              });
-
-              FirebaseAnalytics()
-                  .logEvent(name: 'PartyVoteOnUser', parameters: null);
-              offlineGroupData.vote(selectedPlayer);
-              Navigator.push(
-                  context,
-                  SlidePageRoute(
-                      fromPage: widget, toPage: PassScreen(offlineGroupData)));
-            } else {
-              NoMemberSelectedPopup.noMemberSelectedPopup(context);
-            }
-          },
-          child: Text("Vote".i18n,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: Constants.actionbuttonFontSize)
-                  .copyWith(
-                      color: Constants.iBlack, fontWeight: FontWeight.bold)),
+          child: Padding(
+            padding:
+                const EdgeInsets.only(top: 3, left: 3.0, right: 3, bottom: 3),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    "Vote".i18n,
+                    style: TextStyle(
+                        fontFamily: "roboto",
+                        fontSize: Constants.smallFontSize,
+                        color: Constants.iWhite,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  FaIcon(
+                    FontAwesomeIcons.chevronRight,
+                    size: 18,
+                    color: Constants.iWhite,
+                  )
+                ]),
+          ),
         ),
       ),
     );
+    
+    
+    
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -144,24 +162,13 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
               // can refer to the Scaffold with Scaffold.of().
               builder: (BuildContext context) {
             return Container(
-                color: Constants.grey,
+                color: Constants.black.withOpacity(0.7),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Expanded(
-                        flex: 1,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              'Question'.i18n,
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  color: Constants.iWhite,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                          ],
-                        )),
+                    SizedBox(
+                      height: 50,
+                    ),
                     Expanded(
                       flex: 2,
                       child: Container(
@@ -169,85 +176,85 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                             left: 30, right: 30, top: 20, bottom: 30),
                         child: DelayedDisplay(
                           delay: Duration(milliseconds: 0),
-                          child: Card(
-                            elevation: 0.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            color: Constants.iDarkGrey,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 20.0),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                offlineGroupData
+                                    .getCurrentQuestion()
+                                    .getQuestion(),
+                                style: TextStyle(
+                                    color: Constants.iWhite,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w300),
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(height: 30,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text(
-                                    offlineGroupData
-                                        .getCurrentQuestion()
-                                        .getQuestion(),
-                                    style: TextStyle(
-                                        color: Constants.iWhite,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w300),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SizedBox(height: 15),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                        width: 220.0,
-                                        child: Text(
-                                          '- ' +
-                                              offlineGroupData
-                                                  .getCurrentQuestion()
-                                                  .getCategory() +
-                                              ' -',
-                                          style: TextStyle(
-                                              color: Constants.iWhite,
-                                              fontSize:
-                                                  Constants.smallFontSize - 2,
-                                              fontWeight: FontWeight.w500),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ],
+                                  Container(
+                                    width: 220.0,
+                                    child: Text(
+                                      '- ' +
+                                          offlineGroupData
+                                              .getCurrentQuestion()
+                                              .getCategory() +
+                                          ' -',
+                                      style: TextStyle(
+                                          color: Constants.iLight,
+                                          fontSize: Constants.smallFontSize,
+                                          fontWeight: FontWeight.w500),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
+                            ],
                           ),
                         ),
                       ),
                     ),
                     Expanded(
-                        flex: 4,
-                        child: Column(
-                          children: [
-                            Text(
-                              'Select a friend'.i18n,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.lightBlueAccent[100]
-                                      .withOpacity(0.75),
-                                  fontWeight: FontWeight.w300),
+                      flex: 5,
+                      child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(40.0),
+                              topRight: Radius.circular(40.0),
+                              bottomLeft: Radius.zero,
+                              bottomRight: Radius.zero,
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                                padding: EdgeInsets.only(left: 30, right: 30),
-                                child: membersList),
-                          ],
-                        )),
-                    Expanded(
-                        flex: 1,
-                        child: Container(height: 50, child: voteButton))
+                          ),
+                          color: Constants.iDarkGrey,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              Text(
+                                'Select a friend'.i18n,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Constants.iLight,
+                                    fontWeight: FontWeight.w300),
+                              ),
+                              Container(
+                                  padding: EdgeInsets.only(left: 30, right: 30),
+                                  child: membersList),
+                              SizedBox(
+                                height: 60,
+                              ),
+                            ],
+                          )),
+                    ),
                   ],
                 ));
           }),
+          floatingActionButton: selectedPlayer != null ? voteButton : SizedBox(),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
         ),
       ),
     );
@@ -255,11 +262,10 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
 
   Widget buildUserVoteCard(String playerName) {
     return Container(
-      
         child: Card(
       elevation: 0.0,
       color:
-          playerName == selectedPlayer ? Constants.iLight : Constants.iDarkGrey,
+          playerName == selectedPlayer ? Constants.iLight.withOpacity(0.2) : Constants.iDarkGrey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
@@ -280,10 +286,12 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
             playerName,
             style: TextStyle(
                 color: playerName == selectedPlayer
-                    ? Constants.iDarkGrey
+                    ? Constants.iBlue
                     : Constants.iWhite,
                 fontSize: Constants.smallFontSize,
-                fontWeight: FontWeight.w400),
+                fontWeight: playerName == selectedPlayer
+                    ? FontWeight.w600
+                    : FontWeight.w400,),
           ),
         )),
       ),

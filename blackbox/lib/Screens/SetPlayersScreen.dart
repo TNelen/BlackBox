@@ -2,6 +2,7 @@ import 'package:blackbox/Assets/questions.dart';
 import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PartyQuestionScreen.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
@@ -191,28 +192,18 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
       theme: ThemeData(scaffoldBackgroundColor: Constants.iBlack),
       home: I18n(
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
+          backgroundColor: Constants.black.withOpacity(0.7),
 
-            color: Constants.grey,
-            // decoration: BoxDecoration(
-            //   gradient: LinearGradient(
-            //     begin: Alignment.topCenter,
-            //     end: Alignment.bottomLeft,
-            //     stops: [0.1, 1.0],
-            //     colors: [
-            //       Constants.gradient1,
-            //       Constants.gradient2,
-            //     ],
-            //   ),
-            // ),
+          //resizeToAvoidBottomInset: false,
+          body: SingleChildScrollView(
+            //padding: EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Expanded(
-                    flex: 6,
+                DelayedDisplay(
+                    delay: Duration(milliseconds: 200),
+                    slidingBeginOffset: const Offset(0.0, -0.1),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -295,31 +286,54 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                               ),
                             ]),
                           ),
+                          SizedBox(
+                            height: 25,
+                          ),
                         ])),
-                Expanded(
-                  flex: 15,
-                  child: Column(children: [
-                    Container(
-                      padding: EdgeInsets.only(left: 20, right: 20),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Players'.i18n,
-                          style: TextStyle(
-                              fontSize: 25,
-                              color: Constants.iWhite,
-                              fontWeight: FontWeight.w400),
+                DelayedDisplay(
+                  delay: Duration(milliseconds: 600),
+                  slidingBeginOffset: const Offset(0.0, -0.1),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height-120,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40.0),
+                          topRight: Radius.circular(40.0),
+                          bottomLeft: Radius.zero,
+                          bottomRight: Radius.zero,
                         ),
                       ),
+                      color: Constants.iDarkGrey,
+                      child: Column(children: [
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(left: 20, right: 20),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Players'.i18n,
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  color: Constants.iWhite,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(left: 20, right: 20),
+                          child: playerPills,
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).viewInsets.bottom),
+                      ]),
                     ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 20, right: 20),
-                      child: playerPills,
-                    ),
-                  ]),
+                  ),
                 ),
               ],
             ),

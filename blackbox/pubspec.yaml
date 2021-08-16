@@ -52,6 +52,8 @@ dependencies:
   flutter_neumorphic: ^3.1.0
   flutter_animator: ^3.1.2
   flutter_staggered_animations: ^1.0.0
+  animated_text_kit: ^4.2.1
+  simple_animations: ^3.1.1
 
 dev_dependencies:
   flutter_test:

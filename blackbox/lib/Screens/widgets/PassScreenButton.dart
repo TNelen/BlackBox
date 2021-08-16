@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import '../../Constants.dart';
 
 class PassScreenButton extends StatelessWidget {
+
+  final bool smallTile;
+
   final VoidCallback onTap;
 
   final String title;
@@ -17,7 +20,9 @@ class PassScreenButton extends StatelessWidget {
   final IconCard iconCard;
 
   PassScreenButton(
-      {this.title = "",
+      {
+        this.smallTile = false,
+        this.title = "",
       this.subtitle = "",
       this.titleStyle = const TextStyle(
           color: Constants.iWhite,
@@ -52,17 +57,17 @@ class PassScreenButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 35),
+                  SizedBox(height: smallTile? 10 :  35),
                   Text(
                     title,
                     style: titleStyle,
                   ),
-                  SizedBox(height: 5),
-                  Text(
+                  SizedBox(height: smallTile? 0 : 5),
+                  smallTile ? SizedBox() : Text(
                     subtitle,
                     style: subtitleStyle,
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height:  10),
                 ],
               ),
               Positioned(right: 0.0, top: 0.0, child: iconCard ?? Container()),

@@ -188,7 +188,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               backgroundColor: Colors.transparent,
               body: Container(
                   padding: EdgeInsets.symmetric(horizontal: 10),
-                  color: Constants.grey,
+              color: Constants.black.withOpacity(0.7),
                   child: Column(
                     //shrinkWrap: true,
 

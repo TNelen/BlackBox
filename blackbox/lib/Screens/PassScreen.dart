@@ -5,7 +5,6 @@ import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:blackbox/Screens/widgets/IconCard.dart';
 import 'package:blackbox/Screens/widgets/PassScreenButton.dart';
-import 'package:blackbox/Util/Curves.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -79,7 +78,7 @@ class _PassScreenState extends State<PassScreen> {
         home: I18n(
             child: Scaffold(
           body: Container(
-           color: Constants.grey,
+           color: Constants.iBlack,
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
@@ -207,36 +206,30 @@ class _PassScreenState extends State<PassScreen> {
                             context, offlineGroupData);
                       },
                     ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    PassScreenButton(
+                      smallTile: true,
+                      title: "Edit players".i18n,
+                      titleStyle: TextStyle(
+                          color: allPlayersVoted()
+                              ? Constants.iLight
+                              : Constants.iWhite,
+                          fontSize: Constants.normalFontSize - 12,
+                          fontWeight: FontWeight.w400),
+                    
+                      
+                      onTap: () {
+                         Navigator.push(
+                            context,
+                            ScaleUpPageRoute(
+                                EditPlayersScreen(offlineGroupData)));
+                      },
+                    ),
                   ],
                 ),
-                Positioned(
-                  right: 20,
-                  top: 20,
-                  child: SafeArea(
-                    child: Material(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      child: InkWell(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: FaIcon(
-                            FontAwesomeIcons.userEdit,
-                            color: Constants.iDarkGrey,
-                            size: 25,
-                          ),
-                        ),
-                        splashColor: Constants.iDarkGrey,
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              ScaleUpPageRoute(
-                                  EditPlayersScreen(offlineGroupData)));
-                        },
-                      ),
-                    ),
-                  ),
-                ),
+                
               ],
             ),
           ),

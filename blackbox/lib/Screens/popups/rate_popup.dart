@@ -23,8 +23,8 @@ class _RatePopupState extends State<RatePopup> {
       title: Text(
         'Rate this app'.i18n,
         style: TextStyle(
-            fontFamily: 'atarian',
-            color: Constants.iAccent,
+            fontFamily: 'roboto',
+            color: Constants.iBlue,
             fontSize: Constants.normalFontSize),
       ),
       content: Container(
@@ -35,7 +35,7 @@ class _RatePopupState extends State<RatePopup> {
               'If you like the app, please consider giving it a rating in the play store. '
                   .i18n,
               style: TextStyle(
-                  fontFamily: 'atarian',
+                  fontFamily: 'roboto',
                   color: Constants.iWhite,
                   fontSize: Constants.smallFontSize),
             ),
@@ -74,7 +74,7 @@ class _RatePopupState extends State<RatePopup> {
           child: Text(
             'Close'.i18n,
             style: TextStyle(
-                fontFamily: 'atarian',
+                fontFamily: 'roboto',
                 color: Constants.iAccent,
                 fontSize: Constants.actionbuttonFontSize,
                 fontWeight: FontWeight.bold),

@@ -124,18 +124,8 @@ class _SplashScreenState extends State<SplashScreen>
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Container(
-              // decoration: BoxDecoration(
-              //   gradient: LinearGradient(
-              //     begin: Alignment.topRight,
-              //     end: Alignment.bottomLeft,
-              //     stops: [0.1, 0.9],
-              //     colors: [
-              //       Constants.gradient1,
-              //       Constants.gradient2,
-              //     ],
-              //   ),
-              // ),
-              color: Constants.grey,
+
+              color: Constants.black.withOpacity(0.7),
               child: Stack(
                   fit: StackFit.expand,
                   alignment: Alignment.topCenter,
@@ -149,84 +139,80 @@ class _SplashScreenState extends State<SplashScreen>
                               SizedBox(
                                 height: 75,
                               ),
-                              DelayedDisplay(
-                                delay: Duration(milliseconds: 200),
-                                slidingBeginOffset: const Offset(0.0, 0.8),
-                                child: Text(
-                                  "BlackBox",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: "atarian",
-                                      fontSize: Constants.titleFontSize,
-                                      fontWeight: FontWeight.w300),
-                                ),
+                              Text(
+                                "BlackBox",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "atarian",
+                                    fontSize: Constants.titleFontSize,
+                                    fontWeight: FontWeight.w300),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              DelayedDisplay(
-                                delay: Duration(milliseconds: 700),
-                                slidingBeginOffset: const Offset(0.0, 0.8),
-                                child: Text(
-                                  "A MAGNETAR Game",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: Constants.normalFontSize,
-                                      fontFamily: "atarian",
-                                      fontWeight: FontWeight.w300),
-                                ),
+                              Text(
+                                "A MAGNETAR Game",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: Constants.normalFontSize,
+                                    fontFamily: "atarian",
+                                    fontWeight: FontWeight.w300),
                               ),
                             ]),
 
                         Padding(
                           padding: EdgeInsets.only(bottom: 30),
                           child: Card(
-                            elevation: 5.0,
+                            elevation: 1.0,
 
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(35.0),
                             ),
-                            color: Constants.black.withOpacity(0.7),
+                            color: Constants.grey,
                             //color: Colors.grey.shade800,
                             child: Container(
                               height: 290,
                               width: MediaQuery.of(context).size.width - 50,
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 40),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: 25,
-                                    ),
-                                    Text(
-                                      "Start playing now!".i18n,
-                                      style: TextStyle(
-                                          fontSize: Constants.normalFontSize,
-                                          fontFamily: "roboto",
-                                          color: Constants.iWhite,
-                                          fontWeight: FontWeight.w400),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Text(
-                                      "The #1 game to get to know yourself and your friends!"
-                                          .i18n,
-                                      style: TextStyle(
-                                          fontSize: Constants.smallFontSize,
-                                          fontFamily: "roboto",
-                                          color:
-                                              Constants.iWhite.withOpacity(0.6),
-                                          fontWeight: FontWeight.w300),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    startButton,
-                                  ],
+                                child: DelayedDisplay(
+                                  delay: Duration(milliseconds: 300),
+                                  slidingBeginOffset: const Offset(0.0, -0.1),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: 25,
+                                      ),
+                                      Text(
+                                        "Start playing now!".i18n,
+                                        style: TextStyle(
+                                            fontSize: Constants.normalFontSize,
+                                            fontFamily: "roboto",
+                                            color: Constants.iWhite,
+                                            fontWeight: FontWeight.w400),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      Text(
+                                        "The #1 game to get to know yourself and your friends!"
+                                            .i18n,
+                                        style: TextStyle(
+                                            fontSize: Constants.smallFontSize,
+                                            fontFamily: "roboto",
+                                            color: Constants.iWhite
+                                                .withOpacity(0.6),
+                                            fontWeight: FontWeight.w300),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      startButton,
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
