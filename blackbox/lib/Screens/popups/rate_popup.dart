@@ -75,7 +75,7 @@ class _RatePopupState extends State<RatePopup> {
             'Close'.i18n,
             style: TextStyle(
                 fontFamily: 'roboto',
-                color: Constants.iAccent,
+                color: Constants.iBlue,
                 fontSize: Constants.actionbuttonFontSize,
                 fontWeight: FontWeight.bold),
           ),

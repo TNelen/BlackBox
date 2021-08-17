@@ -65,7 +65,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
         childAspectRatio: 2.75,
         crossAxisCount: 2,
         shrinkWrap: true,
-        clipBehavior: Clip.antiAlias ,
+        clipBehavior: Clip.antiAlias,
         children: List.generate(
           players.length,
           (int index) {
@@ -75,7 +75,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
               columnCount: 2,
               child: ScaleAnimation(
                 child: FadeInAnimation(
-                  child: buildUserVoteCard(players[index]),
+                  child: buildUserVoteCard(players[index], index),
                 ),
               ),
             );
@@ -84,8 +84,7 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
       ),
     );
 
-    final voteButton = 
-    Card(
+    final voteButton = Card(
       elevation: 5.0,
       color: Constants.iBlue,
       shape: RoundedRectangleBorder(
@@ -93,8 +92,8 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12.0),
-        splashColor: Constants.iAccent,
-         onTap: () {
+        splashColor: Constants.iBlue,
+        onTap: () {
           FirebaseAnalytics().logEvent(name: 'game_action', parameters: {
             'type': 'PartyVoteCast',
           });
@@ -136,9 +135,6 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
         ),
       ),
     );
-    
-    
-    
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -189,7 +185,9 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                                     fontWeight: FontWeight.w300),
                                 textAlign: TextAlign.center,
                               ),
-                              SizedBox(height: 30,),
+                              SizedBox(
+                                height: 30,
+                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
@@ -252,7 +250,8 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
                   ],
                 ));
           }),
-          floatingActionButton: selectedPlayer != null ? voteButton : SizedBox(),
+          floatingActionButton:
+              selectedPlayer != null ? voteButton : SizedBox(),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
         ),
@@ -260,21 +259,22 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
     );
   }
 
-  Widget buildUserVoteCard(String playerName) {
+  Widget buildUserVoteCard(String playerName, int index) {
     return Container(
         child: Card(
       elevation: 0.0,
-      color:
-          playerName == selectedPlayer ? Constants.iLight.withOpacity(0.2) : Constants.iDarkGrey,
+      color: playerName == selectedPlayer
+          ? Constants.categoryColors[index % 7]
+          : Constants.categoryColors[index % 7].withOpacity(0.3),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(15.0),
-        splashColor: Constants.iAccent,
+        splashColor: Constants.iBlue,
         onTap: () {
           setState(() {
-            color = Constants.iAccent;
+            color = Constants.iBlue;
             selectedPlayer = playerName;
           });
         },
@@ -285,13 +285,14 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen>
           child: Text(
             playerName,
             style: TextStyle(
-                color: playerName == selectedPlayer
-                    ? Constants.iBlue
-                    : Constants.iWhite,
-                fontSize: Constants.smallFontSize,
-                fontWeight: playerName == selectedPlayer
-                    ? FontWeight.w600
-                    : FontWeight.w400,),
+              color: playerName == selectedPlayer
+                  ? Constants.iDarkGrey
+                  : Constants.iLight,
+              fontSize: Constants.smallFontSize,
+              fontWeight: playerName == selectedPlayer
+                  ? FontWeight.w600
+                  : FontWeight.w400,
+            ),
           ),
         )),
       ),

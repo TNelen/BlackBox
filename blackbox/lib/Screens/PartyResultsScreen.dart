@@ -403,7 +403,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12.0),
-        splashColor: Constants.iAccent,
+        splashColor: Constants.iBlue,
         onTap: () {
           if (!offlineGroupData.isGameEnded()) {
             offlineGroupData.nextRound();

@@ -81,7 +81,6 @@ class _SplashScreenState extends State<SplashScreen>
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(12.0),
-          // splashColor: Constants.iAccent,
           onTap: () {
             Navigator.push(
                 context,

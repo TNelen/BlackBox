@@ -7,7 +7,6 @@ import '../../Constants.dart';
 
 class PassScreenButton extends StatelessWidget {
 
-  final bool smallTile;
 
   final VoidCallback onTap;
 
@@ -21,7 +20,6 @@ class PassScreenButton extends StatelessWidget {
 
   PassScreenButton(
       {
-        this.smallTile = false,
         this.title = "",
       this.subtitle = "",
       this.titleStyle = const TextStyle(
@@ -57,13 +55,13 @@ class PassScreenButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: smallTile? 10 :  35),
+                  SizedBox(height:35),
                   Text(
                     title,
                     style: titleStyle,
                   ),
-                  SizedBox(height: smallTile? 0 : 5),
-                  smallTile ? SizedBox() : Text(
+                  SizedBox(height: 5),
+                  Text(
                     subtitle,
                     style: subtitleStyle,
                   ),

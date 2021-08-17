@@ -2,7 +2,7 @@
 import 'package:blackbox/Assets/questions.dart';
 import 'package:blackbox/Screens/rules_column.dart';
 import 'package:blackbox/Screens/widgets/CategoryCard.dart';
-import 'package:blackbox/Util/Curves.dart';
+import 'package:blackbox/Screens/widgets/HighlightCategoryCard.dart';
 import 'package:blackbox/main.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -76,7 +76,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             ),
                             child: InkWell(
                               borderRadius: BorderRadius.circular(12.0),
-                              // splashColor: Constants.iAccent,
                               onTap: () {
                                 Navigator.pop(context);
                                 setState(() {
@@ -125,7 +124,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12.0),
-        splashColor: Constants.iAccent,
+        splashColor: Constants.iBlue,
         onTap: () {
           Navigator.push(
               context,
@@ -188,7 +187,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               backgroundColor: Colors.transparent,
               body: Container(
                   padding: EdgeInsets.symmetric(horizontal: 10),
-              color: Constants.black.withOpacity(0.7),
+                  color: Constants.black.withOpacity(0.7),
                   child: Column(
                     //shrinkWrap: true,
 
@@ -273,6 +272,24 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               fontWeight: FontWeight.w300)))
                           : SizedBox(),
                       SizedBox(height: 15),
+                      widget.showList
+                          ? Container(
+                              padding: EdgeInsets.only(left: 20, right: 20),
+                              child: HighlightCategoryCard(
+                                selectedCategory.contains(categories[0]),
+                                categories[0],
+                                onTap: () {
+                                  if (!selectedCategory
+                                      .contains(categories[0])) {
+                                    selectedCategory.add(categories[0]);
+                                  } else if (selectedCategory
+                                      .contains(categories[0])) {
+                                    selectedCategory.remove(categories[0]);
+                                  }
+                                  setState(() {});
+                                },
+                              ))
+                          : SizedBox(),
                       widget.showList
                           ? AnimationLimiter(
                               child: ListView.builder(

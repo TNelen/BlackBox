@@ -1,6 +1,5 @@
 import 'package:blackbox/Models/OfflineGroupData.dart';
 import 'package:blackbox/Screens/PartyResultsScreen.dart';
-import 'package:blackbox/Screens/animation/ScalePageRoute.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:blackbox/Screens/popups/Popup.dart';
 import 'package:blackbox/Screens/widgets/IconCard.dart';
@@ -11,7 +10,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import '../Constants.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
-import 'EditPlayersScreen.dart';
 import 'PartyQuestionScreen.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:blackbox/translations/translations.i18n.dart';
@@ -206,27 +204,8 @@ class _PassScreenState extends State<PassScreen> {
                             context, offlineGroupData);
                       },
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    PassScreenButton(
-                      smallTile: true,
-                      title: "Edit players".i18n,
-                      titleStyle: TextStyle(
-                          color: allPlayersVoted()
-                              ? Constants.iLight
-                              : Constants.iWhite,
-                          fontSize: Constants.normalFontSize - 12,
-                          fontWeight: FontWeight.w400),
                     
-                      
-                      onTap: () {
-                         Navigator.push(
-                            context,
-                            ScaleUpPageRoute(
-                                EditPlayersScreen(offlineGroupData)));
-                      },
-                    ),
+                    
                   ],
                 ),
                 

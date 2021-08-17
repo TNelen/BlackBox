@@ -5,23 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../Constants.dart';
 
-class CategoryCard extends StatefulWidget {
+class HighlightCategoryCard extends StatefulWidget {
   final bool defaultValue;
   final Category category;
   final Function() onTap;
-  bool isNewFlag = false;
 
-  CategoryCard(this.defaultValue, this.category,
-      {this.onTap, Key key, this.isNewFlag})
+  HighlightCategoryCard(this.defaultValue, this.category,
+      {this.onTap, Key key})
       : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return CategoryCardState();
+    return HighlightCategoryCardState();
   }
 }
 
-class CategoryCardState extends State<CategoryCard> {
+class HighlightCategoryCardState extends State<HighlightCategoryCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -47,7 +46,7 @@ class CategoryCardState extends State<CategoryCard> {
               Container(
                 height: 45,
                 width: 45,
-                child: Card(
+                child: Column(children:[Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -61,7 +60,7 @@ class CategoryCardState extends State<CategoryCard> {
                       color: Colors.black.withOpacity(0.6),
                     ),
                   ),
-                ),
+                ),]),
               ),
               SizedBox(
                 width: 12,

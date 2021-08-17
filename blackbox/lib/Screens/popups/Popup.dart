@@ -21,8 +21,8 @@ class Popup {
             title,
             style: TextStyle(
                 fontFamily: "roboto",
-                color: Constants.iAccent,
-                fontSize: Constants.smallFontSize),
+                color: Constants.iBlue,
+                fontSize: 20),
           ),
           content: Text(
             message,
@@ -38,7 +38,7 @@ class Popup {
                 "Close".i18n,
                 style: TextStyle(
                     fontFamily: "roboto",
-                    color: Constants.iAccent,
+                    color: Constants.iBlue,
                     fontSize: Constants.smallFontSize,
                     fontWeight: FontWeight.bold),
               ),
@@ -67,7 +67,7 @@ class Popup {
             title,
             style: TextStyle(
                 fontFamily: "roboto",
-                color: Constants.iAccent,
+                color: Constants.iBlue,
                 fontSize: Constants.normalFontSize),
           ),
           content: Container(
@@ -87,7 +87,7 @@ class Popup {
                     "Contact us!".i18n,
                     style: TextStyle(
                         fontFamily: "roboto",
-                        color: Constants.iAccent,
+                        color: Constants.iBlue,
                         fontSize: Constants.smallFontSize),
                   ),
                 ),
@@ -99,7 +99,7 @@ class Popup {
                 "Close".i18n,
                 style: TextStyle(
                     fontFamily: "roboto",
-                    color: Constants.iAccent,
+                    color: Constants.iBlue,
                     fontSize: Constants.actionbuttonFontSize,
                     fontWeight: FontWeight.bold),
               ),
@@ -120,8 +120,8 @@ class Popup {
     // ignore: unnecessary_final
     final questionfield = Theme(
         data: ThemeData(
-          primaryColor: Constants.iAccent,
-          primaryColorDark: Constants.iAccent,
+          primaryColor: Constants.iBlue,
+          primaryColorDark: Constants.iBlue,
         ),
         child: TextField(
           obscureText: false,
@@ -159,8 +159,9 @@ class Popup {
             'Ask a question...'.i18n,
             style: TextStyle(
                 fontFamily: "roboto",
-                color: Constants.iAccent,
-                fontSize: Constants.smallFontSize),
+                color: Constants.iWhite,
+                fontWeight: FontWeight.w500,
+                fontSize: 20),
           ),
           content: questionfield,
           actions: <Widget>[
@@ -184,7 +185,7 @@ class Popup {
                 borderRadius: BorderRadius.circular(12.0),
                 //side: BorderSide(color: Colors.red)
               ),
-              color: Constants.iAccent,
+              color: Constants.iBlue,
               child: Text(
                 "Submit".i18n,
                 style: TextStyle(
