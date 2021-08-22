@@ -1,5 +1,6 @@
 // @dart=2.9
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:blackbox/Assets/questions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -67,7 +68,9 @@ class CategoryCardState extends State<CategoryCard> {
                 width: 12,
               ),
               Container(
-                width: MediaQuery.of(context).size.width - 140,
+                width: widget.isNewFlag
+                    ? MediaQuery.of(context).size.width - 200
+                    : MediaQuery.of(context).size.width - 140,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,6 +100,38 @@ class CategoryCardState extends State<CategoryCard> {
                   ],
                 ),
               ),
+              SizedBox(
+                width: widget.isNewFlag ? 12 : 0,
+              ),
+              widget.isNewFlag
+                  ? Container(
+                      height: 35,
+                      width: 50,
+                      child: Card(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        color: Constants.iDarkGrey,
+                        child: DefaultTextStyle(
+                          style: const TextStyle(
+                            fontSize: 12.0,
+                            color: Constants.iWhite,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          child: Center(
+                            child: AnimatedTextKit(
+                              pause: Duration(milliseconds: 200),
+                              repeatForever: true,
+                              animatedTexts: [
+                                FadeAnimatedText('NEW!'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : SizedBox(),
             ]),
           ),
         ),

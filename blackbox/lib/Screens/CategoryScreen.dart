@@ -1,8 +1,7 @@
 // @dart=2.9
 import 'package:blackbox/Assets/questions.dart';
-import 'package:blackbox/Screens/rules_column.dart';
+
 import 'package:blackbox/Screens/widgets/CategoryCard.dart';
-import 'package:blackbox/Screens/widgets/HighlightCategoryCard.dart';
 import 'package:blackbox/main.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -15,11 +14,10 @@ import 'package:blackbox/translations/translations.i18n.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'animation/ScaleDownPageRoute.dart';
+import 'package:page_indicator/page_indicator.dart';
 
 class CategoryScreen extends StatefulWidget {
-  final bool showHelp;
+  bool showHelp = false;
   bool showList;
 
   CategoryScreen({this.showHelp, this.showList});
@@ -34,6 +32,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
         name: 'open_screen', parameters: {'screen_name': 'CategoryScreen'});
   }
 
+  GlobalKey<PageContainerState> key = GlobalKey();
+
   bool setScrollable = true;
   List<Category> selectedCategory = [];
 
@@ -42,6 +42,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
     super.initState();
+
+    // ignore: unnecessary_final
+    final controller = PageController(initialPage: 0, viewportFraction: 0.9);
 
     widget.showHelp
         ? WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -64,45 +67,173 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     ),
                   ),
                   content: Container(
-                      height: 400,
-                      child: Column(
-                        children: [
-                          RulesColumn(),
-                          Card(
-                            //elevation: 5.0,
-                            color: Constants.iBlue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(12.0),
-                              onTap: () {
-                                Navigator.pop(context);
-                                setState(() {
-                                  widget.showList = true;
-                                });
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.all(8),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width / 2,
+                    width: 300,
+                    height: 300,
+                    child: PageIndicatorContainer(
+                      indicatorSelectorColor: Constants.iBlue,
+                      indicatorColor: Constants.iWhite,
+                      key: key,
+                      align: IndicatorAlign.bottom,
+                      length: 4,
+                      indicatorSpace: 10.0,
+                      child: PageView(
+                        children: <Widget>[
+                          Center(
+                            child: Container(
+                              width: 250,
+                              height: 250,
+                              child: Column(children: [
+                                FaIcon(
+                                  FontAwesomeIcons.dice,
+                                  size: 35,
+                                  color: Constants.iBlue,
+                                ),
+                                SizedBox(
                                   height: 30,
-                                  child: Center(
-                                    child: Text(
-                                      "I got it!".i18n,
-                                      style: TextStyle(
-                                          fontFamily: "roboto",
-                                          color: Constants.iWhite,
-                                          fontSize: Constants.smallFontSize,
-                                          fontWeight: FontWeight.w400),
+                                ),
+                                Container(
+                                  height: 120,
+                                  child: Text(
+                                    "Select one or more question categories"
+                                        .i18n,
+                                    style: TextStyle(
+                                        fontFamily: "roboto",
+                                        color: Colors.white,
+                                        fontSize: 20.0),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ]),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              width: 250,
+                              height: 250,
+                              child: Column(children: [
+                                FaIcon(
+                                  FontAwesomeIcons.users,
+                                  size: 35,
+                                  color: Constants.iBlue,
+                                ),
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                Container(
+                                  height: 120,
+                                  child: Text(
+                                    "Add all players".i18n,
+                                    style: TextStyle(
+                                        fontFamily: "roboto",
+                                        color: Colors.white,
+                                        fontSize: 20.0),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ]),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              width: 300,
+                              height: 250,
+                              child: Column(children: [
+                                FaIcon(
+                                  FontAwesomeIcons.questionCircle,
+                                  size: 35,
+                                  color: Constants.iBlue,
+                                ),
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                Container(
+                                    height: 120,
+                                    child: Column(children: [
+                                      Text(
+                                        "Start playing!".i18n,
+                                        style: TextStyle(
+                                            fontFamily: "roboto",
+                                            color: Colors.white,
+                                            fontSize: 20.0),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(height: 20),
+                                      Text(
+                                        "1. Cast your vote \n 2. Pass the phone to the next player \n 3. Show results when all players voted \n 4. Start next round"
+                                            .i18n,
+                                        style: TextStyle(
+                                            fontFamily: "roboto",
+                                            color: Constants.iLight,
+                                            fontSize: 13.0),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ])),
+                              ]),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              width: 300,
+                              height: 250,
+                              child: Column(children: [
+                                FaIcon(
+                                  FontAwesomeIcons.chevronCircleRight,
+                                  size: 35,
+                                  color: Constants.iBlue,
+                                ),
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                Container(
+                                  height: 65,
+                                  child: Card(
+                                    //elevation: 5.0,
+
+                                    color: Constants.iBlue,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    child: InkWell(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        setState(() {
+                                          widget.showList = true;
+                                        });
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8),
+                                        child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(
+                                              "I got it!".i18n,
+                                              style: TextStyle(
+                                                  fontFamily: "roboto",
+                                                  color: Constants.iWhite,
+                                                  fontSize:
+                                                      Constants.smallFontSize,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                              ]),
                             ),
-                          ),
+                          )
                         ],
-                      )),
+                        controller: controller,
+                        reverse: false,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ).then((val) {
@@ -201,11 +332,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               onTap: () {
                                 Navigator.push(
                                     context,
-                                    ScaleDownPageRoute(
-                                      fromPage: CategoryScreen(
-                                        showHelp: false,
-                                      ),
-                                      toPage: SplashScreen(),
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          SplashScreen(),
                                     ));
                               },
                               child: Row(
@@ -273,29 +402,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           : SizedBox(),
                       SizedBox(height: 15),
                       widget.showList
-                          ? Container(
-                              padding: EdgeInsets.only(left: 20, right: 20),
-                              child: HighlightCategoryCard(
-                                selectedCategory.contains(categories[0]),
-                                categories[0],
-                                onTap: () {
-                                  if (!selectedCategory
-                                      .contains(categories[0])) {
-                                    selectedCategory.add(categories[0]);
-                                  } else if (selectedCategory
-                                      .contains(categories[0])) {
-                                    selectedCategory.remove(categories[0]);
-                                  }
-                                  setState(() {});
-                                },
-                              ))
-                          : SizedBox(),
-                      widget.showList
                           ? AnimationLimiter(
                               child: ListView.builder(
                                 shrinkWrap: true,
                                 padding: EdgeInsets.only(left: 20, right: 20),
                                 scrollDirection: Axis.vertical,
+                                physics: BouncingScrollPhysics(),
                                 itemCount: categories.length,
                                 itemBuilder: (BuildContext context,
                                         int index) =>
@@ -345,3 +457,5 @@ class _CategoryScreenState extends State<CategoryScreen> {
     );
   }
 }
+
+class SmoothPageIndicator {}

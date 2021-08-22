@@ -10,7 +10,6 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animator/animation/animation_preferences.dart';
 import 'package:flutter_animator/flutter_animator.dart';
-import 'package:flutter_animator/widgets/fading_entrances/fade_in_up.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

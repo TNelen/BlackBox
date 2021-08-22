@@ -62,7 +62,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
           color: Constants.iWhite),
       duplicates: false,
       hintTextColor: Constants.iLight,
-      hintText: "Add player...".i18n,
+      hintText: "Click to add player...".i18n,
       maxLength: 20,
       inputDecoration: InputDecoration(
         border: InputBorder.none,

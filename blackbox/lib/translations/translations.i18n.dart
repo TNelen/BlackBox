@@ -53,6 +53,10 @@ extension Localization on String {
         "nl": "Begin met spelen!",
       } +
       {
+        "en": "Game",
+        "nl": "Spel",
+      } +
+      {
         "en": "The #1 game to get to know yourself and your friends!",
         "nl": "Het #1 spel om jezelf en je vrienden beter te leren kennen!",
       } +
@@ -127,6 +131,24 @@ extension Localization on String {
       {
         "en": "Join a game with this code:\n\n",
         "nl": "Speel mee met een spel met deze code:\n\n",
+      } +
+      {
+        "en": "Start playing!",
+        "nl": "Begin met spelen",
+      } +
+      {
+        "en": "Select one or more question categories",
+        "nl": "Selecteer één of meerdere categorieën",
+      } +
+      {
+        "en":
+            "1. Cast your vote \n 2. Pass the phone to the next player \n 3. Show results when all players voted \n 4. Start next round",
+        "nl":
+            "1. Breng je stem uit \n 2. Geef de gsm door \n 3. Toon resultaten nadat iedereen gestemd heeft \n 4. Start volgende ronde",
+      } +
+      {
+        "en": "Add all players",
+        "nl": "Voeg spelers toe",
       } +
 
       ///////////////////
@@ -415,8 +437,8 @@ extension Localization on String {
         "nl": "Kies een of meerdere categorieen aub!",
       } +
       {
-        "en": "Start typing here...",
-        "nl": "Begin hier met typen...",
+        "en": "Click to add player...",
+        "nl": "Klik om speler toe te voegen...",
       } +
       {
         "en": "Add player",
