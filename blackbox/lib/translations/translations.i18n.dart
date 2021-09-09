@@ -1215,6 +1215,89 @@ extension Localization on String {
         "nl": "Wie heeft de lelijkste vriend/vriendin?",
       } +
       /////////////////////////
+      /// Summer Throwback ////
+      /////////////////////////
+      {
+        "en": "Who's vacation are you jealous of?",
+        "nl": "Op wie zijn/haar vakantie ben je jaloers?",
+      } +
+      {
+        "en": "Who is most tanned?",
+        "nl": "Wie is het meest gebruind op vakantie?",
+      } +
+      {
+        "en": "Who did not respect covid-19 regulations?",
+        "nl": "Wie heeft de covid-19 maatregelen niet gerespecteerd",
+      } +
+      {
+        "en": "Who had the most active vacation?",
+        "nl": "Wie heeft de meest actieve vakantie gehad?",
+      } +
+      {
+        "en": "Who traveled the furthest?",
+        "nl": "Wie is het verste gereisd?",
+      } +
+      {
+        "en": "Who visited the coolest place?",
+        "nl": "Wie heeft de coolste plek bezocht?",
+      } +
+      {
+        "en": "Whose vacation was the most boring?",
+        "nl": "Wie heeft de saaiste vakantie gehad?",
+      } +
+      {
+        "en": "Who had the strangest experience on vacation?",
+        "nl": "Wie heeft het vreemdste meegemaakt op vakantie?",
+      } +
+      {
+        "en": "Who did the weirdest thing on holidays?",
+        "nl": "Wie heeft rare dingen gedaan op vakantie?",
+      } +
+      {
+        "en": "Who found a summer romance?",
+        "nl": "Wie heeft een zomerliefde gevonden?",
+      } +
+      {
+        "en": "Who drank the most during holidays?",
+        "nl": "Wie heeft het meest gedronken op vakantie?",
+      } +
+      {
+        "en": "Who was most respectful for covid-19 regulations?",
+        "nl": "Wie was het meest respectvol voor de covid-19 regels?",
+      } +
+      {
+        "en": "Who was away from home the longest?",
+        "nl": "Wie is het langste weg geweest?",
+      } +
+      {
+        "en": "Who visited the most different countries?",
+        "nl": "Wie heeft het meeste verschillende landen bezocht?",
+      } +
+      {
+        "en": "Who spend the most expensive holiday?",
+        "nl": "Wie heeft de duurste vakantie gehad?",
+      } +
+      {
+        "en": "Who had the most adventurous holiday?",
+        "nl": "Wie heeft de meeste avontuurlijke vakantie gehad?",
+      } +
+      {
+        "en": "Who cannot disconnect from work during holidays?",
+        "nl": "Wie kan het werk niet vergeten op vakantie?",
+      } +
+      {
+        "en": "Who drove the furthest by car?",
+        "nl": "Wie is het vert gereden met de auto?",
+      } +
+      {
+        "en": "Who took the most plane flights?",
+        "nl": "Wie heeft het meeste vluchten genomen?",
+      } +
+      {
+        "en": "Who has the coolest souvenir?",
+        "nl": "Wie heeft het coolste aandenken aan deze vakantie?",
+      } +
+      /////////////////////////
       ///      Family     ////
       /////////////////////////
       {
@@ -1302,6 +1385,10 @@ extension Localization on String {
       ///categories and description///
       ////////////////////////////////
       {
+        "en": "Summer throwback",
+        "nl": "Zomer throwback",
+      } +
+      {
         "en": "Casual",
         "nl": "Casual",
       } +
@@ -1366,8 +1453,8 @@ extension Localization on String {
         "nl": "categorie geselecteerd",
       } +
       {
-        "en": "",
-        "nl": "",
+        "en": "Relive the summer",
+        "nl": "Herbeleef de zomer",
       } +
       {
         "en": "",

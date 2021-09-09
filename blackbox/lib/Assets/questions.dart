@@ -301,8 +301,33 @@ List<String> Family = [
   "Who spends the most time in the garden?".i18n,
 ];
 
+List<String> SummerThrowback = [
+  "Who's vacation are you jealous of?".i18n,
+  "Who is most tanned?".i18n,
+  "Who did not respect covid-19 regulations?".i18n,
+  "Who had the most active vacation?".i18n,
+  "Who traveled the furthest?".i18n,
+  "Who visited the coolest place?".i18n,
+  "Whose vacation was the most boring?".i18n,
+  "Who had the strangest experience on vacation?".i18n,
+  "Who did the weirdest thing on holidays?".i18n,
+  "Who found a summer romance?".i18n,
+  "Who drank the most during holidays?".i18n,
+  "Who was most respectful for covid-19 regulations?".i18n,
+  "Who was away from home the longest?".i18n,
+  "Who visited the most different countries?".i18n,
+  "Who spend the most expensive holiday?".i18n,
+  "Who had the most adventurous holiday?".i18n,
+  "Who cannot disconnect from work during holidays?".i18n,
+  "Who drove the furthest by car?".i18n,
+  "Who took the most plane flights?".i18n,
+  "Who has the coolest souvenir?".i18n,
+];
+
 List<Category> categories = [
-  Category("Family".i18n, "Have fun with your household".i18n, Family, true,
+  Category("Summer throwback".i18n, "Relive the summer".i18n, SummerThrowback, true,
+      FontAwesomeIcons.solidSun, Constants.categoryColors[5]),
+  Category("Family".i18n, "Have fun with your household".i18n, Family, false,
       FontAwesomeIcons.home, Constants.categoryColors[0]),
   Category(
       "Casual".i18n,

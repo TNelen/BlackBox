@@ -319,7 +319,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               body: Container(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   color: Constants.black.withOpacity(0.7),
-                  child: Column(
+                  child: ListView(
                     //shrinkWrap: true,
 
                     children: [
@@ -444,7 +444,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             )
                           : SizedBox(),
                       SizedBox(
-                        height: 50,
+                        height: 80,
                       ),
                     ],
                   )),
