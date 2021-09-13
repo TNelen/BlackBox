@@ -98,7 +98,7 @@ class QuestionList {
   }
 
   void addQuestion(String question) {
-    questionsList.putIfAbsent(question, () => "A player's question");
+    questionsList.putIfAbsent(question, () => "A player's question".i18n);
   }
 
   int getRemainingQuestions() {
@@ -309,7 +309,6 @@ List<String> SummerThrowback = [
   "Who traveled the furthest?".i18n,
   "Who visited the coolest place?".i18n,
   "Whose vacation was the most boring?".i18n,
-  "Who had the strangest experience on vacation?".i18n,
   "Who did the weirdest thing on holidays?".i18n,
   "Who found a summer romance?".i18n,
   "Who drank the most during holidays?".i18n,
@@ -325,8 +324,8 @@ List<String> SummerThrowback = [
 ];
 
 List<Category> categories = [
-  Category("Summer throwback".i18n, "Relive the summer".i18n, SummerThrowback, true,
-      FontAwesomeIcons.solidSun, Constants.categoryColors[5]),
+  Category("Summer throwback".i18n, "Relive the summer".i18n, SummerThrowback,
+      true, FontAwesomeIcons.umbrellaBeach, Constants.categoryColors[5]),
   Category("Family".i18n, "Have fun with your household".i18n, Family, false,
       FontAwesomeIcons.home, Constants.categoryColors[0]),
   Category(

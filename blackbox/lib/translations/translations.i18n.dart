@@ -1246,10 +1246,6 @@ extension Localization on String {
         "nl": "Wie heeft de saaiste vakantie gehad?",
       } +
       {
-        "en": "Who had the strangest experience on vacation?",
-        "nl": "Wie heeft het vreemdste meegemaakt op vakantie?",
-      } +
-      {
         "en": "Who did the weirdest thing on holidays?",
         "nl": "Wie heeft rare dingen gedaan op vakantie?",
       } +
