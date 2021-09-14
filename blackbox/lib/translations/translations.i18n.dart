@@ -1267,7 +1267,7 @@ extension Localization on String {
       } +
       {
         "en": "Who visited the most different countries?",
-        "nl": "Wie heeft het meeste verschillende landen bezocht?",
+        "nl": "Wie heeft de meeste verschillende landen bezocht?",
       } +
       {
         "en": "Who spend the most expensive holiday?",
