@@ -10,7 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import '../Constants.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
-import 'PartyQuestionScreen.dart';
+import 'PartyVoteScreen.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:blackbox/translations/translations.i18n.dart';
 import 'package:i18n_extension/i18n_widget.dart';
@@ -173,7 +173,7 @@ class _PassScreenState extends State<PassScreen> {
                                 context,
                                 SlidePageRoute(
                                   fromPage: widget,
-                                  toPage: PartyQuestionScreen(offlineGroupData),
+                                  toPage: PartyVoteScreen(offlineGroupData),
                                 ));
                       },
                     ),

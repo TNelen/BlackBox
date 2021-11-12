@@ -42,7 +42,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
         // Defines the minimum API level required to run the app.
         minSdkVersion 20
         // Specifies the API level used to test the app.
-        targetSdkVersion 29
+        targetSdkVersion 30
         // Defines the version number of your app.
         versionCode flutterVersionCode.toInteger()
         // Defines a user-friendly version name for your app.

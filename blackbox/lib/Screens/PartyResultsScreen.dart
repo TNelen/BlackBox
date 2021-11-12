@@ -476,7 +476,9 @@ class PartyResultScreenState extends State<PartyResultScreen> {
           body: ListView(
             padding: EdgeInsets.only(left: 10, right: 10),
             children: [
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Align(
                 alignment: Alignment.topRight,
                 child: SafeArea(

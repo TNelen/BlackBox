@@ -427,6 +427,13 @@ extension Localization on String {
       {
         "en": " votes",
         "nl": " stemmen",
+      } + {
+        "en": " Start Round",
+        "nl": " Start ronde",
+      } +
+      {
+        "en": " Skip question",
+        "nl": " Volgende vraag",
       } +
       {
         "en": "Create a new Party",
