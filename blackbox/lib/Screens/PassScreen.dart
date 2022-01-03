@@ -76,14 +76,13 @@ class _PassScreenState extends State<PassScreen> {
         home: I18n(
             child: Scaffold(
           body: Container(
-           color: Constants.iBlack,
+            color: Constants.iBlack,
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
-                
                 ListView(
                   padding: const EdgeInsets.only(
-                      top: 80.0, bottom: 20, left: 45, right: 45),
+                      top: 60.0, bottom: 20, left: 45, right: 45),
                   children: [
                     SizedBox(height: 10.0),
                     Row(mainAxisAlignment: MainAxisAlignment.center,
@@ -93,17 +92,26 @@ class _PassScreenState extends State<PassScreen> {
                             'Pass the phone'.i18n,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: Constants.iWhite,
-                                fontSize: Constants.normalFontSize + 3,
+                                color: Constants.iLight,
+                                fontSize: Constants.normalFontSize -3,
                                 fontWeight: FontWeight.w300),
                           ),
                           JumpingDotsProgressIndicator(
                             numberOfDots: 3,
-                            fontSize: Constants.normalFontSize + 3,
-                            color: Constants.iWhite,
+                            fontSize: Constants.normalFontSize -3,
+                            color: Constants.iLight,
                           ),
                         ]),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 35.0),
+                    Text(
+                      offlineGroupData.getCurrentQuestion().getQuestion(),
+                      style: TextStyle(
+                          color: Constants.iWhite,
+                          fontSize: Constants.normalFontSize,
+                          fontWeight: FontWeight.w300),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 45.0),
                     Text(
                       offlineGroupData.canVoteBlank
                           ? offlineGroupData
@@ -137,7 +145,7 @@ class _PassScreenState extends State<PassScreen> {
                           fontSize: Constants.miniFontSize,
                           fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 75.0),
+                    SizedBox(height: 50.0),
                     PassScreenButton(
                       title: "Vote!".i18n,
                       titleStyle: TextStyle(
@@ -204,11 +212,8 @@ class _PassScreenState extends State<PassScreen> {
                             context, offlineGroupData);
                       },
                     ),
-                    
-                    
                   ],
                 ),
-                
               ],
             ),
           ),

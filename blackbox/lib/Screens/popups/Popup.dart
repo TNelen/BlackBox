@@ -20,9 +20,7 @@ class Popup {
           title: Text(
             title,
             style: TextStyle(
-                fontFamily: "roboto",
-                color: Constants.iBlue,
-                fontSize: 20),
+                fontFamily: "roboto", color: Constants.iBlue, fontSize: 20),
           ),
           content: Text(
             message,
