@@ -12,9 +12,6 @@ import '../Constants.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 import 'PartyVoteScreen.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
-import 'package:blackbox/translations/translations.i18n.dart';
-import 'package:i18n_extension/i18n_widget.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 class PassScreen extends StatefulWidget {
   late OfflineGroupData offlineGroupData;
@@ -31,136 +28,77 @@ class _PassScreenState extends State<PassScreen> {
   OfflineGroupData offlineGroupData;
 
   _PassScreenState(this.offlineGroupData) {
-    FirebaseAnalytics().logEvent(
-        name: 'open_screen', parameters: {'screen_name': 'PassScreen'});
+    FirebaseAnalytics.instance.logEvent(name: 'open_screen', parameters: {'screen_name': 'PassScreen'});
   }
 
   bool allPlayersVoted() {
     return offlineGroupData.canVoteBlank
-        ? ((offlineGroupData.getPlayers().length - 1) ==
-            offlineGroupData.getAmountOfCurrentVotes())
-        : (offlineGroupData.getPlayers().length ==
-            offlineGroupData.getAmountOfCurrentVotes());
+        ? ((offlineGroupData.getPlayers().length - 1) == offlineGroupData.getAmountOfCurrentVotes())
+        : (offlineGroupData.getPlayers().length == offlineGroupData.getAmountOfCurrentVotes());
   }
 
   void _moveToResults(bool doAnimate) {
-    Navigator.push(
-      context,
-      doAnimate
-          ? SlidePageRoute(
-              fromPage: widget, toPage: PartyResultScreen(offlineGroupData))
-          : PageRouteBuilder(
-              pageBuilder: (context, animation1, animation2) =>
-                  PartyResultScreen(offlineGroupData),
-              transitionDuration: Duration(seconds: 0),
-            ),
-    );
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => PartyResultScreen(offlineGroupData)));
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: [
-          const Locale('en', ''), // English, no country code
-          const Locale('nl', ''), // nl, no country code
-        ],
         title: 'BlackBox',
-        theme: ThemeData(
-            fontFamily: "roboto", scaffoldBackgroundColor: Constants.iBlack),
-        home: I18n(
-            child: Scaffold(
+        theme: ThemeData(fontFamily: "roboto", scaffoldBackgroundColor: Constants.iBlack),
+        home: Scaffold(
           body: Container(
             color: Constants.iBlack,
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
                 ListView(
-                  padding: const EdgeInsets.only(
-                      top: 60.0, bottom: 20, left: 45, right: 45),
+                  padding: const EdgeInsets.only(top: 60.0, bottom: 20, left: 45, right: 45),
                   children: [
                     SizedBox(height: 10.0),
                     Row(mainAxisAlignment: MainAxisAlignment.center,
                         // crossAxisAlignment: CrossAxisAlignment.,
                         children: [
                           Text(
-                            'Pass the phone'.i18n,
+                            'Pass the phone',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Constants.iLight,
-                                fontSize: Constants.normalFontSize -3,
-                                fontWeight: FontWeight.w300),
+                            style: TextStyle(color: Constants.iLight, fontSize: Constants.normalFontSize - 3, fontWeight: FontWeight.w300),
                           ),
                           JumpingDotsProgressIndicator(
                             numberOfDots: 3,
-                            fontSize: Constants.normalFontSize -3,
+                            fontSize: Constants.normalFontSize - 3,
                             color: Constants.iLight,
                           ),
                         ]),
                     SizedBox(height: 35.0),
                     Text(
                       offlineGroupData.getCurrentQuestion().getQuestion(),
-                      style: TextStyle(
-                          color: Constants.iWhite,
-                          fontSize: Constants.normalFontSize,
-                          fontWeight: FontWeight.w300),
+                      style: TextStyle(color: Constants.iBlue.withOpacity(0.7), fontSize: Constants.normalFontSize, fontWeight: FontWeight.w500),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 45.0),
                     Text(
                       offlineGroupData.canVoteBlank
-                          ? offlineGroupData
-                                  .getAmountOfCurrentVotes()
-                                  .toString() +
-                              '/' +
-                              (offlineGroupData.getPlayers().length - 1)
-                                  .toString() +
-                              ' players have voted'.i18n
-                          : offlineGroupData
-                                  .getAmountOfCurrentVotes()
-                                  .toString() +
-                              '/' +
-                              offlineGroupData.getPlayers().length.toString() +
-                              ' players have voted'.i18n,
+                          ? offlineGroupData.getAmountOfCurrentVotes().toString() + '/' + (offlineGroupData.getPlayers().length - 1).toString() + ' players have voted'
+                          : offlineGroupData.getAmountOfCurrentVotes().toString() + '/' + offlineGroupData.getPlayers().length.toString() + ' players have voted',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Constants.iLight,
-                          fontSize: Constants.smallFontSize,
-                          fontWeight: FontWeight.w300),
+                      style: TextStyle(color: Constants.iLight, fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     Text(
-                      offlineGroupData.questionsLeft().toString() +
-                          " questions remaining".i18n,
+                      offlineGroupData.questionsLeft().toString() + " questions remaining",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Constants.iLight,
-                          fontSize: Constants.miniFontSize,
-                          fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Constants.iLight, fontSize: 14, fontWeight: FontWeight.w300),
                     ),
                     SizedBox(height: 50.0),
                     PassScreenButton(
-                      title: "Vote!".i18n,
-                      titleStyle: TextStyle(
-                          color: allPlayersVoted()
-                              ? Constants.iLight
-                              : Constants.iWhite,
-                          fontSize: Constants.normalFontSize - 3,
-                          fontWeight: FontWeight.w500),
-                      subtitle: allPlayersVoted()
-                          ? "All players voted".i18n
-                          : "New vote for this round".i18n,
-                      subtitleStyle: TextStyle(
-                          color: Constants.iLight,
-                          fontSize: Constants.smallFontSize - 2,
-                          fontWeight: FontWeight.w300),
+                      title: "Vote!",
+                      titleStyle: TextStyle(color: allPlayersVoted() ? Constants.iLight : Constants.iWhite, fontSize: Constants.normalFontSize - 3, fontWeight: FontWeight.w500),
+                      subtitle: allPlayersVoted() ? "All players voted" : "New vote for this round",
+                      subtitleStyle: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize - 2, fontWeight: FontWeight.w300),
                       iconCard: allPlayersVoted()
                           ? IconCard(
                               OMIcons.checkCircle,
@@ -189,18 +127,10 @@ class _PassScreenState extends State<PassScreen> {
                       height: 15,
                     ),
                     PassScreenButton(
-                      title: "Add question".i18n,
-                      subtitle: "Want to ask a question? Submit it here!".i18n,
-                      titleStyle: TextStyle(
-                          color: allPlayersVoted()
-                              ? Constants.iLight
-                              : Constants.iWhite,
-                          fontSize: Constants.normalFontSize - 3,
-                          fontWeight: FontWeight.w500),
-                      subtitleStyle: TextStyle(
-                          color: Constants.iLight,
-                          fontSize: Constants.smallFontSize - 2,
-                          fontWeight: FontWeight.w300),
+                      title: "Add question",
+                      subtitle: "Want to ask a question? Submit it here!",
+                      titleStyle: TextStyle(color: allPlayersVoted() ? Constants.iLight : Constants.iWhite, fontSize: Constants.normalFontSize - 3, fontWeight: FontWeight.w500),
+                      subtitleStyle: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize - 2, fontWeight: FontWeight.w300),
                       iconCard: IconCard(
                         OMIcons.libraryAdd,
                         Constants.iGrey.withOpacity(0.1),
@@ -208,8 +138,7 @@ class _PassScreenState extends State<PassScreen> {
                         35,
                       ),
                       onTap: () {
-                        Popup.submitQuestionOfflinePopup(
-                            context, offlineGroupData);
+                        Popup.submitQuestionOfflinePopup(context, offlineGroupData);
                       },
                     ),
                   ],
@@ -222,19 +151,15 @@ class _PassScreenState extends State<PassScreen> {
             foregroundColor: Constants.iLight,
             backgroundShape: BorderRadius.circular(16.0),
             foregroundShape: BorderRadius.circular(16.0),
-            text: "Swipe to go to results".i18n,
-            textStyle: TextStyle(
-                color: Constants.iLight,
-                fontSize: Constants.miniFontSize,
-                fontWeight: FontWeight.w500),
+            text: "Swipe to go to results",
+            textStyle: TextStyle(color: Constants.iLight, fontSize: 14, fontWeight: FontWeight.w500),
             icon: FontAwesomeIcons.angleDoubleRight,
             iconColor: Constants.iDarkGrey,
             onConfirmation: () {
               _moveToResults(true);
             },
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-        )));
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        ));
   }
 }

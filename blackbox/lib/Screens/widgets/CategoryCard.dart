@@ -12,9 +12,7 @@ class CategoryCard extends StatefulWidget {
   final Function() onTap;
   bool isNewFlag = false;
 
-  CategoryCard(this.defaultValue, this.category,
-      {this.onTap, Key key, this.isNewFlag})
-      : super(key: key);
+  CategoryCard(this.defaultValue, this.category, {this.onTap, Key key, this.isNewFlag}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -42,8 +40,7 @@ class CategoryCardState extends State<CategoryCard> {
         child: Container(
           width: MediaQuery.of(context).size.width - 60,
           child: Padding(
-            padding:
-                const EdgeInsets.only(top: 8, left: 5.0, right: 5, bottom: 8),
+            padding: const EdgeInsets.only(top: 8, left: 5.0, right: 5, bottom: 8),
             child: Row(children: [
               Container(
                 height: 45,
@@ -52,9 +49,7 @@ class CategoryCardState extends State<CategoryCard> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  color: widget.defaultValue
-                      ? widget.category.color.withOpacity(0.2)
-                      : widget.category.color,
+                  color: widget.defaultValue ? widget.category.color.withOpacity(0.2) : widget.category.color,
                   child: Center(
                     child: FaIcon(
                       widget.category.icon,
@@ -68,9 +63,7 @@ class CategoryCardState extends State<CategoryCard> {
                 width: 12,
               ),
               Container(
-                width: widget.isNewFlag
-                    ? MediaQuery.of(context).size.width - 200
-                    : MediaQuery.of(context).size.width - 140,
+                width: widget.isNewFlag ? MediaQuery.of(context).size.width - 200 : MediaQuery.of(context).size.width - 140,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,24 +71,14 @@ class CategoryCardState extends State<CategoryCard> {
                     Text(
                       widget.category.categoryName,
                       textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color: widget.defaultValue
-                              ? Colors.white24
-                              : Constants.iWhite,
-                          fontSize: Constants.smallFontSize,
-                          fontWeight: FontWeight.w500),
+                      style: TextStyle(color: widget.defaultValue ? Colors.white24 : widget.category.titleColor, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     Text(
                       widget.category.description,
                       textAlign: TextAlign.start,
                       maxLines: 2,
-                      style: TextStyle(
-                          color: widget.defaultValue
-                              ? Colors.white12
-                              : Constants.iLight,
-                          fontSize: Constants.smallFontSize - 3,
-                          fontWeight: FontWeight.w300),
+                      style: TextStyle(color: widget.defaultValue ? Colors.white12 : Constants.iLight, fontSize: Constants.smallFontSize - 3, fontWeight: FontWeight.w300),
                     ),
                   ],
                 ),

@@ -24,7 +24,8 @@ class Constants {
     Colors.deepPurple[300],
     Colors.brown[100],
     Colors.yellowAccent[100],
-    Colors.deepOrange[100]
+    Colors.deepOrange[100],
+    Color.fromARGB(255, 128, 10, 55),
   ];
 
   //fontsizes

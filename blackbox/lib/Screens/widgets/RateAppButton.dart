@@ -5,16 +5,13 @@ import '../../Constants.dart';
 
 class RateAppButton {
   static Widget rateAppButton(BuildContext context) {
-    return FlatButton(
+    return MaterialButton(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               "rate this app",
-              style: TextStyle(
-                  color: Constants.iBlue,
-                  fontSize: Constants.smallFontSize,
-                  fontWeight: FontWeight.w300),
+              style: TextStyle(color: Constants.iBlue, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300),
             ),
             SizedBox(
               width: 10,
@@ -27,9 +24,7 @@ class RateAppButton {
           ],
         ),
         onPressed: () {
-          FirebaseAnalytics().logEvent(
-              name: 'button_pressed',
-              parameters: {'button_name': 'RateAppButton'});
+          FirebaseAnalytics.instance.logEvent(name: 'button_pressed', parameters: {'button_name': 'RateAppButton'});
 
           showDialog(
             context: context,
