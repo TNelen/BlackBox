@@ -11,7 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../Constants.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 
 class PartyVoteScreen extends StatefulWidget {
   final OfflineGroupData offlineGroupData;
@@ -104,8 +104,8 @@ class _PartyVoteScreenState extends State<PartyVoteScreen> with WidgetsBindingOb
             padding: const EdgeInsets.only(top: 3, left: 3.0, right: 3, bottom: 3),
             child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
               Text(
-                "Vote",
-                style: TextStyle(fontFamily: "roboto", fontSize: Constants.smallFontSize, color: Constants.iWhite, fontWeight: FontWeight.w500),
+                "Vote".i18n,
+                style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iWhite, fontWeight: FontWeight.w500),
               ),
               SizedBox(
                 width: 5,
@@ -121,98 +121,75 @@ class _PartyVoteScreenState extends State<PartyVoteScreen> with WidgetsBindingOb
       ),
     );
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('en', ''), // English, no country code
-      ],
-      theme: ThemeData(
-        fontFamily: "roboto",
-        scaffoldBackgroundColor: Constants.iBlack,
-      ),
-      home: Scaffold(
-        body: Container(
-            color: Constants.black.withOpacity(0.7),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  height: 50,
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 30),
-                    child: DelayedDisplay(
-                      delay: Duration(milliseconds: 0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            offlineGroupData.getCurrentQuestion().getQuestion(),
-                            style: TextStyle(color: Constants.iWhite, fontSize: 25, fontWeight: FontWeight.w300),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                width: 220.0,
-                                child: Text(
-                                  '- ' + offlineGroupData.getCurrentQuestion().getCategory() + ' -',
-                                  style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w500),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+    return Scaffold(
+      backgroundColor: Constants.black.withOpacity(0.7),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            flex: 3,
+            child: Container(
+              padding: EdgeInsets.only(left: 30, right: 30, top: 70, bottom: 30),
+              child: DelayedDisplay(
+                delay: Duration(milliseconds: 0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      offlineGroupData.getCurrentQuestion().getQuestion().i18n,
+                      style: TextStyle(color: Constants.iWhite, fontSize: 25, fontWeight: FontWeight.w300),
+                      textAlign: TextAlign.center,
                     ),
-                  ),
-                ),
-                Expanded(
-                  flex: 5,
-                  child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(40.0),
-                          topRight: Radius.circular(40.0),
-                          bottomLeft: Radius.zero,
-                          bottomRight: Radius.zero,
-                        ),
-                      ),
-                      color: Constants.iDarkGrey,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          Text(
-                            'Select a friend',
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          width: 220.0,
+                          child: Text(
+                            '- ' + offlineGroupData.getCurrentQuestion().getCategory().i18n + ' -',
+                            style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w500),
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 20, color: Constants.iLight, fontWeight: FontWeight.w300),
                           ),
-                          Container(padding: EdgeInsets.only(left: 30, right: 30), child: membersList),
-                          SizedBox(
-                            height: 60,
-                          ),
-                        ],
-                      )),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            )),
-        floatingActionButton: selectedPlayer != null ? voteButton : SizedBox(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+              ),
+            ),
+          ),
+          Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40.0),
+                  topRight: Radius.circular(40.0),
+                  bottomLeft: Radius.zero,
+                  bottomRight: Radius.zero,
+                ),
+              ),
+              color: Constants.iDarkGrey,
+              child: Expanded(
+                  flex: 7,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Text(
+                        'Select a friend'.i18n,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 25, color: Constants.iLight, fontWeight: FontWeight.w300),
+                      ),
+                      Container(height: MediaQuery.of(context).size.height * 0.6, padding: EdgeInsets.only(left: 30, right: 30, bottom: 70), child: membersList),
+                    ],
+                  ))),
+        ],
       ),
+      floatingActionButton: selectedPlayer != null ? voteButton : SizedBox(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 

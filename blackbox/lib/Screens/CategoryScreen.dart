@@ -8,9 +8,9 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'SetPlayersScreen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import '../Constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 
 class CategoryScreen extends StatefulWidget {
   bool showHelp = false;
@@ -29,7 +29,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   bool setScrollable = true;
   List<Category> selectedCategory = [];
-
 
   void openHelp() {
     showDialog(
@@ -71,7 +70,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
               Text(
                 'Next',
-                style: TextStyle(fontFamily: "roboto", fontSize: Constants.smallFontSize, color: Constants.iWhite, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iWhite, fontWeight: FontWeight.w500),
               ),
               SizedBox(
                 width: 5,
@@ -88,15 +87,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
     );
 
     return WillPopScope(
-      onWillPop: () async {
-        return false;
-      },
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.transparent,
-        ),
-        home: Scaffold(
+        onWillPop: () async {
+          return false;
+        },
+        child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -129,7 +123,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(
-                          'Categories',
+                          'Categories'.i18n,
                           style: TextStyle(fontSize: 25, color: Constants.iWhite, fontWeight: FontWeight.w400),
                         ),
                       ),
@@ -154,12 +148,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   Container(
                       padding: EdgeInsets.only(left: 5, right: 5),
                       child: selectedCategory.length == 0
-                          ? Text("Select one or more categories...", textAlign: TextAlign.center, style: TextStyle(color: Constants.iLight, fontSize: 17, fontWeight: FontWeight.w300))
+                          ? Text("Select one or more categories...".i18n, textAlign: TextAlign.center, style: TextStyle(color: Constants.iLight, fontSize: 17, fontWeight: FontWeight.w300))
                           : selectedCategory.length == 1
-                              ? Text(selectedCategory.length.toString() + " " + "category selected",
-                                  textAlign: TextAlign.center, style: TextStyle(color: Constants.iLight, fontSize: 17, fontWeight: FontWeight.w300))
-                              : Text(selectedCategory.length.toString() + " " + "categories selected",
-                                  textAlign: TextAlign.center, style: TextStyle(color: Constants.iLight, fontSize: 17, fontWeight: FontWeight.w300))),
+                              ? Text(selectedCategory.length.toString() + " " + "category selected".i18n,
+                                  textAlign: TextAlign.center, style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300))
+                              : Text(selectedCategory.length.toString() + " " + "categories selected".i18n,
+                                  textAlign: TextAlign.center, style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300))),
                   SizedBox(height: 15),
                   AnimationLimiter(
                     child: ListView.builder(
@@ -197,8 +191,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
               )),
           floatingActionButton: selectedCategory.length != 0 ? nextButton : SizedBox(),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        ),
-      ),
-    );
+        ));
   }
 }

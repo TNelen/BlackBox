@@ -4,16 +4,15 @@ import 'package:blackbox/Screens/CategoryScreen.dart';
 import 'package:blackbox/push_nofitications.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animator/animation/animation_preferences.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:i18n_extension/i18n_widget.dart';
 import 'Constants.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -108,11 +107,13 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        const Locale('en', ''), // English, no country code
+        const Locale('en', ''),
+        const Locale('nl', ''), // nl, no country code// English, no country code
       ],
       title: 'BlackBox',
-      theme: ThemeData(fontFamily: "roboto", scaffoldBackgroundColor: Constants.iBlack),
-      home: Scaffold(
+      theme: ThemeData(fontFamily: "atarian", scaffoldBackgroundColor: Constants.iBlack),
+      home: I18n(
+          child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Container(
             color: Constants.black.withOpacity(0.7),
@@ -132,7 +133,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                       height: 10,
                     ),
                     Text(
-                      "A COMITS Game",
+                      "A COMITS Game".i18n,
                       style: TextStyle(color: Colors.white, fontSize: Constants.normalFontSize, fontFamily: "atarian", fontWeight: FontWeight.w300),
                     ),
                   ]),
@@ -162,16 +163,16 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                                   height: 25,
                                 ),
                                 Text(
-                                  "Start playing now!",
-                                  style: TextStyle(fontSize: Constants.normalFontSize, fontFamily: "roboto", color: Constants.iWhite, fontWeight: FontWeight.w400),
+                                  "Start playing now!".i18n,
+                                  style: TextStyle(fontSize: Constants.normalFontSize, fontFamily: "atarian", color: Constants.iWhite, fontWeight: FontWeight.w400),
                                   textAlign: TextAlign.center,
                                 ),
                                 SizedBox(
                                   height: 15,
                                 ),
                                 Text(
-                                  "The #1 game to get to know yourself and your friends!",
-                                  style: TextStyle(fontSize: Constants.smallFontSize, fontFamily: "roboto", color: Constants.iWhite.withOpacity(0.6), fontWeight: FontWeight.w300),
+                                  "The #1 game to get to know yourself and your friends!".i18n,
+                                  style: TextStyle(fontSize: Constants.smallFontSize, fontFamily: "atarian", color: Constants.iWhite.withOpacity(0.6), fontWeight: FontWeight.w300),
                                   textAlign: TextAlign.center,
                                 ),
                                 SizedBox(
@@ -202,7 +203,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                         scale: 0.5,
                       ))),
             ])),
-      ),
+      )),
     );
   }
 }

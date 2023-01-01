@@ -3,6 +3,7 @@ import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_indicator/page_indicator.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 
 class HowtoPopup extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _HowtoPopupState extends State<HowtoPopup> {
             title: Center(
               child: Text(
                 "How to play",
-                style: TextStyle(fontFamily: "roboto", color: Constants.iWhite, fontWeight: FontWeight.w300, fontSize: Constants.normalFontSize),
+                style: TextStyle(color: Constants.iWhite, fontWeight: FontWeight.w300, fontSize: Constants.normalFontSize),
               ),
             ),
             content: Container(
@@ -55,8 +56,8 @@ class _HowtoPopupState extends State<HowtoPopup> {
                             Container(
                               height: 120,
                               child: Text(
-                                "Select one or more question categories",
-                                style: TextStyle(fontFamily: "roboto", color: Colors.white, fontSize: 20.0),
+                                "Select one or more question categories".i18n,
+                                style: TextStyle(color: Colors.white, fontSize: 20.0),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -79,8 +80,8 @@ class _HowtoPopupState extends State<HowtoPopup> {
                             Container(
                               height: 120,
                               child: Text(
-                                "Add all players",
-                                style: TextStyle(fontFamily: "roboto", color: Colors.white, fontSize: 20.0),
+                                "Add all players".i18n,
+                                style: TextStyle(color: Colors.white, fontSize: 20.0),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -104,32 +105,32 @@ class _HowtoPopupState extends State<HowtoPopup> {
                                 height: 140,
                                 child: Column(children: [
                                   Text(
-                                    "Start playing!",
-                                    style: TextStyle(fontFamily: "roboto", color: Colors.white, fontSize: 20.0),
+                                    "Start playing!".i18n,
+                                    style: TextStyle(color: Colors.white, fontSize: 20.0),
                                     textAlign: TextAlign.center,
                                   ),
                                   SizedBox(height: 20),
                                   Text(
-                                    "1. Cast your vote",
-                                    style: TextStyle(fontFamily: "roboto", color: Constants.iLight, fontSize: 15.0),
+                                    "1. Cast your vote".i18n,
+                                    style: TextStyle(color: Constants.iLight, fontSize: 15.0),
                                     textAlign: TextAlign.center,
                                   ),
                                   SizedBox(height: 5),
                                   Text(
-                                    "2. Pass the phone to the next player",
-                                    style: TextStyle(fontFamily: "roboto", color: Constants.iLight, fontSize: 15.0),
+                                    "2. Pass the phone to the next player".i18n,
+                                    style: TextStyle(color: Constants.iLight, fontSize: 15.0),
                                     textAlign: TextAlign.center,
                                   ),
                                   SizedBox(height: 5),
                                   Text(
-                                    "3. Show results when all players voted",
-                                    style: TextStyle(fontFamily: "roboto", color: Constants.iLight, fontSize: 15.0),
+                                    "3. Show results when all players voted".i18n,
+                                    style: TextStyle(color: Constants.iLight, fontSize: 15.0),
                                     textAlign: TextAlign.center,
                                   ),
                                   SizedBox(height: 5),
                                   Text(
-                                    "4. Start next round",
-                                    style: TextStyle(fontFamily: "roboto", color: Constants.iLight, fontSize: 15.0),
+                                    "4. Start next round".i18n,
+                                    style: TextStyle(color: Constants.iLight, fontSize: 15.0),
                                     textAlign: TextAlign.center,
                                   ),
                                 ])),
@@ -161,8 +162,8 @@ class _HowtoPopupState extends State<HowtoPopup> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                "I got it!",
-                                style: TextStyle(fontFamily: "roboto", color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
+                                "I got it!".i18n,
+                                style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                               ),
                             ),
                             SizedBox(

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../Constants.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 
 class PartyQuestionScreen extends StatefulWidget {
   final OfflineGroupData offlineGroupData;
@@ -68,8 +69,8 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
           padding: const EdgeInsets.only(top: 3, left: 3.0, right: 3, bottom: 3),
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
             Text(
-              "Start Round",
-              style: TextStyle(fontFamily: "roboto", fontSize: Constants.smallFontSize, color: Constants.iWhite, fontWeight: FontWeight.w500),
+              "Start Round".i18n,
+              style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iWhite, fontWeight: FontWeight.w500),
             ),
             SizedBox(
               width: 5,
@@ -97,87 +98,80 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
         child: Padding(
           padding: const EdgeInsets.only(top: 3, left: 3.0, right: 3, bottom: 3),
           child: Text(
-            "Skip question",
-            style: TextStyle(fontFamily: "roboto", fontSize: Constants.smallFontSize, color: Constants.iLight, fontWeight: FontWeight.w400),
+            "Skip question".i18n,
+            style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iLight, fontWeight: FontWeight.w400),
             textAlign: TextAlign.center,
           ),
         ),
       ),
     );
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: "roboto",
-        scaffoldBackgroundColor: Constants.iBlack,
-      ),
-      home: Scaffold(
-        body: Builder(
-            // Create an inner BuildContext so that the onPressed methods
-            // can refer to the Scaffold with Scaffold.of().
-            builder: (BuildContext context) {
-          return Padding(
-            padding: EdgeInsets.only(bottom: 30, top: 70),
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  DelayedDisplay(
-                    delay: Duration(milliseconds: 0),
-                    child: Container(
-                      padding: EdgeInsets.all(20),
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(
-                              height: 80,
-                            ),
-                            Text(
-                              offlineGroupData.getCurrentQuestion().getQuestion(),
-                              style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  width: 220.0,
-                                  child: Text(
-                                    '- ' + offlineGroupData.getCurrentQuestion().getCategory() + ' -',
-                                    style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w500),
-                                    textAlign: TextAlign.center,
-                                  ),
+    return Scaffold(
+      body: Builder(
+          // Create an inner BuildContext so that the onPressed methods
+          // can refer to the Scaffold with Scaffold.of().
+          builder: (BuildContext context) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: 30, top: 70),
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                DelayedDisplay(
+                  delay: Duration(milliseconds: 0),
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 80,
+                          ),
+                          Text(
+                            offlineGroupData.getCurrentQuestion().getQuestion().i18n,
+                            style: TextStyle(color: Constants.iWhite, fontSize: Constants.normalFontSize, fontWeight: FontWeight.w300),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                width: 220.0,
+                                child: Text(
+                                  '- ' + offlineGroupData.getCurrentQuestion().getCategory().i18n + ' -',
+                                  style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w500),
+                                  textAlign: TextAlign.center,
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  Column(
-                    children: [
-                      nextButton,
-                      SizedBox(
-                        height: 15,
-                      ),
-                      offlineGroupData.isGameEnded() ? SizedBox() : skipButton,
-                    ],
-                  )
-                ],
-              ),
+                ),
+                Column(
+                  children: [
+                    nextButton,
+                    SizedBox(
+                      height: 15,
+                    ),
+                    offlineGroupData.isGameEnded() ? SizedBox() : skipButton,
+                  ],
+                )
+              ],
             ),
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 }

@@ -9,7 +9,7 @@ import '../Constants.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:blackbox/Screens/popups/rate_popup.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 
 import '../main.dart';
 
@@ -91,6 +91,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
     final results = Container(
         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
         child: ListView.separated(
+          physics: NeverScrollableScrollPhysics(),
           padding: EdgeInsets.only(left: 25, right: 25),
           separatorBuilder: (context, index) => Divider(
             color: Colors.white,
@@ -109,24 +110,24 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                       ),
                       index == 0
                           ? Text(
-                              (index + 1).toString() + 'st',
+                              (index + 1).toString() + 'st'.i18n,
                               style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                               textAlign: TextAlign.start,
                             )
                           : index == 1
                               ? Text(
-                                  (index + 1).toString() + 'nd',
+                                  (index + 1).toString() + 'nd'.i18n,
                                   style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                   textAlign: TextAlign.start,
                                 )
                               : index == 2
                                   ? Text(
-                                      (index + 1).toString() + 'rd',
+                                      (index + 1).toString() + 'rd'.i18n,
                                       style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                       textAlign: TextAlign.start,
                                     )
                                   : Text(
-                                      (index + 1).toString() + 'th',
+                                      (index + 1).toString() + 'th'.i18n,
                                       style: TextStyle(color: Constants.iWhite, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w400),
                                       textAlign: TextAlign.start,
                                     ),
@@ -185,8 +186,8 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                   padding: const EdgeInsets.only(top: 3, left: 3.0, right: 3, bottom: 3),
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                     Text(
-                      "Next Question",
-                      style: TextStyle(fontFamily: "roboto", fontSize: Constants.smallFontSize, color: Colors.white, fontWeight: FontWeight.w700),
+                      "Next Question".i18n,
+                      style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Colors.white, fontWeight: FontWeight.w700),
                     ),
                     SizedBox(
                       width: 5,
@@ -206,8 +207,8 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                   padding: const EdgeInsets.only(top: 3, left: 3.0, right: 3, bottom: 3),
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                     Text(
-                      "The games has ended",
-                      style: TextStyle(fontFamily: "roboto", fontSize: Constants.smallFontSize, color: Colors.white, fontWeight: FontWeight.w700),
+                      "The games has ended".i18n,
+                      style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Colors.white, fontWeight: FontWeight.w700),
                     ),
                     SizedBox(
                       width: 5,
@@ -217,99 +218,70 @@ class PartyResultScreenState extends State<PartyResultScreen> {
                 )),
       ),
     );
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('en', ''), // English, no country code
-      ],
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.transparent,
-      ),
-      home: Scaffold(
+    return Scaffold(
         floatingActionButton: nextButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        body: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            // CustomPaint(
-            //   painter: ResultsBottomCurvePainter(),
-            // ),
-            Positioned(
-              right: 12,
-              top: 12,
-              child: SafeArea(
-                child: InkWell(
-                  onTap: () {
-                    FirebaseAnalytics.instance.logEvent(name: 'game_action', parameters: {
-                      'type': 'PartyGameEnded',
-                    });
-                    Navigator.push(
-                        context,
-                        SlidePageRoute(
-                            //TODO : create endScreen
-                            fromPage: widget,
-                            toPage: SplashScreen()));
-                  },
-                  child: Text(
-                    "End game",
-                    style: TextStyle(fontSize: Constants.smallFontSize, color: Constants.iLight, fontWeight: FontWeight.w300),
-                  ),
+        body: ListView(children: <Widget>[
+          //Title
+          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            Padding(
+              padding: EdgeInsets.only(top: 25, right: 25),
+              child: InkWell(
+                onTap: () {
+                  FirebaseAnalytics.instance.logEvent(name: 'game_action', parameters: {
+                    'type': 'PartyGameEnded',
+                  });
+                  Navigator.push(
+                      context,
+                      SlidePageRoute(
+                          //TODO : create endScreen
+                          fromPage: widget,
+                          toPage: SplashScreen()));
+                },
+                child: Text(
+                  "End game".i18n,
+                  style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iLight, fontWeight: FontWeight.w300),
                 ),
               ),
             ),
-            Column(
-              children: <Widget>[
-                //Title
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 70,
-                    ),
-                    Center(
-                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-                      Text(
-                        'Round results',
-                        style: TextStyle(fontSize: Constants.normalFontSize, color: Constants.iBlue, fontWeight: FontWeight.w300),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Icon(
-                        Icons.timeline,
-                        size: 50,
-                        color: Constants.iBlue,
-                      ),
-                    ])),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    //question
-                    Padding(
-                      padding: EdgeInsets.only(left: 35, right: 35),
-                      child: Text(
-                        offlineGroupData.getCurrentQuestion().getQuestion(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Constants.iWhite, fontSize: 20, fontWeight: FontWeight.w300),
-                      ),
-                    ),
-                  ],
-                ),
-                //results
-                Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10, top: 60),
-                  child: results,
-                )
-              ],
+          ]),
+
+          SizedBox(
+            height: 25,
+          ),
+          Center(
+              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            Text(
+              'Round results'.i18n,
+              style: TextStyle(fontFamily: "atarian", fontSize: Constants.normalFontSize, color: Constants.iBlue, fontWeight: FontWeight.w300),
             ),
-          ],
-        ),
-      ),
-    );
+            SizedBox(
+              width: 5,
+            ),
+            Icon(
+              Icons.timeline,
+              size: 50,
+              color: Constants.iBlue,
+            ),
+          ])),
+          SizedBox(
+            height: 25,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 35, right: 35),
+            child: Text(
+              offlineGroupData.getCurrentQuestion().getQuestion().i18n,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: 20, fontWeight: FontWeight.w300),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 10),
+            child: results,
+          ),
+          SizedBox(
+            height: 80,
+          ),
+        ]));
   }
 }

@@ -5,6 +5,7 @@ import 'package:blackbox/Assets/questions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../Constants.dart';
+import 'package:blackbox/translations/translations.i18n.dart';
 
 class CategoryCard extends StatefulWidget {
   final bool defaultValue;
@@ -69,13 +70,13 @@ class CategoryCardState extends State<CategoryCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.category.categoryName,
+                      widget.category.categoryName.i18n,
                       textAlign: TextAlign.start,
                       style: TextStyle(color: widget.defaultValue ? Colors.white24 : widget.category.titleColor, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     Text(
-                      widget.category.description,
+                      widget.category.description.i18n,
                       textAlign: TextAlign.start,
                       maxLines: 2,
                       style: TextStyle(color: widget.defaultValue ? Colors.white12 : Constants.iLight, fontSize: Constants.smallFontSize - 3, fontWeight: FontWeight.w300),
