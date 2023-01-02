@@ -412,11 +412,11 @@ extension Localization on String {
       } +
       {
         "en": "Select one or more categories...",
-        "nl": "Selcteer een of meerdere categorieën...",
+        "nl": "Selcteer een of meerdere thema's...",
       } +
       {
         "en": "Categories",
-        "nl": "Categorieën",
+        "nl": "Thema's",
       } +
       {
         "en": "Popular",
