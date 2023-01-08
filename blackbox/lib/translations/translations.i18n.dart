@@ -1287,7 +1287,7 @@ extension Localization on String {
       } +
       {
         "en": "Who skips breakfast the most?",
-        "nl": "Wie slaagt het vaakst ontbijt over?",
+        "nl": "Wie slaat het vaakst ontbijt over?",
       } +
       {
         "en": "Who spends the most time in the garden?",

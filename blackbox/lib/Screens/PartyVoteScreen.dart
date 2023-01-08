@@ -126,66 +126,63 @@ class _PartyVoteScreenState extends State<PartyVoteScreen> with WidgetsBindingOb
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Expanded(
-            flex: 3,
-            child: Container(
-              padding: EdgeInsets.only(left: 30, right: 30, top: 70, bottom: 30),
-              child: DelayedDisplay(
-                delay: Duration(milliseconds: 0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      offlineGroupData.getCurrentQuestion().getQuestion().i18n,
-                      style: TextStyle(color: Constants.iWhite, fontSize: 25, fontWeight: FontWeight.w300),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          width: 220.0,
-                          child: Text(
-                            '- ' + offlineGroupData.getCurrentQuestion().getCategory().i18n + ' -',
-                            style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w500),
-                            textAlign: TextAlign.center,
-                          ),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.33,
+            padding: EdgeInsets.only(left: 30, right: 30, top: 70, bottom: 30),
+            child: DelayedDisplay(
+              delay: Duration(milliseconds: 0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    offlineGroupData.getCurrentQuestion().getQuestion().i18n,
+                    style: TextStyle(color: Constants.iWhite, fontSize: 25, fontWeight: FontWeight.w300),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        width: 220.0,
+                        child: Text(
+                          '- ' + offlineGroupData.getCurrentQuestion().getCategory().i18n + ' -',
+                          style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.center,
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
-          Card(
-              shape: RoundedRectangleBorder(
+          Container(
+              height: MediaQuery.of(context).size.height * 0.66,
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40.0),
                   topRight: Radius.circular(40.0),
                   bottomLeft: Radius.zero,
                   bottomRight: Radius.zero,
                 ),
+                color: Constants.iDarkGrey,
               ),
-              color: Constants.iDarkGrey,
-              child: Expanded(
-                  flex: 7,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Text(
+              child: ListView(
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(top: 20, bottom: 20),
+                      child: Text(
                         'Select a friend'.i18n,
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 25, color: Constants.iLight, fontWeight: FontWeight.w300),
-                      ),
-                      Container(height: MediaQuery.of(context).size.height * 0.6, padding: EdgeInsets.only(left: 30, right: 30, bottom: 70), child: membersList),
-                    ],
-                  ))),
+                      )),
+                  Container(height: MediaQuery.of(context).size.height * 0.6, padding: EdgeInsets.only(left: 30, right: 30, bottom: 70), child: membersList),
+                ],
+              )),
         ],
       ),
       floatingActionButton: selectedPlayer != null ? voteButton : SizedBox(),
