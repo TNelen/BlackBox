@@ -1,6 +1,4 @@
-// @dart=2.9
-
-import 'package:blackbox/Models/OfflineGroupData.dart';
+import 'package:blackbox/Repositories/gameStateRepository.dart';
 import 'package:blackbox/Screens/PartyQuestionScreen.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:flutter/material.dart';
@@ -14,25 +12,19 @@ import 'package:blackbox/translations/translations.i18n.dart';
 import '../main.dart';
 
 class PartyResultScreen extends StatefulWidget {
-  OfflineGroupData offlineGroupData;
-
-  PartyResultScreen(OfflineGroupData offlineGroupData) {
-    this.offlineGroupData = offlineGroupData;
-  }
+  const PartyResultScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  PartyResultScreenState createState() => PartyResultScreenState(offlineGroupData);
+  PartyResultScreenState createState() => PartyResultScreenState();
 }
 
 class PartyResultScreenState extends State<PartyResultScreen> {
-  OfflineGroupData offlineGroupData;
+  final GameStateRepository gameStateRepo = getIt.get<GameStateRepository>();
 
-  PartyResultScreenState(OfflineGroupData offlineGroupData) {
-    this.offlineGroupData = offlineGroupData;
-  }
-
-  bool showMoreCurrent;
-  bool showMoreAll;
+  late bool showMoreCurrent;
+  late bool showMoreAll;
 
   final controller = PageController(
     initialPage: 0,
@@ -44,16 +36,16 @@ class PartyResultScreenState extends State<PartyResultScreen> {
     Navigator.push(
       context,
       doAnimate
-          ? SlidePageRoute(fromPage: widget, toPage: PartyQuestionScreen(offlineGroupData))
+          ? SlidePageRoute(fromPage: widget, toPage: PartyQuestionScreen())
           : PageRouteBuilder(
-              pageBuilder: (context, animation1, animation2) => PartyQuestionScreen(offlineGroupData),
+              pageBuilder: (context, animation1, animation2) => PartyQuestionScreen(),
               transitionDuration: Duration(seconds: 0),
             ),
     );
   }
 
   bool _showRatePop() {
-    return offlineGroupData.questionsLeft() == 10;
+    return gameStateRepo.questionsLeft() == 10;
   }
 
   @override
@@ -77,8 +69,8 @@ class PartyResultScreenState extends State<PartyResultScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> currentWinners = offlineGroupData.getCurrentRanking();
-    Map<String, int> currentVotes = offlineGroupData.getCurrentVotes();
+    List<String> currentWinners = gameStateRepo.getCurrentRanking();
+    Map<String, int> currentVotes = gameStateRepo.getCurrentVotes();
 
     void toggleAlltime() {
       showMoreAll = !showMoreAll;
@@ -159,8 +151,8 @@ class PartyResultScreenState extends State<PartyResultScreen> {
           borderRadius: BorderRadius.circular(12.0),
         ),
         onPressed: () {
-          if (!offlineGroupData.isGameEnded()) {
-            offlineGroupData.nextRound();
+          if (!gameStateRepo.isGameEnded()) {
+            gameStateRepo.nextRound();
             _moveToNext(true);
             if (_showRatePop()) {
               showDialog(
@@ -178,7 +170,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
           }
         },
         //change isplaying field in database for this group to TRUE
-        child: !offlineGroupData.isGameEnded()
+        child: !gameStateRepo.isGameEnded()
             ? Container(
                 width: MediaQuery.of(context).size.width / 2,
                 height: 50,
@@ -270,7 +262,7 @@ class PartyResultScreenState extends State<PartyResultScreen> {
           Padding(
             padding: EdgeInsets.only(left: 35, right: 35),
             child: Text(
-              offlineGroupData.getCurrentQuestion().getQuestion().i18n,
+              gameStateRepo.getCurrentQuestion().getQuestion().i18n,
               textAlign: TextAlign.center,
               style: TextStyle(fontFamily: "atarian", color: Constants.iWhite, fontSize: 20, fontWeight: FontWeight.w300),
             ),

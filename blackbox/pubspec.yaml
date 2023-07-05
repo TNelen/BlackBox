@@ -11,28 +11,30 @@ description: A fun game for friends that will bring you closer together
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 4.4.1+68
+version: 4.4.2+69
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
 
   firebase_core: ^2.4.0
-  auto_size_text: ^2.1.0
-  package_info: ^0.4.1        # Used to grab (among other things) the version and build number
-  path_provider: ^2.0.0       # Used for file handling
   shared_preferences: ^2.0.5
-  store_redirect: ^1.0.2
+  store_redirect: ^2.0.1
   firebase_analytics: ^10.0.6 # Used to gather more detailed usage statistics
   url_launcher: ^6.0.3
-  progress_indicators: ^0.1.5
-  slide_to_confirm: ^0.0.7
-  outline_material_icons: ^0.1.1
+  progress_indicators: ^1.0.0
+  slide_to_confirm: ^1.0.0
   firebase_messaging: ^14.1.4
-  delayed_display: ^1.1.0
-  font_awesome_flutter: ^8.11.0
-  flutter_tags: "^0.4.9+1"
-
+  delayed_display: ^2.0.0
+  font_awesome_flutter: ^10.5.0
+  back_button_interceptor: ^6.0.2
+  flutter_animator: ^3.1.2
+  flutter_staggered_animations: ^1.0.0
+  animated_text_kit: ^4.2.1
+  simple_animations: ^3.1.1
+  page_indicator: ^0.4.1
+  get_it: ^7.6.0
+  flutter_tags_x: ^1.1.0
 
 
   flutter:
@@ -43,18 +45,6 @@ dependencies:
 
   i18n_extension: 4.0.0 
 
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
-  share: ^0.5.3
-  back_button_interceptor: ^4.0.7
-  flutter_neumorphic: ^3.1.0
-  flutter_animator: ^3.1.2
-  flutter_staggered_animations: ^1.0.0
-  animated_text_kit: ^4.2.1
-  simple_animations: ^3.1.1
-  page_indicator: ^0.4.1
 
 
 

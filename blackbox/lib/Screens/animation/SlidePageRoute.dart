@@ -1,12 +1,10 @@
-// @dart=2.9
-
 import 'package:flutter/material.dart';
 
 class SlidePageRoute extends PageRouteBuilder {
   final Widget fromPage;
   final Widget toPage;
 
-  SlidePageRoute({this.fromPage, this.toPage})
+  SlidePageRoute({required this.fromPage, required this.toPage})
       : super(
           pageBuilder: (
             BuildContext context,

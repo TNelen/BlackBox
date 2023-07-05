@@ -1,13 +1,14 @@
 import 'package:blackbox/Assets/questions.dart';
-import 'package:blackbox/Models/OfflineGroupData.dart';
+import 'package:blackbox/Repositories/gameStateRepository.dart';
 import 'package:blackbox/Screens/CategoryScreen.dart';
 import 'package:blackbox/Screens/PartyQuestionScreen.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tags/flutter_tags.dart';
+import 'package:flutter_tags_x/flutter_tags_x.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../main.dart';
 import 'animation/ScaleDownPageRoute.dart';
 import 'popups/Popup.dart';
 import '../Constants.dart';
@@ -25,8 +26,8 @@ class SetPlayersScreen extends StatefulWidget {
 }
 
 class _SetPlayersScreenState extends State<SetPlayersScreen> {
-  List<Category> selectedCategory = [];
-  List<String> players = [];
+  List<Category> selectedCategory = List.empty(growable: true);
+  List<String> players = List.empty(growable: true);
   TextEditingController codeController = TextEditingController();
 
   _SetPlayersScreenState(List<Category> selectedCategory) {
@@ -36,6 +37,8 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
   }
 
   bool canVoteBlank = false;
+
+  final GameStateRepository gameStateRepo = getIt.get<GameStateRepository>();
 
   @override
   Widget build(BuildContext context) {
@@ -64,26 +67,23 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
     );
 
     final playerPills = Tags(
-      key: Key("1"),
       textField: tagsTextField,
       itemCount: players.length,
       itemBuilder: (index) {
-        final item = players[index];
-
         return GestureDetector(
           child: ItemTags(
             borderRadius: BorderRadius.circular(15),
-            padding: EdgeInsets.all(12),
-            key: Key(index.toString()),
+            padding: EdgeInsets.all(8),
+            // key: Key(index.toString()),
             index: index,
-            title: item,
-            textStyle: TextStyle(color: Constants.black, fontSize: 15),
+            title: players[index],
+            textStyle: TextStyle(color: Constants.black, fontSize: 20),
             textActiveColor: Constants.iDarkGrey,
             pressEnabled: false,
             activeColor: Constants.categoryColors[index % 7],
             removeButton: ItemTagsRemoveButton(
               icon: Icons.clear,
-              size: 18,
+              size: 12,
               backgroundColor: Constants.categoryColors[index % 7],
               color: Constants.iDarkGrey,
               onRemoved: () {
@@ -121,9 +121,11 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
             // Only logged here
             FirebaseAnalytics.instance.logEvent(name: 'party_created', parameters: map);
 
-            OfflineGroupData offlineGroupData = OfflineGroupData(players, questionList, canVoteBlank);
+            gameStateRepo.startGame(players: players, questionList: questionList, canVoteBlank: canVoteBlank);
 
-            Navigator.push(context, SlidePageRoute(fromPage: widget, toPage: PartyQuestionScreen(offlineGroupData)));
+            FocusScope.of(context).unfocus();
+
+            Navigator.push(context, SlidePageRoute(fromPage: widget, toPage: PartyQuestionScreen()));
           } else {
             Popup.makePopup(context, "Woops!", "There should be at least one player!");
           }

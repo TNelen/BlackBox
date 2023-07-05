@@ -1,10 +1,12 @@
 import 'package:blackbox/Assets/questions.dart' as offlineQuestions;
-import 'package:blackbox/Models/OfflineGroupData.dart';
+import 'package:blackbox/Repositories/gameStateRepository.dart';
 import 'package:blackbox/translations/translations.i18n.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../../Constants.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../main.dart';
 
 class Popup {
   static void makePopup(BuildContext context, String title, String message) {
@@ -91,7 +93,9 @@ class Popup {
     );
   }
 
-  static void submitQuestionOfflinePopup(BuildContext context, OfflineGroupData offlineGroupData) {
+  static void submitQuestionOfflinePopup(BuildContext context) {
+    final GameStateRepository gameStateRepo = getIt.get<GameStateRepository>();
+
     TextEditingController questionController = TextEditingController();
 
     // ignore: unnecessary_final
@@ -159,7 +163,7 @@ class Popup {
                 } else if (question.length >= 5) {
                   FirebaseAnalytics.instance.logEvent(name: 'action_performed', parameters: {'action_name': 'AddQuestionParty'});
                   //offlinequestions is prefix
-                  offlineQuestions.QuestionList questionList = offlineGroupData.getQuestionList();
+                  offlineQuestions.QuestionList questionList = gameStateRepo.getQuestionList();
                   questionList.addQuestion(question);
                   Navigator.pop(context);
                 } else

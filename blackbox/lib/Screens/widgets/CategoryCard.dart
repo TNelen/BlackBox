@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:blackbox/Assets/questions.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +11,7 @@ class CategoryCard extends StatefulWidget {
   final Function() onTap;
   bool isNewFlag = false;
 
-  CategoryCard(this.defaultValue, this.category, {this.onTap, Key key, this.isNewFlag}) : super(key: key);
+  CategoryCard(this.defaultValue, this.category, {required this.onTap, required this.isNewFlag , Key? key,}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

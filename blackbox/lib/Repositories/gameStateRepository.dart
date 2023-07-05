@@ -1,26 +1,23 @@
-// @dart=2.9
-
 import 'package:blackbox/Assets/questions.dart';
 
-class OfflineGroupData {
-  QuestionList questionList;
+class GameStateRepository {
+  late QuestionList questionList;
 
-  List<String> players;
+  late List<String> players;
 
-  Map<String, int> totalVotes = Map();
+  late Map<String, int> totalVotes = Map();
 
-  Map<String, int> currentVotes = Map();
+  late Map<String, int> currentVotes = Map();
 
-  Question currentQuestion;
+  late Question currentQuestion;
 
-  bool canVoteBlank;
+  late bool canVoteBlank;
 
   bool ended = false;
 
-  OfflineGroupData(
-      List<String> players, QuestionList questionList, bool canVoteBlank) {
-    this.questionList = questionList;
+  void startGame({required List<String> players, required QuestionList questionList, required bool canVoteBlank}) {
     this.players = players;
+    this.questionList = questionList;
     this.canVoteBlank = canVoteBlank;
 
     //initialize current and totalVotes map
@@ -63,7 +60,7 @@ class OfflineGroupData {
       a,
       b,
     ) =>
-        currentVotes[b].compareTo(currentVotes[a]));
+        currentVotes[b]!.compareTo(currentVotes[a]!));
     return playerList;
   }
 
@@ -73,7 +70,7 @@ class OfflineGroupData {
       a,
       b,
     ) =>
-        totalVotes[b].compareTo(totalVotes[a]));
+        totalVotes[b]!.compareTo(totalVotes[a]!));
 
     return playerList;
   }
@@ -89,8 +86,8 @@ class OfflineGroupData {
   void vote(String playerName) {
     totalVotes.putIfAbsent(playerName, () => 0);
     currentVotes.putIfAbsent(playerName, () => 0);
-    currentVotes[playerName]++;
-    totalVotes[playerName]++;
+    currentVotes[playerName] = currentVotes[playerName]! + 1;
+    totalVotes[playerName] = currentVotes[playerName]! + 1;
   }
 
   List<String> getPlayers() {

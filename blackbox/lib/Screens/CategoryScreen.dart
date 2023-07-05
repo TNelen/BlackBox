@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:blackbox/Assets/questions.dart';
 import 'package:blackbox/Screens/popups/HowToPopup.dart';
 
@@ -16,7 +15,7 @@ class CategoryScreen extends StatefulWidget {
   bool showHelp = false;
   bool showList;
 
-  CategoryScreen({this.showHelp, this.showList});
+  CategoryScreen({required this.showHelp,required this.showList});
 
   @override
   _CategoryScreenState createState() => _CategoryScreenState();

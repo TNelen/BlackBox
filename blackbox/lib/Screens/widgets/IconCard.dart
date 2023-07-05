@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:flutter/material.dart';
 
 class IconCard extends StatefulWidget {
@@ -8,8 +6,7 @@ class IconCard extends StatefulWidget {
   final Color iconcolor;
   final double iconSize;
 
-  IconCard(this.icon, this.color, this.iconcolor, this.iconSize, {Key key})
-      : super(key: key);
+  IconCard(this.icon, this.color, this.iconcolor, this.iconSize, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

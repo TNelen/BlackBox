@@ -1,5 +1,4 @@
-// @dart=2.9
-
+import 'package:blackbox/Repositories/gameStateRepository.dart';
 import 'package:blackbox/Screens/CategoryScreen.dart';
 import 'package:blackbox/push_nofitications.dart';
 import 'package:delayed_display/delayed_display.dart';
@@ -8,13 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'Constants.dart';
 import 'package:blackbox/translations/translations.i18n.dart';
+import 'package:get_it/get_it.dart';
+
+GetIt getIt = GetIt.instance;
+
 
 void main() async {
+
+    getIt.registerSingleton<GameStateRepository>(GameStateRepository(), signalsReady: false);
+
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -59,8 +65,6 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     });
     PushNotificationsManager manager = PushNotificationsManager();
     manager.init();
-    //load user data from localstorage
-    Constants.loadData();
   }
 
   @override

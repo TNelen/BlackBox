@@ -1,5 +1,3 @@
-
-// @dart=2.9
 import 'package:flutter/material.dart';
 
 class PickableRating extends StatefulWidget {
@@ -7,7 +5,7 @@ class PickableRating extends StatefulWidget {
   final void Function(int rating) onTap;
   final int defaultRating;
 
-  PickableRating({this.size: 25.0, this.onTap, int startRating: 0}) : defaultRating = startRating;
+  PickableRating({this.size: 25.0, required this.onTap, int startRating: 0}) : defaultRating = startRating;
 
   @override
   State<StatefulWidget> createState() {
@@ -16,7 +14,7 @@ class PickableRating extends StatefulWidget {
 }
 
 class _PickableRatingState extends State<PickableRating> {
-  int rating;
+  late int rating;
 
   void initState() {
     super.initState();
@@ -46,7 +44,7 @@ class _PickableRatingState extends State<PickableRating> {
   @override
   Widget build(BuildContext context) {
     // Create list of stars
-    final List<Widget> stars = List<Widget>();
+    List<Widget> stars = List.empty(growable: true);
     for (int i = 1; i <= 5; i++) stars.add(buildStar(i));
 
     return Row(

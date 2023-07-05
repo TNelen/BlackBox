@@ -1,4 +1,3 @@
-//@dart=2.9
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ class Category {
   Color color;
   Color titleColor;
 
-  Category({this.categoryName, this.description, this.questions, this.isNew = false, this.icon, this.color, this.titleColor = Colors.white});
+  Category({required this.categoryName, required this.description, required this.questions, this.isNew = false, required this.icon, required this.color, this.titleColor = Colors.white});
 
   String getDescription() {
     return description;
@@ -71,14 +70,14 @@ class QuestionList {
         print(questionString);
         print(questionsList[questionString]);
 
-        Question returning = Question(questionString, questionsList[questionString]);
+        Question returning = Question(questionString, questionsList[questionString]!);
         questionsList.remove(questionString);
 
         return returning;
       } else {
         var questions = questionsList.keys.toList()..shuffle();
         var questionString = questions[0];
-        var question = Question(questionString, questionsList[questionString]);
+        var question = Question(questionString, questionsList[questionString]!);
         //remove from list
         questionsList.remove(questionString);
         return question;
@@ -86,7 +85,7 @@ class QuestionList {
     } else {
       var questions = questionsList.keys.toList()..shuffle();
       var questionString = questions[0];
-      var question = Question(questionString, questionsList[questionString]);
+      var question = Question(questionString, questionsList[questionString]!);
       //remove from list
       questionsList.remove(questionString);
       return question;

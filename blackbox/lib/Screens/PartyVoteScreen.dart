@@ -1,6 +1,4 @@
-// @dart=2.9
-
-import 'package:blackbox/Models/OfflineGroupData.dart';
+import 'package:blackbox/Repositories/gameStateRepository.dart';
 import 'package:blackbox/Screens/PassScreen.dart';
 import 'package:blackbox/Screens/animation/SlidePageRoute.dart';
 import 'package:delayed_display/delayed_display.dart';
@@ -13,29 +11,27 @@ import 'package:back_button_interceptor/back_button_interceptor.dart';
 
 import 'package:blackbox/translations/translations.i18n.dart';
 
+import '../main.dart';
+
 class PartyVoteScreen extends StatefulWidget {
-  final OfflineGroupData offlineGroupData;
+  const PartyVoteScreen({
+    Key? key,
+  }) : super(key: key);
 
-  @override
-  PartyVoteScreen(this.offlineGroupData) {}
-
-  _PartyVoteScreenState createState() => _PartyVoteScreenState(offlineGroupData);
+  _PartyVoteScreenState createState() => _PartyVoteScreenState();
 }
 
 class _PartyVoteScreenState extends State<PartyVoteScreen> with WidgetsBindingObserver {
-  Color color;
-  String selectedPlayer;
-  OfflineGroupData offlineGroupData;
+  late Color color;
+  String selectedPlayer = "";
 
   TextEditingController questionController = TextEditingController();
-
-  _PartyVoteScreenState(OfflineGroupData offlineGroupData) {
-    this.offlineGroupData = offlineGroupData;
-  }
+  final GameStateRepository gameStateRepo = getIt.get<GameStateRepository>();
 
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addObserver(this);
     BackButtonInterceptor.add(myInterceptor);
   }
@@ -54,7 +50,7 @@ class _PartyVoteScreenState extends State<PartyVoteScreen> with WidgetsBindingOb
 
   @override
   Widget build(BuildContext context) {
-    final List<String> players = offlineGroupData.getPlayers();
+    List<String> players = gameStateRepo.getPlayers();
 
     final membersList = AnimationLimiter(
       child: GridView.count(
@@ -94,8 +90,8 @@ class _PartyVoteScreenState extends State<PartyVoteScreen> with WidgetsBindingOb
             'type': 'PartyVoteCast',
           });
           FirebaseAnalytics.instance.logEvent(name: 'PartyVoteOnUser', parameters: null);
-          offlineGroupData.vote(selectedPlayer);
-          Navigator.push(context, SlidePageRoute(fromPage: widget, toPage: PassScreen(offlineGroupData)));
+          if (selectedPlayer != "") gameStateRepo.vote(selectedPlayer!);
+          Navigator.push(context, SlidePageRoute(fromPage: widget, toPage: PassScreen()));
         },
         child: Container(
           width: MediaQuery.of(context).size.width / 2,
@@ -135,7 +131,7 @@ class _PartyVoteScreenState extends State<PartyVoteScreen> with WidgetsBindingOb
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    offlineGroupData.getCurrentQuestion().getQuestion().i18n,
+                    gameStateRepo.getCurrentQuestion().getQuestion().i18n,
                     style: TextStyle(color: Constants.iWhite, fontSize: 25, fontWeight: FontWeight.w300),
                     textAlign: TextAlign.center,
                   ),
@@ -148,7 +144,7 @@ class _PartyVoteScreenState extends State<PartyVoteScreen> with WidgetsBindingOb
                       Container(
                         width: 220.0,
                         child: Text(
-                          '- ' + offlineGroupData.getCurrentQuestion().getCategory().i18n + ' -',
+                          '- ' + gameStateRepo.getCurrentQuestion().getCategory().i18n + ' -',
                           style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w500),
                           textAlign: TextAlign.center,
                         ),
