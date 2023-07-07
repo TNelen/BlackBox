@@ -28,7 +28,7 @@ class SetPlayersScreen extends StatefulWidget {
 class _SetPlayersScreenState extends State<SetPlayersScreen> {
   List<Category> selectedCategory = List.empty(growable: true);
   List<String> players = List.empty(growable: true);
-  TextEditingController codeController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
   _SetPlayersScreenState(List<Category> selectedCategory) {
     this.selectedCategory = selectedCategory;
@@ -42,32 +42,29 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final tagsTextField = TagsTextField(
-      autofocus: true,
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      enabled: true,
-      constraintSuggestion: true,
+    final tagsTextField = TextField(
+      controller: nameController,
+      textAlign: TextAlign.center,
       onSubmitted: (String str) {
         setState(() {
           if (!players.contains(str[0].toUpperCase() + str.substring(1))) {
             players.add(str[0].toUpperCase() + str.substring(1));
+            nameController.clear();
           }
         });
       },
-      textStyle: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iWhite),
-      duplicates: false,
-      hintTextColor: Constants.iLight,
-      hintText: "Click to add player...".i18n,
-      maxLength: 20,
-      inputDecoration: InputDecoration(
+      decoration: InputDecoration(
+        hintStyle: TextStyle(color: Constants.iLight),
+        hintText: "Click to add player...".i18n,
         border: InputBorder.none,
+        counterStyle: TextStyle(color: Constants.iLight),
         contentPadding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 3.0),
       ),
+      style: TextStyle(fontFamily: "atarian", fontSize: Constants.smallFontSize, color: Constants.iWhite),
+      maxLength: 20,
     );
 
     final playerPills = Tags(
-      textField: tagsTextField,
       itemCount: players.length,
       itemBuilder: (index) {
         return GestureDetector(
@@ -105,7 +102,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
           borderRadius: BorderRadius.circular(12.0),
         ),
         onPressed: () {
-          if (players.length != 0 && selectedCategory.length != 0) {
+          if (players.length > 1 && selectedCategory.length != 0) {
             canVoteBlank ? players.add("Blank") : null;
             QuestionList questionList = QuestionList(selectedCategory);
 
@@ -123,11 +120,9 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
 
             gameStateRepo.startGame(players: players, questionList: questionList, canVoteBlank: canVoteBlank);
 
-            FocusScope.of(context).unfocus();
-
             Navigator.push(context, SlidePageRoute(fromPage: widget, toPage: PartyQuestionScreen()));
           } else {
-            Popup.makePopup(context, "Woops!", "There should be at least one player!");
+            Popup.makePopup(context, "Woops!".i18n, "There should be at least two players!".i18n);
           }
         },
         child: Container(
@@ -155,7 +150,6 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
 
     return Scaffold(
       backgroundColor: Constants.black.withOpacity(0.7),
-
       //resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         //padding: EdgeInsets.symmetric(horizontal: 10),
@@ -281,6 +275,13 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
                       padding: EdgeInsets.only(left: 20, right: 20),
                       child: playerPills,
                     ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: tagsTextField,
+                    ),
                     SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
                   ]),
                 ),
@@ -289,7 +290,7 @@ class _SetPlayersScreenState extends State<SetPlayersScreen> {
           ],
         ),
       ),
-      floatingActionButton: showFab ? createButton : null,
+      floatingActionButton: showFab ? createButton : SizedBox.shrink(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

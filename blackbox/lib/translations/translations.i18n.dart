@@ -15,8 +15,8 @@ extension Localization on String {
         "nl": "Vind je dit een tof spel? Overweeg om ons een goede beoordeling te geven in de play store.",
       } +
       {
-        "en": "There should be at least one player!",
-        "nl": "Er moet minstens één speler zijn!",
+        "en": "There should be at least two players!",
+        "nl": "Er moeten minstens twee speler zijn!",
       } +
       {
         "en": "Hi there!",
@@ -303,8 +303,8 @@ extension Localization on String {
         "nl": "categorie geselecteerd",
       } +
       {
-        "en": "categories selected",
-        "nl": "categorie geselecteerd",
+        "en": "selected",
+        "nl": "geselecteerd",
       } +
       {
         "en": "Please select one or more categories!",

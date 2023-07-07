@@ -31,8 +31,6 @@ class _PartyQuestionScreenState extends State<PartyQuestionScreen> with WidgetsB
   @override
   void initState() {
     super.initState();
-    SystemChannels.textInput.invokeMethod('TextInput.hide');
-
     WidgetsBinding.instance.addObserver(this);
     BackButtonInterceptor.add(myInterceptor);
   }

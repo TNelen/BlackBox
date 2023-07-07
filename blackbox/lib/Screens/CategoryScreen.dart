@@ -15,7 +15,7 @@ class CategoryScreen extends StatefulWidget {
   bool showHelp = false;
   bool showList;
 
-  CategoryScreen({required this.showHelp,required this.showList});
+  CategoryScreen({required this.showHelp, required this.showList});
 
   @override
   _CategoryScreenState createState() => _CategoryScreenState();
@@ -148,11 +148,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       padding: EdgeInsets.only(left: 5, right: 5),
                       child: selectedCategory.length == 0
                           ? Text("Select one or more categories...".i18n, textAlign: TextAlign.center, style: TextStyle(color: Constants.iLight, fontSize: 17, fontWeight: FontWeight.w300))
-                          : selectedCategory.length == 1
-                              ? Text(selectedCategory.length.toString() + " " + "category selected".i18n,
-                                  textAlign: TextAlign.center, style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300))
-                              : Text(selectedCategory.length.toString() + " " + "categories selected".i18n,
-                                  textAlign: TextAlign.center, style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300))),
+                          : Text(selectedCategory.length.toString() + " " + "selected".i18n,
+                              textAlign: TextAlign.center, style: TextStyle(color: Constants.iLight, fontSize: Constants.smallFontSize, fontWeight: FontWeight.w300))),
                   SizedBox(height: 15),
                   AnimationLimiter(
                     child: ListView.builder(
